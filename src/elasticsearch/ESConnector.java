@@ -22,8 +22,10 @@ public class ESConnector {
 	}
 
 	public void startup() throws UnknownHostException {
+		org.elasticsearch.common.settings.Settings settings = org.elasticsearch.common.settings.Settings
+				.settingsBuilder().put("cluster.name", "stackoverflow").build();
 		// on startup
-		client = TransportClient.builder().build()
+		client = TransportClient.builder().settings(settings).build()
 				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), 9300));
 	}
 
@@ -31,20 +33,23 @@ public class ESConnector {
 		client.close();
 	}
 
-	public ArrayList<String> search(String query) {
+	public ArrayList<String> search(String index, String type, String query) {
 		ArrayList<String> results = new ArrayList<String>();
-		SearchResponse response = client.prepareSearch("cloplag").setSearchType(SearchType.QUERY_AND_FETCH)
-				.setQuery(QueryBuilders.matchQuery("src", query)).setFrom(0).setSize(10).setExplain(true).execute()
+		SearchResponse response = client.prepareSearch(index).setSearchType(SearchType.QUERY_AND_FETCH)
+				.setQuery(QueryBuilders.matchQuery(type, query)).setFrom(0).setSize(10).setExplain(true).execute()
 				.actionGet();
 		SearchHit[] hits = response.getHits().getHits();
 		// System.out.println("hits: " + hits.length);
 		int count = 0;
 		for (SearchHit hit : hits) {
-			count++;
-			if (count >= 10) break;
-			// System.out.println(hit.getId()); // prints out the id of the document
+			if (count >= 10)
+				break;
+			// System.out.println(hit.getId()); // prints out the id of the
+			// document
 			results.add(hit.getId());
-			// Map<String, Object> result = hit.getSource(); // the retrieved document
+			// Map<String, Object> result = hit.getSource(); // the retrieved
+			// document
+			count++;
 		}
 		return results;
 	}
