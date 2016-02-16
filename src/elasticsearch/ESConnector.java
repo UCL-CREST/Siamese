@@ -33,24 +33,28 @@ public class ESConnector {
 		client.close();
 	}
 
-	public ArrayList<String> search(String index, String type, String query) {
+	public ArrayList<String> search(String index, String type, String query, boolean isPrint, boolean isDFS) {
 		ArrayList<String> results = new ArrayList<String>();
-		SearchResponse response = client.prepareSearch(index).setSearchType(SearchType.QUERY_AND_FETCH)
-				.setQuery(QueryBuilders.matchQuery(type, query)).setFrom(0).setSize(10).setExplain(true).execute()
+		SearchType searchType = SearchType.QUERY_THEN_FETCH;
+		if (isDFS)
+			searchType = SearchType.DFS_QUERY_THEN_FETCH;
+		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
+				.setQuery(QueryBuilders.matchQuery("src", query)).setFrom(0).setSize(10).execute()
 				.actionGet();
 		SearchHit[] hits = response.getHits().getHits();
-		// System.out.println("hits: " + hits.length);
+		if (isPrint) System.out.println("=======================\nhits: " + hits.length);
 		int count = 0;
 		for (SearchHit hit : hits) {
 			if (count >= 10)
 				break;
-			// System.out.println(hit.getId()); // prints out the id of the
+			if (isPrint) System.out.println(hit.getId()); // prints out the id of the
 			// document
 			results.add(hit.getId());
 			// Map<String, Object> result = hit.getSource(); // the retrieved
 			// document
 			count++;
 		}
+		if (isPrint) System.out.println("=======================");
 		return results;
 	}
 }

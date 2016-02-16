@@ -28,6 +28,7 @@ public class Checker {
 	private static boolean isPrint = false;
 	private static nGramGenerator ngen;
 	private static Options options = new Options();
+	private static boolean isDFS = false;
 
 	public static void main(String[] args) {
 		processCommandLine(args);
@@ -36,8 +37,8 @@ public class Checker {
 		// initialise the ngram generator
 		ngen = new nGramGenerator(ngramSize);
 		
-		System.out.println("Checking " + server + ":9200/" + index + "/" + type + ", norm level: " + mode
-				+ ", ngram = " + isNgram);
+		System.out.println(server + ":9200/" + index + "/" + type + ", norm: " + mode + ", "
+				+ ngramSize + "-ngram = " + isNgram + ", DFS=" + isDFS);
 		try {
 			es.startup();
 			search();
@@ -67,6 +68,7 @@ public class Checker {
 		File[] listOfFiles = folder.listFiles();
 
 		for (int i = 0; i < listOfFiles.length; i++) {
+			System.err.println(i);
 			JavaTokenizer tokenizer = new JavaTokenizer(mode);
 			// generate tokens
 			ArrayList<String> tokens = tokenizer.getTokensFromFile(listOfFiles[i].getAbsolutePath());
@@ -79,8 +81,8 @@ public class Checker {
 				System.out.println(listOfFiles[i].getName());
 				System.out.println(query);
 			}
-			System.out.print(listOfFiles[i].getName() + ",");
-			System.out.println(findTP(es.search(index, type, query), listOfFiles[i].getName().split("\\$")[0]));
+			int tp = findTP(es.search(index, type, query, isPrint, isDFS), listOfFiles[i].getName().split("\\$")[0]);
+			System.out.print(listOfFiles[i].getName() + "," + tp);
 		}
 	}
 
@@ -102,10 +104,6 @@ public class Checker {
 	}
 
 	private static void processCommandLine(String[] args) {
-		if (args.length == 0) {
-			showHelp();
-			return ;
-		}
 		// create the command line parser
 		CommandLineParser parser = new BasicParser();
 
@@ -117,8 +115,15 @@ public class Checker {
 		options.addOption("n", "ngram", false, "convert tokens into ngram [default=no]");
 		options.addOption("g", "size", true, "size of n in ngram [default = 4]");
 		options.addOption("p", "print", false, "print the generated tokens");
+		options.addOption("f", "dfs", false, "use DFS mode [default=no]");
 		options.addOption("h", "help", false, "print help");
 
+		// check if no parameter given, print help and quit
+		if (args.length == 0) {
+			showHelp();
+			System.exit(0);
+		}
+		
 		try {
 			// parse the command line arguments
 			CommandLine line = parser.parse(options, args);
@@ -168,6 +173,10 @@ public class Checker {
 
 			if (line.hasOption("p")) {
 				isPrint = true;
+			}
+			
+			if (line.hasOption("f")) {
+				isDFS  = true;
 			}
 
 		} catch (ParseException exp) {
