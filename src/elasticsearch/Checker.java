@@ -1,6 +1,8 @@
 package elasticsearch;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
@@ -65,15 +67,28 @@ public class Checker {
 	private static void search() throws Exception {
 		File folder = new File(inputFolder);
 		File[] listOfFiles = folder.listFiles();
-
+		String query = "";
 		for (int i = 0; i < listOfFiles.length; i++) {
 			JavaTokenizer tokenizer = new JavaTokenizer(mode);
-			// generate tokens
-			ArrayList<String> tokens = tokenizer.getTokensFromFile(listOfFiles[i].getAbsolutePath());
-			String query = printArray(tokens, false);
-			// enter ngram mode
-			if (isNgram) {
-				query = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
+
+			if (mode == Settings.Normalize.ESCAPE) {
+				try (BufferedReader br = new BufferedReader(new FileReader(listOfFiles[i].getAbsolutePath()))) {
+					String line;
+					while ((line = br.readLine()) != null) {
+						ArrayList<String> tokens = tokenizer.noNormalizeAToken(escapeString(line).trim());
+						query = printArray(tokens, false);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				// generate tokens
+				ArrayList<String> tokens = tokenizer.getTokensFromFile(listOfFiles[i].getAbsolutePath());
+				query = printArray(tokens, false);
+				// enter ngram mode
+				if (isNgram) {
+					query = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
+				}
 			}
 			if (isPrint) {
 				System.out.println(listOfFiles[i].getName());
@@ -100,6 +115,14 @@ public class Checker {
 		}
 		return s;
 	}
+	
+	private static String escapeString(String input) {
+		String output = "";
+		output += input.replace("\\", "\\\\").replace("\"", "\\\"").replace("/", "\\/").replace("\b", "\\b")
+				.replace("\f", "\\f").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
+		return output;
+	}
+
 
 	private static void processCommandLine(String[] args) {
 		if (args.length == 0) {
@@ -154,6 +177,8 @@ public class Checker {
 			if (line.hasOption("l")) {
 				if (line.getOptionValue("l").toLowerCase().equals("lo"))
 					mode = Settings.Normalize.LO_NORM;
+				else if (line.getOptionValue("l").toLowerCase().equals("esc"))
+					mode = Settings.Normalize.ESCAPE;
 				else
 					mode = Settings.Normalize.HI_NORM;
 			}

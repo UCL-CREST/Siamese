@@ -7,6 +7,7 @@ public class Settings {
 		public static final int MED_NORM = 1;
 		public static final int LO_NORM = 2;
 		public static final int NO_NORM = 3;
+		public static final int ESCAPE = 4;
 	}
 	
 	public class Ngram {
