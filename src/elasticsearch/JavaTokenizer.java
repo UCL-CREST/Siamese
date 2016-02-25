@@ -60,63 +60,60 @@ public class JavaTokenizer {
 	private void hiNormalizeAToken(int tok) {
 		switch (tok) {
 		case StreamTokenizer.TT_NUMBER:
-			// check if the previous symbol is assignment
-			/* if (prevChar.equals("=")) {
-				tokens.add("A");
+			if (prevChar.equals("=")) {
+				tokens.add("=");
 				prevChar = "";
-			} else if (prevChar.equals(">") || prevChar.equals("<")) {
-				tokens.add("C");
+			} else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") 
+					|| prevChar.equals("/") || prevChar.equals("%") || prevChar.equals("<") 
+					|| prevChar.equals(">")) {
+				tokens.add(prevChar);
 				prevChar = "";
-			} else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") || prevChar.equals("/") || prevChar.equals("%")) {
-				tokens.add("O");
-				prevChar = "";
-			} */
-			
+			} 
 			tokens.add("V");
 			break;
 		case StreamTokenizer.TT_WORD:
-			// String word = tokenizer.sval;
-			// check if the previous symbol is assignment
-			/* if (prevChar.equals("=")) {
-				tokens.add("A");
+			if (prevChar.equals("=")) {
+				tokens.add("=");
 				prevChar = "";
-			} else if (prevChar.equals(">") || prevChar.equals("<")) {
-				tokens.add("C");
+			} else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") 
+					|| prevChar.equals("/") || prevChar.equals("%") || prevChar.equals("<") 
+					|| prevChar.equals(">")) {
+				tokens.add(prevChar);
 				prevChar = "";
-			} else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") || prevChar.equals("/") || prevChar.equals("%")) {
-				tokens.add("O");
-				prevChar = "";
-			} */
+			} 
 			
 			tokens.add("W");
+			
 			break;
 		case '"':
-			// check if the previous symbol is assignment
-			/* if (prevChar.equals("=")) {
-				tokens.add("A");
+			// String doublequote = tokenizer.sval;
+			if (prevChar.equals("=")) {
+				tokens.add("=");
 				prevChar = "";
-			} else if (prevChar.equals(">") || prevChar.equals("<")) {
-				tokens.add("C");
+			}  else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") 
+					|| prevChar.equals("/") || prevChar.equals("%") || prevChar.equals("<") 
+					|| prevChar.equals(">")) {
+				tokens.add(prevChar);
 				prevChar = "";
-			} else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") || prevChar.equals("/") || prevChar.equals("%")) {
-				tokens.add("O");
-				prevChar = "";
-			} */
-			
+			} 
 			tokens.add("S");
 			break;
 		case '\'':
 			// String singlequote = tokenizer.sval;
-			// check if the previous symbol is assignment
-			/* if (prevChar.equals("=")) {
-				tokens.add("A");
+			if (prevChar.equals("=")) {
+				tokens.add("=");
 				prevChar = "";
-			} */
+			}  else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") 
+					|| prevChar.equals("/") || prevChar.equals("%") || prevChar.equals("<") 
+					|| prevChar.equals(">")) {
+				tokens.add(prevChar);
+				prevChar = "";
+			} 
 			tokens.add("C");
 			break;
 		case StreamTokenizer.TT_EOL:
 			// if (newline == Settings.Newline)
-			// tokens.add("\n");
+			tokens.add("\n");
 			break;
 		case StreamTokenizer.TT_EOF:
 			break;
@@ -124,56 +121,47 @@ public class JavaTokenizer {
 			char character = (char) tokenizer.ttype;
 			String cStr = String.valueOf(character);
 			if (!Character.isWhitespace(character) && character != '\n' && character != '\r') {
-				/* if (cStr.equals("*") || cStr.equals("/") || cStr.equals("%")) {
-					prevChar = cStr;
-				} else */ 
-				if (cStr.equals("+") || cStr.equals("-")) {
+				if (cStr.equals("+") || cStr.equals("-") || cStr.equals("*") || cStr.equals("/") || cStr.equals("%")) {
 					// nothing found before this
 					if (prevChar.equals(""))
 						prevChar = cStr;
 					else if (prevChar.equals("+")) {
-						tokens.add("I");
+						tokens.add("++");
 						prevChar = "";
 					}
 					else if (prevChar.equals("-")) {
-						tokens.add("D");
+						tokens.add("--");
 						prevChar = "";
 					}
-				} /* else if (cStr.equals(">") || cStr.equals("<")) {
+				} else if (cStr.equals(">") || cStr.equals("<")) {
 					prevChar = cStr;
-				} */ else if (cStr.equals("&") || cStr.equals("|")) {
-					if (prevChar.equals("&") && cStr.equals("&")) {
-						tokens.add("&&");
+				} else if (cStr.equals("&") || cStr.equals("|")) {
+					if (prevChar.equals("&") || prevChar.equals("|")) {
+						tokens.add(prevChar+cStr);
 						prevChar = "";
-					} else if (prevChar.equals("|") && cStr.equals("|")) {
-						tokens.add("||");
 					} else {
 						prevChar = cStr;
 					}
 				} else if (cStr.equals("=")) {
-					if (prevChar.equals("=")) {
-						tokens.add("==");
+					if (prevChar.equals("=") || prevChar.equals("!")) {
+						tokens.add(prevChar+cStr);
 						prevChar = "";
-					} /* else if (prevChar.equals(">") || prevChar.equals("<")) {
-						tokens.add("C");
+					} else if (prevChar.equals(">") || prevChar.equals("<")) {
+						tokens.add(prevChar+cStr);
 						prevChar = "";
 					} else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") || prevChar.equals("/") || prevChar.equals("%")) {
-						tokens.add("X");
+						tokens.add(prevChar+cStr);
 						prevChar = "";
-					} */ 
-					else {
+					} else {
 						prevChar = "=";
 					}
-				} /* else if (prevChar.equals("=") && cStr.equals("(")) {
-					tokens.add("A");
-					prevChar = "";
+				} else if (cStr.equals("!")) {
+					prevChar = cStr;
+				} else if (prevChar.equals("=")) {
+					tokens.add("=");
 					tokens.add(cStr);
-				} else if ((prevChar.equals("+") || (prevChar.equals("-"))) && cStr.equals("(")) {
-					tokens.add(prevChar);
 					prevChar = "";
-					tokens.add(cStr);
-				} */
-				else {
+				} else {
 					tokens.add(cStr);
 					prevChar = "";
 				}
