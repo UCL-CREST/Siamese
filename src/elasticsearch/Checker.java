@@ -2,10 +2,13 @@ package elasticsearch;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -13,6 +16,13 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 
 public class Checker {
 	private static ESConnector es;
@@ -48,6 +58,42 @@ public class Checker {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private ArrayList<JavaMethod> extractMethod(String filePath) throws FileNotFoundException, com.github.javaparser.ParseException {
+		FileInputStream in = new FileInputStream(filePath);
+		CompilationUnit cu;
+		ArrayList<JavaMethod> methodList = new ArrayList<JavaMethod>();
+		// parse the file
+		cu = JavaParser.parse(in);
+		int count = 0;
+		List<TypeDeclaration> typeDeclarations = cu.getTypes();
+		for (TypeDeclaration typeDec : typeDeclarations) {
+			List<BodyDeclaration> members = typeDec.getMembers();
+			if (members != null) {
+				for (BodyDeclaration member : members) {
+					// extract the constructors
+					if (member instanceof ConstructorDeclaration) {
+						ConstructorDeclaration constructor = (ConstructorDeclaration) member;
+						JavaMethod jm = new JavaMethod(count, filePath, constructor.getName(),
+								constructor.getDeclarationAsString() + constructor.getBlock(),
+								constructor.getBeginLine(), constructor.getEndLine(), "");
+						methodList.add(jm);
+						count++;
+						// extract all the methods
+					} else if (member instanceof MethodDeclaration) {
+						MethodDeclaration method = (MethodDeclaration) member;
+						JavaMethod jm = new JavaMethod(count, filePath, method.getName(),
+								method.getDeclarationAsString() + method.getBody().toString(), method.getBeginLine(),
+								method.getEndLine(), "");
+						methodList.add(jm);
+						count++;
+					}
+				}
+			}
+		}
+		
+		return methodList;
 	}
 
 	private static int findTP(ArrayList<String> results, String query) {
