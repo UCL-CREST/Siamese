@@ -5,15 +5,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -68,8 +64,8 @@ public class Checker {
 	private static void search() throws Exception {
 		File folder = new File(inputFolder);
 		File[] listOfFiles = folder.listFiles();
-		String query = "";
 		for (int i = 0; i < listOfFiles.length; i++) {
+			String query = "";
 			System.err.println(i);
 			JavaTokenizer tokenizer = new JavaTokenizer(mode);
 
@@ -78,7 +74,7 @@ public class Checker {
 					String line;
 					while ((line = br.readLine()) != null) {
 						ArrayList<String> tokens = tokenizer.noNormalizeAToken(escapeString(line).trim());
-						query = printArray(tokens, false);
+						query += printArray(tokens, false);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -101,10 +97,11 @@ public class Checker {
 		}
 	}
 
+	/* 
 	private static String readFile(String path, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return new String(encoded, encoding);
-	}
+	} */
 
 	public static String printArray(ArrayList<String> arr, boolean pretty) {
 		String s = "";
@@ -128,7 +125,7 @@ public class Checker {
 
 	private static void processCommandLine(String[] args) {
 		// create the command line parser
-		CommandLineParser parser = new BasicParser();
+		CommandLineParser parser = new DefaultParser();
 
 		options.addOption("s", "server", true, "elasticsearch's server name (or IP)");
 		options.addOption("i", "index", true, "index name");
