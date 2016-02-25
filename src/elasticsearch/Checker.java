@@ -14,10 +14,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import uk.ac.ucl.cragkhit.JavaTokenizer;
-import uk.ac.ucl.cragkhit.Settings;
-import uk.ac.ucl.cragkhit.nGramGenerator;
-
 public class Checker {
 	private static ESConnector es;
 	private static String server;
