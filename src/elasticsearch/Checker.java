@@ -2,13 +2,10 @@ package elasticsearch;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -134,7 +131,7 @@ public class Checker {
 		options.addOption("i", "index", true, "index name");
 		options.addOption("t", "type", true, "type name");
 		options.addOption("d", "dir", true, "input folder of source files to search");
-		options.addOption("l", "level", true, "normalisation level (hi [default]/lo)");
+		options.addOption("l", "level", true, "normalisation level (hi [default]/lo/esc)");
 		options.addOption("n", "ngram", false, "convert tokens into ngram [default=no]");
 		options.addOption("g", "size", true, "size of n in ngram [default = 4]");
 		options.addOption("p", "print", false, "print the generated tokens");
@@ -211,7 +208,7 @@ public class Checker {
 
 	private static void showHelp() {
 		HelpFormatter formater = new HelpFormatter();
-		formater.printHelp("java -jar checker.jar", options);
+		formater.printHelp("(v 0.1) java -jar checker.jar", options);
 		System.exit(0);
 	}
 }
