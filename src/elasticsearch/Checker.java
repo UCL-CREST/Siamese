@@ -23,7 +23,7 @@ public class Checker {
 	private static String index;
 	private static String type;
 	private static String inputFolder;
-	private static int mode = Settings.Normalize.HI_NORM;
+	private static TokenizerMode modes = new TokenizerMode();
 	private static int ngramSize = 4;
 	private static boolean isNgram = false;
 	private static boolean isPrint = false;
@@ -37,9 +37,9 @@ public class Checker {
 		es = new ESConnector(server);
 		// initialise the ngram generator
 		ngen = new nGramGenerator(ngramSize);
-		
-		System.out.println(server + ":9200/" + index + "/" + type + ", norm: " + mode + ", "
-				+ ngramSize + "-ngram = " + isNgram + ", DFS=" + isDFS);
+
+		System.out.println(server + ":9200/" + index + "/" + type + ", norm: " + modes + ", " + ngramSize + "-ngram = "
+				+ isNgram + ", DFS=" + isDFS);
 		try {
 			es.startup();
 			search();
@@ -52,7 +52,7 @@ public class Checker {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static int findTP(ArrayList<String> results, String query) {
 		int tp = 0;
 		for (int i = 0; i < results.size(); i++) {
@@ -70,9 +70,9 @@ public class Checker {
 		for (int i = 0; i < listOfFiles.length; i++) {
 			String query = "";
 			System.err.println(i);
-			JavaTokenizer tokenizer = new JavaTokenizer(mode);
+			JavaTokenizer tokenizer = new JavaTokenizer(modes);
 
-			if (mode == Settings.Normalize.ESCAPE) {
+			if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
 				try (BufferedReader br = new BufferedReader(new FileReader(listOfFiles[i].getAbsolutePath()))) {
 					String line;
 					while ((line = br.readLine()) != null) {
@@ -100,11 +100,11 @@ public class Checker {
 		}
 	}
 
-	/* 
-	private static String readFile(String path, Charset encoding) throws IOException {
-		byte[] encoded = Files.readAllBytes(Paths.get(path));
-		return new String(encoded, encoding);
-	} */
+	/*
+	 * private static String readFile(String path, Charset encoding) throws
+	 * IOException { byte[] encoded = Files.readAllBytes(Paths.get(path));
+	 * return new String(encoded, encoding); }
+	 */
 
 	public static String printArray(ArrayList<String> arr, boolean pretty) {
 		String s = "";
@@ -117,14 +117,13 @@ public class Checker {
 		}
 		return s;
 	}
-	
+
 	private static String escapeString(String input) {
 		String output = "";
 		output += input.replace("\\", "\\\\").replace("\"", "\\\"").replace("/", "\\/").replace("\b", "\\b")
 				.replace("\f", "\\f").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
 		return output;
 	}
-
 
 	private static void processCommandLine(String[] args) {
 		// create the command line parser
@@ -146,7 +145,7 @@ public class Checker {
 			showHelp();
 			System.exit(0);
 		}
-		
+
 		try {
 			// parse the command line arguments
 			CommandLine line = parser.parse(options, args);
@@ -180,16 +179,39 @@ public class Checker {
 			}
 
 			if (line.hasOption("l")) {
-				if (line.getOptionValue("l").toLowerCase().equals("lo"))
-					mode = Settings.Normalize.LO_NORM;
-				else if (line.getOptionValue("l").toLowerCase().equals("esc"))
-					mode = Settings.Normalize.ESCAPE;
-				else
-					mode = Settings.Normalize.HI_NORM;
+				char[] normOptions = line.getOptionValue("l").toLowerCase().toCharArray();
+				for (char c : normOptions) {
+					// setting all normalisation options: w, d, j, p, k, v, s
+					if (c == 'w')
+						modes.setWord(Settings.Normalize.WORD_NORM_ON);
+					else if (c == 'd')
+						modes.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
+					else if (c == 'j')
+						modes.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
+					else if (c == 'p')
+						modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_ON);
+					else if (c == 'k')
+						modes.setKeyword(Settings.Normalize.KEYWORD_NORM_ON);
+					else if (c == 'v')
+						modes.setValue(Settings.Normalize.VALUE_NORM_ON);
+					else if (c == 's')
+						modes.setString(Settings.Normalize.STRING_NORM_ON);
+					else if (c == 'x') {
+						modes.setWord(Settings.Normalize.WORD_NORM_OFF);
+						modes.setDatatype(Settings.Normalize.DATATYPE_NORM_OFF);
+						modes.setJavaClass(Settings.Normalize.JAVACLASS_NORM_OFF);
+						modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_OFF);
+						modes.setKeyword(Settings.Normalize.KEYWORD_NORM_OFF);
+						modes.setValue(Settings.Normalize.VALUE_NORM_OFF);
+						modes.setValue(Settings.Normalize.STRING_NORM_OFF);
+					} else if (c == 'e') {
+						modes.setEscape(Settings.Normalize.ESCAPE_ON);
+					}
+				}
 			}
 
 			if (line.hasOption("n")) {
-					isNgram = true;
+				isNgram = true;
 			}
 
 			if (line.hasOption("g")) {
@@ -199,9 +221,9 @@ public class Checker {
 			if (line.hasOption("p")) {
 				isPrint = true;
 			}
-			
+
 			if (line.hasOption("f")) {
-				isDFS  = true;
+				isDFS = true;
 			}
 
 		} catch (ParseException exp) {
