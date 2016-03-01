@@ -230,7 +230,7 @@ public class Checker {
 
 	private static void showHelp() {
 		HelpFormatter formater = new HelpFormatter();
-		formater.printHelp("(v 0.1) java -jar checker.jar", options);
+		formater.printHelp("(v 0.2) java -jar checker.jar", options);
 		System.exit(0);
 	}
 }

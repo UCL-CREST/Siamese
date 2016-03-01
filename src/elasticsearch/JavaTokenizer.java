@@ -284,7 +284,7 @@ public class JavaTokenizer {
 			break;
 		case StreamTokenizer.TT_EOL:
 			// if (newline == Settings.Newline)
-			tokens.add("\n");
+			// tokens.add("\n");
 			break;
 		case StreamTokenizer.TT_EOF:
 			break;
