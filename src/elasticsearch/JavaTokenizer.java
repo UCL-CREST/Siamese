@@ -41,6 +41,10 @@ public class JavaTokenizer {
 		tokenizer.parseNumbers();
 		// Don't parse slash as part of numbers.
 		tokenizer.ordinaryChar('/');
+		tokenizer.ordinaryChar('+');
+		tokenizer.ordinaryChar('-');
+		tokenizer.ordinaryChar('*');
+		tokenizer.ordinaryChar('%');
 		tokenizer.wordChars('_', '_');
 		tokenizer.eolIsSignificant(false);
 		tokenizer.ordinaryChars(0, ' ');
@@ -155,6 +159,7 @@ public class JavaTokenizer {
 			break;
 		case '"':
 			// String doublequote = tokenizer.sval;
+			// System.out.println("String = |" + tokenizer.sval + "|");
 			if (prevChar.equals("=")) {
 				tokens.add("=");
 				prevChar = "";
@@ -164,8 +169,17 @@ public class JavaTokenizer {
 				prevChar = "";
 			}
 			
+			String s = tokenizer.sval;
 			if (modes.getString() == Settings.Normalize.STRING_NORM_ON)
 				tokens.add("S");
+			else if (s.equals("\t"))
+				tokens.add("\"\\t\"");
+			else if (s.contains("\t") && !s.equals("\t"))
+				tokens.add(s.replace("\t", "\\t"));
+			else if (s.contains("\n") && !s.equals("\n"))
+				tokens.add(s.replace("\n", "\\n"));
+			else if (s.equals("\n"))
+				tokens.add("\"\\n\"");
 			else
 				tokens.add("\"" + tokenizer.sval + "\"");
 			break;
@@ -182,11 +196,11 @@ public class JavaTokenizer {
 			if (modes.getString() == Settings.Normalize.STRING_NORM_ON)
 				tokens.add("C");
 			else
-				tokens.add(tokenizer.sval);
+				tokens.add("'" + tokenizer.sval + "'");
 			break;
 		case StreamTokenizer.TT_EOL:
 			// if (newline == Settings.Newline)
-			// tokens.add("\n");
+			tokens.add("\n");
 			break;
 		case StreamTokenizer.TT_EOF:
 			break;

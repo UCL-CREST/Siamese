@@ -95,7 +95,8 @@ public class Checker {
 				System.out.println(query);
 			}
 			int tp = findTP(es.search(index, type, query, isPrint, isDFS), listOfFiles[i].getName().split("\\$")[0]);
-			System.out.println(listOfFiles[i].getName() + "," + round((tp * 0.1), 2));
+			// System.out.println(listOfFiles[i].getName() + "," + round((tp * 0.1), 2));
+			System.out.println(round((tp * 0.1), 2));
 		}
 	}
 	
