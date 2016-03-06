@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
@@ -35,7 +37,7 @@ public class Checker {
 		// initialise the ngram generator
 		ngen = new nGramGenerator(ngramSize);
 
-		System.out.println(server + ":9200/" + index + "/" + type + ", norm: " + modes + ", " + ngramSize + "-ngram = "
+		System.out.println(server + ":9200/" + index + "/" + type + ", norm: " + modes.toString() + ", " + ngramSize + "-ngram = "
 				+ isNgram + ", DFS=" + isDFS);
 		try {
 			es.startup();
@@ -93,8 +95,19 @@ public class Checker {
 				System.out.println(query);
 			}
 			int tp = findTP(es.search(index, type, query, isPrint, isDFS), listOfFiles[i].getName().split("\\$")[0]);
-			System.out.println(listOfFiles[i].getName() + "," + tp);
+			System.out.println(listOfFiles[i].getName() + "," + round((tp * 0.1), 2));
 		}
+	}
+	
+	/***
+	 * Copied from: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
+	 */
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
 	}
 
 	/*
@@ -130,7 +143,8 @@ public class Checker {
 		options.addOption("i", "index", true, "index name");
 		options.addOption("t", "type", true, "type name");
 		options.addOption("d", "dir", true, "input folder of source files to search");
-		options.addOption("l", "level", true, "normalisation level (hi [default]/lo/esc)");
+		options.addOption("l", "level", true, "normalisation. It can be a combination of x (none), w (words), d (datatypes), "
+				+ "j (Java classes), p (Java packages), k (keywords), v (values), s (strings), e (escape). For example: wkvs");
 		options.addOption("n", "ngram", false, "convert tokens into ngram [default=no]");
 		options.addOption("g", "size", true, "size of n in ngram [default = 4]");
 		options.addOption("p", "print", false, "print the generated tokens");
