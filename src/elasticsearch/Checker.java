@@ -37,8 +37,8 @@ public class Checker {
 		// initialise the ngram generator
 		ngen = new nGramGenerator(ngramSize);
 
-		System.out.println(server + ":9200/" + index + "/" + type + ", norm: " + modes.toString() + ", " + ngramSize + "-ngram = "
-				+ isNgram + ", DFS=" + isDFS);
+		// System.out.println(server + ":9200/" + index + "/" + type + ", norm: " + modes.toString() + ", " + ngramSize + "-ngram = "
+		// 		+ isNgram + ", DFS=" + isDFS);
 		try {
 			es.startup();
 			search();
@@ -68,7 +68,7 @@ public class Checker {
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			String query = "";
-			System.err.println(i);
+			// System.err.print(".");
 			JavaTokenizer tokenizer = new JavaTokenizer(modes);
 
 			if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
