@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -15,6 +16,8 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
 public class Checker {
 	private static ESConnector es;
@@ -65,14 +68,14 @@ public class Checker {
 
 	private static void search() throws Exception {
 		File folder = new File(inputFolder);
-		File[] listOfFiles = folder.listFiles();
-		for (int i = 0; i < listOfFiles.length; i++) {
+		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+		for (File file : listOfFiles) {
 			String query = "";
 			// System.err.print(".");
 			JavaTokenizer tokenizer = new JavaTokenizer(modes);
 
 			if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
-				try (BufferedReader br = new BufferedReader(new FileReader(listOfFiles[i].getAbsolutePath()))) {
+				try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
 					String line;
 					while ((line = br.readLine()) != null) {
 						ArrayList<String> tokens = tokenizer.noNormalizeAToken(escapeString(line).trim());
@@ -83,7 +86,7 @@ public class Checker {
 				}
 			} else {
 				// generate tokens
-				ArrayList<String> tokens = tokenizer.getTokensFromFile(listOfFiles[i].getAbsolutePath());
+				ArrayList<String> tokens = tokenizer.getTokensFromFile(file.getAbsolutePath());
 				query = printArray(tokens, false);
 				// enter ngram mode
 				if (isNgram) {
@@ -91,11 +94,10 @@ public class Checker {
 				}
 			}
 			if (isPrint) {
-				System.out.println(listOfFiles[i].getName());
+				System.out.println(file.getName());
 				System.out.println(query);
 			}
-			int tp = findTP(es.search(index, type, query, isPrint, isDFS), listOfFiles[i].getName().split("\\$")[0]);
-			// System.out.println(listOfFiles[i].getName() + "," + round((tp * 0.1), 2));
+			int tp = findTP(es.search(index, type, query, isPrint, isDFS), file.getName().split("\\$")[0]);
 			System.out.println(round((tp * 0.1), 2));
 		}
 	}
