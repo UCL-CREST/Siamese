@@ -66,6 +66,9 @@ public class Checker {
 	private static void search() throws Exception {
 		File folder = new File(inputFolder);
 		File[] listOfFiles = folder.listFiles();
+		
+		double total = 0.0;
+		
 		for (int i = 0; i < listOfFiles.length; i++) {
 			String query = "";
 			// System.err.print(".");
@@ -96,8 +99,11 @@ public class Checker {
 			}
 			int tp = findTP(es.search(index, type, query, isPrint, isDFS), listOfFiles[i].getName().split("\\$")[0]);
 			// System.out.println(listOfFiles[i].getName() + "," + round((tp * 0.1), 2));
-			System.out.println(round((tp * 0.1), 2));
+			// System.out.println(round((tp * 0.1), 2));
+			total += round((tp * 0.1), 2);
 		}
+		
+		System.out.println(total/listOfFiles.length);
 	}
 	
 	/***
