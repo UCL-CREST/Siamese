@@ -1,8 +1,10 @@
 package elasticsearch;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,19 +21,22 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
-public class Main {
+public class IndexChecker {
 	private static ESConnector es;
 	private static String server;
 	private static String index;
 	private static String type;
 	private static String inputFolder;
+	private static String normMode;
 	private static TokenizerMode modes = new TokenizerMode();
 	private static int ngramSize = 4;
 	private static boolean isNgram = false;
 	private static boolean isPrint = false;
 	private static nGramGenerator ngen;
 	private static Options options = new Options();
-	private static boolean isDFS = false;
+	private static boolean isDFS = true;
+	private static String outputFolder = "";
+	private static boolean writeToFile = false;
 
 	public static void main(String[] args) {
 		processCommandLine(args);
@@ -44,10 +49,68 @@ public class Main {
 			es.startup();
 			boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
 			if (status) {
-				// if ok, search
+				// if ok, refresh the index, then search
+				es.refresh();
 				search();
 			} else {
 				System.out.println("Indexing error: please check!");
+			}
+			es.shutdown();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void runExperiment(String hostname, String indexName, String typeName, String inputDir
+			, String[] normModes, int[] ngramSizes, boolean useNgram
+			, boolean useDFS, String outputDir, boolean writeToOutputFile) {
+		server = hostname;
+		type = typeName;
+		inputFolder = inputDir;
+		isNgram = useNgram;
+		isDFS = useDFS;
+		outputFolder = outputDir;
+		writeToFile = writeToOutputFile;
+		// create a connector
+		es = new ESConnector(server);
+		System.out.print("Settings" + ", precison");
+		try {
+			es.startup();
+			for (String normMode : normModes) {
+				setTokenizerMode(normMode.toLowerCase().toCharArray());
+				for (int ngramSize : ngramSizes) {
+					index = indexName + "_" + normMode + "_" + ngramSize;
+					System.out.print(index + ",");
+					
+					// delete the index if it exists
+					if (es.isIndexExist(index)) {
+						es.deleteIndex(index);
+					}
+					// create index
+					if (!es.createIndex(index)) {
+						System.err.println("Cannot create index: " + index);
+						System.exit(-1);
+					}
+					// initialise the ngram generator
+					ngen = new nGramGenerator(ngramSize);
+					boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+					if (status) {
+						// if ok, refresh the index, then search
+						es.refresh();
+						search();
+					} else {
+						System.out.println("Indexing error: please check!");
+					}
+					// delete index
+					if (!es.deleteIndex(index)) {
+						System.err.println("Cannot delete index: " + index);
+						// System.exit(-1);
+					}
+				}
 			}
 			es.shutdown();
 		} catch (UnknownHostException e) {
@@ -116,6 +179,9 @@ public class Main {
 	
 	@SuppressWarnings("unchecked")
 	private static void search() throws Exception {
+		double total = 0.0;
+		String outToFile = "";
+		
 		File folder = new File(inputFolder);
 		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 		for (File file : listOfFiles) {
@@ -126,7 +192,24 @@ public class Main {
 				System.out.println(query);
 			}
 			int tp = findTP(es.search(index, type, query, isPrint, isDFS), file.getName().split("\\$")[0]);
-			System.out.println(round((tp * 0.1), 2));
+			// System.out.println(round((tp * 0.1), 2));
+			total += round((tp * 0.1), 2);
+			// collect output for writing to file
+			if (writeToFile)
+				outToFile += round((tp * 0.1), 2) + "\n";
+		}
+	
+		System.out.println((double) total / listOfFiles.size());
+		if (writeToFile) {
+			File outfile = new File(outputFolder + "/" + index + "_" + type + "_" + normMode + "_" + ngramSize + "_" + isNgram + ".csv");
+			// if file doesnt exists, then create it
+			if (!outfile.exists())
+				outfile.createNewFile();
+			FileWriter fw = new FileWriter(outfile.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+
+			bw.write(outToFile);
+			bw.close();
 		}
 	}
 
@@ -185,6 +268,7 @@ public class Main {
 		options.addOption("g", "size", true, "size of n in ngram [default = 4]");
 		options.addOption("p", "print", false, "print the generated tokens");
 		options.addOption("f", "dfs", false, "use DFS mode [default=no]");
+		options.addOption("o", "output", true, "output file location [optional]");
 		options.addOption("h", "help", false, "print help");
 
 		// check if no parameter given, print help and quit
@@ -226,35 +310,9 @@ public class Main {
 			}
 
 			if (line.hasOption("l")) {
+				normMode = line.getOptionValue("l").toLowerCase();
 				char[] normOptions = line.getOptionValue("l").toLowerCase().toCharArray();
-				for (char c : normOptions) {
-					// setting all normalisation options: w, d, j, p, k, v, s
-					if (c == 'w')
-						modes.setWord(Settings.Normalize.WORD_NORM_ON);
-					else if (c == 'd')
-						modes.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
-					else if (c == 'j')
-						modes.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
-					else if (c == 'p')
-						modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_ON);
-					else if (c == 'k')
-						modes.setKeyword(Settings.Normalize.KEYWORD_NORM_ON);
-					else if (c == 'v')
-						modes.setValue(Settings.Normalize.VALUE_NORM_ON);
-					else if (c == 's')
-						modes.setString(Settings.Normalize.STRING_NORM_ON);
-					else if (c == 'x') {
-						modes.setWord(Settings.Normalize.WORD_NORM_OFF);
-						modes.setDatatype(Settings.Normalize.DATATYPE_NORM_OFF);
-						modes.setJavaClass(Settings.Normalize.JAVACLASS_NORM_OFF);
-						modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_OFF);
-						modes.setKeyword(Settings.Normalize.KEYWORD_NORM_OFF);
-						modes.setValue(Settings.Normalize.VALUE_NORM_OFF);
-						modes.setValue(Settings.Normalize.STRING_NORM_OFF);
-					} else if (c == 'e') {
-						modes.setEscape(Settings.Normalize.ESCAPE_ON);
-					}
-				}
+				setTokenizerMode(normOptions);
 			}
 
 			if (line.hasOption("n")) {
@@ -263,6 +321,11 @@ public class Main {
 
 			if (line.hasOption("g")) {
 				ngramSize = Integer.valueOf(line.getOptionValue("g"));
+			}
+			
+			if (line.hasOption("o")) {
+				writeToFile = true;
+				outputFolder = line.getOptionValue("o");
 			}
 
 			if (line.hasOption("p")) {
@@ -275,6 +338,37 @@ public class Main {
 
 		} catch (ParseException exp) {
 			System.out.println("Warning: " + exp.getMessage());
+		}
+	}
+	
+	private static void setTokenizerMode(char[] normOptions) {
+		for (char c : normOptions) {
+			// setting all normalisation options: w, d, j, p, k, v, s
+			if (c == 'w')
+				modes.setWord(Settings.Normalize.WORD_NORM_ON);
+			else if (c == 'd')
+				modes.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
+			else if (c == 'j')
+				modes.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
+			else if (c == 'p')
+				modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_ON);
+			else if (c == 'k')
+				modes.setKeyword(Settings.Normalize.KEYWORD_NORM_ON);
+			else if (c == 'v')
+				modes.setValue(Settings.Normalize.VALUE_NORM_ON);
+			else if (c == 's')
+				modes.setString(Settings.Normalize.STRING_NORM_ON);
+			else if (c == 'x') {
+				modes.setWord(Settings.Normalize.WORD_NORM_OFF);
+				modes.setDatatype(Settings.Normalize.DATATYPE_NORM_OFF);
+				modes.setJavaClass(Settings.Normalize.JAVACLASS_NORM_OFF);
+				modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_OFF);
+				modes.setKeyword(Settings.Normalize.KEYWORD_NORM_OFF);
+				modes.setValue(Settings.Normalize.VALUE_NORM_OFF);
+				modes.setValue(Settings.Normalize.STRING_NORM_OFF);
+			} else if (c == 'e') {
+				modes.setEscape(Settings.Normalize.ESCAPE_ON);
+			}
 		}
 	}
 

@@ -5,8 +5,13 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -116,5 +121,28 @@ public class ESConnector {
 		}
 		if (isPrint) System.out.println("=======================");
 		return results;
+	}
+	
+	public boolean createIndex(String indexName) {
+		CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
+		CreateIndexResponse response = createIndexRequestBuilder.execute().actionGet();
+		return response.isAcknowledged();
+	}
+
+	public boolean deleteIndex(String indexName) {
+		DeleteIndexRequest deleteRequest = new DeleteIndexRequest(indexName);
+		DeleteIndexResponse response = client.admin().indices().delete(deleteRequest).actionGet();
+		return response.isAcknowledged();
+	}
+	
+	public boolean isIndexExist(String indexName) {
+		boolean exists = client.admin().indices()
+			    .prepareExists(indexName)
+			    .execute().actionGet().isExists();
+		return exists;
+	}
+	
+	public void refresh() {
+		client.admin().indices().prepareRefresh().execute().actionGet();
 	}
 }
