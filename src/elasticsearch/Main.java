@@ -19,7 +19,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
-public class Checker {
+public class Main {
 	private static ESConnector es;
 	private static String server;
 	private static String index;
@@ -40,11 +40,15 @@ public class Checker {
 		// initialise the ngram generator
 		ngen = new nGramGenerator(ngramSize);
 
-		// System.out.println(server + ":9200/" + index + "/" + type + ", norm: " + modes.toString() + ", " + ngramSize + "-ngram = "
-		// 		+ isNgram + ", DFS=" + isDFS);
 		try {
 			es.startup();
-			search();
+			boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+			if (status) {
+				// if ok, search
+				search();
+			} else {
+				System.out.println("Indexing error: please check!");
+			}
 			es.shutdown();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -52,6 +56,76 @@ public class Checker {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static boolean insert(String inputFolder, int indexMode) throws Exception {
+		boolean indexResult = true;
+		ArrayList<Document> docArray = new ArrayList<Document>();
+		File folder = new File(inputFolder);
+		
+		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+		for (File file : listOfFiles) {
+			// Create Document object and put in an array list
+			String src = tokenize(file);
+			// Use file name as id
+			Document d = new Document(file.getName(), src);
+			// add document to array
+			docArray.add(d);
+		}
+
+		// doing indexing (can choose between bulk/sequential)
+		if (indexMode == Settings.IndexingMode.BULK)
+			es.bulkInsert(index, type, docArray);
+		else if (indexMode == Settings.IndexingMode.SEQUENTIAL)
+			es.sequentialInsert(index, type, docArray);
+		else
+			// wrong mode
+			return false;
+		
+		return indexResult;
+	}
+	
+	private static String tokenize(File file) throws Exception {
+		String src = "";
+		JavaTokenizer tokenizer = new JavaTokenizer(modes);
+
+		if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
+			try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
+				String line;
+				while ((line = br.readLine()) != null) {
+					ArrayList<String> tokens = tokenizer.noNormalizeAToken(escapeString(line).trim());
+					src += printArray(tokens, false);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			// generate tokens
+			ArrayList<String> tokens = tokenizer.getTokensFromFile(file.getAbsolutePath());
+			src = printArray(tokens, false);
+			// enter ngram mode
+			if (isNgram) {
+				src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
+			}
+		}
+		return src;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static void search() throws Exception {
+		File folder = new File(inputFolder);
+		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+		for (File file : listOfFiles) {
+			String query = tokenize(file);
+			
+			if (isPrint) {
+				System.out.println(file.getName());
+				System.out.println(query);
+			}
+			int tp = findTP(es.search(index, type, query, isPrint, isDFS), file.getName().split("\\$")[0]);
+			System.out.println(round((tp * 0.1), 2));
 		}
 	}
 
@@ -65,42 +139,6 @@ public class Checker {
 		}
 		return tp;
 	}
-
-	private static void search() throws Exception {
-		File folder = new File(inputFolder);
-		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-		for (File file : listOfFiles) {
-			String query = "";
-			// System.err.print(".");
-			JavaTokenizer tokenizer = new JavaTokenizer(modes);
-
-			if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
-				try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
-					String line;
-					while ((line = br.readLine()) != null) {
-						ArrayList<String> tokens = tokenizer.noNormalizeAToken(escapeString(line).trim());
-						query += printArray(tokens, false);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				// generate tokens
-				ArrayList<String> tokens = tokenizer.getTokensFromFile(file.getAbsolutePath());
-				query = printArray(tokens, false);
-				// enter ngram mode
-				if (isNgram) {
-					query = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
-				}
-			}
-			if (isPrint) {
-				System.out.println(file.getName());
-				System.out.println(query);
-			}
-			int tp = findTP(es.search(index, type, query, isPrint, isDFS), file.getName().split("\\$")[0]);
-			System.out.println(round((tp * 0.1), 2));
-		}
-	}
 	
 	/***
 	 * Copied from: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
@@ -112,12 +150,6 @@ public class Checker {
 	    bd = bd.setScale(places, RoundingMode.HALF_UP);
 	    return bd.doubleValue();
 	}
-
-	/*
-	 * private static String readFile(String path, Charset encoding) throws
-	 * IOException { byte[] encoded = Files.readAllBytes(Paths.get(path));
-	 * return new String(encoded, encoding); }
-	 */
 
 	public static String printArray(ArrayList<String> arr, boolean pretty) {
 		String s = "";
