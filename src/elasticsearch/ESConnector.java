@@ -1,9 +1,13 @@
 package elasticsearch;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -11,6 +15,8 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+
+import static org.elasticsearch.common.xcontent.XContentFactory.*;
 
 public class ESConnector {
 	private Client client;
@@ -30,6 +36,61 @@ public class ESConnector {
 
 	public void shutdown() {
 		client.close();
+	}
+	
+	/***
+	 * A method for one-by-one document indexing
+	 * @param index the index name
+	 * @param type the doc type name
+	 * @param documents the array of documents
+	 * @return status of bulk insert (true = no failure, false = failures)
+	 */
+	public boolean sequentialInsert(String index, String type, ArrayList<Document> documents) {
+		boolean isCreated = false;
+		for (Document d : documents) {
+			try {
+				// insert document one by one
+				IndexResponse response = client.prepareIndex(index, type, d.getId())
+						.setSource(jsonBuilder().startObject().field("src", d.getSource()).endObject()).get();
+				isCreated = response.isCreated();
+				if (!isCreated) return false;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/***
+	 * A method for bulk insertion of documents
+	 * @param index the index name
+	 * @param type the doc type name
+	 * @param documents array of documents
+	 * @return status of bulk insert (true = no failure, false = failures)
+	 */
+	public boolean bulkInsert(String index, String type, ArrayList<Document> documents) {
+		BulkRequestBuilder bulkRequest = client.prepareBulk();
+		// keep adding documents
+		for (Document d : documents) {
+			try {
+				bulkRequest.add(client.prepareIndex(index, type, d.getId())
+						.setSource(jsonBuilder().startObject().field("src", d.getSource()).endObject()));
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		// bulk insert once
+		BulkResponse bulkResponse = bulkRequest.execute().actionGet();
+		// check for failtures after insertion
+		boolean hasFailure = false;
+		hasFailure = bulkResponse.hasFailures();
+		if (hasFailure)
+			return false;
+		else
+			return true;
 	}
 
 	public ArrayList<String> search(String index, String type, String query, boolean isPrint, boolean isDFS) {
