@@ -69,6 +69,7 @@ public class Main {
 		for (File file : listOfFiles) {
 			// Create Document object and put in an array list
 			String src = tokenize(file);
+			// System.out.println(file.getName() + ":" + src);
 			// Use file name as id
 			Document d = new Document(file.getName(), src);
 			// add document to array
