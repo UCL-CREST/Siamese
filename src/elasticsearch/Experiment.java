@@ -17,13 +17,33 @@ public class Experiment {
 				"djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws", "djkp",
 				"djkps", "djkpw", "djkpws", "e"};
 		int[] ngramSizes = { 2, 3, 4, 5 };
+		
 		IndexChecker checker = new IndexChecker();
 		
 		for (String bm : basicModelArr)
 			for (String ae : afterEffectArr)
-				for (String norm : dfrNormalizationArr)
+				for (String norm : dfrNormalizationArr) {
+					String indexSettings = "{ \"settings\": "
+							+ "{ \"similarity\": "
+							+ "{ \"dfr_similarity\" : "
+								+ "{ \"type\": \"DFR\", "
+								+ "\"basic_model\": \"" + bm + "\", "
+								+ "\"after_effect\": \"" + ae + "\", "
+								+ "\"normalization\": \"" + norm + "\", "
+								+ "\"normalization.h2.c\": \"3.0\" "
+								+ "} "
+							+ "} "
+							+ "}, "
+							+ "\"mappings\": {  "
+							+ "\"doc\":{  \"properties\": "
+							+ "{  \"src\": {  \"type\": \"string\", \"similarity\": \"dfr_similarity\" "
+							+ "}  }  }  } ,  "
+							+ "\"index\" : {  \"analysis\" : { \"analyzer\" : "
+							+ "{ \"default\" : { \"type\" : \"whitespace\" } } } } }";
+					// System.out.println(indexSettings);
 					checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
 							"/Users/Chaiyong/Documents/es_exp/methods", normModes, ngramSizes, true, true,
-							"/Users/Chaiyong/Documents/es_exp", false);
+							"/Users/Chaiyong/Documents/es_exp", false, indexSettings);
+				}
 	}
 }

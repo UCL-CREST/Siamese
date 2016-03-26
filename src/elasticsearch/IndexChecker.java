@@ -67,7 +67,7 @@ public class IndexChecker {
 	
 	public void runExperiment(String hostname, String indexName, String typeName, String inputDir
 			, String[] normModes, int[] ngramSizes, boolean useNgram
-			, boolean useDFS, String outputDir, boolean writeToOutputFile) {
+			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings) {
 		server = hostname;
 		type = typeName;
 		inputFolder = inputDir;
@@ -91,7 +91,7 @@ public class IndexChecker {
 						es.deleteIndex(index);
 					}
 					// create index
-					if (!es.createIndex(index)) {
+					if (!es.createIndex(index, indexSettings)) {
 						System.err.println("Cannot create index: " + index);
 						System.exit(-1);
 					}
