@@ -81,6 +81,9 @@ public class IndexChecker {
 		try {
 			es.startup();
 			for (String normMode : normModes) {
+				// reset the modes before setting it again
+				modes.reset();
+				// set the normalisation + tokenization mode
 				setTokenizerMode(normMode.toLowerCase().toCharArray());
 				for (int ngramSize : ngramSizes) {
 					index = indexName + "_" + normMode + "_" + ngramSize;

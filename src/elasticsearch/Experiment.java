@@ -9,14 +9,14 @@ public class Experiment {
 		String[] basicModelArr = { "be", "d", "g", "if", "in", "ine", "p" };
 		String[] afterEffectArr = { "no", "b", "l" };
 		String[] dfrNormalizationArr = { "no", "h1", "h2", "h3", "z" };
-		String[] normModes = {"s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks", "kw",
+		String[] normModes = {"x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks", "kw",
 				"kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws", "jp",
 				"jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps", "jkpw",
 				"jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws", "dk",
 				"dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs", "djw",
 				"djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws", "djkp",
-				"djkps", "djkpw", "djkpws", "e"};
-		int[] ngramSizes = { 2, 3, 4, 5 };
+				"djkps", "djkpw", "djkpws"};
+		int[] ngramSizes = { 1, 2, 3, 4 };
 		
 		IndexChecker checker = new IndexChecker();
 		

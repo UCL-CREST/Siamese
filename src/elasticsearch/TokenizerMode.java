@@ -31,6 +31,17 @@ public class TokenizerMode {
 		this.escape = escape;
 		this.datatype = datatype;
 	}
+	
+	public void reset() {
+		word = Settings.Normalize.WORD_NORM_OFF;
+		keyword = Settings.Normalize.KEYWORD_NORM_OFF;
+		javaClass = Settings.Normalize.JAVACLASS_NORM_OFF;
+		javaPackage = Settings.Normalize.JAVAPACKAGE_NORM_OFF;
+		string = Settings.Normalize.STRING_NORM_OFF;
+		value = Settings.Normalize.STRING_NORM_OFF;
+		escape = Settings.Normalize.ESCAPE_OFF;
+		datatype = Settings.Normalize.DATATYPE_NORM_OFF;
+	}
 
 	public int getWord() {
 		return word;
