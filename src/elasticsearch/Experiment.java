@@ -12,7 +12,51 @@ public class Experiment {
 	
 	public static void main(String[] args) {
 		// dfrExp();
-		tfidfExp();
+		// tfidfExp();
+		tfidfExpOnce();
+	}
+	
+	public static void tfidfExpOnce() {
+		String[] discountOverlap = { "true" };
+		String[] normModes = { "kp" };
+		int[] ngramSizes = { 3 };
+		IndexChecker checker = new IndexChecker();
+				for (String discO : discountOverlap) {
+					String indexSettings = "";
+					if (!discO.equals("no")) 
+						indexSettings = "{"+
+										"\"settings\": {" +
+											"\"similarity\": {" +
+												"\"tfidf_similarity\": {" +
+													"\"type\": \"default\"," +
+													"\"discount_overlaps\": \"" + discO + "\"" +
+												"} } }, " +
+										"\"mappings\": { " +
+											"\"doc\": {" +
+												"\"properties\": { " +
+													"\"src\": { " +
+														"\"type\": \"string\"," +
+														"\"similarity\": \"tfidf_similarity\"" +
+													"} } } }, " +
+										"\"index\": { " +
+											"\"analysis\": { " +
+												"\"analyzer\": { " +
+													"\"default\": { " +
+														"\"type\": \"whitespace\"" +
+													"} } } } }";
+					else {
+						indexSettings = "{ \"settings\":"
+								+ "{ \"mappings\": {  \"doc\":{  \"properties\": "
+								+ "{  \"src\": { \"type\": \"string\", \"similarity\": \"default\" } } } }"
+								+ ", \"index\" : { \"analysis\" : { \"analyzer\" : "
+								+ "{ \"default\" : { \"type\" : \"whitespace\" } } } } } }";
+					}
+					// System.out.println(indexSettings);
+					checker.check10FoldExperiment("localhost", "tfidf_" + discO, "doc",
+							"/Users/Chaiyong/Documents/es_exp/methods_full", normModes, ngramSizes, true, true,
+							"/Users/Chaiyong/Documents/es_exp", false, indexSettings, 
+							"/Users/Chaiyong/Documents/es_exp/methods");
+				}
 	}
 	
 	public static void tfidfExp() {

@@ -1,0 +1,90 @@
+Settings, precisonMar 28, 2016 2:04:10 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Golden Girl] loaded [], sites []
+tfidf_true_k_3,1.0
+Settings, precisonMar 28, 2016 2:04:11 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Sphinxor] loaded [], sites []
+tfidf_false_k_3,1.0
+Settings, precisonMar 28, 2016 2:07:50 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Lightbright] loaded [], sites []
+tfidf_true_k_3,1.0
+Settings, precisonMar 28, 2016 2:07:52 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Lilandra Neramani] loaded [], sites []
+tfidf_false_k_3,1.0
+Settings, precisonMar 28, 2016 2:09:29 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Demogorge the God-Eater] loaded [], sites []
+tfidf_true_k_3,1.0
+Settings, precisonMar 28, 2016 2:09:30 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Blue Marvel] loaded [], sites []
+tfidf_false_k_3,1.0
+Settings, precisonMar 28, 2016 2:11:08 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Lorna Dane] loaded [], sites []
+tfidf_true_k_3,1.0
+Settings, precisonMar 28, 2016 2:11:09 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Ringer] loaded [], sites []
+tfidf_false_k_3,1.0
+Settings, precisonMar 28, 2016 2:11:57 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Redeemer] loaded [], sites []
+tfidf_true_k_3,1.0
+Settings, precisonMar 28, 2016 2:11:59 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Tartarus] loaded [], sites []
+tfidf_false_k_3,1.0
+Settings, precisonMar 28, 2016 2:15:06 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Clive] loaded [], sites []
+tfidf_true_kp_3,1.0
+Settings, precisonMar 28, 2016 2:15:33 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Donald Ritter] loaded [], sites []
+tfidf_true_kp_3,[tfidf_true_kp_3] IndexAlreadyExistsException[already exists]
+	at org.elasticsearch.cluster.metadata.MetaDataCreateIndexService.validateIndexName(MetaDataCreateIndexService.java:138)
+	at org.elasticsearch.cluster.metadata.MetaDataCreateIndexService.validate(MetaDataCreateIndexService.java:473)
+	at org.elasticsearch.cluster.metadata.MetaDataCreateIndexService.access$100(MetaDataCreateIndexService.java:97)
+	at org.elasticsearch.cluster.metadata.MetaDataCreateIndexService$1.execute(MetaDataCreateIndexService.java:192)
+	at org.elasticsearch.cluster.ClusterStateUpdateTask.execute(ClusterStateUpdateTask.java:45)
+	at org.elasticsearch.cluster.service.InternalClusterService.runTasksForExecutor(InternalClusterService.java:458)
+	at org.elasticsearch.cluster.service.InternalClusterService$UpdateTask.run(InternalClusterService.java:762)
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.runAndClean(PrioritizedEsThreadPoolExecutor.java:231)
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.run(PrioritizedEsThreadPoolExecutor.java:194)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Settings, precisonMar 28, 2016 2:15:53 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Wendigo] loaded [], sites []
+tfidf_true_kp_3,0.8899999999999999
+Settings, precisonMar 28, 2016 2:16:30 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Rachel Grey] loaded [], sites []
+tfidf_true_kp_3,1.0
+Settings, precisonMar 28, 2016 2:16:54 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Stygorr] loaded [], sites []
+tfidf_true_j_4,1.0
+tfidf_true_jp_4,1.0
+Settings, precisonMar 28, 2016 2:17:15 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Man-Brute] loaded [], sites []
+tfidf_true_j_4,0.5700000000000001
+tfidf_true_jp_4,0.5700000000000001
+Settings, precisonMar 28, 2016 2:17:53 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Double Helix] loaded [], sites []
+tfidf_true_p_3,0.9800000000000001
+Settings, precisonMar 28, 2016 2:18:22 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Mortimer Toynbee] loaded [], sites []
+tfidf_true_dkp_3,0.9200000000000002
+Settings, precisonMar 28, 2016 2:18:41 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Aireo] loaded [], sites []
+tfidf_true_dkp_3,0.9200000000000002
+Settings, precisonMar 28, 2016 2:18:42 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Tommy] loaded [], sites []
+tfidf_false_dkp_3,0.9200000000000002
+Settings, precisonMar 28, 2016 2:19:29 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Outrage] loaded [], sites []
+tfidf_true_j_4,1.0
+tfidf_true_jp_4,1.0
+Settings, precisonMar 28, 2016 2:20:03 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Mop Man] loaded [], sites []
+tfidf_true_kp_3,1.0
+Settings, precisonMar 28, 2016 2:20:40 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Helmut Zemo] loaded [], sites []
+tfidf_true_w_2,0.5700000000000001
+Settings, precisonMar 28, 2016 2:20:42 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Texas Twister] loaded [], sites []
+tfidf_false_w_2,0.5700000000000001
+Settings, precisonMar 28, 2016 2:21:14 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Blind Justice] loaded [], sites []
+tfidf_true_kp_3,0.7899999999999998
