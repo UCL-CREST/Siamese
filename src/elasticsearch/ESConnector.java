@@ -108,19 +108,20 @@ public class ESConnector {
 				.setQuery(QueryBuilders.matchQuery("src", query)).setFrom(0).setSize(10).execute()
 				.actionGet();
 		SearchHit[] hits = response.getHits().getHits();
-		if (isPrint) System.out.println("=======================\nhits: " + hits.length);
+		// if (isPrint) System.out.println("=======================\nhits: " + hits.length);
 		int count = 0;
 		for (SearchHit hit : hits) {
 			if (count >= 10)
 				break;
-			if (isPrint) System.out.println(hit.getId()); // prints out the id of the
+			if (isPrint) System.out.println("ANS," + hit.getId() + "," + hit.getScore()); // prints out the id of the
 			// document
 			results.add(hit.getId());
 			// Map<String, Object> result = hit.getSource(); // the retrieved
 			// document
 			count++;
 		}
-		if (isPrint) System.out.println("=======================");
+		// if (isPrint) System.out.println("=======================");
+		// if (isPrint) System.out.println();
 		return results;
 	}
 	

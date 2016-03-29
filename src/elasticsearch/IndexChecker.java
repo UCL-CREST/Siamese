@@ -67,7 +67,8 @@ public class IndexChecker {
 	
 	public void runExperiment(String hostname, String indexName, String typeName, String inputDir
 			, String[] normModes, int[] ngramSizes, boolean useNgram
-			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings) {
+			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
+			, boolean printLog) {
 		server = hostname;
 		type = typeName;
 		inputFolder = inputDir;
@@ -75,9 +76,10 @@ public class IndexChecker {
 		isDFS = useDFS;
 		outputFolder = outputDir;
 		writeToFile = writeToOutputFile;
+		isPrint = printLog;
 		// create a connector
 		es = new ESConnector(server);
-		System.out.print("Settings" + ", precison");
+		// System.out.print("Settings" + ", precison");
 		try {
 			es.startup();
 			for (String normMode : normModes) {
@@ -87,7 +89,7 @@ public class IndexChecker {
 				setTokenizerMode(normMode.toLowerCase().toCharArray());
 				for (int ngramSize : ngramSizes) {
 					index = indexName + "_" + normMode + "_" + ngramSize;
-					System.out.print(index + ",");
+					if (isPrint) System.out.println("INDEX," + index);
 					
 					// delete the index if it exists
 					if (es.isIndexExist(index)) {
@@ -251,18 +253,19 @@ public class IndexChecker {
 			String query = tokenize(file);
 			
 			if (isPrint) {
-				System.out.println(file.getName());
-				System.out.println(query);
+				System.out.println("QUERY," + file.getName());
+				// System.out.println(query);
 			}
+			
 			int tp = findTP(es.search(index, type, query, isPrint, isDFS), file.getName().split("\\$")[0]);
-			// System.out.println(round((tp * 0.1), 2));
+			// System.out.println();
 			total += round((tp * 0.1), 2);
 			// collect output for writing to file
 			if (writeToFile)
 				outToFile += round((tp * 0.1), 2) + "\n";
 		}
 	
-		System.out.println((double) total / listOfFiles.size());
+		System.out.println("PREC, " + (double) total / listOfFiles.size());
 		if (writeToFile) {
 			File outfile = new File(outputFolder + "/" + index + "_" + type + "_" + normMode + "_" + ngramSize + "_" + isNgram + ".csv");
 			// if file doesnt exists, then create it
