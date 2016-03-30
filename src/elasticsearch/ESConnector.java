@@ -101,9 +101,12 @@ public class ESConnector {
 
 	public ArrayList<String> search(String index, String type, String query, boolean isPrint, boolean isDFS) {
 		ArrayList<String> results = new ArrayList<String>();
-		SearchType searchType = SearchType.QUERY_THEN_FETCH;
+		SearchType searchType;
 		if (isDFS)
 			searchType = SearchType.DFS_QUERY_THEN_FETCH;
+		else
+			searchType = SearchType.QUERY_THEN_FETCH;
+		
 		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
 				.setQuery(QueryBuilders.matchQuery("src", query)).setFrom(0).setSize(10).execute()
 				.actionGet();

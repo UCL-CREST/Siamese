@@ -79,7 +79,7 @@ public class IndexChecker {
 		isPrint = printLog;
 		// create a connector
 		es = new ESConnector(server);
-		// System.out.print("Settings" + ", precison");
+		// System.out.print("Settings" + ", precision");
 		try {
 			es.startup();
 			for (String normMode : normModes) {
@@ -111,10 +111,10 @@ public class IndexChecker {
 						System.out.println("Indexing error: please check!");
 					}
 					// delete index
-					if (!es.deleteIndex(index)) {
-						System.err.println("Cannot delete index: " + index);
-						// System.exit(-1);
-					}
+//					if (!es.deleteIndex(index)) {
+//						System.err.println("Cannot delete index: " + index);
+//						 System.exit(-1);
+//					}
 				}
 			}
 			es.shutdown();
@@ -152,14 +152,14 @@ public class IndexChecker {
 					System.out.print(index + ",");
 					
 					// delete the index if it exists
-					if (es.isIndexExist(index)) {
+					 if (es.isIndexExist(index)) {
 						es.deleteIndex(index);
-					}
+					 }
 					// create index
-					if (!es.createIndex(index, indexSettings)) {
+					 if (!es.createIndex(index, indexSettings)) {
 						System.err.println("Cannot create index: " + index);
 						System.exit(-1);
-					}
+					 }
 					// initialise the ngram generator
 					ngen = new nGramGenerator(ngramSize);
 					boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
@@ -248,7 +248,8 @@ public class IndexChecker {
 		String outToFile = "";
 		
 		File folder = new File(inputFolder);
-		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder
+				, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 		for (File file : listOfFiles) {
 			String query = tokenize(file);
 			
