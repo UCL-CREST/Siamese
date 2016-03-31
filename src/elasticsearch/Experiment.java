@@ -1,17 +1,14 @@
 package elasticsearch;
 
 public class Experiment {
-//	private static String[] normModes = {"x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks", "kw",
-//			"kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws", "jp",
-//			"jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps", "jkpw",
-//			"jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws", "dk",
-//			"dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs", "djw",
-//			"djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws", "djkp",
-//			"djkps", "djkpw", "djkpws"};
-//	private static int[] ngramSizes = { 1, 2, 3, 4 };
-	
-	private static String[] normModes = { "w" };
-	private static int[] ngramSizes = { 3 };
+	private static String[] normModes = {"x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks", "kw",
+			"kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws", "jp",
+			"jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps", "jkpw",
+			"jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws", "dk",
+			"dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs", "djw",
+			"djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws", "djkp",
+			"djkps", "djkpw", "djkpws"};
+	private static int[] ngramSizes = { 1, 2, 3, 4 };
 	
 	public static void main(String[] args) {
 		// dfrExp();
