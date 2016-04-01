@@ -26,7 +26,7 @@ public class Experiment {
 			// dfrExpOnce(inputDir, workingDir);
 			// tfidfExpOnce();
 			
-			boolean isPrint = false;
+			boolean isPrint = true;
 			if (mode.equals("tfidf"))
 				tfidfExp(inputDir, workingDir, isPrint);
 			else if (mode.equals("bm25")) 
@@ -133,7 +133,8 @@ public class Experiment {
 	}
 	
 	public static void dfrExp(String inputDir, String workingDir, boolean isPrint) {
-		String[] basicModelArr = { "be", "d", "g", "if", "in", "ine", "p" };
+		// String[] basicModelArr = { "be", "d", "g", "if", "in", "ine", "p" };
+		String[] basicModelArr = { "be", "d", "g", "if" };
 		String[] afterEffectArr = { "no", "b", "l" };
 		String[] dfrNormalizationArr = { "no", "h1", "h2", "h3", "z" };
 		

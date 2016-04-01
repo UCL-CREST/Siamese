@@ -111,10 +111,10 @@ public class IndexChecker {
 						System.out.println("Indexing error: please check!");
 					}
 					// delete index
-//					if (!es.deleteIndex(index)) {
-//						System.err.println("Cannot delete index: " + index);
-//						 System.exit(-1);
-//					}
+					if (!es.deleteIndex(index)) {
+						System.err.println("Cannot delete index: " + index);
+						 System.exit(-1);
+					}
 				}
 			}
 			es.shutdown();
