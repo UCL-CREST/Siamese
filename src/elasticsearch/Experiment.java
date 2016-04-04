@@ -134,7 +134,7 @@ public class Experiment {
 	
 	public static void dfrExp(String inputDir, String workingDir, boolean isPrint) {
 		// String[] basicModelArr = { "be", "d", "g", "if", "in", "ine", "p" };
-		String[] basicModelArr = { "be", "d", "g", "if" };
+		String[] basicModelArr = { "in", "ine", "p" };
 		String[] afterEffectArr = { "no", "b", "l" };
 		String[] dfrNormalizationArr = { "no", "h1", "h2", "h3", "z" };
 		
