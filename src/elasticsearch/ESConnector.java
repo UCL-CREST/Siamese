@@ -135,7 +135,7 @@ public class ESConnector {
                 .loadFromSource(settingsStr)
                 .build();
 		createIndexRequestBuilder.setSettings(settings);
-		System.out.println("Type name = " + typeName);
+		// System.out.println("Type name = " + typeName);
 		createIndexRequestBuilder.addMapping(typeName, mappingStr);
 		//System.out.println(mappingStr);
         // createIndexRequestBuilder.addMapping(type, mappingStr);
