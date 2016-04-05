@@ -68,7 +68,7 @@ public class IndexChecker {
 	public void runExperiment(String hostname, String indexName, String typeName, String inputDir
 			, String[] normModes, int[] ngramSizes, boolean useNgram
 			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
-			, boolean printLog) {
+			, String mappingStr, boolean printLog) {
 		server = hostname;
 		type = typeName;
 		inputFolder = inputDir;
@@ -96,7 +96,7 @@ public class IndexChecker {
 						es.deleteIndex(index);
 					}
 					// create index
-					if (!es.createIndex(index, indexSettings)) {
+					if (!es.createIndex(index, type, indexSettings, mappingStr)) {
 						System.err.println("Cannot create index: " + index);
 						System.exit(-1);
 					}
@@ -111,70 +111,10 @@ public class IndexChecker {
 						System.out.println("Indexing error: please check!");
 					}
 					// delete index
-					if (!es.deleteIndex(index)) {
-						System.err.println("Cannot delete index: " + index);
-						 System.exit(-1);
-					}
-				}
-			}
-			es.shutdown();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void check10FoldExperiment(String hostname, String indexName, String typeName, String inputDir
-			, String[] normModes, int[] ngramSizes, boolean useNgram
-			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings, String testDir) {
-		server = hostname;
-		type = typeName;
-		inputFolder = inputDir;
-		isNgram = useNgram;
-		isDFS = useDFS;
-		outputFolder = outputDir;
-		writeToFile = writeToOutputFile;
-		// create a connector
-		es = new ESConnector(server);
-		System.out.print("Settings" + ", precison");
-		try {
-			es.startup();
-			for (String normMode : normModes) {
-				// reset the modes before setting it again
-				modes.reset();
-				// set the normalisation + tokenization mode
-				setTokenizerMode(normMode.toLowerCase().toCharArray());
-				for (int ngramSize : ngramSizes) {
-					index = indexName + "_" + normMode + "_" + ngramSize;
-					System.out.print(index + ",");
-					
-					// delete the index if it exists
-					 if (es.isIndexExist(index)) {
-						es.deleteIndex(index);
-					 }
-					// create index
-					 if (!es.createIndex(index, indexSettings)) {
-						System.err.println("Cannot create index: " + index);
-						System.exit(-1);
-					 }
-					// initialise the ngram generator
-					ngen = new nGramGenerator(ngramSize);
-					boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
-					if (status) {
-						// if ok, refresh the index, then search
-						es.refresh();
-						search(testDir);
-					} else {
-						System.out.println("Indexing error: please check!");
-					}
-					// delete index
-					 if (!es.deleteIndex(index)) {
-						 System.err.println("Cannot delete index: " + index);
-						 System.exit(-1);
-					 }
+//					if (!es.deleteIndex(index)) {
+//						System.err.println("Cannot delete index: " + index);
+//						 System.exit(-1);
+//					}
 				}
 			}
 			es.shutdown();

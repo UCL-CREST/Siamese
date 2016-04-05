@@ -19,6 +19,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
@@ -128,12 +129,17 @@ public class ESConnector {
 		return results;
 	}
 	
-	public boolean createIndex(String indexName, String settingsStr) {
+	public boolean createIndex(String indexName, String typeName, String settingsStr, String mappingStr) {
 		CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
 		Settings settings = Settings.builder()
                 .loadFromSource(settingsStr)
                 .build();
 		createIndexRequestBuilder.setSettings(settings);
+		System.out.println("Type name = " + typeName);
+		createIndexRequestBuilder.addMapping(typeName, mappingStr);
+		//System.out.println(mappingStr);
+        // createIndexRequestBuilder.addMapping(type, mappingStr);
+		
 		CreateIndexResponse response = createIndexRequestBuilder.execute().actionGet();
 		return response.isAcknowledged();
 	}
