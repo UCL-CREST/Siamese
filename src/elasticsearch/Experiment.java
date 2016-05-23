@@ -184,8 +184,9 @@ public class Experiment {
 	}
 	
 	public static void dfrExp(String inputDir, String workingDir, boolean isPrint) {
+		String[] basicModelArr = { "be", "d", "g", "if" };
 		// String[] basicModelArr = { "be", "d", "g", "if", "in", "ine", "p" };
-		String[] basicModelArr = { "in", "ine", "p" };
+		// String[] basicModelArr = { "in", "ine", "p" };
 		String[] afterEffectArr = { "no", "b", "l" };
 		String[] dfrNormalizationArr = { "no", "h1", "h2", "h3", "z" };
 		
@@ -261,7 +262,9 @@ public class Experiment {
 	}
 	
 	private static void lmjkmExp(String inputDir, String workingDir, boolean isPrint) {
-		String[] lambdas = { "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0" };
+		String[] normModes = { "pw" };
+		int[] ngramSizes = { 4 };
+		String[] lambdas = { "0.9" };
 		IndexChecker checker = new IndexChecker();
 		for (String lambda : lambdas) {
 			String indexSettings = "{ \"similarity\": "
