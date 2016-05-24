@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,19 +55,15 @@ public class IndexChecker {
 				System.out.println("Indexing error: please check!");
 			}
 			es.shutdown();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void runExperiment(String hostname, String indexName, String typeName, String inputDir
-			, String[] normModes, int[] ngramSizes, boolean useNgram
-			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
-			, String mappingStr, boolean printLog) {
+	void runExperiment(String hostname, String indexName, String typeName, String inputDir
+            , String[] normModes, int[] ngramSizes, boolean useNgram
+            , boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
+            , String mappingStr, boolean printLog) {
 		server = hostname;
 		type = typeName;
 		inputFolder = inputDir;
@@ -118,10 +113,6 @@ public class IndexChecker {
 				}
 			}
 			es.shutdown();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -130,18 +121,25 @@ public class IndexChecker {
 	@SuppressWarnings("unchecked")
 	private static boolean insert(String inputFolder, int indexMode) throws Exception {
 		boolean indexResult = true;
-		ArrayList<Document> docArray = new ArrayList<Document>();
+		ArrayList<Document> docArray = new ArrayList<>();
 		File folder = new File(inputFolder);
 		
 		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 		for (File file : listOfFiles) {
-			// Create Document object and put in an array list
-			String src = tokenize(file);
-			// System.out.println(file.getName() + ":" + src);
-			// Use file name as id
-			Document d = new Document(file.getName(), src);
-			// add document to array
-			docArray.add(d);
+            // parse each file into method (if possible)
+			MethodParser methodParser = new MethodParser();
+            ArrayList<String> methodList;
+            // TODO: Fix this to be able to handle code snippets (not complete method) as well.
+            methodList = methodParser.parseMethods(file.getAbsolutePath());
+
+            for (String method: methodList) {
+                // Create Document object and put in an array list
+                String src = tokenize(method);
+                // Use file name as id
+                Document d = new Document(file.getName(), src);
+                // add document to array
+                docArray.add(d);
+            }
 		}
 
 		// doing indexing (can choose between bulk/sequential)
@@ -151,7 +149,7 @@ public class IndexChecker {
 			es.sequentialInsert(index, type, docArray);
 		else
 			// wrong mode
-			return false;
+			indexResult = false;
 		
 		return indexResult;
 	}
@@ -181,6 +179,20 @@ public class IndexChecker {
 		}
 		return src;
 	}
+
+    private static String tokenize(String sourcecode) throws Exception {
+        String src;
+        JavaTokenizer tokenizer = new JavaTokenizer(modes);
+
+        // generate tokens
+        ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
+        src = printArray(tokens, false);
+        // enter ngram mode
+        if (isNgram) {
+            src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
+        }
+        return src;
+    }
 	
 	@SuppressWarnings("unchecked")
 	private static void search(String inputFolder) throws Exception {
@@ -206,35 +218,40 @@ public class IndexChecker {
 				outToFile += round((tp * 0.1), 2) + "\n";
 		}
 	
-		System.out.println("PREC, " + (double) total / listOfFiles.size());
+		System.out.println("PREC, " + total / listOfFiles.size());
 		if (writeToFile) {
 			File outfile = new File(outputFolder + "/" + index + "_" + type + "_" + normMode + "_" + ngramSize + "_" + isNgram + ".csv");
-			// if file doesnt exists, then create it
-			if (!outfile.exists())
-				outfile.createNewFile();
-			FileWriter fw = new FileWriter(outfile.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
+			// if file doesn't exists, then create it
+            boolean isCreated = false;
+			if (!outfile.exists()) {
+                isCreated = outfile.createNewFile();
+            }
 
-			bw.write(outToFile);
-			bw.close();
+            if (isCreated) {
+                FileWriter fw = new FileWriter(outfile.getAbsoluteFile());
+                BufferedWriter bw = new BufferedWriter(fw);
+
+                bw.write(outToFile);
+                bw.close();
+            } else throw new IOException("Cannot create the output file");
 		}
 	}
 
 	private static int findTP(ArrayList<String> results, String query) {
 		int tp = 0;
-		for (int i = 0; i < results.size(); i++) {
-			// System.out.println(results.get(i));
-			if (results.get(i).contains(query)) {
-				tp++;
-			}
-		}
+        for (String result : results) {
+            // System.out.println(results.get(i));
+            if (result.contains(query)) {
+                tp++;
+            }
+        }
 		return tp;
 	}
 	
 	/***
 	 * Copied from: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
 	 */
-	public static double round(double value, int places) {
+	private static double round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 
 	    BigDecimal bd = new BigDecimal(value);
@@ -242,15 +259,15 @@ public class IndexChecker {
 	    return bd.doubleValue();
 	}
 
-	public static String printArray(ArrayList<String> arr, boolean pretty) {
+	private static String printArray(ArrayList<String> arr, boolean pretty) {
 		String s = "";
-		for (int i = 0; i < arr.size(); i++) {
-			if (pretty && arr.get(i).equals("\n")) {
-				System.out.print(arr.get(i));
-				continue;
-			}
-			s += arr.get(i) + " ";
-		}
+        for (String anArr : arr) {
+            if (pretty && anArr.equals("\n")) {
+                System.out.print(anArr);
+                continue;
+            }
+            s += anArr + " ";
+        }
 		return s;
 	}
 
