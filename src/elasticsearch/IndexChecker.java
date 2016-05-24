@@ -36,16 +36,23 @@ public class IndexChecker {
 	private static boolean isDFS = true;
 	private static String outputFolder = "";
 	private static boolean writeToFile = false;
+    private static String[] extensions = { "java" };
 
 	public static void main(String[] args) {
 		processCommandLine(args);
 		// create a connector
 		es = new ESConnector(server);
-		// initialise the ngram generator
+		// initialise the n-gram generator
 		ngen = new nGramGenerator(ngramSize);
+        String indexSettings = "{ \"similarity\": { \"dfr_similarity\" : { \"type\": \"DFR\", \"basic_model\": \"if\", \"after_effect\": \"l\", "
+                + "\"normalization\": \"h1\", \"normalization.h2.c\": \"3.0\"} },  "
+                + "\"analysis\" : { \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } } }";
+
+        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 
 		try {
 			es.startup();
+            createIndex(indexSettings, mappingStr);
 			boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
 			if (status) {
 				// if ok, refresh the index, then search
@@ -59,6 +66,24 @@ public class IndexChecker {
 			e.printStackTrace();
 		}
 	}
+
+    private static boolean createIndex(String indexSettings, String mappingStr) {
+        // String index = indexName + "_" + normMode + "_" + ngramSize;
+        if (isPrint) System.out.println("INDEX," + index);
+
+        // delete the index if it exists
+        if (es.isIndexExist(index)) {
+            es.deleteIndex(index);
+        }
+        // create index
+        boolean isCreated = es.createIndex(index, type, indexSettings, mappingStr);
+        // System.err.println("Created: " + index);
+        if (!isCreated) {
+            System.err.println("Cannot create index: " + index);
+            // System.exit(-1);
+        }
+        return isCreated;
+    }
 	
 	void runExperiment(String hostname, String indexName, String typeName, String inputDir
             , String[] normModes, int[] ngramSizes, boolean useNgram
@@ -124,7 +149,7 @@ public class IndexChecker {
 		ArrayList<Document> docArray = new ArrayList<>();
 		File folder = new File(inputFolder);
 		
-		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
 		for (File file : listOfFiles) {
             // parse each file into method (if possible)
 			MethodParser methodParser = new MethodParser();
@@ -132,21 +157,26 @@ public class IndexChecker {
             // TODO: Fix this to be able to handle code snippets (not complete method) as well.
             methodList = methodParser.parseMethods(file.getAbsolutePath());
 
+            int count = 0;
             for (String method: methodList) {
                 // Create Document object and put in an array list
                 String src = tokenize(method);
                 // Use file name as id
-                Document d = new Document(file.getName(), src);
+                Document d = new Document(file.getName() + "_" + count, src);
+                System.out.println("Adding: " + file.getName() + "_" + count);
+                count++;
                 // add document to array
                 docArray.add(d);
             }
 		}
 
+        // System.out.println("Methods = " + docArray.size());
+
 		// doing indexing (can choose between bulk/sequential)
 		if (indexMode == Settings.IndexingMode.BULK)
-			es.bulkInsert(index, type, docArray);
+			indexResult = es.bulkInsert(index, type, docArray);
 		else if (indexMode == Settings.IndexingMode.SEQUENTIAL)
-			es.sequentialInsert(index, type, docArray);
+            indexResult = es.sequentialInsert(index, type, docArray);
 		else
 			// wrong mode
 			indexResult = false;
@@ -198,27 +228,39 @@ public class IndexChecker {
 	private static void search(String inputFolder) throws Exception {
 		double total = 0.0;
 		String outToFile = "";
+        int totalMethods = 0;
 		
 		File folder = new File(inputFolder);
 		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder
 				, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 		for (File file : listOfFiles) {
-			String query = tokenize(file);
-			
-			if (isPrint) {
-				System.out.println("QUERY," + file.getName());
-				// System.out.println(query);
-			}
-			
-			int tp = findTP(es.search(index, type, query, isPrint, isDFS), file.getName().split("\\$")[0]);
-			// System.out.println();
-			total += round((tp * 0.1), 2);
-			// collect output for writing to file
-			if (writeToFile)
-				outToFile += round((tp * 0.1), 2) + "\n";
+            // parse each file into method (if possible)
+            MethodParser methodParser = new MethodParser();
+            ArrayList<String> methodList;
+            // TODO: Fix this to be able to handle code snippets (not complete method) as well.
+            methodList = methodParser.parseMethods(file.getAbsolutePath());
+
+            for (String method: methodList) {
+                // count the number of methods
+                totalMethods += methodList.size();
+
+                String query = tokenize(method);
+
+                if (isPrint) {
+                    System.out.println("QUERY," + method);
+                    // System.out.println(query);
+                }
+
+                int tp = findTP(es.search(index, type, query, isPrint, isDFS), file.getName().split("\\$")[0]);
+                // System.out.println();
+                total += round((tp * 0.1), 2);
+                // collect output for writing to file
+                if (writeToFile)
+                    outToFile += round((tp * 0.1), 2) + "\n";
+            }
 		}
 	
-		System.out.println("PREC, " + total / listOfFiles.size());
+		System.out.println("PREC, " + total / totalMethods);
 		if (writeToFile) {
 			File outfile = new File(outputFolder + "/" + index + "_" + type + "_" + normMode + "_" + ngramSize + "_" + isNgram + ".csv");
 			// if file doesn't exists, then create it

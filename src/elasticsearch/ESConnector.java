@@ -60,7 +60,9 @@ public class ESConnector {
 				IndexResponse response = client.prepareIndex(index, type, d.getId())
 						.setSource(jsonBuilder().startObject().field("src", d.getSource()).endObject()).get();
 				isCreated = response.isCreated();
-				if (!isCreated) return false;
+				if (!isCreated) {
+					return false;
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;

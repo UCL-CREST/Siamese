@@ -11,14 +11,15 @@ import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
-public class MethodParser {
-	public ArrayList<String> parseMethods(String filePath) {
-		ArrayList<String> methodList = new ArrayList<String>();
+class MethodParser {
+	ArrayList<String> parseMethods(String filePath) {
+		ArrayList<String> methodList = new ArrayList<>();
 		try {
 			/* Parse and extract method body */
 			FileInputStream in = new FileInputStream(filePath);
 			CompilationUnit cu;
 			try {
+				// System.out.println("Parsing: " + filePath);
 				// parse the file
 				cu = JavaParser.parse(in);
 				List<TypeDeclaration> typeDeclarations = cu.getTypes();
