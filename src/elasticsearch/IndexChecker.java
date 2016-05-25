@@ -200,8 +200,10 @@ public class IndexChecker {
                     return false;
 
                 // something wrong with indexing, return false
-                if (!isIndexed) return  false;
-
+                if (!isIndexed)
+                    return  false;
+                else
+                    System.out.println("Successfully indexed 100 documents.");
                 // reset the file counter
                 fileCount = 0;
             }
