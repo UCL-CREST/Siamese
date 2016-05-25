@@ -8,7 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
@@ -38,6 +41,7 @@ public class IndexChecker {
 	private static String outputFolder = "";
 	private static boolean writeToFile = false;
     private static String[] extensions = { "java" };
+    private static String command = "index";
 
 	public static void main(String[] args) {
 		processCommandLine(args);
@@ -50,15 +54,20 @@ public class IndexChecker {
 
 		try {
 			es.startup();
-            createIndex(indexSettings, mappingStr);
-			boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
-			if (status) {
-				// if ok, refresh the index, then search
-				es.refresh();
-				search(inputFolder);
-			} else {
-				System.out.println("Indexing error: please check!");
-			}
+            if (command.toLowerCase().equals("index")) {
+                createIndex(indexSettings, mappingStr);
+                boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+                if (status) {
+                    // if ok, refresh the index, then search
+                    es.refresh();
+                    System.out.println("Successfully creating index.");
+                } else {
+                    System.out.println("Indexing error: please check!");
+                }
+            } else if (command.toLowerCase().equals("search")) {
+                search(inputFolder);
+                System.out.println("Searching done. See output at " + outputFolder);
+            }
 			es.shutdown();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -161,7 +170,7 @@ public class IndexChecker {
                 String src = tokenize(method);
                 // Use file name as id
                 Document d = new Document(file.getName() + "_" + count, src);
-                System.out.println("Adding: " + file.getName() + "_" + count);
+                // System.out.println("Adding: " + file.getName() + "_" + count);
                 count++;
                 // add document to array
                 docArray.add(d);
@@ -232,48 +241,45 @@ public class IndexChecker {
 		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder
 				, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 		for (File file : listOfFiles) {
+            // reset the output buffer
+            outToFile = "";
             // parse each file into method (if possible)
             MethodParser methodParser = new MethodParser();
             ArrayList<String> methodList;
             // TODO: Fix this to be able to handle code snippets (not complete method) as well.
             methodList = methodParser.parseMethods(file.getAbsolutePath());
-
+            int count = 0;
             for (String method: methodList) {
+                outToFile += file.getName() + "_" + count + ",";
+                count++;
                 // count the number of methods
                 totalMethods += methodList.size();
-
                 String query = tokenize(method);
 
-                if (isPrint) {
-                    System.out.println("QUERY," + method);
-                    // System.out.println(query);
+                ArrayList<String> results = es.search(index, type, query, isPrint, isDFS);
+                for (String s: results) {
+                    outToFile += s + ",";
+                }
+                outToFile += "\n";
+            }
+
+            if (writeToFile) {
+                DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
+                Date dateobj = new Date();
+                File outfile = new File(outputFolder + "/" + file.getName() + "_" + df.format(dateobj) + ".csv");
+                // if file doesn't exists, then create it
+                boolean isCreated = false;
+                if (!outfile.exists()) {
+                    isCreated = outfile.createNewFile();
                 }
 
-                int tp = findTP(es.search(index, type, query, isPrint, isDFS), file.getName().split("\\$")[0]);
-                // System.out.println();
-                total += round((tp * 0.1), 2);
-                // collect output for writing to file
-                if (writeToFile)
-                    outToFile += round((tp * 0.1), 2) + "\n";
+                if (isCreated) {
+                    FileWriter fw = new FileWriter(outfile.getAbsoluteFile());
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.write(outToFile);
+                    bw.close();
+                } else throw new IOException("Cannot create the output file");
             }
-		}
-	
-		System.out.println("PREC, " + total / totalMethods);
-		if (writeToFile) {
-			File outfile = new File(outputFolder + "/" + index + "_" + type + "_" + normMode + "_" + ngramSize + "_" + isNgram + ".csv");
-			// if file doesn't exists, then create it
-            boolean isCreated = false;
-			if (!outfile.exists()) {
-                isCreated = outfile.createNewFile();
-            }
-
-            if (isCreated) {
-                FileWriter fw = new FileWriter(outfile.getAbsoluteFile());
-                BufferedWriter bw = new BufferedWriter(fw);
-
-                bw.write(outToFile);
-                bw.close();
-            } else throw new IOException("Cannot create the output file");
 		}
 	}
 
@@ -333,6 +339,7 @@ public class IndexChecker {
 		options.addOption("p", "print", false, "print the generated tokens");
 		options.addOption("f", "dfs", false, "use DFS mode [default=no]");
 		options.addOption("o", "output", true, "output file location [optional]");
+        options.addOption("c", "command", true, "command to do [index, search]");
 		options.addOption("h", "help", false, "print help");
 
 		// check if no parameter given, print help and quit
@@ -352,24 +359,28 @@ public class IndexChecker {
 			if (line.hasOption("s")) {
 				server = line.getOptionValue("s");
 			} else {
+                showHelp();
 				throw new ParseException("No server name provided.");
 			}
 
 			if (line.hasOption("i")) {
 				index = line.getOptionValue("i");
 			} else {
+                showHelp();
 				throw new ParseException("No index provided.");
 			}
 
 			if (line.hasOption("t")) {
 				type = line.getOptionValue("t");
 			} else {
+                showHelp();
 				throw new ParseException("No type provided.");
 			}
 
 			if (line.hasOption("d")) {
 				inputFolder = line.getOptionValue("d");
 			} else {
+                showHelp();
 				throw new ParseException("No input folder provided.");
 			}
 
@@ -391,6 +402,13 @@ public class IndexChecker {
 				writeToFile = true;
 				outputFolder = line.getOptionValue("o");
 			}
+
+            if (line.hasOption("c")) {
+                command = line.getOptionValue("c");
+            } else {
+                showHelp();
+                throw new ParseException("Wrong command.");
+            }
 
 			if (line.hasOption("p")) {
 				isPrint = true;
