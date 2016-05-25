@@ -42,7 +42,7 @@ class MethodParser {
 						}
 					}
 				}
-			} catch (Exception e) {
+			} catch (Throwable e) {
                 // cannot parse, add the whole string = only 1 string return in the list
                 StringBuilder builder = new StringBuilder();
                 int ch;
