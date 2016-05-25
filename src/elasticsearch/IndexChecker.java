@@ -158,6 +158,7 @@ public class IndexChecker {
 		
 		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
 		for (File file : listOfFiles) {
+			System.out.println("File: " + file.getName());
             // parse each file into method (if possible)
 			MethodParser methodParser = new MethodParser();
             ArrayList<String> methodList;
