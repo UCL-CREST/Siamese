@@ -42,7 +42,16 @@ class MethodParser {
 						}
 					}
 				}
-			} finally {
+			} catch (Exception e) {
+                // cannot parse, add the whole string = only 1 string return in the list
+                StringBuilder builder = new StringBuilder();
+                int ch;
+                while((ch = in.read()) != -1){
+                    builder.append((char)ch);
+                }
+                methodList.add(builder.toString());
+            }
+            finally {
 				in.close();
 			}
 		} catch (Exception e) {
