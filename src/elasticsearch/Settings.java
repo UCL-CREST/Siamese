@@ -1,6 +1,7 @@
 package elasticsearch;
 
 public class Settings {
+	public static int BULK_SIZE = 100;
 	public class Normalize {
 		public static final int WORD_NORM_ON = 1;
 		public static final int WORD_NORM_OFF = 0;

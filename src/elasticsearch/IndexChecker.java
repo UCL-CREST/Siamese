@@ -152,17 +152,18 @@ public class IndexChecker {
 	
 	@SuppressWarnings("unchecked")
 	private static boolean insert(String inputFolder, int indexMode) throws Exception {
-		boolean indexResult = true;
+		boolean isIndexed = true;
 		ArrayList<Document> docArray = new ArrayList<>();
 		File folder = new File(inputFolder);
 		
 		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
+        int fileCount = 0;
 		for (File file : listOfFiles) {
 			System.out.println("File: " + file.getName());
             // parse each file into method (if possible)
 			MethodParser methodParser = new MethodParser();
             ArrayList<String> methodList;
-            // TODO: Fix this to be able to handle code snippets (not complete method) as well.
+
             try {
                 methodList = methodParser.parseMethods(file.getAbsolutePath());
 
@@ -185,20 +186,29 @@ public class IndexChecker {
                 // add document to array
                 docArray.add(d);
             }
+
+            fileCount++;
+
+            // index every 100 docs
+            if (fileCount == Settings.BULK_SIZE) {
+                // doing indexing (can choose between bulk/sequential)
+                if (indexMode == Settings.IndexingMode.BULK)
+                    isIndexed = es.bulkInsert(index, type, docArray);
+                else if (indexMode == Settings.IndexingMode.SEQUENTIAL)
+                    isIndexed = es.sequentialInsert(index, type, docArray);
+                else // wrong mode
+                    return false;
+
+                // something wrong with indexing, return false
+                if (!isIndexed) return  false;
+
+                // reset the file counter
+                fileCount = 0;
+            }
 		}
 
-        // System.out.println("Methods = " + docArray.size());
-
-		// doing indexing (can choose between bulk/sequential)
-		if (indexMode == Settings.IndexingMode.BULK)
-			indexResult = es.bulkInsert(index, type, docArray);
-		else if (indexMode == Settings.IndexingMode.SEQUENTIAL)
-            indexResult = es.sequentialInsert(index, type, docArray);
-		else
-			// wrong mode
-			indexResult = false;
-		
-		return indexResult;
+        // successfully indexed, return true
+		return true;
 	}
 	
 	private static String tokenize(File file) throws Exception {
