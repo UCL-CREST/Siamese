@@ -157,7 +157,7 @@ public class IndexChecker {
 		File folder = new File(inputFolder);
 		
 		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
-        int fileCount = 0;
+
 		for (File file : listOfFiles) {
 			System.out.println("File: " + file.getName());
             // parse each file into method (if possible)
@@ -187,10 +187,8 @@ public class IndexChecker {
                 docArray.add(d);
             }
 
-            fileCount++;
-
             // index every 100 docs
-            if (fileCount == Settings.BULK_SIZE) {
+            if (docArray.size() >= Settings.BULK_SIZE) {
                 // doing indexing (can choose between bulk/sequential)
                 if (indexMode == Settings.IndexingMode.BULK)
                     isIndexed = es.bulkInsert(index, type, docArray);
@@ -202,10 +200,11 @@ public class IndexChecker {
                 // something wrong with indexing, return false
                 if (!isIndexed)
                     return  false;
-                else
+                else {
                     System.out.println("Successfully indexed 100 documents.");
-                // reset the file counter
-                fileCount = 0;
+                    // reset the array list
+                    docArray = new ArrayList<>();
+                }
             }
 		}
 
