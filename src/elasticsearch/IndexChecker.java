@@ -162,16 +162,25 @@ public class IndexChecker {
 			MethodParser methodParser = new MethodParser();
             ArrayList<String> methodList;
             // TODO: Fix this to be able to handle code snippets (not complete method) as well.
-            methodList = methodParser.parseMethods(file.getAbsolutePath());
+            try {
+                methodList = methodParser.parseMethods(file.getAbsolutePath());
 
-            int count = 0;
-            for (String method: methodList) {
-                // Create Document object and put in an array list
-                String src = tokenize(method);
+                int count = 0;
+                for (String method : methodList) {
+                    // Create Document object and put in an array list
+                    String src = tokenize(method);
+                    // Use file name as id
+                    Document d = new Document(file.getName() + "_" + count, src);
+                    // System.out.println("Adding: " + file.getName() + "_" + count);
+                    count++;
+                    // add document to array
+                    docArray.add(d);
+                }
+            } catch (Exception e) {
+                // cannot parse, use the whole file
+                String src = tokenize(file);
                 // Use file name as id
-                Document d = new Document(file.getName() + "_" + count, src);
-                // System.out.println("Adding: " + file.getName() + "_" + count);
-                count++;
+                Document d = new Document(file.getName(), src);
                 // add document to array
                 docArray.add(d);
             }
@@ -246,18 +255,31 @@ public class IndexChecker {
             // parse each file into method (if possible)
             MethodParser methodParser = new MethodParser();
             ArrayList<String> methodList;
-            // TODO: Fix this to be able to handle code snippets (not complete method) as well.
-            methodList = methodParser.parseMethods(file.getAbsolutePath());
-            int count = 0;
-            for (String method: methodList) {
-                outToFile += file.getName() + "_" + count + ",";
-                count++;
-                // count the number of methods
-                totalMethods += methodList.size();
-                String query = tokenize(method);
+            String query = "";
 
+            try {
+                methodList = methodParser.parseMethods(file.getAbsolutePath());
+                int count = 0;
+                for (String method : methodList) {
+                    outToFile += file.getName() + "_" + count + ",";
+                    count++;
+                    // count the number of methods
+                    totalMethods += methodList.size();
+                    query = tokenize(method);
+                    // search for results
+                    ArrayList<String> results = es.search(index, type, query, isPrint, isDFS);
+                    for (String s : results) {
+                        outToFile += s + ",";
+                    }
+                    outToFile += "\n";
+                }
+            }
+            // cannot parse the file, use the whole file
+            catch (Exception e) {
+                query = tokenize(file);
+                // search for results
                 ArrayList<String> results = es.search(index, type, query, isPrint, isDFS);
-                for (String s: results) {
+                for (String s : results) {
                     outToFile += s + ",";
                 }
                 outToFile += "\n";
