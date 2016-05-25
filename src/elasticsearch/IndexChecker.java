@@ -19,6 +19,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.elasticsearch.cluster.metadata.AliasOrIndex;
 
 public class IndexChecker {
 	private static ESConnector es;
@@ -44,11 +45,8 @@ public class IndexChecker {
 		es = new ESConnector(server);
 		// initialise the n-gram generator
 		ngen = new nGramGenerator(ngramSize);
-        String indexSettings = "{ \"similarity\": { \"dfr_similarity\" : { \"type\": \"DFR\", \"basic_model\": \"if\", \"after_effect\": \"l\", "
-                + "\"normalization\": \"h1\", \"normalization.h2.c\": \"3.0\"} },  "
-                + "\"analysis\" : { \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } } }";
-
-        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
+        String indexSettings = IndexSettings.DFR.getIndexSettings(IndexSettings.DFR.bmIF, IndexSettings.DFR.aeL, IndexSettings.DFR.normH1);
+        String mappingStr = IndexSettings.DFR.mappingStr;
 
 		try {
 			es.startup();
