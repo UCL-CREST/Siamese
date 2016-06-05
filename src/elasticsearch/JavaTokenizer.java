@@ -262,7 +262,7 @@ public class JavaTokenizer {
 				} else if (cStr.equals(",")) {
 					tokens.add(",");
 					prevChar = ",";
-				} else {
+				} else if (character >= 32){ // only deal with printable characters
 					tokens.add(cStr);
 					prevChar = "";
 				}
