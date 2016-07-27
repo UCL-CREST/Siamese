@@ -10,10 +10,15 @@ import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
+import elasticsearch.document.Method;
 
-class MethodParser {
-	ArrayList<String> parseMethods(String filePath) {
-		ArrayList<String> methodList = new ArrayList<>();
+public class MethodParser {
+    public MethodParser() {
+
+    }
+
+	public ArrayList<Method> parseMethods(String filePath) {
+		ArrayList<Method> methodList = new ArrayList<>();
 		try {
 			/* Parse and extract method body */
 			FileInputStream in = new FileInputStream(filePath);
@@ -31,13 +36,21 @@ class MethodParser {
 							if (member instanceof ConstructorDeclaration) {
 								ConstructorDeclaration constructor = (ConstructorDeclaration) member;
 								String cons = constructor.getDeclarationAsString() + constructor.getBlock();
-								methodList.add(cons);
+
+                                // System.out.println(getOnlyMethodName(constructor.getDeclarationAsString()));
+
+                                Method m = new Method(getOnlyMethodName(constructor.getDeclarationAsString()),cons);
+								methodList.add(m);
 							}
 							// extract all the methods
 							else if (member instanceof MethodDeclaration) {
 								MethodDeclaration method = (MethodDeclaration) member;
 								String mthd = method.getDeclarationAsString() + method.getBody().toString();
-								methodList.add(mthd);
+
+                                // System.out.println(getOnlyMethodName(method.getDeclarationAsString()));
+
+                                Method m = new Method(getOnlyMethodName(method.getDeclarationAsString()), mthd);
+								methodList.add(m);
 							}
 						}
 					}
@@ -49,7 +62,8 @@ class MethodParser {
                 while((ch = in.read()) != -1){
                     builder.append((char)ch);
                 }
-                methodList.add(builder.toString());
+                Method m = new Method("method", builder.toString());
+                methodList.add(m);
             }
             finally {
 				in.close();
@@ -59,4 +73,15 @@ class MethodParser {
 		}
 		return methodList;
 	}
+
+	private String getOnlyMethodName(String methodHeader) {
+        String[] methodNames = methodHeader.split(" ");
+        String methodName = "no_name";
+        for (String mName : methodNames) {
+            if (mName.contains("("))
+                methodName = mName.substring(0, mName.indexOf("("));
+        }
+
+        return methodName;
+    }
 }

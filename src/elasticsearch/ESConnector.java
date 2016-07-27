@@ -52,17 +52,28 @@ public class ESConnector {
 	 * @param documents the array of documents
 	 * @return status of bulk insert (true = no failure, false = failures)
 	 */
-	public boolean sequentialInsert(String index, String type, ArrayList<Document> documents) {
+	public boolean sequentialInsert(String index, String type, ArrayList<Document> documents) throws Exception {
 		boolean isCreated = false;
 		for (Document d : documents) {
 			try {
+                // System.out.println(d.getId() + ", " + d.getFile());
+
+			    XContentBuilder builder = jsonBuilder()
+                        .startObject()
+                        .field("file", d.getFile())
+                        .field("src", d.getSource())
+                        .endObject();
+
 				// insert document one by one
-				IndexResponse response = client.prepareIndex(index, type, d.getId())
-						.setSource(jsonBuilder().startObject().field("src", d.getSource()).endObject()).get();
+				IndexResponse response = client.prepareIndex(index, type, d.getId()).setSource(builder).get();
 				isCreated = response.isCreated();
+
 				if (!isCreated) {
-					return false;
-				}
+					throw new Exception("cannot insert " + d.getId() + ", " + d.getFile()
+							+ ", src = " + builder.string());
+				} else {
+				     // System.out.println("inserted: " + d.getId());
+                }
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
@@ -82,21 +93,29 @@ public class ESConnector {
 		BulkRequestBuilder bulkRequest = client.prepareBulk();
 		// keep adding documents
 		for (Document d : documents) {
+		    // System.out.println(d.getId() + ", " + d.getFile());
 			try {
 				bulkRequest.add(client.prepareIndex(index, type, d.getId())
-						.setSource(jsonBuilder().startObject().field("src", d.getSource()).endObject()));
+						.setSource(jsonBuilder().startObject()
+                                .field("file", d.getFile())
+                                .field("src", d.getSource())
+                            .endObject()));
 
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
 			}
 		}
+
 		// bulk insert once
 		BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-		// check for failtures after insertion
+
+        // check for failures after insertion
 		boolean hasFailure = false;
-		hasFailure = bulkResponse.hasFailures();
-		if (hasFailure)
+
+        hasFailure = bulkResponse.hasFailures();
+
+        if (hasFailure)
 			return false;
 		else
 			return true;

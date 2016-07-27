@@ -50,7 +50,7 @@ public class IndexSettings {
                     + "\"normalization\": \"" + norm + "\", \"normalization.h2.c\": \"3.0\"} },  "
                     + "\"analysis\" : { \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } } }";
         }
-        public static String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
+        public static String mappingStr = "{ \"properties\": { \"file\": { \"type\": \"string\"}, \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
     }
 
     public class IB {
