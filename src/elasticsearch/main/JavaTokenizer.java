@@ -1,4 +1,7 @@
-package elasticsearch;
+package elasticsearch.main;
+
+import elasticsearch.settings.Settings;
+import elasticsearch.settings.TokenizerMode;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -116,9 +119,14 @@ public class JavaTokenizer {
 					tokens.add("K");
 				else
 					tokens.add(word);
-			} else if (/* Character.isUpperCase(word.charAt(0)) || */javaClassMap.containsKey(word)) {
+			} else if (javaClassMap.containsKey(word)) {
 				if (modes.getJavaClass() == Settings.Normalize.JAVACLASS_NORM_ON)
 					tokens.add("J");
+				else
+					tokens.add(word);
+			} else if (javaPackagesMap.containsKey(word)) {
+				if (modes.getJavaPackage() == Settings.Normalize.JAVAPACKAGE_NORM_ON)
+					tokens.add("P");
 				else
 					tokens.add(word);
 			} else if (word.contains(".")) {
@@ -208,18 +216,23 @@ public class JavaTokenizer {
 			char character = (char) tokenizer.ttype;
 			String cStr = String.valueOf(character);
 			if (!Character.isWhitespace(character) && character != '\n' && character != '\r') {
-				if (cStr.equals("+") || cStr.equals("-") || cStr.equals("*") || cStr.equals("/") || cStr.equals("%")) {
-					// nothing found before this
-					if (prevChar.equals(""))
-						prevChar = cStr;
-					else if (prevChar.equals("+")) {
-						tokens.add("++");
-						prevChar = "";
-					} else if (prevChar.equals("-")) {
-						tokens.add("--");
-						prevChar = "";
-					}
-				} else if (cStr.equals(">") || cStr.equals("<")) {
+                if (cStr.equals("+") || cStr.equals("-")
+                        || cStr.equals("*") || cStr.equals("/")
+                        || cStr.equals("%")) {
+                    // nothing found before this
+                    if (prevChar.equals(""))
+                        prevChar = cStr;
+                    else if (prevChar.equals("+")) {
+                        tokens.add("++");
+                        prevChar = "";
+                    } else if (prevChar.equals("-")) {
+                        tokens.add("--");
+                        prevChar = "";
+                    }
+                } else if (cStr.equals(">") && prevChar.equals("<")) {
+                    tokens.add("<");
+                    prevChar = cStr;
+                } else if (cStr.equals(">") || cStr.equals("<")) {
 					prevChar = cStr;
 				} else if (cStr.equals("(") && (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") || prevChar.equals("/")
 						|| prevChar.equals("%") || prevChar.equals("<") || prevChar.equals(">"))) {

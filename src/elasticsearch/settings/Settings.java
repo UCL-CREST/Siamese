@@ -1,4 +1,4 @@
-package elasticsearch;
+package elasticsearch.settings;
 
 public class Settings {
 	public static int BULK_SIZE = 100;

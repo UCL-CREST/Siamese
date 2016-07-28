@@ -1,4 +1,4 @@
-package elasticsearch;
+package elasticsearch.main;
 
 public class Experiment {
 	private static String[] normModes = {"x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks", "kw",
@@ -15,7 +15,7 @@ public class Experiment {
 		// tfidfExpOnce();
 		
 		if (args.length < 3) {
-			System.out.println("Usage: java elasticsearch.Experiment <similarity> <input folder> <working dir>");
+			System.out.println("Usage: java elasticsearch.main.Experiment <similarity> <input folder> <working dir>");
 			System.exit(-1);
 		} else {
 			String mode = args[0];

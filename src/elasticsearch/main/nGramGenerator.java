@@ -1,4 +1,4 @@
-package elasticsearch;
+package elasticsearch.main;
 
 
 import java.util.ArrayList;

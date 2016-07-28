@@ -1,4 +1,6 @@
-package elasticsearch;
+package elasticsearch.settings;
+
+import elasticsearch.settings.Settings;
 
 public class TokenizerMode {
 	private int word;

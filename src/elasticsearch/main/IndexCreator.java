@@ -16,40 +16,35 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package elasticsearch;
+package elasticsearch.main;
 
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
-import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
  * A {@link Request} used to create indices.
  */
-public class CreateIndex {
+public class IndexCreator {
 
     private final CreateIndexRequest request;
     private final String index;
 
-    public CreateIndex(String index) {
+    public IndexCreator(String index) {
         this.index = index;
         request = new CreateIndexRequest(index);
     }
 
-    public CreateIndex withSettings(Settings settings) {
+    public IndexCreator withSettings(Settings settings) {
         request.settings(settings);
         return this;
     }
 
-    public CreateIndex withSettings(String source) {
+    public IndexCreator withSettings(String source) {
         Settings settings = Settings.builder()
                 .loadFromSource(source)
                 .build();
@@ -57,7 +52,7 @@ public class CreateIndex {
         return this;
     }
 
-    public CreateIndex withSource(String source) {
+    public IndexCreator withSource(String source) {
         request.source(source);
         return this;
     }

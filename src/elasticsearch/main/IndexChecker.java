@@ -1,4 +1,4 @@
-package elasticsearch;
+package elasticsearch.main;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,8 +14,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import elasticsearch.settings.IndexSettings;
+import elasticsearch.settings.Settings;
 import elasticsearch.document.Method;
 
+import elasticsearch.settings.TokenizerMode;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -164,33 +167,51 @@ public class IndexChecker {
         int count = 0;
 
 		for (File file : listOfFiles) {
-			System.out.println("File: " + file.getAbsolutePath());
+			System.out.println(count + ": " + file.getAbsolutePath());
             // parse each file into method (if possible)
 			MethodParser methodParser = new MethodParser();
             ArrayList<Method> methodList;
 
             try {
                 methodList = methodParser.parseMethods(file.getAbsolutePath());
-                for (Method method : methodList) {
-                    // Create Document object and put in an array list
-                    String src = tokenize(method.getSrc());
-                    // Use file name as id
-                    Document d = new Document(String.valueOf(count), file.getAbsolutePath() + "_" + method.getName(), src);
-                    // System.out.println("Adding: " + file.getName() + "_" + count);
+                // System.out.println("No. of methods: " + methodList.size());
+                // check if there's a method
+                if (methodList.size() > 0) {
+                    for (Method method : methodList) {
+//                        if (method.getName().equals("method"))
+//                            System.out.println("src = " + method.getSrc());
+                        // Create Document object and put in an array list
+                        String src = tokenize(method.getSrc());
+                        // Use file name as id
+                        Document d = new Document(String.valueOf(count), file.getAbsolutePath() + "_" + method.getName(), src);
+                        // System.out.println("Adding: " + file.getName() + "_" + count);
 
+                        // add document to array
+                        docArray.add(d);
+
+                        // System.out.println("Added " + count + " to the list.");
+                        count++;
+                    }
+                } else {
+                    // cannot parse, use the whole file
+                    String src = tokenize(file);
+                    // System.out.println("Can't extract methods: src = " + src);
+                    // Use file name as id
+                    Document d = new Document(String.valueOf(count), file.getAbsolutePath() + "_raw", src);
                     // add document to array
                     docArray.add(d);
-
-                    // System.out.println("Added " + count + " to the list.");
-                    count = count + 1;
+                    count++;
                 }
             } catch (Exception e) {
-                // cannot parse, use the whole file
+                e.printStackTrace();
+                /*
+                // problem parsing, use the whole file
                 String src = tokenize(file);
                 // Use file name as id
-                Document d = new Document(String.valueOf(count), file.getAbsolutePath(), src);
+                Document d = new Document(String.valueOf(count), file.getAbsolutePath() + "_raw", src);
                 // add document to array
                 docArray.add(d);
+                */
             }
 
             // System.out.println("Size: " + docArray.size());
@@ -210,29 +231,56 @@ public class IndexChecker {
                     // reset the array list
                      docArray.clear();
                 }
-            }
+            } // index every 100 docs
+            // if (docArray.size() >= Settings.BULK_SIZE) {
+            // doing indexing (can choose between bulk/sequential)
+            else if (indexMode == Settings.IndexingMode.BULK) {
+                if (docArray.size() >= Settings.BULK_SIZE) {
+                    isIndexed = es.bulkInsert(index, type, docArray);
 
+                    if (!isIndexed)
+                        throw new Exception("Cannot bulk insert documents");
+                    else {
+                        // reset the array list
+                        docArray.clear();
+                    }
+                }
+            }
 		}
 
-        // index every 100 docs
-        // if (docArray.size() >= Settings.BULK_SIZE) {
-        // doing indexing (can choose between bulk/sequential)
-        if (indexMode == Settings.IndexingMode.BULK) {
+		// the last batch
+        if (indexMode == Settings.IndexingMode.BULK && docArray.size() != 0) {
             isIndexed = es.bulkInsert(index, type, docArray);
 
             if (!isIndexed)
                 throw new Exception("Cannot bulk insert documents");
             else {
-                System.out.println("Successfully indexed documents.");
                 // reset the array list
                 docArray.clear();
             }
-        } else if (indexMode == Settings.IndexingMode.SEQUENTIAL) {
-            System.out.println("Successfully indexed documents.");
-        } else // wrong mode
-            throw new Exception("Wrong mode (neither bulk or sequential)");
+        }
+
+        // index every 100 docs
+        // if (docArray.size() >= Settings.BULK_SIZE) {
+        // doing indexing (can choose between bulk/sequential)
+        // if (indexMode == Settings.IndexingMode.BULK) {
+        //    isIndexed = es.bulkInsert(index, type, docArray);
+
+        //    if (!isIndexed)
+        //        throw new Exception("Cannot bulk insert documents");
+        //    else {
+        //        System.out.println("Successfully indexed documents.");
+                // reset the array list
+        //        docArray.clear();
+        //    }
+        //} else if (indexMode == Settings.IndexingMode.SEQUENTIAL) {
+        //    System.out.println("Successfully indexed documents.");
+        //} else // wrong mode
+        //    throw new Exception("Wrong mode (neither bulk or sequential)");
 
         // successfully indexed, return true
+        System.out.println("Successfully indexed documents.");
+
 		return true;
 	}
 	

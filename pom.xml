@@ -21,7 +21,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>elasticsearch.IndexChecker</mainClass>
+									<mainClass>elasticsearch.main.IndexChecker</mainClass>
 								</transformer>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />

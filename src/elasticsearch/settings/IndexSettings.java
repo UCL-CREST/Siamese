@@ -1,4 +1,4 @@
-package elasticsearch;
+package elasticsearch.settings;
 
 /**
  * Created by Chaiyong on 5/24/16.

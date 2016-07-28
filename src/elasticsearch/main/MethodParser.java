@@ -1,8 +1,10 @@
-package elasticsearch;
+package elasticsearch.main;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
@@ -57,12 +59,13 @@ public class MethodParser {
 				}
 			} catch (Throwable e) {
                 // cannot parse, add the whole string = only 1 string return in the list
-                StringBuilder builder = new StringBuilder();
-                int ch;
-                while((ch = in.read()) != -1){
-                    builder.append((char)ch);
-                }
-                Method m = new Method("method", builder.toString());
+//                StringBuilder builder = new StringBuilder();
+//                int ch;
+//                while((ch = in.read()) != -1){
+//                    builder.append((char)ch);
+//                }
+                String content = new Scanner(new File(filePath)).useDelimiter("\\Z").next();
+                Method m = new Method("method", content);
                 methodList.add(m);
             }
             finally {
