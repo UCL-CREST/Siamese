@@ -64,6 +64,7 @@ public class MethodParser {
 //                while((ch = in.read()) != -1){
 //                    builder.append((char)ch);
 //                }
+                System.out.println("File: " + filePath);
                 String content = new Scanner(new File(filePath)).useDelimiter("\\Z").next();
                 Method m = new Method("method", content);
                 methodList.add(m);

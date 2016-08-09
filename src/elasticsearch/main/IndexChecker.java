@@ -26,7 +26,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.elasticsearch.transport.RemoteTransportException;
 
 
 public class IndexChecker {
@@ -71,7 +71,6 @@ public class IndexChecker {
                 }
             } else if (command.toLowerCase().equals("search")) {
                 search(inputFolder);
-                System.out.println("Searching done. See output at " + outputFolder);
             }
 			es.shutdown();
 		} catch (Exception e) {
@@ -326,68 +325,86 @@ public class IndexChecker {
 	
 	@SuppressWarnings("unchecked")
 	private static void search(String inputFolder) throws Exception {
-		double total = 0.0;
-		String outToFile = "";
+        double total = 0.0;
+        String outToFile = "";
         int totalMethods = 0;
-		
-		File folder = new File(inputFolder);
-		List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder
-				, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-		for (File file : listOfFiles) {
-            // reset the output buffer
-            outToFile = "";
-            // parse each file into method (if possible)
-            MethodParser methodParser = new MethodParser();
-            ArrayList<Method> methodList;
-            String query = "";
 
-            try {
-                methodList = methodParser.parseMethods(file.getAbsolutePath());
-                int count = 0;
-                for (Method method : methodList) {
-                    outToFile += file.getName() + "_" + count + ",";
-                    count++;
-                    // count the number of methods
-                    totalMethods += methodList.size();
-                    query = tokenize(method.getSrc());
-                    // search for results
-                    ArrayList<String> results = es.search(index, type, query, isPrint, isDFS);
-                    for (String s : results) {
-                        outToFile += s + ",";
+        // if (writeToFile) {
+        DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
+        Date dateobj = new Date();
+        File outfile = new File(outputFolder + "/" + "output_" + df.format(dateobj) + ".csv");
+
+        // if file doesn't exists, then create it
+        boolean isCreated = false;
+        if (!outfile.exists()) {
+            isCreated = outfile.createNewFile();
+        }
+
+        if (isCreated) {
+            FileWriter fw = new FileWriter(outfile.getAbsoluteFile(), true);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            File folder = new File(inputFolder);
+            List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
+
+            int count = 0;
+
+            for (File file : listOfFiles) {
+                System.out.println("File: " + file.getAbsolutePath());
+                // reset the output buffer
+                outToFile = "";
+                // parse each file into method (if possible)
+                MethodParser methodParser = new MethodParser();
+                ArrayList<Method> methodList;
+                String query = "";
+
+                try {
+                    methodList = methodParser.parseMethods(file.getAbsolutePath());
+                    // check if there's a method
+                    if (methodList.size() > 0) {
+                        for (Method method : methodList) {
+                            outToFile += count + "," + file.getName() + "_" + method.getName() + ",";
+                            count++;
+                            // count the number of methods
+                            totalMethods += methodList.size();
+                            query = tokenize(method.getSrc());
+                            // search for results
+                            ArrayList<String> results = es.search(index, type, query, isPrint, isDFS);
+                            for (String s : results) {
+                                outToFile += s + ",";
+                            }
+                            outToFile += "\n";
+                        }
+                    } else {
+                        query = tokenize(file);
+                        // search for results
+                        ArrayList<String> results = es.search(index, type, query, isPrint, isDFS);
+                        outToFile += count + "," + file.getName() + "_noMethod" + ",";
+                        for (String s : results) {
+                            outToFile += s + ",";
+                        }
+                        outToFile += "\n";
+                        count++;
                     }
-                    outToFile += "\n";
+                //} catch(RemoteTransportException rmtexp) {
+                    // System.out.println("Error: query term size exceeds 4096 (too big).");
+                } catch (Exception e) {
+                    System.out.println(e.getCause());
+                    System.out.println("Error: query term size exceeds 4096 (too big).");
+                    // e.printStackTrace();
+                    // System.exit(0);
                 }
+                bw.write(outToFile);
             }
-            // cannot parse the file, use the whole file
-            catch (Exception e) {
-                query = tokenize(file);
-                // search for results
-                ArrayList<String> results = es.search(index, type, query, isPrint, isDFS);
-                for (String s : results) {
-                    outToFile += s + ",";
-                }
-                outToFile += "\n";
-            }
+            bw.close();
 
-            if (writeToFile) {
-                DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
-                Date dateobj = new Date();
-                File outfile = new File(outputFolder + "/" + file.getName() + "_" + df.format(dateobj) + ".csv");
-                // if file doesn't exists, then create it
-                boolean isCreated = false;
-                if (!outfile.exists()) {
-                    isCreated = outfile.createNewFile();
-                }
 
-                if (isCreated) {
-                    FileWriter fw = new FileWriter(outfile.getAbsoluteFile());
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    bw.write(outToFile);
-                    bw.close();
-                } else throw new IOException("Cannot create the output file");
-            }
-		}
-	}
+            System.out.println("Searching done. See output at " + outfile.getAbsolutePath());
+
+        } else {
+            throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
+        }
+    }
 
 	private static int findTP(ArrayList<String> results, String query) {
 		int tp = 0;
