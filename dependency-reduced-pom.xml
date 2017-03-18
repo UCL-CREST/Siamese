@@ -19,7 +19,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>elasticsearch.IndexChecker</mainClass>
+                  <mainClass>elasticsearch.main.IndexChecker</mainClass>
                 </transformer>
                 <transformer />
               </transformers>

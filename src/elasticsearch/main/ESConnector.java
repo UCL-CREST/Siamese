@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import elasticsearch.document.Document;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -120,36 +121,36 @@ public class ESConnector {
 			return true;
 	}
 
-	public ArrayList<String> search(String index, String type, String query, boolean isPrint, boolean isDFS) {
-		ArrayList<String> results = new ArrayList<String>();
-		SearchType searchType;
-		if (isDFS)
-			searchType = SearchType.DFS_QUERY_THEN_FETCH;
-		else
-			searchType = SearchType.QUERY_THEN_FETCH;
-		
-		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
-				.setQuery(QueryBuilders.matchQuery("src", query)).setFrom(0).setSize(10).execute()
-				.actionGet();
-		SearchHit[] hits = response.getHits().getHits();
-		// if (isPrint) System.out.println("=======================\nhits: " + hits.length);
-		int count = 0;
-		for (SearchHit hit : hits) {
-			if (count >= 10)
-				break;
-			if (isPrint) System.out.println("ANS," + hit.getId() + "," + hit.getScore()); // prints out the id of the
-			// document
-			results.add(hit.getId());
-			// Map<String, Object> result = hit.getSource(); // the retrieved
-			// document
-			count++;
-		}
-		// if (isPrint) System.out.println("=======================");
-		// if (isPrint) System.out.println();
-		return results;
-	}
-	
-	public boolean createIndex(String indexName, String typeName, String settingsStr, String mappingStr) {
+    public ArrayList<Document> search(String index, String type, String query, boolean isPrint, boolean isDFS) {
+        ArrayList<Document> results = new ArrayList<Document>();
+        SearchType searchType;
+        if (isDFS)
+            searchType = SearchType.DFS_QUERY_THEN_FETCH;
+        else
+            searchType = SearchType.QUERY_THEN_FETCH;
+
+        SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
+                .setQuery(QueryBuilders.matchQuery("src", query)).setFrom(0).setSize(10).execute()
+                .actionGet();
+        SearchHit[] hits = response.getHits().getHits();
+        // if (isPrint) System.out.println("=======================\nhits: " + hits.length);
+        int count = 0;
+        for (SearchHit hit : hits) {
+            if (count >= 10)
+                break;
+            if (isPrint) System.out.println("ANS," + hit.getId() + "," + hit.getScore()); // prints out the id of the
+            // document
+            Document d = new Document(hit.getId(),
+                    hit.getSource().get("file").toString(),
+                    hit.getSource().get("src").toString());
+            results.add(d);
+            // document
+            count++;
+        }
+        return results;
+    }
+
+    public boolean createIndex(String indexName, String typeName, String settingsStr, String mappingStr) {
 		CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
 		Settings settings = Settings.builder()
                 .loadFromSource(settingsStr)

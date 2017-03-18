@@ -9,36 +9,31 @@ public class Experiment {
 			"djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws", "djkp",
 			"djkps", "djkpw", "djkpws"};
 	private static int[] ngramSizes = { 1, 2, 3, 4 };
+	public static String prefixToRemove = "";
+    public static boolean isPrint = false;
 	
 	public static void main(String[] args) {
-		// dfrExp();
-		// tfidfExpOnce();
-		
 		if (args.length < 3) {
 			System.out.println("Usage: java elasticsearch.main.Experiment <similarity> <input folder> <working dir>");
 			System.exit(-1);
 		} else {
+            String outputFile = "";
 			String mode = args[0];
 			String inputDir = args[1];
 			String workingDir = args[2];
-			
-			// bm25ExpOnce("0.0", "0.0", "true");
-			// dfrExpOnce(inputDir, workingDir);
-			// tfidfExpOnce();
-			
-			boolean isPrint = true;
-			if (mode.equals("tfidf"))
-				tfidfExp(inputDir, workingDir, isPrint);
-			else if (mode.equals("tfidf_text"))
-				tfidfTextExp(inputDir, workingDir, isPrint);
-			else if (mode.equals("tfidf_norm"))
-				tfidfNormExp(inputDir, workingDir, isPrint);
-			else if (mode.equals("bm25")) 
+
+            prefixToRemove = inputDir;
+            if (!prefixToRemove.endsWith("/"))
+                prefixToRemove += "/"; // append / at the end
+
+			if (mode.equals("tfidf_text"))
+				outputFile = tfidfTextExp(inputDir, workingDir, isPrint);
+            else if (mode.equals("bm25_text"))
+                outputFile = bm25TextExp(inputDir, workingDir, isPrint);
+            else if (mode.equals("tfidf"))
+                tfidfExp(inputDir, workingDir, isPrint);
+			else if (mode.equals("bm25"))
 				bm25Exp(inputDir, workingDir, isPrint);
-			else if (mode.equals("bm25_text"))
-				bm25TextExp(inputDir, workingDir, isPrint);
-			else if (mode.equals("bm25_norm"))
-				bm25NormExp(inputDir, workingDir, isPrint);
 			else if (mode.equals("dfr"))
 				dfrExp(inputDir, workingDir, isPrint);
 			else if (mode.equals("ib"))
@@ -49,113 +44,75 @@ public class Experiment {
 				lmjkmExp(inputDir, workingDir, isPrint);
 			else
 				System.out.println("No similarity found");
+
+            Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode + "_1gram", workingDir);
+            evaluator.generateSearchKey();
+            // evaluator.printSearchKey();
+            evaluator.evaluteRPrec(outputFile, 6);
 		}
-		
 	}
 	
-	public static void tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
+	public static String tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
+        String discO = "true";
 		String[] normModes = { "x" };
-		int[] ngramSizes = { 4 };
+		int[] ngramSizes = { 1 };
 		IndexChecker checker = new IndexChecker();
 		String indexSettings = "";
-		indexSettings = "{ \"settings\":" + "{ \"mappings\": {  \"doc\":{  \"properties\": "
-				+ "{  \"src\": { \"type\": \"string\", \"similarity\": \"default\" } } } } } }";
-		// System.out.println(indexSettings);
-		checker.runExperiment("localhost", "tfidf", "doc", inputDir, normModes, ngramSizes, true, true, workingDir,
-				true, indexSettings, "", isPrint);
-	}
-	
-	public static void tfidfNormExp(String inputDir, String workingDir, boolean isPrint) {
-		String[] normModes = { "w" };
-		int[] ngramSizes = { 2 };
-		IndexChecker checker = new IndexChecker();
-		String indexSettings = "";
-		indexSettings = "{ \"settings\":" + "{ \"mappings\": {  \"doc\":{  \"properties\": "
-				+ "{  \"src\": { \"type\": \"string\", \"similarity\": \"default\" } } } } } }";
-		// System.out.println(indexSettings);
-		checker.runExperiment("localhost", "tfidf", "doc", inputDir, normModes, ngramSizes, true, true, workingDir,
-				true, indexSettings, "", isPrint);
-	}
-	
-	public static void bm25TextExp(String inputDir, String workingDir, boolean isPrint) {
-		String[] normModes = { "x" };
-		int[] ngramSizes = { 2 };
-		IndexChecker checker = new IndexChecker();
-		String indexSettings = ""
-				+ "{ \"settings\": "
-					+ "{ \"similarity\": "
-						+ "{ \"bm25_similarity\" : "
-							+ "{ \"type\": \"BM25\", "
-							+ "\"k1\": \"1.2\", "
-							+ "\"b\": \"0.75\""
-							+ "} "
-						+ "} "
-					+ "}, "
-				+ "\"mappings\": {  "
-					+ "\"doc\":{  \"properties\": "
-								+ "{  \"src\": "
-								+ "	{  \"type\": \"string\", "
-									+ "\"similarity\": \"bm25_similarity\" }  "
-								+ "} "
-							+ " } "
-					+ " } } ";
+        if (!discO.equals("false"))
+            indexSettings = "{ \"similarity\": { \"tfidf_similarity\": { \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
+                    "\"analysis\": { " +
+                    "\"analyzer\": { " +
+                    "\"default\": { " +
+                    "\"type\": \"whitespace\"" +
+                    "} } } }";
+        else {
+            indexSettings = "{ \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } }";
+        }
 
-		String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } } }";
-		checker.runExperiment("localhost", "bm25", "doc", inputDir, normModes, ngramSizes, true, true, workingDir,
-				true, indexSettings, mappingStr, isPrint);
-	}
-	
-	public static void bm25NormExp(String inputDir, String workingDir, boolean isPrint) {
-		String[] normModes = { "w" };
-		int[] ngramSizes = { 2 };
-		IndexChecker checker = new IndexChecker();
-		String indexSettings = ""
-				+ "{ \"settings\": "
-					+ "{ \"similarity\": "
-						+ "{ \"bm25_similarity\" : "
-							+ "{ \"type\": \"BM25\", "
-							+ "\"k1\": \"1.2\", "
-							+ "\"b\": \"0.75\""
-							+ "} "
-						+ "} "
-					+ "}, "
-				+ "\"mappings\": {  "
-					+ "\"doc\":{  \"properties\": "
-								+ "{  \"src\": "
-								+ "	{  \"type\": \"string\", "
-									+ "\"similarity\": \"bm25_similarity\" }  "
-								+ "} "
-							+ " } "
-					+ " } } ";
-
-		String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } } }";
-		checker.runExperiment("localhost", "bm25", "doc", inputDir, normModes, ngramSizes, true, true, workingDir,
+        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
+		return checker.runExperiment("localhost", "tfidf", "doc",
+				inputDir, normModes, ngramSizes, true, true, workingDir,
 				true, indexSettings, mappingStr, isPrint);
 	}
 
-	public static void tfidfExp(String inputDir, String workingDir, boolean isPrint) {
-		String[] discountOverlap = { "no", "true", "false" };
-		IndexChecker checker = new IndexChecker();
-				for (String discO : discountOverlap) {
-					String indexSettings = "";
-					if (!discO.equals("no")) 
-						indexSettings = "{ \"similarity\": { \"tfidf_similarity\": { \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
-										"\"analysis\": { " +
-											"\"analyzer\": { " +
-												"\"default\": { " +
-													"\"type\": \"whitespace\"" +
-												"} } } }";
-					else {
-						indexSettings = "{ \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } }";
-					}
+    public static void tfidfExp(String inputDir, String workingDir, boolean isPrint) {
+        String[] discountOverlap = { "no", "true", "false" };
+        IndexChecker checker = new IndexChecker();
+        for (String discO : discountOverlap) {
+            String indexSettings = "";
+            if (!discO.equals("no"))
+                indexSettings = "{ \"similarity\": { \"tfidf_similarity\": { \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
+                        "\"analysis\": { " +
+                        "\"analyzer\": { " +
+                        "\"default\": { " +
+                        "\"type\": \"whitespace\"" +
+                        "} } } }";
+            else {
+                indexSettings = "{ \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } }";
+            }
 
-					String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
-					// System.out.println(indexSettings);
-					checker.runExperiment("localhost", "tfidf_" + discO, "doc",
-							inputDir, normModes, ngramSizes, true, true,
-							workingDir, false, indexSettings, mappingStr, isPrint);
-				}
-	}
+            String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
+            // System.out.println(indexSettings);
+            checker.runExperiment("localhost", "tfidf_" + discO, "doc",
+                    inputDir, normModes, ngramSizes, true, true,
+                    workingDir, false, indexSettings, mappingStr, isPrint);
+        }
+    }
+
+    public static String bm25TextExp(String inputDir, String workingDir, boolean isPrint) {
+        String[] normModes = { "x" };
+        int[] ngramSizes = { 1 };
+        double k1 = 1.2;
+        double b = 0.75;
+        String discO = "true";
+        IndexChecker checker = new IndexChecker();
+        String indexSettings = "{ \"similarity\": "
+                + "{ \"bm25_similarity\": { \"type\": \"BM25\", \"k1\": \"" + k1 + "\", \"b\": \"" + b + "\", \"discount_overlap\": \""+discO+"\" } }, "
+                + "\"analysis\": { \"analyzer\": { \"default\": { \"type\": \"whitespace\" } } } }";
+        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
+        return checker.runExperiment("localhost", "bm25", "doc", inputDir, normModes, ngramSizes, true, true, workingDir,
+                true, indexSettings, mappingStr, isPrint);
+    }
 	
 	public static void bm25Exp(String inputDir, String workingDir, boolean isPrint) {
 		String[] k1s = { "0.0", "0.6", "1.2", "1.8", "2.4" };
@@ -184,9 +141,7 @@ public class Experiment {
 	}
 	
 	public static void dfrExp(String inputDir, String workingDir, boolean isPrint) {
-		String[] basicModelArr = { "be", "d", "g", "if" };
-		// String[] basicModelArr = { "be", "d", "g", "if", "in", "ine", "p" };
-		// String[] basicModelArr = { "in", "ine", "p" };
+		String[] basicModelArr = { "be", "d", "g", "if", "in", "ine", "p" };
 		String[] afterEffectArr = { "no", "b", "l" };
 		String[] dfrNormalizationArr = { "no", "h1", "h2", "h3", "z" };
 		
@@ -229,7 +184,7 @@ public class Experiment {
 							+ "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
 					String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 					// System.out.println(indexSettings);
-					checker.runExperiment("localhost", 
+					checker.runExperiment("localhost",
 							"ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
 							inputDir, normModes, ngramSizes, true, true,
 							workingDir, false, indexSettings, mappingStr, isPrint);

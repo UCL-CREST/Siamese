@@ -13,11 +13,9 @@ public class MethodParserTest {
 
     @org.junit.Test
     public void checkMethodParser() throws Exception {
-        MethodParser mParser = new MethodParser();
-
         String srcStr = "/Users/Chaiyong/Documents/cloplag/tests/guessword/0_orig/GuessWord.java";
-
-        ArrayList<Method> methods = mParser.parseMethods(srcStr);
+        MethodParser mParser = new MethodParser(srcStr, "");
+        ArrayList<Method> methods = mParser.parseMethods();
 
         assertEquals(methods.size(), 3);
         assertEquals(methods.get(0).getName(), "ReadWordsFromFile");
@@ -27,11 +25,9 @@ public class MethodParserTest {
 
     @org.junit.Test
     public void checkMethodParser2() throws Exception {
-        MethodParser mParser = new MethodParser();
-
         String srcStr = "/Users/Chaiyong/Downloads/stackoverflow/stackoverflow_formatted/10135525_0.java";
-
-        ArrayList<Method> methods = mParser.parseMethods(srcStr);
+        MethodParser mParser = new MethodParser(srcStr, "");
+        ArrayList<Method> methods = mParser.parseMethods();
 
         assertEquals(methods.size(), 3);
         assertEquals(methods.get(0).getName(), "ReadWordsFromFile");

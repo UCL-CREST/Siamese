@@ -320,16 +320,16 @@ public class JavaTokenizer {
 		wordMap = new HashMap<String, Integer>();
 
 		FileReader fileReader = new FileReader(file);
-		readJavaClassNames("JavaClass.txt");
-		readJavaPackages("JavaPackages.txt");
+		readJavaClassNames(Settings.Tokenizer.JAVA_CLASS_FILE);
+		readJavaPackages(Settings.Tokenizer.JAVA_PACKAGES_FILE);
 		return tokenize(fileReader);
 	}
 
 	public ArrayList<String> getTokensFromString(String input) throws Exception {
 		// reset wordMap
 		wordMap = new HashMap<String, Integer>();
-		readJavaClassNames("JavaClass.txt");
-		readJavaPackages("JavaPackages.txt");
+		readJavaClassNames(Settings.Tokenizer.JAVA_CLASS_FILE);
+		readJavaPackages(Settings.Tokenizer.JAVA_PACKAGES_FILE);
 		return tokenize(new StringReader(input));
 	}
 

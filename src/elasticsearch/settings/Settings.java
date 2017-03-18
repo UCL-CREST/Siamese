@@ -2,6 +2,12 @@ package elasticsearch.settings;
 
 public class Settings {
 	public static int BULK_SIZE = 100;
+
+	public class Tokenizer {
+		public static final String JAVA_CLASS_FILE = "references/JavaClass.isics";
+		public static final String JAVA_PACKAGES_FILE = "references/JavaPackages.isics";
+	}
+
 	public class Normalize {
 		public static final int WORD_NORM_ON = 1;
 		public static final int WORD_NORM_OFF = 0;

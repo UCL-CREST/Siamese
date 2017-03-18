@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import elasticsearch.document.Document;
 import elasticsearch.settings.IndexSettings;
 import elasticsearch.settings.Settings;
 import elasticsearch.document.Method;
@@ -26,7 +27,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
-import org.elasticsearch.transport.RemoteTransportException;
 
 
 public class IndexChecker {
@@ -96,7 +96,7 @@ public class IndexChecker {
         return isCreated;
     }
 	
-	void runExperiment(String hostname, String indexName, String typeName, String inputDir
+	String runExperiment(String hostname, String indexName, String typeName, String inputDir
             , String[] normModes, int[] ngramSizes, boolean useNgram
             , boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
             , String mappingStr, boolean printLog) {
@@ -111,6 +111,7 @@ public class IndexChecker {
 		// create a connector
 		es = new ESConnector(server);
 		// System.out.print("Settings" + ", precision");
+        String outputFile = "";
 		try {
 			es.startup();
 			for (String normMode : normModes) {
@@ -137,7 +138,7 @@ public class IndexChecker {
 					if (status) {
 						// if ok, refresh the index, then search
 						es.refresh();
-						search(inputFolder);
+						outputFile = search(inputFolder);
 					} else {
 						System.out.println("Indexing error: please check!");
 					}
@@ -152,6 +153,7 @@ public class IndexChecker {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return outputFile;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -166,54 +168,45 @@ public class IndexChecker {
         int count = 0;
 
 		for (File file : listOfFiles) {
-			System.out.println(count + ": " + file.getAbsolutePath());
+		    String filePath = file.getAbsolutePath().replace(Experiment.prefixToRemove, "");
+			if (isPrint)
+				System.out.println(count + ": " + filePath);
             // parse each file into method (if possible)
-			MethodParser methodParser = new MethodParser();
+			MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
             ArrayList<Method> methodList;
 
             try {
-                methodList = methodParser.parseMethods(file.getAbsolutePath());
+                methodList = methodParser.parseMethods();
                 // System.out.println("No. of methods: " + methodList.size());
                 // check if there's a method
                 if (methodList.size() > 0) {
                     for (Method method : methodList) {
-//                        if (method.getName().equals("method"))
-//                            System.out.println("src = " + method.getSrc());
                         // Create Document object and put in an array list
                         String src = tokenize(method.getSrc());
                         // Use file name as id
-                        Document d = new Document(String.valueOf(count), file.getAbsolutePath() + "_" + method.getName(), src);
-                        // System.out.println("Adding: " + file.getName() + "_" + count);
+                        Document d = new Document(String.valueOf(count),
+								filePath + "_" + method.getName(),
+                                src);
 
                         // add document to array
                         docArray.add(d);
-
-                        // System.out.println("Added " + count + " to the list.");
                         count++;
                     }
                 } else {
                     // cannot parse, use the whole file
                     String src = tokenize(file);
-                    // System.out.println("Can't extract methods: src = " + src);
                     // Use file name as id
-                    Document d = new Document(String.valueOf(count), file.getAbsolutePath() + "_raw", src);
+                    Document d = new Document(String.valueOf(count),
+                            filePath + "_raw",
+                            src);
                     // add document to array
                     docArray.add(d);
                     count++;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                /*
-                // problem parsing, use the whole file
-                String src = tokenize(file);
-                // Use file name as id
-                Document d = new Document(String.valueOf(count), file.getAbsolutePath() + "_raw", src);
-                // add document to array
-                docArray.add(d);
-                */
             }
 
-            // System.out.println("Size: " + docArray.size());
             if (indexMode == Settings.IndexingMode.SEQUENTIAL) {
                 try {
                     isIndexed = es.sequentialInsert(index, type, docArray);
@@ -231,7 +224,6 @@ public class IndexChecker {
                      docArray.clear();
                 }
             } // index every 100 docs
-            // if (docArray.size() >= Settings.BULK_SIZE) {
             // doing indexing (can choose between bulk/sequential)
             else if (indexMode == Settings.IndexingMode.BULK) {
                 if (docArray.size() >= Settings.BULK_SIZE) {
@@ -258,24 +250,6 @@ public class IndexChecker {
                 docArray.clear();
             }
         }
-
-        // index every 100 docs
-        // if (docArray.size() >= Settings.BULK_SIZE) {
-        // doing indexing (can choose between bulk/sequential)
-        // if (indexMode == Settings.IndexingMode.BULK) {
-        //    isIndexed = es.bulkInsert(index, type, docArray);
-
-        //    if (!isIndexed)
-        //        throw new Exception("Cannot bulk insert documents");
-        //    else {
-        //        System.out.println("Successfully indexed documents.");
-                // reset the array list
-        //        docArray.clear();
-        //    }
-        //} else if (indexMode == Settings.IndexingMode.SEQUENTIAL) {
-        //    System.out.println("Successfully indexed documents.");
-        //} else // wrong mode
-        //    throw new Exception("Wrong mode (neither bulk or sequential)");
 
         // successfully indexed, return true
         System.out.println("Successfully indexed documents.");
@@ -324,7 +298,7 @@ public class IndexChecker {
     }
 	
 	@SuppressWarnings("unchecked")
-	private static void search(String inputFolder) throws Exception {
+	private static String search(String inputFolder) throws Exception {
         double total = 0.0;
         String outToFile = "";
         int totalMethods = 0;
@@ -332,7 +306,7 @@ public class IndexChecker {
         // if (writeToFile) {
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
         Date dateobj = new Date();
-        File outfile = new File(outputFolder + "/" + "output_" + df.format(dateobj) + ".csv");
+        File outfile = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
 
         // if file doesn't exists, then create it
         boolean isCreated = false;
@@ -350,44 +324,57 @@ public class IndexChecker {
             int count = 0;
 
             for (File file : listOfFiles) {
-                System.out.println("File: " + file.getAbsolutePath());
+            	if (isPrint)
+                	System.out.println("File: " + file.getAbsolutePath());
                 // reset the output buffer
                 outToFile = "";
                 // parse each file into method (if possible)
-                MethodParser methodParser = new MethodParser();
+                MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
                 ArrayList<Method> methodList;
                 String query = "";
 
                 try {
-                    methodList = methodParser.parseMethods(file.getAbsolutePath());
+                    methodList = methodParser.parseMethods();
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
-                            outToFile += count + "," + file.getName() + "_" + method.getName() + ",";
-                            count++;
+                            // write output to file
+                            outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
+                                    + method.getName() + "," ;
                             // count the number of methods
                             totalMethods += methodList.size();
                             query = tokenize(method.getSrc());
                             // search for results
-                            ArrayList<String> results = es.search(index, type, query, isPrint, isDFS);
-                            for (String s : results) {
-                                outToFile += s + ",";
+                            ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
+                            int resultCount = 0;
+                            for (Document d : results) {
+                                if (resultCount>0)
+                                    outToFile += ","; // add comma in between
+
+                                outToFile += d.getFile();
+                                resultCount++;
                             }
                             outToFile += "\n";
                         }
                     } else {
                         query = tokenize(file);
                         // search for results
-                        ArrayList<String> results = es.search(index, type, query, isPrint, isDFS);
-                        outToFile += count + "," + file.getName() + "_noMethod" + ",";
-                        for (String s : results) {
-                            outToFile += s + ",";
+                        ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
+                        outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
+                                "_noMethod" +
+                                ",";
+                        int resultCount = 0;
+                        for (Document d : results) {
+                            if (resultCount>0)
+                                outToFile += ","; // add comma in between
+
+                            outToFile += d.getFile();
+                            resultCount++;
                         }
                         outToFile += "\n";
-                        count++;
                     }
+                    count++;
                 //} catch(RemoteTransportException rmtexp) {
-                    // System.out.println("Error: query term size exceeds 4096 (too big).");
                 } catch (Exception e) {
                     System.out.println(e.getCause());
                     System.out.println("Error: query term size exceeds 4096 (too big).");
@@ -404,6 +391,8 @@ public class IndexChecker {
         } else {
             throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
         }
+
+        return outfile.getAbsolutePath();
     }
 
 	private static int findTP(ArrayList<String> results, String query) {

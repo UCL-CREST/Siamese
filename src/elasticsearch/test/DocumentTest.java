@@ -1,6 +1,6 @@
 package elasticsearch.test;
 
-import elasticsearch.main.Document;
+import elasticsearch.document.Document;
 import static org.junit.Assert.*;
 /**
  * Created by Chaiyong on 7/27/16.

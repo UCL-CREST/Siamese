@@ -15,6 +15,7 @@ avgp=[]
 avgp_all=[]
 
 for line in file:
+	print line
 	if index_type in line:
 		print line.split(',',1)[1].strip() + ",",
 	if "QUERY," in line:
@@ -32,7 +33,7 @@ for line in file:
 			#print answer_name + "," + query_name,
 			# for MRR
 			if rank_found == 0:
-				rank_found=count
+			    rank_found=count
 			# for MAP
 			correct_ans_sum += 1
 			#print "precision at " + str(count) + "=" +  str(correct_ans_sum) + "/" + str(count)  + "=" + str(correct_ans_sum/count)
