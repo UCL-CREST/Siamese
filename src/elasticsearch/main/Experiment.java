@@ -26,11 +26,15 @@ public class Experiment {
             if (!prefixToRemove.endsWith("/"))
                 prefixToRemove += "/"; // append / at the end
 
-			if (mode.equals("tfidf_text"))
+			if (mode.equals("tfidf_text")) /* text mode (1-gram + no normalisation) */
 				outputFile = tfidfTextExp(inputDir, workingDir, isPrint);
             else if (mode.equals("bm25_text"))
                 outputFile = bm25TextExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("tfidf"))
+            else if (mode.equals("dfr_text"))
+                outputFile = dfrTextExp(inputDir, workingDir, isPrint);
+            else if (mode.equals("ib_text"))
+                outputFile = ibTextExp(inputDir, workingDir, isPrint);
+            else if (mode.equals("tfidf")) /* normal mode (search all parameters + grams + normalisation) */
                 tfidfExp(inputDir, workingDir, isPrint);
 			else if (mode.equals("bm25"))
 				bm25Exp(inputDir, workingDir, isPrint);
@@ -139,7 +143,28 @@ public class Experiment {
 			}
 		// }
 	}
-	
+
+    public static String dfrTextExp(String inputDir, String workingDir, boolean isPrint) {
+        String bm = "be";
+        String ae = "b";
+        String norm = "h1";
+        int[] ngramSizes = {1};
+        String[] normModes = {"x"};
+
+        IndexChecker checker = new IndexChecker();
+
+        String indexSettings = "{ \"similarity\": { \"dfr_similarity\" : { \"type\": \"DFR\", \"basic_model\": \"" + bm + "\", \"after_effect\": \"" + ae + "\", "
+                + "\"normalization\": \"" + norm + "\", \"normalization.h2.c\": \"3.0\"} },  "
+                + "\"analysis\" : { \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } } }";
+
+        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
+        // System.out.println(indexSettings);
+        return checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
+                inputDir, normModes, ngramSizes, true, true,
+                workingDir, false, indexSettings, mappingStr, isPrint);
+
+    }
+
 	public static void dfrExp(String inputDir, String workingDir, boolean isPrint) {
 		String[] basicModelArr = { "be", "d", "g", "if", "in", "ine", "p" };
 		String[] afterEffectArr = { "no", "b", "l" };
@@ -161,6 +186,34 @@ public class Experiment {
 							workingDir, false, indexSettings, mappingStr, isPrint);
 				}
 	}
+
+    public static String ibTextExp(String inputDir, String workingDir, boolean isPrint) {
+        String dist = "ll";
+        String lamb = "df";
+        String ibNorm = "h1";
+        String[] normModes = { "x" };
+        int[] ngramSizes = { 1 };
+
+        IndexChecker checker = new IndexChecker();
+
+        String indexSettings = "{ \"similarity\": "
+                + "{ \"ib_similarity\" : "
+                + "{ \"type\": \"IB\", "
+                + "\"distribution\": \"" + dist + "\", "
+                + "\"lambda\": \"" + lamb + "\", "
+                + "\"normalization\": \"" + ibNorm + "\""
+                + "} "
+                + "},  "
+                + "\"analysis\" : { \"analyzer\" : "
+                + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
+        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
+        // System.out.println(indexSettings);
+        return checker.runExperiment("localhost",
+                "ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
+                inputDir, normModes, ngramSizes, true, true,
+                workingDir, false, indexSettings, mappingStr, isPrint);
+
+    }
 	
 	public static void ibExp(String inputDir, String workingDir, boolean isPrint) {
 		String[] distributions = { "ll", "spl" };

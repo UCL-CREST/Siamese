@@ -23,7 +23,7 @@ public class Evaluator {
 
         ArrayList<MethodClone> clones = readCSV(clonePairFile);
         System.out.println("Reading clone cluster files ... ");
-        System.out.println("  No. of clones = " + clones.size());
+        System.out.println("--> No. of clones = " + clones.size());
 
         // setup a hash map to store clone cluster
         cloneCluster = new HashMap<String, ArrayList<MethodClone>>();
@@ -40,7 +40,7 @@ public class Evaluator {
             }
         }
 
-        System.out.println("  No. of clusters = " + cloneCluster.size());
+        System.out.println("--> No. of clusters = " + cloneCluster.size());
     }
 
     public void generateSearchKey() {
@@ -155,7 +155,7 @@ public class Evaluator {
             }
             // calculate average r-precision
             double arp = sumRPrec/noOfQueries;
-            System.out.println("  No. of query = " + noOfQueries);
+            System.out.println("--> No. of query = " + noOfQueries);
 
             String outFile = "rprec_" + index + ".csv";
             writeToFile(outputDir, outFile , RPrecToPrint, false);
