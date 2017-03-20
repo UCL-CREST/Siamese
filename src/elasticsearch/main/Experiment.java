@@ -9,7 +9,7 @@ public class Experiment {
 			"dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs", "djw",
 			"djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws", "djkp",
 			"djkps", "djkpw", "djkpws"};
-	private static int[] ngramSizes = { 1, 2, 3, 4 };
+	private static int[] ngramSizes = { 1, 2, 3, 4, 5 };
 	public static String prefixToRemove = "";
     public static boolean isPrint = false;
     public static int[] textNgramSize = { 1, 2, 3, 4, 5 };
@@ -98,7 +98,7 @@ public class Experiment {
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
 		String outFile = checker.runExperiment("localhost", "tfidf", "doc",
-				inputDir, normModes, textNgramSize, true, true, workingDir,
+				inputDir, normModes, ngramSizes, true, true, workingDir,
 				true, indexSettings, mappingStr, isPrint);
 
 		return outFile;
@@ -138,8 +138,9 @@ public class Experiment {
                 + "{ \"bm25_similarity\": { \"type\": \"BM25\", \"k1\": \"" + k1 + "\", \"b\": \"" + b + "\", \"discount_overlap\": \""+discO+"\" } }, "
                 + "\"analysis\": { \"analyzer\": { \"default\": { \"type\": \"whitespace\" } } } }";
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
-        return checker.runExperiment("localhost", "bm25", "doc", inputDir, normModes, textNgramSize, true, true, workingDir,
-                true, indexSettings, mappingStr, isPrint);
+        return checker.runExperiment("localhost", "bm25",
+				"doc", inputDir, normModes, ngramSizes, true,
+				true, workingDir, true, indexSettings, mappingStr, isPrint);
     }
 	
 	public static void bm25Exp(String inputDir, String workingDir, boolean isPrint) {
@@ -182,8 +183,8 @@ public class Experiment {
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
         // System.out.println(indexSettings);
-        return checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
-                inputDir, normModes, textNgramSize, true, true,
+        return checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm,
+				"doc", inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr, isPrint);
 
     }
@@ -232,7 +233,7 @@ public class Experiment {
         // System.out.println(indexSettings);
         return checker.runExperiment("localhost",
                 "ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
-                inputDir, normModes, textNgramSize, true, true,
+                inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr, isPrint);
 
     }
@@ -286,7 +287,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
         return checker.runExperiment("localhost",
                 "lmd_" + mu, "doc",
-                inputDir, normModes, textNgramSize, true, true,
+                inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr, isPrint);
     }
 
@@ -330,7 +331,7 @@ public class Experiment {
         // System.out.println(indexSettings);
         return checker.runExperiment("localhost",
                 "lmj_" + lambda, "doc",
-                inputDir, normModes, textNgramSize, true, true,
+                inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr, isPrint);
     }
 
