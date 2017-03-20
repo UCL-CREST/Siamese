@@ -1,0 +1,1 @@
+Best ARP = /home/cragkhit/elasticsearch/results/170319_ngram/lmd_2000_pw_4_20-03-17_02-53-39.csv, 0.7761437944045254
