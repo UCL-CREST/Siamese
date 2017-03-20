@@ -112,9 +112,11 @@ public class Experiment {
 		return outFile;
 	}
 
-    public static void tfidfExp(String inputDir, String workingDir, boolean isPrint) {
+    public static String tfidfExp(String inputDir, String workingDir, boolean isPrint) {
         String[] discountOverlap = { "no", "true", "false" };
         IndexChecker checker = new IndexChecker();
+		String outFile = "";
+
         for (String discO : discountOverlap) {
             String indexSettings = "";
             if (!discO.equals("no"))
@@ -130,10 +132,11 @@ public class Experiment {
 
             String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
             // System.out.println(indexSettings);
-            checker.runExperiment("localhost", "tfidf_" + discO, "doc",
+			outFile = checker.runExperiment("localhost", "tfidf_" + discO, "doc",
                     inputDir, normModes, ngramSizes, true, true,
                     workingDir, false, indexSettings, mappingStr, isPrint);
         }
+		return outFile;
     }
 
     public static String bm25TextExp(String inputDir, String workingDir, boolean isPrint) {
@@ -151,30 +154,29 @@ public class Experiment {
 				true, workingDir, true, indexSettings, mappingStr, isPrint);
     }
 	
-	public static void bm25Exp(String inputDir, String workingDir, boolean isPrint) {
-		String[] k1s = { "0.0", "0.6", "1.2", "1.8", "2.4" };
-		String[] bs = { "0.0", "0.25", "0.50", "0.75", "1.00" };
-		String[] discountOverlaps = { "true", "false" };
-		
+	public static String bm25Exp(String inputDir, String workingDir, boolean isPrint) {
+		String[] k1s = {"0.0", "0.6", "1.2", "1.8", "2.4"};
+		String[] bs = {"0.0", "0.25", "0.50", "0.75", "1.00"};
+		String[] discountOverlaps = {"true", "false"};
+		String outFile = "";
 		IndexChecker checker = new IndexChecker();
-		
-		// for (String fold : folds) {
-			for (String k1 : k1s) {
-				for (String b : bs) {
-					for (String discO : discountOverlaps) {
-						String indexSettings = "{ \"similarity\": "
-								+ "{ \"bm25_similarity\": { \"type\": \"BM25\", \"k1\": \""+k1+"\", \"b\": \""+b+"\", \"discount_overlap\": \""+discO+"\" } }, "
-										+ "\"analysis\": { \"analyzer\": { \"default\": { \"type\": \"whitespace\" } } } }";
-						String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
-						System.out.println(indexSettings);
-						checker.runExperiment("localhost", 
-								"bm25_" + k1 + "_" + b + "_" + discO, "doc",
-								inputDir, normModes, ngramSizes, true, true,
-								workingDir, false, indexSettings, mappingStr, isPrint);
-					}
+
+		for (String k1 : k1s) {
+			for (String b : bs) {
+				for (String discO : discountOverlaps) {
+					String indexSettings = "{ \"similarity\": "
+							+ "{ \"bm25_similarity\": { \"type\": \"BM25\", \"k1\": \"" + k1 + "\", \"b\": \"" + b + "\", \"discount_overlap\": \"" + discO + "\" } }, "
+							+ "\"analysis\": { \"analyzer\": { \"default\": { \"type\": \"whitespace\" } } } }";
+					String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
+					System.out.println(indexSettings);
+					outFile = checker.runExperiment("localhost",
+							"bm25_" + k1 + "_" + b + "_" + discO, "doc",
+							inputDir, normModes, ngramSizes, true, true,
+							workingDir, false, indexSettings, mappingStr, isPrint);
 				}
 			}
-		// }
+		}
+		return outFile;
 	}
 
     public static String dfrTextExp(String inputDir, String workingDir, boolean isPrint) {
@@ -197,26 +199,29 @@ public class Experiment {
 
     }
 
-	public static void dfrExp(String inputDir, String workingDir, boolean isPrint) {
+	public static String dfrExp(String inputDir, String workingDir, boolean isPrint) {
 		String[] basicModelArr = { "be", "d", "g", "if", "in", "ine", "p" };
 		String[] afterEffectArr = { "no", "b", "l" };
 		String[] dfrNormalizationArr = { "no", "h1", "h2", "h3", "z" };
-		
+		String outFile = "";
 		IndexChecker checker = new IndexChecker();
 		
-		for (String bm : basicModelArr)
-			for (String ae : afterEffectArr)
+		for (String bm : basicModelArr) {
+			for (String ae : afterEffectArr) {
 				for (String norm : dfrNormalizationArr) {
 					String indexSettings = "{ \"similarity\": { \"dfr_similarity\" : { \"type\": \"DFR\", \"basic_model\": \"" + bm + "\", \"after_effect\": \"" + ae + "\", "
-										+ "\"normalization\": \"" + norm + "\", \"normalization.h2.c\": \"3.0\"} },  "
+							+ "\"normalization\": \"" + norm + "\", \"normalization.h2.c\": \"3.0\"} },  "
 							+ "\"analysis\" : { \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } } }";
 
 					String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 					// System.out.println(indexSettings);
-					checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
+					outFile = checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
 							inputDir, normModes, ngramSizes, true, true,
 							workingDir, false, indexSettings, mappingStr, isPrint);
 				}
+			}
+		}
+		return outFile;
 	}
 
     public static String ibTextExp(String inputDir, String workingDir, boolean isPrint) {
@@ -246,11 +251,12 @@ public class Experiment {
 
     }
 	
-	public static void ibExp(String inputDir, String workingDir, boolean isPrint) {
+	public static String ibExp(String inputDir, String workingDir, boolean isPrint) {
 		String[] distributions = { "ll", "spl" };
 		String[] lambdas = { "df", "ttf" };
 		String[] ibNormalizationArr = { "no", "h1", "h2", "h3", "z" };
-		
+		String outFile = "";
+
 		IndexChecker checker = new IndexChecker();
 		
 		for (String dist : distributions) {
@@ -268,13 +274,14 @@ public class Experiment {
 							+ "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
 					String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 					// System.out.println(indexSettings);
-					checker.runExperiment("localhost",
+					outFile = checker.runExperiment("localhost",
 							"ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
 							inputDir, normModes, ngramSizes, true, true,
 							workingDir, false, indexSettings, mappingStr, isPrint);
 				}
 			}
 		}
+		return outFile;
 	}
 
     private static String lmdTextExp(String inputDir, String workingDir, boolean isPrint) {
@@ -299,9 +306,11 @@ public class Experiment {
                 workingDir, false, indexSettings, mappingStr, isPrint);
     }
 
-	private static void lmdExp(String inputDir, String workingDir, boolean isPrint) {
+	private static String lmdExp(String inputDir, String workingDir, boolean isPrint) {
 		String[] mus = { "500", "750", "1000", "1250", "1500", 
 				"1750", "2000", "2250", "2500", "2750", "3000" };
+		String outFile = "";
+
 		IndexChecker checker = new IndexChecker();
 		for (String mu : mus) {
 			String indexSettings = "{ \"similarity\": "
@@ -315,11 +324,12 @@ public class Experiment {
 			// System.out.println(indexSettings);
 
 			String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
-			checker.runExperiment("localhost", 
+			outFile = checker.runExperiment("localhost",
 					"lmd_" + mu, "doc",
 					inputDir, normModes, ngramSizes, true, true,
 					workingDir, false, indexSettings, mappingStr, isPrint);
 		}
+		return outFile;
 	}
 
     private static String lmjTextExp(String inputDir, String workingDir, boolean isPrint) {
