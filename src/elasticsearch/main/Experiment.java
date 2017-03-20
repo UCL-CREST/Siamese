@@ -1,14 +1,21 @@
 package elasticsearch.main;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Experiment {
 
-	private static String[] normModes = {"x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks", "kw",
-			"kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws", "jp",
-			"jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps", "jkpw",
-			"jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws", "dk",
-			"dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs", "djw",
-			"djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws", "djkp",
-			"djkps", "djkpw", "djkpws"};
+	private static String[] normModes = {
+			"x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks",
+			"kw", "kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws",
+			"jp", "jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps",
+			"jkpw", "jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws",
+			"dk", "dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs",
+			"djw", "djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws",
+			"djkp", "djkps", "djkpw", "djkpws"};
 	private static int[] ngramSizes = { 1, 2, 3, 4, 5 };
 	public static String prefixToRemove = "";
     public static boolean isPrint = false;
@@ -62,9 +69,10 @@ public class Experiment {
 				lmjExp(inputDir, workingDir, isPrint);
 			else
 				System.out.println("No similarity found");
+
+			writeToFile(workingDir, "best_arp_ngram_" + mode + ".txt","Best ARP = " + Experiment.setting + ", " + Experiment.maxART, false);
 		}
 
-		System.out.println("Best ARP = " + Experiment.setting + ", " + Experiment.maxART);
 	}
 
 	public static void evaluate(String outputFile, String mode, String workingDir) {
@@ -81,7 +89,7 @@ public class Experiment {
 	
 	public static String tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
         String discO = "true";
-		String[] normModes = Experiment.normModes;
+		// String[] normModes = Experiment.normModes;
 		// String[] normModes = { "x" };
 		IndexChecker checker = new IndexChecker();
 		String indexSettings = "";
@@ -385,4 +393,43 @@ public class Experiment {
 
     }
     */
+
+	public static void writeToFile(String location, String filename, String content, boolean isAppend) {
+		if (createDir(location)) {
+            /* copied from https://www.mkyong.com/java/how-to-write-to-file-in-java-bufferedwriter-example/ */
+			BufferedWriter bw = null;
+			FileWriter fw = null;
+
+			try {
+				fw = new FileWriter(location + "/" + filename, isAppend);
+				bw = new BufferedWriter(fw);
+				bw.write(content);
+				if (!isAppend)
+					System.out.println("Saved as: " + filename);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (bw != null)
+						bw.close();
+					if (fw != null)
+						fw.close();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+
+			}
+		} else {
+			System.out.println("ERROR: can't create a directory at: " + location);
+		}
+	}
+
+	public static boolean createDir(String location) {
+		try {
+			Files.createDirectories(Paths.get(location));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 }
