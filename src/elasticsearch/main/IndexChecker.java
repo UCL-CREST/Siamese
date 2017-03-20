@@ -110,7 +110,7 @@ public class IndexChecker {
 		isPrint = printLog;
 		// create a connector
 		es = new ESConnector(server);
-		// System.out.print("Settings" + ", precision");
+
         String outputFile = "";
 		try {
 			es.startup();
@@ -143,16 +143,19 @@ public class IndexChecker {
 						System.out.println("Indexing error: please check!");
 					}
 					// delete index
-					if (!es.deleteIndex(index)) {
-						System.err.println("Cannot delete index: " + index);
-						 System.exit(-1);
-					}
+//					if (!es.deleteIndex(index)) {
+//						System.err.println("Cannot delete index: " + index);
+//						 System.exit(-1);
+//					}
+
+					Experiment.evaluate(outputFile, index, outputDir);
 				}
 			}
 			es.shutdown();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return outputFile;
 	}
 	

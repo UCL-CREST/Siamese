@@ -121,9 +121,11 @@ public class Evaluator {
         writeToFile("resources", "searchkey.csv", textToPrint, false);
     }
 
-    public void evaluteRPrec(String outputFile, int r) {
+    public double evaluteRPrec(String outputFile, int r) {
         System.out.println("Evaluating " + r + "-precision from the output file: " + outputFile);
         String RPrecToPrint = "";
+        double arp = 0.0;
+
         try {
         /* copied from http://howtodoinjava.com/3rd-party/parse-read-write-csv-files-opencsv-tutorial/ */
             CSVReader reader = new CSVReader(new FileReader(outputFile), ',', '"', 0);
@@ -154,7 +156,7 @@ public class Evaluator {
                 sumRPrec += rprec;
             }
             // calculate average r-precision
-            double arp = sumRPrec/noOfQueries;
+            arp = sumRPrec/noOfQueries;
             System.out.println("--> No. of query = " + noOfQueries);
 
             String outFile = "rprec_" + index + ".csv";
@@ -167,10 +169,7 @@ public class Evaluator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public double getPreicionAt10(int tp, int fp) {
-        return 0.0;
+        return arp;
     }
 
     public ArrayList<MethodClone> readCSV(String csvFile) {

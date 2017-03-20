@@ -17,6 +17,12 @@ plot(3, mean(dfr), 'bo')
 plot(4, mean(ib), 'bo')
 plot(5, mean(lmd), 'bo')
 plot(6, mean(lmj), 'bo')
+mean(tfidf)
+mean(bm25)
+mean(dfr)
+mean(ib)
+mean(lmd)
+mean(lmj)
 % xlabel('IR Scoring Function');
 ylabel('r-precision');
 xticks([1 2 3 4 5 6])

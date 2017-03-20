@@ -12,7 +12,11 @@ public class Experiment {
 	private static int[] ngramSizes = { 1, 2, 3, 4 };
 	public static String prefixToRemove = "";
     public static boolean isPrint = false;
-    public static int[] textNgramSize = { 1 };
+    public static int[] textNgramSize = { 1, 2, 3, 4, 5 };
+
+	// collect the best evaluation
+	private static double maxART = 0.0;
+	private static String setting = "";
 	
 	public static void main(String[] args) {
 
@@ -58,17 +62,27 @@ public class Experiment {
 				lmjExp(inputDir, workingDir, isPrint);
 			else
 				System.out.println("No similarity found");
+		}
 
-            Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode + "_1gram", workingDir);
-            evaluator.generateSearchKey();
-            // evaluator.printSearchKey();
-            evaluator.evaluteRPrec(outputFile, 6);
+		System.out.println("Best ARP = " + Experiment.setting + ", " + Experiment.maxART);
+	}
+
+	public static void evaluate(String outputFile, String mode, String workingDir) {
+		Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode, workingDir);
+		evaluator.generateSearchKey();
+		// evaluator.printSearchKey();
+		double arp = evaluator.evaluteRPrec(outputFile, 6);
+		// update the max ARP
+		if (maxART < arp) {
+			maxART = arp;
+			setting = outputFile;
 		}
 	}
 	
 	public static String tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
         String discO = "true";
-		String[] normModes = { "x" };
+		String[] normModes = Experiment.normModes;
+		// String[] normModes = { "x" };
 		IndexChecker checker = new IndexChecker();
 		String indexSettings = "";
         if (!discO.equals("false"))
@@ -83,9 +97,11 @@ public class Experiment {
         }
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
-		return checker.runExperiment("localhost", "tfidf", "doc",
+		String outFile = checker.runExperiment("localhost", "tfidf", "doc",
 				inputDir, normModes, textNgramSize, true, true, workingDir,
 				true, indexSettings, mappingStr, isPrint);
+
+		return outFile;
 	}
 
     public static void tfidfExp(String inputDir, String workingDir, boolean isPrint) {
