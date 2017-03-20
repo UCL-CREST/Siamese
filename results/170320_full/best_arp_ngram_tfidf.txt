@@ -1,0 +1,1 @@
+Best ARP = /home/cragkhit/elasticsearch/results/170320_full/tfidf_true_w_3_20-03-17_10-50-43.csv, 0.7834967349966367
