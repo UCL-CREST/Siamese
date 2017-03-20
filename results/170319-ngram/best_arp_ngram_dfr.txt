@@ -1,0 +1,1 @@
+Best ARP = /Users/Chaiyong/IdeasProjects/ElasticCodeSearch/results/170319-ngram/dfr_be_b_h1_w_5_20-03-17_01-35-22.csv, 0.7728758200856984
