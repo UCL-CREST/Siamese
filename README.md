@@ -33,7 +33,18 @@ sudo apt-get install maven
 ```
 sudo apt-get install default-jdk
 ```
-7. Execute the experiment.
+7. Set JAVA_HOME
+```
+vim /etc/environment
+```
+and paste the location of JAVA_HOME into the file.
+Note: finding JAVA_HOME by
+```
+whereis javac
+ls -l <the path>
+... keep following the path
+```
+8. Execute the experiment.
 ```
 mvn compile exec:java -Dexec.mainClass=elasticsearch.main.Experiment -Dexec.args="tfidf /home/cragkhit/cloplag/tests_andrea/ /home/cragkhit/elasticsearch/results/170320_full/"
 ```
