@@ -1,0 +1,1 @@
+Best ARP = /home/cragkhit/elasticsearch/results/170320_full/lmd_500_kpw_5_21-03-17_02-35-33.csv, 0.7810457547505697
