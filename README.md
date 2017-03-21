@@ -12,7 +12,12 @@ index.query.bool.max_clause_count: 4096
 ```
 git clone git@github.com:cragkhit/elasticsearch.git
 ```
-4. Install Maven: 
+4. Install Maven.
 ```
+sudo apt-get update
 sudo apt-get install maven
+```
+5. Execute the experiment.
+```
+mvn exec:java -Dexec.mainClass=elasticsearch.main.Experiment -Dexec.args="tfidf /home/cragkhit/cloplag/tests_andrea/ "
 ```
