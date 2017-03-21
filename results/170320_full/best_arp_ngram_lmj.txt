@@ -1,0 +1,1 @@
+Best ARP = /home/cragkhit/elasticsearch/results/170320_full/lmj_0.8_w_3_21-03-17_05-43-46.csv, 0.7924836632959983

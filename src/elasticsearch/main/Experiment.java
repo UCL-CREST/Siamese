@@ -19,7 +19,7 @@ public class Experiment {
             "dk", "dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs",
             "djw", "djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws",
             "djkp", "djkps", "djkpw", "djkpws"};
-    private static int[] ngramSizes = {1, 2, 3, 4, 5};
+    private static int[] ngramSizes = { 1, 2, 3, 4 };
     // collect the best evaluation
     private static double maxART = 0.0;
     private static String setting = "";
@@ -182,7 +182,7 @@ public class Experiment {
         String bm = "be";
         String ae = "b";
         String norm = "h1";
-        // String[] normModes = {"x"};
+        String[] normModes = {"x"};
 
         IndexChecker checker = new IndexChecker();
 
@@ -193,7 +193,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
         // System.out.println(indexSettings);
         return checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm,
-                "doc", inputDir, normModes, ngramSizes, true, true,
+                "doc", inputDir, normModes, textNgramSize, true, true,
                 workingDir, false, indexSettings, mappingStr, isPrint);
 
     }
@@ -306,8 +306,8 @@ public class Experiment {
     }
 
     private static String lmdExp(String inputDir, String workingDir, boolean isPrint) {
-        String[] mus = {"500", "750", "1000", "1250", "1500",
-                "1750", "2000", "2250", "2500", "2750", "3000"};
+        String[] mus = {"500", "1000", "1500",
+                "2000", "2500", "3000"};
         String outFile = "";
 
         IndexChecker checker = new IndexChecker();
@@ -353,9 +353,10 @@ public class Experiment {
     }
 
     private static void lmjExp(String inputDir, String workingDir, boolean isPrint) {
-        String[] normModes = {"pw"};
-        int[] ngramSizes = {4};
-        String[] lambdas = {"0.9"};
+        // String[] normModes = {"pw"};
+        // int[] ngramSizes = {4};
+        String[] lambdas = { "0.1", "0.2", "0.3", "0.4", "0.5",
+                "0.6", "0.7", "0.8", "0.9", "1.0" };
         IndexChecker checker = new IndexChecker();
         for (String lambda : lambdas) {
             String indexSettings = "{ \"similarity\": "
