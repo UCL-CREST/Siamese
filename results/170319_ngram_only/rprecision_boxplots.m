@@ -1,5 +1,5 @@
-scoring_fnc = 'lmd_2000';
-scoring_name = 'LM Dirichlet';
+scoring_fnc = 'tfidf';
+scoring_name = 'TFIDF';
 % read each result file separately
 x1gram = csvread(strcat('rprec_',scoring_fnc, '_x_1.csv'));
 x2gram = csvread(strcat('rprec_',scoring_fnc, '_x_2.csv'));
@@ -17,11 +17,11 @@ plot(2, mean(x2gram), 'bo')
 plot(3, mean(x3gram), 'bo')
 plot(4, mean(x4gram), 'bo')
 plot(5, mean(x5gram), 'bo')
-mean(tfidf_1gram)
-mean(tfidf_2gram)
-mean(tfidf_3gram)
-mean(tfidf_4gram)
-mean(tfidf_5gram)
+mean(x1gram)
+mean(x2gram)
+mean(x3gram)
+mean(x4gram)
+mean(x5gram)
 xlabel(scoring_name);
 ylabel('r-precision');
 xticks([1 2 3 4 5])
