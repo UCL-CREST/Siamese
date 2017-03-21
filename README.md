@@ -9,6 +9,7 @@ wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/
 And extract it to the disk.
 ```
 tar -xvf elasticsearch-2.2.0.tar.gz
+rm elasticsearch-2.2.0.tar.gz
 ```
 2. Modify the configuration file in config/elasticsearch.yml
 ```
