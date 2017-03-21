@@ -51,6 +51,7 @@ mvn compile exec:java -Dexec.mainClass=elasticsearch.main.Experiment -Dexec.args
 
 # Experimental Details
 No. of combinations of IR scoring parameter I searched for:
+
 | Func. | n-gram | code norm. | params | Total |
 |-------------------|--------|------------|--------|-------|
 | TF-IDF | 4 | 64 | 3 | 768 |
