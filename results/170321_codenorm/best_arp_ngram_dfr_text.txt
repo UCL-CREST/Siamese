@@ -1,0 +1,1 @@
+Best ARP = /home/cragkhit/elasticsearch/results/170321_codenorm/dfr_be_b_h1_jkw_1_21-03-17_19-42-40.csv, 0.6495098084503529

@@ -1,0 +1,1 @@
+Best ARP = /home/cragkhit/elasticsearch/results/170321_codenorm/lmj_0.1_jw_1_21-03-17_19-08-58.csv, 0.7165032708469559
