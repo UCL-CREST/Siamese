@@ -90,6 +90,7 @@ public class Experiment {
         String discO = "true";
         // String[] normModes = Experiment.normModes;
         // String[] normModes = { "x" };
+	int[] ngramSizes = { 1 };
         IndexChecker checker = new IndexChecker();
         String indexSettings = "";
         if (!discO.equals("false"))
@@ -140,6 +141,7 @@ public class Experiment {
 
     public static String bm25TextExp(String inputDir, String workingDir, boolean isPrint) {
         // String[] normModes = { "x" };
+	int[] ngramSizes = { 1 };
         double k1 = 1.2;
         double b = 0.75;
         String discO = "true";
@@ -182,7 +184,8 @@ public class Experiment {
         String bm = "be";
         String ae = "b";
         String norm = "h1";
-        String[] normModes = {"x"};
+        // String[] normModes = {"x"};
+	int[] ngramSizes = { 1 };
 
         IndexChecker checker = new IndexChecker();
 
@@ -227,6 +230,7 @@ public class Experiment {
         String dist = "ll";
         String lamb = "df";
         String ibNorm = "h1";
+	int[] ngramSizes = { 1 };
         // String[] normModes = { "x" };
 
         IndexChecker checker = new IndexChecker();
@@ -286,7 +290,7 @@ public class Experiment {
     private static String lmdTextExp(String inputDir, String workingDir, boolean isPrint) {
         String mu = "2000";
         // String[] normModes = { "x" };
-        // int[] ngramSizes = { 1 };
+         int[] ngramSizes = { 1 };
 
         IndexChecker checker = new IndexChecker();
         String indexSettings = "{ \"similarity\": "
@@ -334,6 +338,7 @@ public class Experiment {
     private static String lmjTextExp(String inputDir, String workingDir, boolean isPrint) {
         // String[] normModes = { "x" };
         String lambda = "0.1";
+        int[] ngramSizes = { 1 };
         IndexChecker checker = new IndexChecker();
         String indexSettings = "{ \"similarity\": "
                 + "{ \"lmj_similarity\" : "
