@@ -1,0 +1,1 @@
+Best ARP = /home/cragkhit/elasticsearch/results/170320_full/bm25_0.6_1.00_true_kw_5_20-03-17_21-52-09.csv, 0.7834967348505469
