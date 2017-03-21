@@ -17,7 +17,11 @@ git clone git@github.com:cragkhit/elasticsearch.git
 sudo apt-get update
 sudo apt-get install maven
 ```
-5. Execute the experiment.
+5. Run elasticsearch
+```
+./elasticsearch-2.2.0/bin/elasticsearch -d
+```
+6. Execute the experiment.
 ```
 mvn compile exec:java -Dexec.mainClass=elasticsearch.main.Experiment -Dexec.args="tfidf /home/cragkhit/cloplag/tests_andrea/ /home/cragkhit/elasticsearch/results/170320_full/"
 ```
