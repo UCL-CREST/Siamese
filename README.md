@@ -2,7 +2,14 @@
 Similar code search using Elasticsearch
 
 Setup steps:
-1. Download elasticsearch-2.2.0 from https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz and extract it to the disk.
+1. Download elasticsearch-2.2.0 
+```
+wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz
+```
+And extract it to the disk.
+```
+tar -xvf elasticsearch-2.2.0.tar.gz
+```
 2. Modify the configuration file in config/elasticsearch.yml
 ```
 cluster.name: stackoverflow
