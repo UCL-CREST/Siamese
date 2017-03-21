@@ -196,7 +196,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
         // System.out.println(indexSettings);
         return checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm,
-                "doc", inputDir, normModes, textNgramSize, true, true,
+                "doc", inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr, isPrint);
 
     }
