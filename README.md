@@ -48,3 +48,16 @@ ls -l <the path>
 ```
 mvn compile exec:java -Dexec.mainClass=elasticsearch.main.Experiment -Dexec.args="tfidf /home/cragkhit/cloplag/tests_andrea/ /home/cragkhit/elasticsearch/results/170320_full/"
 ```
+
+# Experimental Details
+No. of combinations of IR scoring parameter I searched for:
+
+| Func. | n-gram | code norm. | params | Total |
+|-------------------|--------|------------|--------|-------|
+| TF-IDF | 4 | 64 | 3 | 768 |
+| BM25 | 4 | 64 | 5*5*2 | 12800 |
+| DFR | 4 | 64 | 7*3*5 | 26880 |
+| IB | 4 | 64 | 2*2*5 | 5120 |
+| LM Dirichlet | 4 | 64 | 6 | 1536 |
+| LM Jelinek Mercer | 4 | 64 | 10 | 2560 |
+| Grand total |  |  |  | 49664 |
