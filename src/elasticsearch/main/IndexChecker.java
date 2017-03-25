@@ -99,7 +99,7 @@ public class IndexChecker {
 	String runExperiment(String hostname, String indexName, String typeName, String inputDir
             , String[] normModes, int[] ngramSizes, boolean useNgram
             , boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
-            , String mappingStr, boolean printLog) {
+            , String mappingStr, boolean printLog, boolean isDeleteIndex) {
 		server = hostname;
 		type = typeName;
 		inputFolder = inputDir;
@@ -143,10 +143,12 @@ public class IndexChecker {
 						System.out.println("Indexing error: please check!");
 					}
 					// delete index
-					if (!es.deleteIndex(index)) {
-						System.err.println("Cannot delete index: " + index);
-						 System.exit(-1);
-					}
+					if (isDeleteIndex) {
+                        if (!es.deleteIndex(index)) {
+                            System.err.println("Cannot delete index: " + index);
+                            System.exit(-1);
+                        }
+                    }
 
 					Experiment.evaluate(outputFile, index, outputDir);
 				}
