@@ -90,7 +90,7 @@ public class Experiment {
     private static String tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
         String discO = "true";
         // String[] normModes = Experiment.normModes;
-        String[] normModes = { "x" };
+        String[] normModes = { "sw" };
 	    int[] ngramSizes = { 1 };
         IndexChecker checker = new IndexChecker();
         String indexSettings = "";
@@ -423,7 +423,7 @@ public class Experiment {
     }
     */
 
-    private static void writeToFile(String location, String filename, String content, boolean isAppend) {
+    public static void writeToFile(String location, String filename, String content, boolean isAppend) {
         if (createDir(location)) {
             /* copied from https://www.mkyong.com/java/how-to-write-to-file-in-java-bufferedwriter-example/ */
             BufferedWriter bw = null;
