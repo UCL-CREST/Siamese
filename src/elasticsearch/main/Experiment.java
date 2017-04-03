@@ -91,7 +91,7 @@ public class Experiment {
         String discO = "true";
         // String[] normModes = Experiment.normModes;
         String[] normModes = { "sw" };
-	    int[] ngramSizes = { 1 };
+	    int[] ngramSizes = { 3 };
         IndexChecker checker = new IndexChecker();
         String indexSettings = "";
         if (!discO.equals("false"))

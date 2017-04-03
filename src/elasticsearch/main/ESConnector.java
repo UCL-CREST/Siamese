@@ -6,10 +6,12 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import elasticsearch.document.Document;
+import org.elasticsearch.action.admin.indices.close.CloseIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexResponse;
@@ -138,8 +140,8 @@ public class ESConnector {
         for (SearchHit hit : hits) {
             if (count >= 10)
                 break;
-            if (isPrint) System.out.println("ANS," + hit.getId() + "," + hit.getScore()); // prints out the id of the
-            // document
+			// prints out the id of the document
+            if (isPrint) System.out.println("ANS," + hit.getId() + "," + hit.getScore());
             Document d = new Document(hit.getId(),
                     hit.getSource().get("file").toString(),
                     hit.getSource().get("src").toString());
@@ -178,7 +180,8 @@ public class ESConnector {
 		return exists;
 	}
 	
-	public void refresh() {
+	public void refresh(String indexName) {
 		client.admin().indices().prepareRefresh().execute().actionGet();
+		client.admin().indices().prepareFlush(indexName).execute().actionGet();
 	}
 }

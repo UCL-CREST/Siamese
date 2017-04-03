@@ -140,14 +140,20 @@ public class Evaluator {
                 noOfQueries++;
 
                 String query = nextLine[0];
-                // get the key of this query
+
+                // get the answer key of this query
                 ArrayList<String> relevantResults = searchKey.get(query);
+
+                int checkSize = r;
+                if (nextLine.length < r)
+                    checkSize = nextLine.length;
                 // check the results with the key
-                for (int i = 1; i <= r; i++) {
+                // limit the check to the number of relevant results obtained (nextLine.length)
+                for (int i = 1; i < checkSize; i++) {
                     if (relevantResults.contains(nextLine[i]))
                         tp++;
                 }
-                // calculate r-precision
+                // calculate r-precision up to the number of relevant results obtained (if <= r)
                 float rprec = (float) tp/r;
                 if (Experiment.isPrint)
                     System.out.println("  " + r + "-prec = " + rprec);

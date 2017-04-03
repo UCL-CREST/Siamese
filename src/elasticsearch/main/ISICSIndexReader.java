@@ -8,7 +8,9 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.NativeFSLockFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,8 +30,9 @@ public class ISICSIndexReader {
     private static nGramGenerator ngen;
 
     public static void main(String[] args) {
-        String indexName = "tfidf_sw_1";
+         // testIdfRetrieval();
 
+        String indexName = "tfidf_sw_1";
         // initialise the n-gram generator
         ngen = new nGramGenerator(1);
 
@@ -40,9 +43,7 @@ public class ISICSIndexReader {
         setTokenizerMode(normMode);
         try {
             reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
-            IndexSearcher searcher = new IndexSearcher(reader);
-
-
+            // IndexSearcher searcher = new IndexSearcher(reader);
             String queries = queryTermSelection("/Users/Chaiyong/Documents/phd/2016/cloplag/tests_andrea/", "tfidf_sw_1");
             // testIdfRetrieval();
 
@@ -50,7 +51,6 @@ public class ISICSIndexReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private static String queryTermSelection(String inputFolder, String index) {
@@ -161,33 +161,21 @@ public class ISICSIndexReader {
     }
 
     public static void testIdfRetrieval() {
-        String[] terms = {"publicstaticvoid", "staticvoidW",
-                "voidW(", "W(String", "(String[", "String[]", "[]W",
-                "]W)", "W){", "){String", "{StringW", "StringW=",
-                "W=\"\"", "=\"\";", "\"\";InputStreamReader", ";InputStreamReaderW",
-                "InputStreamReaderW="};
+        String[] terms = {"public", "static", "void"};
         /***
          * Code is copied from
          * http://stackoverflow.com/questions/35925482/lucene-using-fsdirectory
          */
         // directory where your index is stored
-        String indexFile =  "/Users/Chaiyong/elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/tfidf_w_3/0/index";
+        String indexFile =  "/Users/Chaiyong/elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/tfidf_sw_1/0/index";
 
         IndexReader reader = null;
         try {
-            reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
+            Directory dir = FSDirectory.open(Paths.get(indexFile), NativeFSLockFactory.INSTANCE);
+            reader = DirectoryReader.open(dir);
             IndexSearcher searcher = new IndexSearcher(reader);
             for (String term : terms) {
                 Term t = new Term("src", term);
-                // Get the top 10 docs
-//            Query query = new TermQuery(t);
-//            TopDocs tops= searcher.search(query, 10);
-//            ScoreDoc[] scoreDoc = tops.scoreDocs;
-//            System.out.println(scoreDoc.length);
-//            for (ScoreDoc score : scoreDoc){
-//                System.out.println("DOC " + score.doc + " SCORE " + score.score);
-//            }
-                // Get the frequency of the term
                 int freq = reader.docFreq(t);
                 System.out.println(term + ": " + freq);
             }

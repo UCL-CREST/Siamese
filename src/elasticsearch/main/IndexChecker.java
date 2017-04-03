@@ -32,7 +32,9 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.NativeFSLockFactory;
 
 
 public class IndexChecker {
@@ -70,7 +72,7 @@ public class IndexChecker {
                 boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
                 if (status) {
                     // if ok, refresh the index, then search
-                    es.refresh();
+                    es.refresh(index);
                     System.out.println("Successfully creating index.");
                 } else {
                     System.out.println("Indexing error: please check!");
@@ -143,7 +145,7 @@ public class IndexChecker {
 					boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
 					if (status) {
 						// if ok, refresh the index, then search
-						es.refresh();
+						es.refresh(index);
 						outputFile = search(inputFolder);
 					} else {
 						System.out.println("Indexing error: please check!");
@@ -307,10 +309,70 @@ public class IndexChecker {
         }
         return src;
     }
+
+	/***
+	 * Read idf of each term in the query directly from Lucene index
+	 * @param terms query containing search terms
+	 * @param selectedSize size of the selected terms
+	 * @return selected top-selectedSize terms
+	 */
+	private static String getSelectedTerms(String indexName, String terms, int selectedSize) {
+		String indexFile = "/Users/Chaiyong/elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/"
+				+ indexName + "/0/index";
+		String selectedTerms = "";
+		try {
+			IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
+
+			String[] termsArr = terms.split(" ");
+
+			// TODO: fix this constant values!!
+
+			SelectedTerm firstMinTerm = new SelectedTerm("x", 9999999);
+			SelectedTerm secondMinTerm = new SelectedTerm("x", 9999999);
+			SelectedTerm thirdMinTerm = new SelectedTerm("x", 9999999);
+
+			for (int i = 0; i < termsArr.length; i++) {
+				String term = termsArr[i];
+				// TODO: get rid of the blank term (why it's blank?)
+				if (!term.equals("")) {
+					Term t = new Term("src", term);
+					int freq = reader.docFreq(t);
+
+					if (freq < firstMinTerm.getFrequency()) {
+						firstMinTerm.setFrequency(freq);
+						firstMinTerm.setTerm(term);
+					} else if (!term.equals(firstMinTerm.getTerm()) &&
+							freq < secondMinTerm.getFrequency()) {
+						secondMinTerm.setFrequency(freq);
+						secondMinTerm.setTerm(term);
+					} else if (!term.equals(firstMinTerm.getTerm()) &&
+							!term.equals(secondMinTerm.getTerm()) &&
+							freq < thirdMinTerm.getFrequency()) {
+						thirdMinTerm.setFrequency(freq);
+						thirdMinTerm.setTerm(term);
+					}
+				}
+			}
+
+			selectedTerms = "\"" + firstMinTerm.getTerm().replace("\"", "&quot;") + "\"," + firstMinTerm.getFrequency() +
+					",\"" + secondMinTerm.getTerm().replace("\"", "&quot;") + "\"," + secondMinTerm.getFrequency() +
+					",\"" + thirdMinTerm.getTerm().replace("\"", "&quot;") + "\"," + thirdMinTerm.getFrequency();
+
+			System.out.println(selectedTerms);
+
+			// selectedTerms = firstMinTerm.getTerm() +  " " + secondMinTerm.getTerm() + " " + thirdMinTerm.getTerm();
+			selectedTerms = firstMinTerm.getTerm();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return selectedTerms;
+	}
 	
 	@SuppressWarnings("unchecked")
 	private static String search(String inputFolder) throws Exception {
-        double total = 0.0;
+		double total = 0.0;
         String outToFile = "";
         int totalMethods = 0;
 
@@ -354,7 +416,10 @@ public class IndexChecker {
                                     + method.getName() + "," ;
                             // count the number of methods
                             totalMethods += methodList.size();
-                            query = tokenize(method.getSrc());
+
+                            String tmpQuery = tokenize(method.getSrc());
+                            query = getSelectedTerms(index, tmpQuery, 3);
+
                             // search for results
                             ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
                             int resultCount = 0;
@@ -568,65 +633,6 @@ public class IndexChecker {
 		HelpFormatter formater = new HelpFormatter();
 		formater.printHelp("(v 0.2) java -jar checker.jar", options);
 		System.exit(0);
-	}
-
-    /***
-     * Read idf of each term in the query directly from Lucene index
-     * @param indexName name of the Elasticsearch (Lucene) index
-     * @param terms query containing search terms
-     * @param selectedSize size of the selected terms
-     * @return selected top-selectedSize terms
-     */
-	private static String getSelectedTerms(String indexName, String terms, int selectedSize) {
-		String[] termsArr = terms.split(" ");
-		ArrayList<SelectedTerm> selectedTermIndexes = new ArrayList<>();
-		String selectedTerms = "";
-		// directory where your index is stored
-		String indexFile =  "/Users/Chaiyong/elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/"
-                + indexName + "/0/index";
-
-		IndexReader reader = null;
-		try {
-			reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
-			IndexSearcher searcher = new IndexSearcher(reader);
-
-			for (int i=0; i<termsArr.length; i++) {
-			    String term = termsArr[i];
-				Term t = new Term("src", term);
-				int freq = reader.docFreq(t);
-				// System.out.println(term + ": " + freq);
-				// first term, just insert
-				if (selectedTermIndexes.size() == 0) {
-                    selectedTermIndexes.add(new SelectedTerm(termsArr[i], freq));
-                }
-                else{
-				    // if not the first one, add it according to its frequency (ascending)
-                    for (int j=0; i<selectedTermIndexes.size(); j++) {
-                        SelectedTerm sti = selectedTermIndexes.get(j);
-                        if (freq < sti.getFrequency()) {
-                            SelectedTerm newSti = new SelectedTerm(termsArr[i], freq);
-                            selectedTermIndexes.add(j, newSti);
-                        }
-                    }
-                }
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		selectedTerms = selectedTermIndexes.get(0).getTerm();
-		for (int i=1; i<selectedSize; i++) {
-		    selectedTerms += " " + selectedTermIndexes.get(i).getTerm();
-        }
-		/* TODO: have to remove */
-        // System.out.println("Selected terms: " + selectedTerms);
-		// wait for keyboard
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return selectedTerms;
 	}
 
 	public static class SelectedTerm {
