@@ -148,10 +148,12 @@ public class Evaluator {
                 if (nextLine.length < r)
                     checkSize = nextLine.length;
                 // check the results with the key
-                // limit the check to the number of relevant results obtained (nextLine.length)
-                for (int i = 1; i < checkSize; i++) {
-                    if (relevantResults.contains(nextLine[i]))
-                        tp++;
+                for (int i = 1; i <= r; i++) {
+                    // limit the check to the number of relevant results obtained (nextLine.length)
+                    if (i < nextLine.length) {
+                        if (relevantResults.contains(nextLine[i]))
+                            tp++;
+                    }
                 }
                 // calculate r-precision up to the number of relevant results obtained (if <= r)
                 float rprec = (float) tp/r;

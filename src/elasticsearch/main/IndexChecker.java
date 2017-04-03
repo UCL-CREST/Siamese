@@ -330,6 +330,8 @@ public class IndexChecker {
 			SelectedTerm firstMinTerm = new SelectedTerm("x", 9999999);
 			SelectedTerm secondMinTerm = new SelectedTerm("x", 9999999);
 			SelectedTerm thirdMinTerm = new SelectedTerm("x", 9999999);
+			SelectedTerm fourthMinTerm = new SelectedTerm("x", 9999999);
+			SelectedTerm fifthMinTerm = new SelectedTerm("x", 9999999);
 
 			for (int i = 0; i < termsArr.length; i++) {
 				String term = termsArr[i];
@@ -350,18 +352,32 @@ public class IndexChecker {
 							freq < thirdMinTerm.getFrequency()) {
 						thirdMinTerm.setFrequency(freq);
 						thirdMinTerm.setTerm(term);
+					} else if (!term.equals(firstMinTerm.getTerm()) &&
+							!term.equals(secondMinTerm.getTerm()) &&
+							!term.equals(thirdMinTerm.getTerm()) &&
+							freq < fourthMinTerm.getFrequency()) {
+						fourthMinTerm.setFrequency(freq);
+						fourthMinTerm.setTerm(term);
+					} else if (!term.equals(firstMinTerm.getTerm()) &&
+							!term.equals(secondMinTerm.getTerm()) &&
+							!term.equals(thirdMinTerm.getTerm()) &&
+							!term.equals(fourthMinTerm.getTerm()) &&
+							freq < fifthMinTerm.getFrequency()) {
+						fifthMinTerm.setFrequency(freq);
+						fifthMinTerm.setTerm(term);
 					}
 				}
 			}
 
 			selectedTerms = "\"" + firstMinTerm.getTerm().replace("\"", "&quot;") + "\"," + firstMinTerm.getFrequency() +
 					",\"" + secondMinTerm.getTerm().replace("\"", "&quot;") + "\"," + secondMinTerm.getFrequency() +
-					",\"" + thirdMinTerm.getTerm().replace("\"", "&quot;") + "\"," + thirdMinTerm.getFrequency();
+					",\"" + thirdMinTerm.getTerm().replace("\"", "&quot;") + "\"," + thirdMinTerm.getFrequency() +
+					",\"" + fourthMinTerm.getTerm().replace("\"", "&quot;") + "\"," + fourthMinTerm.getFrequency() +
+					",\"" + fifthMinTerm.getTerm().replace("\"", "&quot;") + "\"," + fifthMinTerm.getFrequency();
 
 			System.out.println(selectedTerms);
 
-			// selectedTerms = firstMinTerm.getTerm() +  " " + secondMinTerm.getTerm() + " " + thirdMinTerm.getTerm();
-			selectedTerms = firstMinTerm.getTerm();
+			selectedTerms = firstMinTerm.getTerm() +  " " + secondMinTerm.getTerm() + " " + thirdMinTerm.getTerm() + " " + fourthMinTerm + " " + fifthMinTerm;
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -417,7 +433,8 @@ public class IndexChecker {
                             // count the number of methods
                             totalMethods += methodList.size();
 
-                            String tmpQuery = tokenize(method.getSrc());
+							String tmpQuery = tokenize(method.getSrc());
+//							query = tokenize(method.getSrc());
                             query = getSelectedTerms(index, tmpQuery, 3);
 
                             // search for results

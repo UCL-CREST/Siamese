@@ -90,7 +90,7 @@ public class Experiment {
     private static String tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
         String discO = "true";
         // String[] normModes = Experiment.normModes;
-        String[] normModes = { "sw" };
+        String[] normModes = { "w" };
 	    int[] ngramSizes = { 3 };
         IndexChecker checker = new IndexChecker();
         String indexSettings = "";
