@@ -13,7 +13,7 @@ public class MethodParserTest {
 
     @org.junit.Test
     public void checkMethodParser() throws Exception {
-        String srcStr = "/Users/Chaiyong/Documents/cloplag/tests/guessword/0_orig/GuessWord.java";
+        String srcStr = "resources/tests/guessword/0_orig/GuessWord.java";
         MethodParser mParser = new MethodParser(srcStr, "");
         ArrayList<Method> methods = mParser.parseMethods();
 
@@ -25,7 +25,7 @@ public class MethodParserTest {
 
     @org.junit.Test
     public void checkMethodParser2() throws Exception {
-        String srcStr = "/Users/Chaiyong/Downloads/stackoverflow/stackoverflow_formatted/10135525_0.java";
+        String srcStr = "resources/tests/guessword/0_orig/GuessWord.java";
         MethodParser mParser = new MethodParser(srcStr, "");
         ArrayList<Method> methods = mParser.parseMethods();
 

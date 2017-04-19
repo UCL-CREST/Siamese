@@ -1,16 +1,19 @@
 package elasticsearch.main;
 
+import elasticsearch.document.Method;
+
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class Experiment {
 
     static String prefixToRemove = "";
-    static boolean isPrint = false;
-    public static int[] textNgramSize = {1, 2, 3, 4, 5};
+
     private static String[] normModes = {
             "x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks",
             "kw", "kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws",
@@ -19,10 +22,14 @@ public class Experiment {
             "dk", "dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs",
             "djw", "djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws",
             "djkp", "djkps", "djkpw", "djkpws"};
+
     private static int[] ngramSizes = { 1, 2, 3, 4 };
+
     // collect the best evaluation
     private static double maxART = 0.0;
     private static String setting = "";
+
+    protected static boolean isPrint = true;
     private static boolean isDeleteIndex = false;
 
     public static void main(String[] args) {
@@ -43,18 +50,20 @@ public class Experiment {
             if (!prefixToRemove.endsWith("/"))
                 prefixToRemove += "/"; // append / at the end
 
-            if (mode.equals("tfidf_text")) /* text mode (1-gram + no normalisation) */
-                outputFile = tfidfTextExp(inputDir, workingDir, isPrint);
+            if (mode.equals("query2n"))
+                generate2NQueries();
+            else if (mode.equals("tfidf_text")) /* text mode (1-gram + no normalisation) */
+                tfidfTextExp(inputDir, workingDir, isPrint);
             else if (mode.equals("bm25_text"))
-                outputFile = bm25TextExp(inputDir, workingDir, isPrint);
+                bm25TextExp(inputDir, workingDir, isPrint);
             else if (mode.equals("dfr_text"))
-                outputFile = dfrTextExp(inputDir, workingDir, isPrint);
+                dfrTextExp(inputDir, workingDir, isPrint);
             else if (mode.equals("ib_text"))
-                outputFile = ibTextExp(inputDir, workingDir, isPrint);
+                ibTextExp(inputDir, workingDir, isPrint);
             else if (mode.equals("lmd_text"))
-                outputFile = lmdTextExp(inputDir, workingDir, isPrint);
+                lmdTextExp(inputDir, workingDir, isPrint);
             else if (mode.equals("lmj_text"))
-                outputFile = lmjTextExp(inputDir, workingDir, isPrint);
+                lmjTextExp(inputDir, workingDir, isPrint);
             else if (mode.equals("tfidf")) /* normal mode (search all parameters + grams + normalisation) */
                 tfidfExp(inputDir, workingDir, isPrint);
             else if (mode.equals("bm25"))
@@ -70,9 +79,32 @@ public class Experiment {
             else
                 System.out.println("No similarity found");
 
-            writeToFile(workingDir, "best_arp_ngram_" + mode + ".txt", "Best ARP = " + Experiment.setting + ", " + Experiment.maxART, false);
+            writeToFile(workingDir, "best_arp_ngram_" + mode + ".txt",
+                    "Best ARP = " + Experiment.setting + ", " + Experiment.maxART,
+                    false);
         }
 
+    }
+
+    private static void generate2NQueries() {
+        File file = new File("resources/tests_code3/bubblesort/0_orig_BubbleSort.java:main/BubbleSort.java:main.java");
+        MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
+        ArrayList<Method> methodList = methodParser.parseMethods();
+        for (Method method: methodList) {
+            try {
+                IndexChecker ic = new IndexChecker();
+                ic.setIsPrint(true);
+                ic.setOutputFolder("results/170404");
+                char[] normMode = { 's', 'w' };
+                ic.setTokenizerMode(normMode);
+                ArrayList<String> tokens = ic.tokenizeStringToArray(ic.tokenize(method.getSrc()));
+                // System.out.println("Array size: " + tokens.size());
+                ArrayList<String> queries = ic.generate2NQuery(tokens);
+                // System.out.println("Size: " + queries.size());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     static void evaluate(String outputFile, String mode, String workingDir) {
@@ -80,6 +112,8 @@ public class Experiment {
         evaluator.generateSearchKey();
         // evaluator.printSearchKey();
         double arp = evaluator.evaluteRPrec(outputFile, 6);
+        if (isPrint)
+            System.out.println("ARP: " + arp);
         // update the max ARP
         if (maxART < arp) {
             maxART = arp;
@@ -87,11 +121,11 @@ public class Experiment {
         }
     }
 
-    private static String tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static void tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
         String discO = "true";
         // String[] normModes = Experiment.normModes;
-        String[] normModes = { "w" };
-	    int[] ngramSizes = { 3 };
+        String[] normModes = { "x" };
+	    int[] ngramSizes = { 1 };
         IndexChecker checker = new IndexChecker();
         String indexSettings = "";
         if (!discO.equals("false"))
@@ -108,12 +142,37 @@ public class Experiment {
         }
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
-        String outFile = checker.runExperiment("localhost", "tfidf", "doc",
+        checker.runExperiment("localhost", "tfidf", "doc",
                 inputDir, normModes, ngramSizes, true, true, workingDir,
                 true, indexSettings, mappingStr, isPrint, isDeleteIndex);
-
-        return outFile;
     }
+
+    private static void tfidfQuerySelectionExp(String inputDir, String workingDir, boolean isPrint) {
+        String discO = "true";
+        // String[] normModes = Experiment.normModes;
+        String[] normModes = { "x" };
+        int[] ngramSizes = { 1 };
+        IndexChecker checker = new IndexChecker();
+        String indexSettings = "";
+        if (!discO.equals("false"))
+            indexSettings = "{ \"number_of_shards\": 1, " +
+                    "\"similarity\": { \"tfidf_similarity\": " +
+                    "{ \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
+                    "\"analysis\": { " +
+                    "\"analyzer\": { " +
+                    "\"default\": { " +
+                    "\"type\": \"whitespace\"" +
+                    "} } } }";
+        else {
+            indexSettings = "{ \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } }";
+        }
+
+        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
+        checker.run2NExperiment("localhost", "tfidf", "doc",
+                inputDir, normModes, ngramSizes, true, true, workingDir,
+                true, indexSettings, mappingStr, isPrint, isDeleteIndex);
+    }
+
 
     private static String tfidfExp(String inputDir, String workingDir, boolean isPrint) {
         String[] discountOverlap = {"no", "true", "false"};

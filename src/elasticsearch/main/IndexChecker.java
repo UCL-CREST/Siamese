@@ -1,92 +1,75 @@
 package elasticsearch.main;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import elasticsearch.document.Document;
-import elasticsearch.settings.IndexSettings;
-import elasticsearch.settings.Settings;
 import elasticsearch.document.Method;
-
+import elasticsearch.settings.Settings;
 import elasticsearch.settings.TokenizerMode;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.store.NativeFSLockFactory;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.file.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 public class IndexChecker {
-	private static ESConnector es;
-	private static String server;
-	private static String index;
-	private static String type;
-	private static String inputFolder;
-	private static String normMode;
-	private static TokenizerMode modes = new TokenizerMode();
-	private static int ngramSize = 4;
-	private static boolean isNgram = false;
-	private static boolean isPrint = false;
-	private static nGramGenerator ngen;
-	private static Options options = new Options();
-	private static boolean isDFS = true;
-	private static String outputFolder = "";
-	private static boolean writeToFile = false;
-    private static String[] extensions = { "java" };
-    private static String command = "index";
+	private ESConnector es;
+	private String server;
+	private String index;
+	private String type;
+	private String inputFolder;
+	private String normMode;
+	private TokenizerMode modes = new TokenizerMode();
+	private int ngramSize = 4;
+	private boolean isNgram = false;
+	private boolean isPrint = false;
+	private nGramGenerator ngen;
+	private Options options = new Options();
+	private boolean isDFS = true;
+	private String outputFolder = "";
+	private boolean writeToFile = false;
+    private String[] extensions = { "java" };
+    private String command = "index";
 
-	public static void main(String[] args) {
-		processCommandLine(args);
-		// create a connector
-		es = new ESConnector(server);
-		// initialise the n-gram generator
-		ngen = new nGramGenerator(ngramSize);
-        String indexSettings = IndexSettings.DFR.getIndexSettings(IndexSettings.DFR.bmIF, IndexSettings.DFR.aeL, IndexSettings.DFR.normH1);
-        String mappingStr = IndexSettings.DFR.mappingStr;
+//	public static void main(String[] args) {
+//		processCommandLine(args);
+//		// create a connector
+//		es = new ESConnector(server);
+//		// initialise the n-gram generator
+//		ngen = new nGramGenerator(ngramSize);
+//        String indexSettings = IndexSettings.DFR.getIndexSettings(IndexSettings.DFR.bmIF, IndexSettings.DFR.aeL, IndexSettings.DFR.normH1);
+//        String mappingStr = IndexSettings.DFR.mappingStr;
+//
+//		try {
+//			es.startup();
+//            if (command.toLowerCase().equals("index")) {
+//                createIndex(indexSettings, mappingStr);
+//                boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+//                if (status) {
+//                    // if ok, refresh the index, then search
+//                    es.refresh(index);
+//                    System.out.println("Successfully creating index.");
+//                } else {
+//                    System.out.println("Indexing error: please check!");
+//                }
+//            } else if (command.toLowerCase().equals("search")) {
+//                search(inputFolder);
+//            }
+//			es.shutdown();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
-		try {
-			es.startup();
-            if (command.toLowerCase().equals("index")) {
-                createIndex(indexSettings, mappingStr);
-                boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
-                if (status) {
-                    // if ok, refresh the index, then search
-                    es.refresh(index);
-                    System.out.println("Successfully creating index.");
-                } else {
-                    System.out.println("Indexing error: please check!");
-                }
-            } else if (command.toLowerCase().equals("search")) {
-                search(inputFolder);
-            }
-			es.shutdown();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-    private static boolean createIndex(String indexSettings, String mappingStr) {
+    private boolean createIndex(String indexSettings, String mappingStr) {
         // String index = indexName + "_" + normMode + "_" + ngramSize;
         if (isPrint) System.out.println("INDEX," + index);
 
@@ -168,9 +151,72 @@ public class IndexChecker {
 
 		return outputFile;
 	}
+
+	String run2NExperiment(String hostname, String indexName, String typeName, String inputDir
+			, String[] normModes, int[] ngramSizes, boolean useNgram
+			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
+			, String mappingStr, boolean printLog, boolean isDeleteIndex) {
+		server = hostname;
+		type = typeName;
+		inputFolder = inputDir;
+		isNgram = useNgram;
+		isDFS = useDFS;
+		outputFolder = outputDir;
+		writeToFile = writeToOutputFile;
+		isPrint = printLog;
+		// create a connector
+		es = new ESConnector(server);
+
+		String outputFile = "";
+		try {
+			es.startup();
+			for (String normMode : normModes) {
+				// reset the modes before setting it again
+				modes.reset();
+				// set the normalisation + tokenization mode
+				setTokenizerMode(normMode.toLowerCase().toCharArray());
+				for (int ngramSize : ngramSizes) {
+					index = indexName + "_" + normMode + "_" + ngramSize;
+					if (isPrint) System.out.println("INDEX," + index);
+
+					// delete the index if it exists
+					if (es.isIndexExist(index)) {
+						es.deleteIndex(index);
+					}
+					// create index
+					if (!es.createIndex(index, type, indexSettings, mappingStr)) {
+						System.err.println("Cannot create index: " + index);
+						System.exit(-1);
+					}
+					// initialise the ngram generator
+					ngen = new nGramGenerator(ngramSize);
+					boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+					if (status) {
+						// if ok, refresh the index, then search
+						es.refresh(index);
+						outputFile = searchBy2NQuery(inputFolder, outputDir);
+					} else {
+						System.out.println("Indexing error: please check!");
+					}
+					// delete index
+					if (isDeleteIndex) {
+						if (!es.deleteIndex(index)) {
+							System.err.println("Cannot delete index: " + index);
+							System.exit(-1);
+						}
+					}
+				}
+			}
+			es.shutdown();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return outputFile;
+	}
 	
 	@SuppressWarnings("unchecked")
-	private static boolean insert(String inputFolder, int indexMode) throws Exception {
+	private boolean insert(String inputFolder, int indexMode) throws Exception {
 		boolean isIndexed = true;
 		ArrayList<Document> docArray = new ArrayList<>();
 		File folder = new File(inputFolder);
@@ -270,7 +316,7 @@ public class IndexChecker {
 		return true;
 	}
 	
-	private static String tokenize(File file) throws Exception {
+	private String tokenize(File file) throws Exception {
 		String src = "";
 		JavaTokenizer tokenizer = new JavaTokenizer(modes);
 
@@ -296,7 +342,7 @@ public class IndexChecker {
 		return src;
 	}
 
-    private static String tokenize(String sourcecode) throws Exception {
+    public String tokenize(String sourcecode) throws Exception {
         String src;
         JavaTokenizer tokenizer = new JavaTokenizer(modes);
 
@@ -310,13 +356,181 @@ public class IndexChecker {
         return src;
     }
 
+	public ArrayList<String> tokenizeStringToArray(String sourcecode) throws Exception {
+		String src;
+		JavaTokenizer tokenizer = new JavaTokenizer(modes);
+
+		// generate tokens
+		ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
+
+		// enter ngram mode
+		if (isNgram) {
+			tokens = ngen.generateNGramsFromJavaTokens(tokens);
+		}
+		return tokens;
+	}
+
+	/* copied from http://stackoverflow.com/questions/4640034/calculating-all-of-the-subsets-of-a-set-of-numbers */
+	public Set<Set<String>> powerSet(Set<String> originalSet) {
+		Set<Set<String>> sets = new HashSet<Set<String>>();
+		if (originalSet.isEmpty()) {
+			sets.add(new HashSet<String>());
+			return sets;
+		}
+		List<String> list = new ArrayList<String>(originalSet);
+		String head = list.get(0);
+
+		Set<String> rest = new HashSet<String>(list.subList(1, list.size()));
+		for (Set<String> set : powerSet(rest)) {
+			Set<String> newSet = new HashSet<String>();
+			newSet.add(head);
+			newSet.addAll(set);
+			// TODO: do we need to write to a file here?
+//			Experiment.writeToFile(outputFolder
+//					, "queries.txt"
+//					, newSet.toString().replace("[","").replace(",","").replace("]","\n")
+//					, true);
+			// System.out.println(newSet);
+			sets.add(newSet);
+			sets.add(set);
+		}
+
+		return sets;
+	}
+
+	public ArrayList<String> generate2NQuery(ArrayList<String> tokens) {
+		ArrayList<String> querySet = new ArrayList<String>();
+
+		// create a set to store query terms (removing duplicated terms)
+		Set<String> queryTerms = new HashSet<String>(tokens);
+
+		if (isPrint)
+			System.out.println("Size of term (set-based): " + queryTerms.size());
+
+		Set<Set<String>> possibleQueries = powerSet(queryTerms);
+
+		if (isPrint)
+			System.out.println("Size of sub queries: " + possibleQueries.size());
+
+		for (Set<String> query: possibleQueries) {
+			String queryStr = "";
+			for (String t: query) {
+				queryStr += t + " ";
+			}
+			querySet.add(queryStr.trim());
+		}
+
+		return querySet;
+	}
+
+	private String performSearch(String query, String outputFileLocation, String fileName, String output) {
+		String outToFile = output;
+		outToFile += query + ",";
+		// search for results
+		ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
+		int resultCount = 0;
+		for (Document d : results) {
+			if (resultCount>0)
+				outToFile += ","; // add comma in between
+
+			outToFile += d.getFile();
+			resultCount++;
+		}
+		outToFile += "\n";
+
+		Experiment.writeToFile(outputFileLocation, fileName, outToFile, false);
+		System.out.println("Searching done. See output at " + outputFileLocation + "/" + fileName);
+
+		return outputFileLocation + "/" + fileName;
+	}
+
+	@SuppressWarnings("unchecked")
+	private String searchBy2NQuery(String inputFolder, String outputDir) throws Exception {
+		double total = 0.0;
+		String outToFile = "";
+
+			File folder = new File(inputFolder);
+			List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
+
+			int count = 0;
+
+			for (File file : listOfFiles) {
+				if (isPrint)
+					System.out.println("File: " + file.getAbsolutePath());
+				// reset the output buffer
+				outToFile = "";
+				// parse each file into method (if possible)
+				MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
+				ArrayList<Method> methodList;
+				String query = "";
+
+				try {
+					methodList = methodParser.parseMethods();
+
+					// Use timestamp as a file name
+					DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
+					Date dateobj = new Date();
+					File outfile = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
+
+					// check if there's a method
+					if (methodList.size() > 0) {
+						for (Method method : methodList) {
+							ArrayList<String> tokens = tokenizeStringToArray(tokenize(method.getSrc()));
+							if (isPrint)
+								System.out.println("Generating 2^n sub-queries ... ");
+
+							ArrayList<String> queries = generate2NQuery(tokens);
+							if (isPrint)
+								System.out.println("Done generating 2^n sub-queries ... ");
+							for (String q: queries) {
+								// write output to file
+								outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
+										+ method.getName() + ",";
+								performSearch(q, outputFolder, index + "_" + df.format(dateobj) + ".csv", outToFile);
+								Experiment.evaluate(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv"
+										, index, outputDir);
+							}
+						}
+					} else {
+						ArrayList<String> tokens = tokenizeStringToArray(tokenize(file));
+						ArrayList<String> queries = generate2NQuery(tokens);
+						for (String q: queries) {
+							outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
+									"_noMethod" +
+									",";
+							performSearch(q, outputFolder, index + "_" + df.format(dateobj) + ".csv", outToFile);
+							Experiment.evaluate(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv"
+									, index, outputDir);
+						}
+					}
+
+					// delete file after evaluation
+					try {
+						// create new file
+						File f = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
+						// tries to delete a non-existing file
+						boolean success = f.delete();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					count++;
+				} catch (Exception e) {
+					System.out.println(e.getCause());
+					System.out.println("Error: query term size exceeds 4096 (too big).");
+				}
+		}
+
+		return "";
+	}
+
 	/***
 	 * Read idf of each term in the query directly from Lucene index
 	 * @param terms query containing search terms
 	 * @param selectedSize size of the selected terms
 	 * @return selected top-selectedSize terms
 	 */
-	private static String getSelectedTerms(String indexName, String terms, int selectedSize) {
+	private String getSelectedTerms(String indexName, String terms, int selectedSize) {
 		String indexFile = "/Users/Chaiyong/elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/"
 				+ indexName + "/0/index";
 		String selectedTerms = "";
@@ -387,7 +601,7 @@ public class IndexChecker {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static String search(String inputFolder) throws Exception {
+	private String search(String inputFolder) throws Exception {
 		double total = 0.0;
         String outToFile = "";
         int totalMethods = 0;
@@ -433,9 +647,9 @@ public class IndexChecker {
                             // count the number of methods
                             totalMethods += methodList.size();
 
-							String tmpQuery = tokenize(method.getSrc());
-//							query = tokenize(method.getSrc());
-                            query = getSelectedTerms(index, tmpQuery, 3);
+//							String tmpQuery = tokenize(method.getSrc());
+							query = tokenize(method.getSrc());
+//                            query = getSelectedTerms(index, tmpQuery, 3);
 
                             // search for results
                             ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
@@ -488,7 +702,7 @@ public class IndexChecker {
         return outfile.getAbsolutePath();
     }
 
-	private static int findTP(ArrayList<String> results, String query) {
+	private int findTP(ArrayList<String> results, String query) {
 		int tp = 0;
         for (String result : results) {
             // System.out.println(results.get(i));
@@ -502,7 +716,7 @@ public class IndexChecker {
 	/***
 	 * Copied from: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
 	 */
-	private static double round(double value, int places) {
+	private double round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 
 	    BigDecimal bd = new BigDecimal(value);
@@ -510,7 +724,7 @@ public class IndexChecker {
 	    return bd.doubleValue();
 	}
 
-	private static String printArray(ArrayList<String> arr, boolean pretty) {
+	private String printArray(ArrayList<String> arr, boolean pretty) {
 		String s = "";
         for (String anArr : arr) {
             if (pretty && anArr.equals("\n")) {
@@ -522,14 +736,14 @@ public class IndexChecker {
 		return s;
 	}
 
-	private static String escapeString(String input) {
+	private String escapeString(String input) {
 		String output = "";
 		output += input.replace("\\", "\\\\").replace("\"", "\\\"").replace("/", "\\/").replace("\b", "\\b")
 				.replace("\f", "\\f").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
 		return output;
 	}
 
-	private static void processCommandLine(String[] args) {
+	private void processCommandLine(String[] args) {
 		// create the command line parser
 		CommandLineParser parser = new DefaultParser();
 
@@ -615,7 +829,7 @@ public class IndexChecker {
 		}
 	}
 	
-	private static void setTokenizerMode(char[] normOptions) {
+	public void setTokenizerMode(char[] normOptions) {
 		for (char c : normOptions) {
 			// setting all normalisation options: w, d, j, p, k, v, s
 			if (c == 'w')
@@ -646,13 +860,13 @@ public class IndexChecker {
 		}
 	}
 
-	private static void showHelp() {
+	private void showHelp() {
 		HelpFormatter formater = new HelpFormatter();
 		formater.printHelp("(v 0.2) java -jar checker.jar", options);
 		System.exit(0);
 	}
 
-	public static class SelectedTerm {
+	public class SelectedTerm {
 	    private String term;
 	    private int frequency;
 
@@ -677,4 +891,16 @@ public class IndexChecker {
             this.frequency = frequency;
         }
     }
+
+    public void setIsPrint(boolean isPrint) {
+		this.isPrint = isPrint;
+	}
+
+	public void setOutputFolder(String outputFolder) {
+		this.outputFolder = outputFolder;
+	}
+
+	public void setNormMode(String normMode) {
+		this.normMode = normMode;
+	}
 }
