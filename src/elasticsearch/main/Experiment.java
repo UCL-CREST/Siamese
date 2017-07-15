@@ -26,8 +26,9 @@ public class Experiment {
     private static int[] ngramSizes = { 1, 2, 3, 4 };
 
     // collect the best evaluation
-    private static double maxART = 0.0;
+    private static double maxARP = 0.0;
     private static String setting = "";
+    private static String errMeasure = "arp";
 
     protected static boolean isPrint = true;
     private static boolean isDeleteIndex = false;
@@ -80,7 +81,7 @@ public class Experiment {
                 System.out.println("No similarity found");
 
             writeToFile(workingDir, "best_arp_ngram_" + mode + ".txt",
-                    "Best ARP = " + Experiment.setting + ", " + Experiment.maxART,
+                    "Best ARP = " + Experiment.setting + ", " + Experiment.maxARP,
                     false);
         }
 
@@ -107,18 +108,33 @@ public class Experiment {
         }
     }
 
-    static void evaluate(String outputFile, String mode, String workingDir) {
+    /***
+     * Evaluate the search results by either r-precision or mean average precision (MAP)
+     * @param outputFile the complete search results
+     * @param mode
+     * @param workingDir location of the results
+     * @param errMeasure type of error measure
+     * @return
+     */
+    static boolean evaluate(String outputFile, String mode, String workingDir, String errMeasure) {
         Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode, workingDir);
         evaluator.generateSearchKey();
         // evaluator.printSearchKey();
-        double arp = evaluator.evaluteRPrec(outputFile, 6);
-        if (isPrint)
-            System.out.println("ARP: " + arp);
-        // update the max ARP
-        if (maxART < arp) {
-            maxART = arp;
-            setting = outputFile;
-        }
+
+        if (errMeasure.equals("rprec")) {
+            double arp = evaluator.evaluteRPrec(outputFile, 6);
+            if (isPrint)
+                System.out.println("ARP: " + arp);
+            // update the max ARP
+            if (maxARP < arp) {
+                maxARP = arp;
+                setting = outputFile;
+            }
+            return true;
+        } else if (errMeasure.equals("map")) {
+            return true;
+        } else
+            return false;
     }
 
     private static void tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
@@ -144,7 +160,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
         checker.runExperiment("localhost", "tfidf", "doc",
                 inputDir, normModes, ngramSizes, true, true, workingDir,
-                true, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                true, indexSettings, mappingStr, isPrint, isDeleteIndex, errMeasure);
     }
 
     private static void tfidfQuerySelectionExp(String inputDir, String workingDir, boolean isPrint) {
@@ -170,7 +186,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
         checker.run2NExperiment("localhost", "tfidf", "doc",
                 inputDir, normModes, ngramSizes, true, true, workingDir,
-                true, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                true, indexSettings, mappingStr, isPrint, isDeleteIndex, errMeasure);
     }
 
 
@@ -197,7 +213,8 @@ public class Experiment {
             // System.out.println(indexSettings);
             outFile = checker.runExperiment("localhost", "tfidf_" + discO, "doc",
                     inputDir, normModes, ngramSizes, true, true,
-                    workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                    workingDir, false, indexSettings, mappingStr,
+                    isPrint, isDeleteIndex, errMeasure);
         }
         return outFile;
     }
@@ -216,7 +233,8 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
         return checker.runExperiment("localhost", "bm25",
                 "doc", inputDir, normModes, ngramSizes, true,
-                true, workingDir, true, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                true, workingDir, true, indexSettings, mappingStr,
+                isPrint, isDeleteIndex, errMeasure);
     }
 
     private static String bm25Exp(String inputDir, String workingDir, boolean isPrint) {
@@ -238,7 +256,8 @@ public class Experiment {
                     outFile = checker.runExperiment("localhost",
                             "bm25_" + k1 + "_" + b + "_" + discO, "doc",
                             inputDir, normModes, ngramSizes, true, true,
-                            workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                            workingDir, false, indexSettings, mappingStr,
+                            isPrint, isDeleteIndex, errMeasure);
                 }
             }
         }
@@ -263,7 +282,8 @@ public class Experiment {
         // System.out.println(indexSettings);
         return checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm,
                 "doc", inputDir, normModes, ngramSizes, true, true,
-                workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                workingDir, false, indexSettings, mappingStr,
+                isPrint, isDeleteIndex, errMeasure);
 
     }
 
@@ -286,7 +306,8 @@ public class Experiment {
                     // System.out.println(indexSettings);
                     outFile = checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
                             inputDir, normModes, ngramSizes, true, true,
-                            workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                            workingDir, false, indexSettings, mappingStr,
+                            isPrint, isDeleteIndex, errMeasure);
                 }
             }
         }
@@ -318,7 +339,8 @@ public class Experiment {
         return checker.runExperiment("localhost",
                 "ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
                 inputDir, normModes, ngramSizes, true, true,
-                workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                workingDir, false, indexSettings, mappingStr,
+                isPrint, isDeleteIndex, errMeasure);
 
     }
 
@@ -349,7 +371,8 @@ public class Experiment {
                     outFile = checker.runExperiment("localhost",
                             "ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
                             inputDir, normModes, ngramSizes, true, true,
-                            workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                            workingDir, false, indexSettings, mappingStr,
+                            isPrint, isDeleteIndex, errMeasure);
                 }
             }
         }
@@ -376,7 +399,8 @@ public class Experiment {
         return checker.runExperiment("localhost",
                 "lmd_" + mu, "doc",
                 inputDir, normModes, ngramSizes, true, true,
-                workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                workingDir, false, indexSettings, mappingStr,
+                isPrint, isDeleteIndex, errMeasure);
     }
 
     private static String lmdExp(String inputDir, String workingDir, boolean isPrint) {
@@ -401,7 +425,8 @@ public class Experiment {
             outFile = checker.runExperiment("localhost",
                     "lmd_" + mu, "doc",
                     inputDir, normModes, ngramSizes, true, true,
-                    workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                    workingDir, false, indexSettings, mappingStr,
+                    isPrint, isDeleteIndex, errMeasure);
         }
         return outFile;
     }
@@ -426,7 +451,8 @@ public class Experiment {
         return checker.runExperiment("localhost",
                 "lmj_" + lambda, "doc",
                 inputDir, normModes, ngramSizes, true, true,
-                workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                workingDir, false, indexSettings, mappingStr,
+                isPrint, isDeleteIndex, errMeasure);
     }
 
     private static void lmjExp(String inputDir, String workingDir, boolean isPrint) {
@@ -451,7 +477,8 @@ public class Experiment {
             checker.runExperiment("localhost",
                     "lmj_" + lambda, "doc",
                     inputDir, normModes, ngramSizes, true, true,
-                    workingDir, false, indexSettings, mappingStr, isPrint, isDeleteIndex);
+                    workingDir, false, indexSettings, mappingStr,
+                    isPrint, isDeleteIndex, errMeasure);
         }
     }
 

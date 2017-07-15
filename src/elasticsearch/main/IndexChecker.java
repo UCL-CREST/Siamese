@@ -90,7 +90,7 @@ public class IndexChecker {
 	String runExperiment(String hostname, String indexName, String typeName, String inputDir
             , String[] normModes, int[] ngramSizes, boolean useNgram
             , boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
-            , String mappingStr, boolean printLog, boolean isDeleteIndex) {
+            , String mappingStr, boolean printLog, boolean isDeleteIndex, String errMeasure) {
 		server = hostname;
 		type = typeName;
 		inputFolder = inputDir;
@@ -123,10 +123,12 @@ public class IndexChecker {
 						System.err.println("Cannot create index: " + index);
 						System.exit(-1);
 					}
+
 					// initialise the ngram generator
 					ngen = new nGramGenerator(ngramSize);
-					boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
-					if (status) {
+					boolean insertStatus = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+
+					if (insertStatus) {
 						// if ok, refresh the index, then search
 						es.refresh(index);
 						outputFile = search(inputFolder);
@@ -141,7 +143,8 @@ public class IndexChecker {
                         }
                     }
 
-					Experiment.evaluate(outputFile, index, outputDir);
+
+                    boolean completeEvaluation = Experiment.evaluate(outputFile, index, outputDir, errMeasure);
 				}
 			}
 			es.shutdown();
@@ -155,7 +158,7 @@ public class IndexChecker {
 	String run2NExperiment(String hostname, String indexName, String typeName, String inputDir
 			, String[] normModes, int[] ngramSizes, boolean useNgram
 			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
-			, String mappingStr, boolean printLog, boolean isDeleteIndex) {
+			, String mappingStr, boolean printLog, boolean isDeleteIndex, String errMeasure) {
 		server = hostname;
 		type = typeName;
 		inputFolder = inputDir;
@@ -194,7 +197,7 @@ public class IndexChecker {
 					if (status) {
 						// if ok, refresh the index, then search
 						es.refresh(index);
-						outputFile = searchBy2NQuery(inputFolder, outputDir);
+						outputFile = searchBy2NQuery(inputFolder, outputDir, errMeasure);
 					} else {
 						System.out.println("Indexing error: please check!");
 					}
@@ -236,12 +239,15 @@ public class IndexChecker {
 
             try {
                 methodList = methodParser.parseMethods();
-                // System.out.println("No. of methods: " + methodList.size());
+
                 // check if there's a method
                 if (methodList.size() > 0) {
+
                     for (Method method : methodList) {
+
                         // Create Document object and put in an array list
                         String src = tokenize(method.getSrc());
+
                         // Use file name as id
                         Document d = new Document(String.valueOf(count),
 								filePath + "_" + method.getName(),
@@ -252,12 +258,13 @@ public class IndexChecker {
                         count++;
                     }
                 } else {
+
                     // cannot parse, use the whole file
                     String src = tokenize(file);
+
                     // Use file name as id
-                    Document d = new Document(String.valueOf(count),
-                            filePath + "_raw",
-                            src);
+                    Document d = new Document(String.valueOf(count), filePath + "_raw", src);
+
                     // add document to array
                     docArray.add(d);
                     count++;
@@ -278,11 +285,11 @@ public class IndexChecker {
                 if (!isIndexed)
                     throw new Exception("Cannot insert docId " + count + " in sequential mode");
                 else {
-                    // System.out.println("Successfully indexed document(s).");
                     // reset the array list
                      docArray.clear();
                 }
-            } // index every 100 docs
+            }
+            // index every 100 docs
             // doing indexing (can choose between bulk/sequential)
             else if (indexMode == Settings.IndexingMode.BULK) {
                 if (docArray.size() >= Settings.BULK_SIZE) {
@@ -445,7 +452,7 @@ public class IndexChecker {
 	}
 
 	@SuppressWarnings("unchecked")
-	private String searchBy2NQuery(String inputFolder, String outputDir) throws Exception {
+	private String searchBy2NQuery(String inputFolder, String outputDir, String errMeasure) throws Exception {
 		double total = 0.0;
 		String outToFile = "";
 
@@ -488,7 +495,7 @@ public class IndexChecker {
 										+ method.getName() + ",";
 								performSearch(q, outputFolder, index + "_" + df.format(dateobj) + ".csv", outToFile);
 								Experiment.evaluate(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv"
-										, index, outputDir);
+										, index, outputDir, errMeasure);
 							}
 						}
 					} else {
@@ -500,7 +507,7 @@ public class IndexChecker {
 									",";
 							performSearch(q, outputFolder, index + "_" + df.format(dateobj) + ".csv", outToFile);
 							Experiment.evaluate(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv"
-									, index, outputDir);
+									, index, outputDir, errMeasure);
 						}
 					}
 
@@ -629,8 +636,10 @@ public class IndexChecker {
             for (File file : listOfFiles) {
             	if (isPrint)
                 	System.out.println("File: " + file.getAbsolutePath());
-                // reset the output buffer
+
+            	// reset the output buffer
                 outToFile = "";
+
                 // parse each file into method (if possible)
                 MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
                 ArrayList<Method> methodList;
@@ -638,12 +647,15 @@ public class IndexChecker {
 
                 try {
                     methodList = methodParser.parseMethods();
+
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
-                            // write output to file
+
+                        	// write output to file
                             outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
                                     + method.getName() + "," ;
+
                             // count the number of methods
                             totalMethods += methodList.size();
 
@@ -665,6 +677,7 @@ public class IndexChecker {
                         }
                     } else {
                         query = tokenize(file);
+
                         // search for results
                         ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
                         outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
