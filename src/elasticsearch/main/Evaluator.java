@@ -121,7 +121,7 @@ public class Evaluator {
         Experiment.writeToFile("resources", "searchkey.csv", textToPrint, false);
     }
 
-    double evaluteRPrec(String outputFile, int r) {
+    double evaluateARP(String outputFile, int r) {
         System.out.println("Evaluating " + r + "-precision from the output file: " + outputFile);
         String RPrecToPrint = "";
         double arp = 0.0;
@@ -185,6 +185,68 @@ public class Evaluator {
         }
 
         return arp;
+    }
+
+    double evaluateMAP(String outputFile, int size) {
+        System.out.println("Evaluating MAP from the output file: " + outputFile);
+        String mapToPrint = "";
+        double map = 0.0;
+
+        try {
+            /* copied from http://howtodoinjava.com/3rd-party/parse-read-write-csv-files-opencsv-tutorial/ */
+            CSVReader reader = new CSVReader(new FileReader(outputFile), ',', '"', 0);
+            String[] nextLine;
+            double sumPrecision;
+            double sumAvgPrec = 0.0;
+            int noOfQueries = 0;
+
+            while ((nextLine = reader.readNext()) != null) {
+
+                int tp = 0;
+                // increase query count
+                noOfQueries++;
+                String query = nextLine[0];
+                sumPrecision = 0.0;
+
+                // get the answer key of this query
+                ArrayList<String> relevantResults = searchKey.get(query);
+
+                // check the results with the key
+                for (int i = 1; i <= size; i++) {
+                    if (relevantResults.contains(nextLine[i])) {
+                        tp++;
+                        // calculate precision every time a relevant result is obtained.
+                        float precision = (float) tp / i;
+                        sumPrecision += precision;
+                    }
+
+                    // found all relevant results, stop
+                    if (tp == relevantResults.size())
+                        break;
+                }
+
+                double averagePrec = sumPrecision / relevantResults.size();
+
+                if (Experiment.isPrint)
+                    System.out.println("avgprec = " + averagePrec);
+
+                mapToPrint += averagePrec + "\n";
+                sumAvgPrec += averagePrec;
+            }
+
+            // calculate MAP
+            map = sumAvgPrec/noOfQueries;
+            System.out.println("--> No. of query = " + noOfQueries);
+
+            String outFile = "map_" + index + ".csv";
+            Experiment.writeToFile(outputDir, outFile , mapToPrint, false);
+            System.out.println("MAP = " + map);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return map;
     }
 
     private ArrayList<MethodClone> readCSV(String csvFile) {

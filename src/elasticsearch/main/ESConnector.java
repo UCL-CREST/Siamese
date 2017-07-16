@@ -55,11 +55,11 @@ public class ESConnector {
 	 * @return status of bulk insert (true = no failure, false = failures)
 	 */
 	public boolean sequentialInsert(String index, String type, ArrayList<Document> documents) throws Exception {
-		boolean isCreated = false;
+
+	    boolean isCreated = false;
+
 		for (Document d : documents) {
 			try {
-                // System.out.println(d.getId() + ", " + d.getFile());
-
 			    XContentBuilder builder = jsonBuilder()
                         .startObject()
                         .field("file", d.getFile())
@@ -68,14 +68,11 @@ public class ESConnector {
 
 				// insert document one by one
 				IndexResponse response = client.prepareIndex(index, type, d.getId()).setSource(builder).get();
-				isCreated = response.isCreated();
 
-				if (!isCreated) {
+				if (!response.isCreated()) {
 					throw new Exception("cannot insert " + d.getId() + ", " + d.getFile()
 							+ ", src = " + builder.string());
-				} else {
-				     // System.out.println("inserted: " + d.getId());
-                }
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
@@ -91,7 +88,7 @@ public class ESConnector {
 	 * @param documents array of documents
 	 * @return status of bulk insert (true = no failure, false = failures)
 	 */
-	public boolean bulkInsert(String index, String type, ArrayList<Document> documents) {
+	 boolean bulkInsert(String index, String type, ArrayList<Document> documents) {
 		BulkRequestBuilder bulkRequest = client.prepareBulk();
 		// keep adding documents
 		for (Document d : documents) {
@@ -112,75 +109,72 @@ public class ESConnector {
 		// bulk insert once
 		BulkResponse bulkResponse = bulkRequest.execute().actionGet();
 
-        // check for failures after insertion
-		boolean hasFailure = false;
-
-        hasFailure = bulkResponse.hasFailures();
-
-        if (hasFailure)
-			return false;
-		else
-			return true;
+        return bulkResponse.hasFailures();
 	}
 
-    public ArrayList<Document> search(String index, String type, String query, boolean isPrint, boolean isDFS) {
+    ArrayList<Document> search(String index, String type, String query, boolean isPrint
+			, boolean isDFS, int resultOffset, int resultSize) {
+
         ArrayList<Document> results = new ArrayList<Document>();
         SearchType searchType;
+
         if (isDFS)
             searchType = SearchType.DFS_QUERY_THEN_FETCH;
         else
             searchType = SearchType.QUERY_THEN_FETCH;
 
         SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
-                .setQuery(QueryBuilders.matchQuery("src", query)).setFrom(0).setSize(10).execute()
+                .setQuery(QueryBuilders.matchQuery("src", query)).setFrom(resultOffset).setSize(resultSize).execute()
                 .actionGet();
         SearchHit[] hits = response.getHits().getHits();
-        // if (isPrint) System.out.println("=======================\nhits: " + hits.length);
+
         int count = 0;
         for (SearchHit hit : hits) {
-            if (count >= 10)
+
+            if (count >= resultSize)
                 break;
+
 			// prints out the id of the document
-            if (isPrint) System.out.println("ANS," + hit.getId() + "," + hit.getScore());
+            if (isPrint)
+                System.out.println("ANS," + hit.getId() + "," + hit.getScore());
+
             Document d = new Document(hit.getId(),
                     hit.getSource().get("file").toString(),
                     hit.getSource().get("src").toString());
             results.add(d);
-            // document
+
             count++;
         }
+
         return results;
     }
 
-    public boolean createIndex(String indexName, String typeName, String settingsStr, String mappingStr) {
+    boolean createIndex(String indexName, String typeName, String settingsStr, String mappingStr) {
+
 		CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(indexName);
 		Settings settings = Settings.builder()
                 .loadFromSource(settingsStr)
                 .build();
 		createIndexRequestBuilder.setSettings(settings);
-		// System.out.println("Type name = " + typeName);
 		createIndexRequestBuilder.addMapping(typeName, mappingStr);
-		//System.out.println(mappingStr);
-        // createIndexRequestBuilder.addMapping(type, mappingStr);
-		
 		CreateIndexResponse response = createIndexRequestBuilder.execute().actionGet();
+
 		return response.isAcknowledged();
 	}
 
-	public boolean deleteIndex(String indexName) {
+    boolean deleteIndex(String indexName) {
 		DeleteIndexRequest deleteRequest = new DeleteIndexRequest(indexName);
 		DeleteIndexResponse response = client.admin().indices().delete(deleteRequest).actionGet();
 		return response.isAcknowledged();
 	}
 	
-	public boolean isIndexExist(String indexName) {
-		boolean exists = client.admin().indices()
+    boolean isIndexExist(String indexName) {
+		return client.admin().indices()
 			    .prepareExists(indexName)
 			    .execute().actionGet().isExists();
-		return exists;
 	}
 	
-	public void refresh(String indexName) {
+    void refresh(String indexName) {
 		client.admin().indices().prepareRefresh().execute().actionGet();
 		client.admin().indices().prepareFlush(indexName).execute().actionGet();
 	}

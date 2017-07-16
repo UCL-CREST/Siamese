@@ -142,7 +142,7 @@ public class IndexChecker {
 					boolean insertStatus = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
 
 					if (insertStatus) {
-					    
+
 						// if ok, refresh the index, then search
 						es.refresh(index);
 						EvalResult result = evaluate(index, outputDir, errMeasure, isPrint);
@@ -453,7 +453,7 @@ public class IndexChecker {
 		outToFile += query + ",";
 
 		// search for results
-		ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
+		ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS, 0, 10);
 		int resultCount = 0;
 
 		for (Document d : results) {
@@ -636,15 +636,14 @@ public class IndexChecker {
      */
     private EvalResult evaluate(String mode, String workingDir, String errMeasure, boolean isPrint) throws Exception {
 
-        String outputFile = search(inputFolder);
-
         Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode, workingDir);
         evaluator.generateSearchKey();
         EvalResult result = new EvalResult();
 
         switch (errMeasure) {
             case "arp":
-                double arp = evaluator.evaluteRPrec(outputFile, 6);
+                String outputFile = search(inputFolder, 0, 10);
+                double arp = evaluator.evaluateARP(outputFile, 6);
                 if (isPrint)
                     System.out.println("ARP: " + arp);
 
@@ -653,10 +652,25 @@ public class IndexChecker {
                     result.setValue(arp);
                     result.setSetting(outputFile);
                 }
+
                 break;
             case "map":
+                int offset = 0;
+                int size = 204;
+                outputFile = search(inputFolder, offset, size);
+                double map = evaluator.evaluateMAP(outputFile, size);
+                if (isPrint)
+                    System.out.println("MAP: " + map);
+
+                // update the max MAP
+                if (result.getValue() < map) {
+                    result.setValue(map);
+                    result.setSetting(outputFile);
+                }
+
                 break;
             default:
+                System.out.println("ERROR: Invalid evaluation method.");
                 break;
         }
 
@@ -664,7 +678,7 @@ public class IndexChecker {
     }
 	
 	@SuppressWarnings("unchecked")
-	private String search(String inputFolder) throws Exception {
+	private String search(String inputFolder, int offset, int size) throws Exception {
 
         String outToFile = "";
 
@@ -711,18 +725,17 @@ public class IndexChecker {
                             outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
                                     + method.getName() + "," ;
 
-//							String tmpQuery = tokenize(method.getSrc());
 							query = tokenize(method.getSrc());
 //                            query = getSelectedTerms(index, tmpQuery, 3);
 
                             // search for results
-                            results = es.search(index, type, query, isPrint, isDFS);
+                            results = es.search(index, type, query, isPrint, isDFS, offset, size);
                         }
                     } else {
                         query = tokenize(file);
 
                         // search for results
-                        results = es.search(index, type, query, isPrint, isDFS);
+                        results = es.search(index, type, query, isPrint, isDFS, offset, size);
                         outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
                                 "_noMethod" +
                                 ",";
