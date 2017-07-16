@@ -39,6 +39,10 @@ public class IndexChecker {
     private String[] extensions = { "java" };
     private String command = "index";
 
+    // collect the best evaluation
+    private double maxEval = 0.0;
+    private String setting = "";
+
 //	public static void main(String[] args) {
 //		processCommandLine(args);
 //		// create a connector
@@ -87,10 +91,11 @@ public class IndexChecker {
         return isCreated;
     }
 	
-	String runExperiment(String hostname, String indexName, String typeName, String inputDir
+	protected EvalResult runExperiment(String hostname, String indexName, String typeName, String inputDir
             , String[] normModes, int[] ngramSizes, boolean useNgram
             , boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
             , String mappingStr, boolean printLog, boolean isDeleteIndex, String errMeasure) {
+
 		server = hostname;
 		type = typeName;
 		inputFolder = inputDir;
@@ -99,18 +104,25 @@ public class IndexChecker {
 		outputFolder = outputDir;
 		writeToFile = writeToOutputFile;
 		isPrint = printLog;
+
 		// create a connector
 		es = new ESConnector(server);
 
-        String outputFile = "";
+		EvalResult bestResult = new EvalResult();
+
 		try {
+
 			es.startup();
 			for (String normMode : normModes) {
+
 				// reset the modes before setting it again
 				modes.reset();
+
 				// set the normalisation + tokenization mode
 				setTokenizerMode(normMode.toLowerCase().toCharArray());
+
 				for (int ngramSize : ngramSizes) {
+
 					index = indexName + "_" + normMode + "_" + ngramSize;
 					if (isPrint) System.out.println("INDEX," + index);
 					
@@ -118,6 +130,7 @@ public class IndexChecker {
 					if (es.isIndexExist(index)) {
 						es.deleteIndex(index);
 					}
+
 					// create index
 					if (!es.createIndex(index, type, indexSettings, mappingStr)) {
 						System.err.println("Cannot create index: " + index);
@@ -129,12 +142,19 @@ public class IndexChecker {
 					boolean insertStatus = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
 
 					if (insertStatus) {
+					    
 						// if ok, refresh the index, then search
 						es.refresh(index);
-						outputFile = search(inputFolder);
+						EvalResult result = evaluate(index, outputDir, errMeasure, isPrint);
+
+						if (result.getValue() > bestResult.getValue()) {
+						    bestResult = result;
+                        }
+
 					} else {
 						System.out.println("Indexing error: please check!");
 					}
+
 					// delete index
 					if (isDeleteIndex) {
                         if (!es.deleteIndex(index)) {
@@ -142,9 +162,6 @@ public class IndexChecker {
                             System.exit(-1);
                         }
                     }
-
-
-                    boolean completeEvaluation = Experiment.evaluate(outputFile, index, outputDir, errMeasure);
 				}
 			}
 			es.shutdown();
@@ -152,71 +169,71 @@ public class IndexChecker {
 			e.printStackTrace();
 		}
 
-		return outputFile;
+		return bestResult;
 	}
-
-	String run2NExperiment(String hostname, String indexName, String typeName, String inputDir
-			, String[] normModes, int[] ngramSizes, boolean useNgram
-			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
-			, String mappingStr, boolean printLog, boolean isDeleteIndex, String errMeasure) {
-		server = hostname;
-		type = typeName;
-		inputFolder = inputDir;
-		isNgram = useNgram;
-		isDFS = useDFS;
-		outputFolder = outputDir;
-		writeToFile = writeToOutputFile;
-		isPrint = printLog;
-		// create a connector
-		es = new ESConnector(server);
-
-		String outputFile = "";
-		try {
-			es.startup();
-			for (String normMode : normModes) {
-				// reset the modes before setting it again
-				modes.reset();
-				// set the normalisation + tokenization mode
-				setTokenizerMode(normMode.toLowerCase().toCharArray());
-				for (int ngramSize : ngramSizes) {
-					index = indexName + "_" + normMode + "_" + ngramSize;
-					if (isPrint) System.out.println("INDEX," + index);
-
-					// delete the index if it exists
-					if (es.isIndexExist(index)) {
-						es.deleteIndex(index);
-					}
-					// create index
-					if (!es.createIndex(index, type, indexSettings, mappingStr)) {
-						System.err.println("Cannot create index: " + index);
-						System.exit(-1);
-					}
-					// initialise the ngram generator
-					ngen = new nGramGenerator(ngramSize);
-					boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
-					if (status) {
-						// if ok, refresh the index, then search
-						es.refresh(index);
-						outputFile = searchBy2NQuery(inputFolder, outputDir, errMeasure);
-					} else {
-						System.out.println("Indexing error: please check!");
-					}
-					// delete index
-					if (isDeleteIndex) {
-						if (!es.deleteIndex(index)) {
-							System.err.println("Cannot delete index: " + index);
-							System.exit(-1);
-						}
-					}
-				}
-			}
-			es.shutdown();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return outputFile;
-	}
+//
+//	String run2NExperiment(String hostname, String indexName, String typeName, String inputDir
+//			, String[] normModes, int[] ngramSizes, boolean useNgram
+//			, boolean useDFS, String outputDir, boolean writeToOutputFile, String indexSettings
+//			, String mappingStr, boolean printLog, boolean isDeleteIndex, String errMeasure) {
+//		server = hostname;
+//		type = typeName;
+//		inputFolder = inputDir;
+//		isNgram = useNgram;
+//		isDFS = useDFS;
+//		outputFolder = outputDir;
+//		writeToFile = writeToOutputFile;
+//		isPrint = printLog;
+//		// create a connector
+//		es = new ESConnector(server);
+//
+//		String outputFile = "";
+//		try {
+//			es.startup();
+//			for (String normMode : normModes) {
+//				// reset the modes before setting it again
+//				modes.reset();
+//				// set the normalisation + tokenization mode
+//				setTokenizerMode(normMode.toLowerCase().toCharArray());
+//				for (int ngramSize : ngramSizes) {
+//					index = indexName + "_" + normMode + "_" + ngramSize;
+//					if (isPrint) System.out.println("INDEX," + index);
+//
+//					// delete the index if it exists
+//					if (es.isIndexExist(index)) {
+//						es.deleteIndex(index);
+//					}
+//					// create index
+//					if (!es.createIndex(index, type, indexSettings, mappingStr)) {
+//						System.err.println("Cannot create index: " + index);
+//						System.exit(-1);
+//					}
+//					// initialise the ngram generator
+//					ngen = new nGramGenerator(ngramSize);
+//					boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+//					if (status) {
+//						// if ok, refresh the index, then search
+//						es.refresh(index);
+//						outputFile = searchBy2NQuery(inputFolder, outputDir, errMeasure);
+//					} else {
+//						System.out.println("Indexing error: please check!");
+//					}
+//					// delete index
+//					if (isDeleteIndex) {
+//						if (!es.deleteIndex(index)) {
+//							System.err.println("Cannot delete index: " + index);
+//							System.exit(-1);
+//						}
+//					}
+//				}
+//			}
+//			es.shutdown();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		return outputFile;
+//	}
 	
 	@SuppressWarnings("unchecked")
 	private boolean insert(String inputFolder, int indexMode) throws Exception {
@@ -431,11 +448,14 @@ public class IndexChecker {
 	}
 
 	private String performSearch(String query, String outputFileLocation, String fileName, String output) {
-		String outToFile = output;
+
+	    String outToFile = output;
 		outToFile += query + ",";
+
 		// search for results
 		ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
 		int resultCount = 0;
+
 		for (Document d : results) {
 			if (resultCount>0)
 				outToFile += ","; // add comma in between
@@ -443,6 +463,7 @@ public class IndexChecker {
 			outToFile += d.getFile();
 			resultCount++;
 		}
+
 		outToFile += "\n";
 
 		Experiment.writeToFile(outputFileLocation, fileName, outToFile, false);
@@ -451,85 +472,85 @@ public class IndexChecker {
 		return outputFileLocation + "/" + fileName;
 	}
 
-	@SuppressWarnings("unchecked")
-	private String searchBy2NQuery(String inputFolder, String outputDir, String errMeasure) throws Exception {
-		double total = 0.0;
-		String outToFile = "";
-
-			File folder = new File(inputFolder);
-			List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
-
-			int count = 0;
-
-			for (File file : listOfFiles) {
-				if (isPrint)
-					System.out.println("File: " + file.getAbsolutePath());
-				// reset the output buffer
-				outToFile = "";
-				// parse each file into method (if possible)
-				MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
-				ArrayList<Method> methodList;
-				String query = "";
-
-				try {
-					methodList = methodParser.parseMethods();
-
-					// Use timestamp as a file name
-					DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
-					Date dateobj = new Date();
-					File outfile = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
-
-					// check if there's a method
-					if (methodList.size() > 0) {
-						for (Method method : methodList) {
-							ArrayList<String> tokens = tokenizeStringToArray(tokenize(method.getSrc()));
-							if (isPrint)
-								System.out.println("Generating 2^n sub-queries ... ");
-
-							ArrayList<String> queries = generate2NQuery(tokens);
-							if (isPrint)
-								System.out.println("Done generating 2^n sub-queries ... ");
-							for (String q: queries) {
-								// write output to file
-								outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
-										+ method.getName() + ",";
-								performSearch(q, outputFolder, index + "_" + df.format(dateobj) + ".csv", outToFile);
-								Experiment.evaluate(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv"
-										, index, outputDir, errMeasure);
-							}
-						}
-					} else {
-						ArrayList<String> tokens = tokenizeStringToArray(tokenize(file));
-						ArrayList<String> queries = generate2NQuery(tokens);
-						for (String q: queries) {
-							outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
-									"_noMethod" +
-									",";
-							performSearch(q, outputFolder, index + "_" + df.format(dateobj) + ".csv", outToFile);
-							Experiment.evaluate(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv"
-									, index, outputDir, errMeasure);
-						}
-					}
-
-					// delete file after evaluation
-					try {
-						// create new file
-						File f = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
-						// tries to delete a non-existing file
-						boolean success = f.delete();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-
-					count++;
-				} catch (Exception e) {
-					System.out.println(e.getCause());
-					System.out.println("Error: query term size exceeds 4096 (too big).");
-				}
-		}
-
-		return "";
-	}
+//	@SuppressWarnings("unchecked")
+//	private String searchBy2NQuery(String inputFolder, String outputDir, String errMeasure) throws Exception {
+//		double total = 0.0;
+//		String outToFile = "";
+//
+//			File folder = new File(inputFolder);
+//			List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
+//
+//			int count = 0;
+//
+//			for (File file : listOfFiles) {
+//				if (isPrint)
+//					System.out.println("File: " + file.getAbsolutePath());
+//				// reset the output buffer
+//				outToFile = "";
+//				// parse each file into method (if possible)
+//				MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
+//				ArrayList<Method> methodList;
+//				String query = "";
+//
+//				try {
+//					methodList = methodParser.parseMethods();
+//
+//					// Use timestamp as a file name
+//					DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
+//					Date dateobj = new Date();
+//					File outfile = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
+//
+//					// check if there's a method
+//					if (methodList.size() > 0) {
+//						for (Method method : methodList) {
+//							ArrayList<String> tokens = tokenizeStringToArray(tokenize(method.getSrc()));
+//							if (isPrint)
+//								System.out.println("Generating 2^n sub-queries ... ");
+//
+//							ArrayList<String> queries = generate2NQuery(tokens);
+//							if (isPrint)
+//								System.out.println("Done generating 2^n sub-queries ... ");
+//							for (String q: queries) {
+//								// write output to file
+//								outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
+//										+ method.getName() + ",";
+//								performSearch(q, outputFolder, index + "_" + df.format(dateobj) + ".csv", outToFile);
+//								evaluate(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv"
+//										, index, outputDir, errMeasure);
+//							}
+//						}
+//					} else {
+//						ArrayList<String> tokens = tokenizeStringToArray(tokenize(file));
+//						ArrayList<String> queries = generate2NQuery(tokens);
+//						for (String q: queries) {
+//							outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
+//									"_noMethod" +
+//									",";
+//							performSearch(q, outputFolder, index + "_" + df.format(dateobj) + ".csv", outToFile);
+//							evaluate(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv"
+//									, index, outputDir, errMeasure);
+//						}
+//					}
+//
+//					// delete file after evaluation
+//					try {
+//						// create new file
+//						File f = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
+//						// tries to delete a non-existing file
+//						boolean success = f.delete();
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//
+//					count++;
+//				} catch (Exception e) {
+//					System.out.println(e.getCause());
+//					System.out.println("Error: query term size exceeds 4096 (too big).");
+//				}
+//		}
+//
+//		return "";
+//	}
 
 	/***
 	 * Read idf of each term in the query directly from Lucene index
@@ -554,8 +575,7 @@ public class IndexChecker {
 			SelectedTerm fourthMinTerm = new SelectedTerm("x", 9999999);
 			SelectedTerm fifthMinTerm = new SelectedTerm("x", 9999999);
 
-			for (int i = 0; i < termsArr.length; i++) {
-				String term = termsArr[i];
+			for (String term: termsArr) {
 				// TODO: get rid of the blank term (why it's blank?)
 				if (!term.equals("")) {
 					Term t = new Term("src", term);
@@ -606,14 +626,48 @@ public class IndexChecker {
 
 		return selectedTerms;
 	}
+
+    /***
+     * Evaluate the search results by either r-precision or mean average precision (MAP)
+     * @param mode parameter settings
+     * @param workingDir location of the results
+     * @param errMeasure type of error measure
+     * @return A pair of the best performance (either ARP or MAP) and its value
+     */
+    private EvalResult evaluate(String mode, String workingDir, String errMeasure, boolean isPrint) throws Exception {
+
+        String outputFile = search(inputFolder);
+
+        Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode, workingDir);
+        evaluator.generateSearchKey();
+        EvalResult result = new EvalResult();
+
+        switch (errMeasure) {
+            case "arp":
+                double arp = evaluator.evaluteRPrec(outputFile, 6);
+                if (isPrint)
+                    System.out.println("ARP: " + arp);
+
+                // update the max ARP
+                if (result.getValue() < arp) {
+                    result.setValue(arp);
+                    result.setSetting(outputFile);
+                }
+                break;
+            case "map":
+                break;
+            default:
+                break;
+        }
+
+        return result;
+    }
 	
 	@SuppressWarnings("unchecked")
 	private String search(String inputFolder) throws Exception {
-		double total = 0.0;
-        String outToFile = "";
-        int totalMethods = 0;
 
-        // if (writeToFile) {
+        String outToFile = "";
+
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
         Date dateobj = new Date();
         File outfile = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
@@ -647,6 +701,7 @@ public class IndexChecker {
 
                 try {
                     methodList = methodParser.parseMethods();
+                    ArrayList<Document> results = new ArrayList<>();
 
                     // check if there's a method
                     if (methodList.size() > 0) {
@@ -656,55 +711,43 @@ public class IndexChecker {
                             outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
                                     + method.getName() + "," ;
 
-                            // count the number of methods
-                            totalMethods += methodList.size();
-
 //							String tmpQuery = tokenize(method.getSrc());
 							query = tokenize(method.getSrc());
 //                            query = getSelectedTerms(index, tmpQuery, 3);
 
                             // search for results
-                            ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
-                            int resultCount = 0;
-                            for (Document d : results) {
-                                if (resultCount>0)
-                                    outToFile += ","; // add comma in between
-
-                                outToFile += d.getFile();
-                                resultCount++;
-                            }
-                            outToFile += "\n";
+                            results = es.search(index, type, query, isPrint, isDFS);
                         }
                     } else {
                         query = tokenize(file);
 
                         // search for results
-                        ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS);
+                        results = es.search(index, type, query, isPrint, isDFS);
                         outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
                                 "_noMethod" +
                                 ",";
-                        int resultCount = 0;
-                        for (Document d : results) {
-                            if (resultCount>0)
-                                outToFile += ","; // add comma in between
-
-                            outToFile += d.getFile();
-                            resultCount++;
-                        }
-                        outToFile += "\n";
                     }
+
+                    int resultCount = 0;
+                    for (Document d : results) {
+                        if (resultCount>0)
+                            outToFile += ","; // add comma in between
+
+                        outToFile += d.getFile();
+                        resultCount++;
+                    }
+                    outToFile += "\n";
                     count++;
-                //} catch(RemoteTransportException rmtexp) {
+
                 } catch (Exception e) {
                     System.out.println(e.getCause());
                     System.out.println("Error: query term size exceeds 4096 (too big).");
-                    // e.printStackTrace();
-                    // System.exit(0);
                 }
+
                 bw.write(outToFile);
             }
-            bw.close();
 
+            bw.close();
 
             System.out.println("Searching done. See output at " + outfile.getAbsolutePath());
 
@@ -718,7 +761,6 @@ public class IndexChecker {
 	private int findTP(ArrayList<String> results, String query) {
 		int tp = 0;
         for (String result : results) {
-            // System.out.println(results.get(i));
             if (result.contains(query)) {
                 tp++;
             }

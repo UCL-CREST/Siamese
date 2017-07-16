@@ -1,14 +1,10 @@
 package elasticsearch.main;
 
-import elasticsearch.document.Method;
-
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class Experiment {
 
@@ -24,14 +20,10 @@ public class Experiment {
             "djkp", "djkps", "djkpw", "djkpws"};
 
     private static int[] ngramSizes = { 1, 2, 3, 4 };
-
-    // collect the best evaluation
-    private static double maxARP = 0.0;
-    private static String setting = "";
     private static String errMeasure = "arp";
 
     protected static boolean isPrint = true;
-    private static boolean isDeleteIndex = false;
+    private static boolean isDeleteIndex = true;
 
     public static void main(String[] args) {
 
@@ -51,99 +43,86 @@ public class Experiment {
             if (!prefixToRemove.endsWith("/"))
                 prefixToRemove += "/"; // append / at the end
 
-            if (mode.equals("query2n"))
-                generate2NQueries();
-            else if (mode.equals("tfidf_text")) /* text mode (1-gram + no normalisation) */
-                tfidfTextExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("bm25_text"))
-                bm25TextExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("dfr_text"))
-                dfrTextExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("ib_text"))
-                ibTextExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("lmd_text"))
-                lmdTextExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("lmj_text"))
-                lmjTextExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("tfidf")) /* normal mode (search all parameters + grams + normalisation) */
-                tfidfExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("bm25"))
-                bm25Exp(inputDir, workingDir, isPrint);
-            else if (mode.equals("dfr"))
-                dfrExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("ib"))
-                ibExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("lmdirichlet") || mode.equals("lmd"))
-                lmdExp(inputDir, workingDir, isPrint);
-            else if (mode.equals("lmjelinekmercer") || mode.equals("lmj"))
-                lmjExp(inputDir, workingDir, isPrint);
-            else
-                System.out.println("No similarity found");
+            EvalResult bestResult = new EvalResult();
 
-            writeToFile(workingDir, "best_arp_ngram_" + mode + ".txt",
-                    "Best ARP = " + Experiment.setting + ", " + Experiment.maxARP,
+            switch(mode) {
+                case "tfidf_text":
+                    bestResult = tfidfTextExp(inputDir, workingDir, isPrint);
+                    break;
+                case "bm25_text":
+                    bestResult = bm25TextExp(inputDir, workingDir, isPrint);
+                    break;
+                case "dfr_text":
+                    bestResult = dfrTextExp(inputDir, workingDir, isPrint);
+                    break;
+                case "ib_text":
+                    bestResult = ibTextExp(inputDir, workingDir, isPrint);
+                    break;
+                case "lmd_text":
+                    bestResult = lmdTextExp(inputDir, workingDir, isPrint);
+                    break;
+                case "lmj_text":
+                    bestResult = lmjTextExp(inputDir, workingDir, isPrint);
+                    break;
+                case "tfidf": /* normal mode (search all parameters + grams + normalisation) */
+                    bestResult = tfidfExp(inputDir, workingDir, isPrint);
+                    break;
+                case "bm25":
+                    bestResult = bm25Exp(inputDir, workingDir, isPrint);
+                    break;
+                case "dfr":
+                    bestResult = dfrExp(inputDir, workingDir, isPrint);
+                    break;
+                case "ib":
+                    bestResult = ibExp(inputDir, workingDir, isPrint);
+                    break;
+                case "lmdirichlet":
+                case "lmd":
+                    bestResult = lmdExp(inputDir, workingDir, isPrint);
+                    break;
+                case "lmjelinekmercer":
+                case "lmj":
+                    bestResult = lmjExp(inputDir, workingDir, isPrint);
+                    break;
+                default:
+                    System.out.println("No ranking function found");
+            }
+
+            writeToFile(workingDir, "best_" + errMeasure + "_ngram_" + mode + ".txt",
+                    "Best " + errMeasure + " = " + bestResult.getSetting() + ", " + bestResult.getValue(),
                     false);
         }
 
     }
 
-    private static void generate2NQueries() {
-        File file = new File("resources/tests_code3/bubblesort/0_orig_BubbleSort.java:main/BubbleSort.java:main.java");
-        MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
-        ArrayList<Method> methodList = methodParser.parseMethods();
-        for (Method method: methodList) {
-            try {
-                IndexChecker ic = new IndexChecker();
-                ic.setIsPrint(true);
-                ic.setOutputFolder("results/170404");
-                char[] normMode = { 's', 'w' };
-                ic.setTokenizerMode(normMode);
-                ArrayList<String> tokens = ic.tokenizeStringToArray(ic.tokenize(method.getSrc()));
-                // System.out.println("Array size: " + tokens.size());
-                ArrayList<String> queries = ic.generate2NQuery(tokens);
-                // System.out.println("Size: " + queries.size());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    private static void generate2NQueries() {
+//        File file = new File("resources/tests_code3/bubblesort/0_orig_BubbleSort.java:main/BubbleSort.java:main.java");
+//        MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
+//        ArrayList<Method> methodList = methodParser.parseMethods();
+//        for (Method method: methodList) {
+//            try {
+//                IndexChecker ic = new IndexChecker();
+//                ic.setIsPrint(true);
+//                ic.setOutputFolder("results/170404");
+//                char[] normMode = { 's', 'w' };
+//                ic.setTokenizerMode(normMode);
+//                ArrayList<String> tokens = ic.tokenizeStringToArray(ic.tokenize(method.getSrc()));
+//                // System.out.println("Array size: " + tokens.size());
+//                ArrayList<String> queries = ic.generate2NQuery(tokens);
+//                // System.out.println("Size: " + queries.size());
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
-    /***
-     * Evaluate the search results by either r-precision or mean average precision (MAP)
-     * @param outputFile the complete search results
-     * @param mode
-     * @param workingDir location of the results
-     * @param errMeasure type of error measure
-     * @return
-     */
-    static boolean evaluate(String outputFile, String mode, String workingDir, String errMeasure) {
-        Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode, workingDir);
-        evaluator.generateSearchKey();
-        // evaluator.printSearchKey();
-
-        if (errMeasure.equals("rprec")) {
-            double arp = evaluator.evaluteRPrec(outputFile, 6);
-            if (isPrint)
-                System.out.println("ARP: " + arp);
-            // update the max ARP
-            if (maxARP < arp) {
-                maxARP = arp;
-                setting = outputFile;
-            }
-            return true;
-        } else if (errMeasure.equals("map")) {
-            return true;
-        } else
-            return false;
-    }
-
-    private static void tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
         String discO = "true";
-        // String[] normModes = Experiment.normModes;
         String[] normModes = { "x" };
 	    int[] ngramSizes = { 1 };
         IndexChecker checker = new IndexChecker();
         String indexSettings = "";
+
         if (!discO.equals("false"))
             indexSettings = "{ \"number_of_shards\": 1, " +
                     "\"similarity\": { \"tfidf_similarity\": " +
@@ -158,44 +137,47 @@ public class Experiment {
         }
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
-        checker.runExperiment("localhost", "tfidf", "doc",
+
+        return checker.runExperiment("localhost", "tfidf", "doc",
                 inputDir, normModes, ngramSizes, true, true, workingDir,
                 true, indexSettings, mappingStr, isPrint, isDeleteIndex, errMeasure);
     }
 
-    private static void tfidfQuerySelectionExp(String inputDir, String workingDir, boolean isPrint) {
-        String discO = "true";
-        // String[] normModes = Experiment.normModes;
-        String[] normModes = { "x" };
-        int[] ngramSizes = { 1 };
-        IndexChecker checker = new IndexChecker();
-        String indexSettings = "";
-        if (!discO.equals("false"))
-            indexSettings = "{ \"number_of_shards\": 1, " +
-                    "\"similarity\": { \"tfidf_similarity\": " +
-                    "{ \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
-                    "\"analysis\": { " +
-                    "\"analyzer\": { " +
-                    "\"default\": { " +
-                    "\"type\": \"whitespace\"" +
-                    "} } } }";
-        else {
-            indexSettings = "{ \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } }";
-        }
+//    private static String[] tfidfQuerySelectionExp(String inputDir, String workingDir, boolean isPrint) {
+//        String discO = "true";
+//        // String[] normModes = Experiment.normModes;
+//        String[] normModes = { "x" };
+//        int[] ngramSizes = { 1 };
+//        IndexChecker checker = new IndexChecker();
+//        String indexSettings = "";
+//        if (!discO.equals("false"))
+//            indexSettings = "{ \"number_of_shards\": 1, " +
+//                    "\"similarity\": { \"tfidf_similarity\": " +
+//                    "{ \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
+//                    "\"analysis\": { " +
+//                    "\"analyzer\": { " +
+//                    "\"default\": { " +
+//                    "\"type\": \"whitespace\"" +
+//                    "} } } }";
+//        else {
+//            indexSettings = "{ \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } }";
+//        }
+//
+//        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
+//        checker.run2NExperiment("localhost", "tfidf", "doc",
+//                inputDir, normModes, ngramSizes, true, true, workingDir,
+//                true, indexSettings, mappingStr, isPrint, isDeleteIndex, errMeasure);
+//    }
 
-        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
-        checker.run2NExperiment("localhost", "tfidf", "doc",
-                inputDir, normModes, ngramSizes, true, true, workingDir,
-                true, indexSettings, mappingStr, isPrint, isDeleteIndex, errMeasure);
-    }
 
+    private static EvalResult tfidfExp(String inputDir, String workingDir, boolean isPrint) {
 
-    private static String tfidfExp(String inputDir, String workingDir, boolean isPrint) {
         String[] discountOverlap = {"no", "true", "false"};
         IndexChecker checker = new IndexChecker();
-        String outFile = "";
+        EvalResult bestResult = new EvalResult();
 
         for (String discO : discountOverlap) {
+
             String indexSettings = "";
             if (!discO.equals("no"))
                 indexSettings = "{ \"number_of_shards\": 1, " +
@@ -210,39 +192,48 @@ public class Experiment {
             }
 
             String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
-            // System.out.println(indexSettings);
-            outFile = checker.runExperiment("localhost", "tfidf_" + discO, "doc",
+
+            EvalResult result = checker.runExperiment("localhost", "tfidf_" + discO, "doc",
                     inputDir, normModes, ngramSizes, true, true,
                     workingDir, false, indexSettings, mappingStr,
                     isPrint, isDeleteIndex, errMeasure);
+
+            if (result.getValue() > bestResult.getValue()) {
+                bestResult = result;
+            }
         }
-        return outFile;
+
+        return bestResult;
     }
 
-    private static String bm25TextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult bm25TextExp(String inputDir, String workingDir, boolean isPrint) {
         String[] normModes = { "x" };
 	    int[] ngramSizes = { 1 };
         double k1 = 1.2;
         double b = 0.75;
         String discO = "true";
         IndexChecker checker = new IndexChecker();
+
         String indexSettings = "{ \"number_of_shards\": 1, " +
                 "\"similarity\": "
                 + "{ \"bm25_similarity\": { \"type\": \"BM25\", \"k1\": \"" + k1 + "\", \"b\": \"" + b + "\", \"discount_overlap\": \"" + discO + "\" } }, "
                 + "\"analysis\": { \"analyzer\": { \"default\": { \"type\": \"whitespace\" } } } }";
+
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
+
         return checker.runExperiment("localhost", "bm25",
                 "doc", inputDir, normModes, ngramSizes, true,
                 true, workingDir, true, indexSettings, mappingStr,
                 isPrint, isDeleteIndex, errMeasure);
     }
 
-    private static String bm25Exp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult bm25Exp(String inputDir, String workingDir, boolean isPrint) {
         String[] k1s = {"0.0", "0.6", "1.2", "1.8", "2.4"};
         String[] bs = {"0.0", "0.25", "0.50", "0.75", "1.00"};
         String[] discountOverlaps = {"true", "false"};
-        String outFile = "";
+
         IndexChecker checker = new IndexChecker();
+        EvalResult bestResult = new EvalResult();
 
         for (String k1 : k1s) {
             for (String b : bs) {
@@ -253,23 +244,28 @@ public class Experiment {
                             + "\"analysis\": { \"analyzer\": { \"default\": { \"type\": \"whitespace\" } } } }";
                     String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
                     System.out.println(indexSettings);
-                    outFile = checker.runExperiment("localhost",
+                    EvalResult result = checker.runExperiment("localhost",
                             "bm25_" + k1 + "_" + b + "_" + discO, "doc",
                             inputDir, normModes, ngramSizes, true, true,
                             workingDir, false, indexSettings, mappingStr,
                             isPrint, isDeleteIndex, errMeasure);
+
+                    if (result.getValue() > bestResult.getValue()) {
+                        bestResult = result;
+                    }
                 }
             }
         }
-        return outFile;
+
+        return bestResult;
     }
 
-    private static String dfrTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult dfrTextExp(String inputDir, String workingDir, boolean isPrint) {
         String bm = "be";
         String ae = "b";
         String norm = "h1";
         // String[] normModes = {"x"};
-	int[] ngramSizes = { 1 };
+        int[] ngramSizes = {1};
 
         IndexChecker checker = new IndexChecker();
 
@@ -279,7 +275,7 @@ public class Experiment {
                 + "\"analysis\" : { \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } } }";
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
-        // System.out.println(indexSettings);
+
         return checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm,
                 "doc", inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr,
@@ -287,12 +283,13 @@ public class Experiment {
 
     }
 
-    private static String dfrExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult dfrExp(String inputDir, String workingDir, boolean isPrint) {
         String[] basicModelArr = {"be", "d", "g", "if", "in", "ine", "p"};
         String[] afterEffectArr = {"no", "b", "l"};
         String[] dfrNormalizationArr = {"no", "h1", "h2", "h3", "z"};
-        String outFile = "";
+
         IndexChecker checker = new IndexChecker();
+        EvalResult bestResult = new EvalResult();
 
         for (String bm : basicModelArr) {
             for (String ae : afterEffectArr) {
@@ -303,22 +300,26 @@ public class Experiment {
                             + "\"analysis\" : { \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } } }";
 
                     String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
-                    // System.out.println(indexSettings);
-                    outFile = checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
+
+                    EvalResult result = checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
                             inputDir, normModes, ngramSizes, true, true,
                             workingDir, false, indexSettings, mappingStr,
                             isPrint, isDeleteIndex, errMeasure);
+
+                    if (result.getValue() > bestResult.getValue()) {
+                        bestResult = result;
+                    }
                 }
             }
         }
-        return outFile;
+        return bestResult;
     }
 
-    private static String ibTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult ibTextExp(String inputDir, String workingDir, boolean isPrint) {
         String dist = "ll";
         String lamb = "df";
         String ibNorm = "h1";
-	int[] ngramSizes = { 1 };
+        int[] ngramSizes = {1};
         // String[] normModes = { "x" };
 
         IndexChecker checker = new IndexChecker();
@@ -335,7 +336,7 @@ public class Experiment {
                 + "\"analysis\" : { \"analyzer\" : "
                 + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
-        // System.out.println(indexSettings);
+
         return checker.runExperiment("localhost",
                 "ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
                 inputDir, normModes, ngramSizes, true, true,
@@ -344,13 +345,14 @@ public class Experiment {
 
     }
 
-    private static String ibExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult ibExp(String inputDir, String workingDir, boolean isPrint) {
         String[] distributions = {"ll", "spl"};
         String[] lambdas = {"df", "ttf"};
         String[] ibNormalizationArr = {"no", "h1", "h2", "h3", "z"};
         String outFile = "";
 
         IndexChecker checker = new IndexChecker();
+        EvalResult bestResult = new EvalResult();
 
         for (String dist : distributions) {
             for (String lamb : lambdas) {
@@ -367,19 +369,23 @@ public class Experiment {
                             + "\"analysis\" : { \"analyzer\" : "
                             + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
                     String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
-                    // System.out.println(indexSettings);
-                    outFile = checker.runExperiment("localhost",
+
+                    EvalResult result = checker.runExperiment("localhost",
                             "ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
                             inputDir, normModes, ngramSizes, true, true,
                             workingDir, false, indexSettings, mappingStr,
                             isPrint, isDeleteIndex, errMeasure);
+
+                    if (result.getValue() > bestResult.getValue()) {
+                        bestResult = result;
+                    }
                 }
             }
         }
-        return outFile;
+        return bestResult;
     }
 
-    private static String lmdTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult lmdTextExp(String inputDir, String workingDir, boolean isPrint) {
         String mu = "2000";
         // String[] normModes = { "x" };
          int[] ngramSizes = { 1 };
@@ -403,10 +409,10 @@ public class Experiment {
                 isPrint, isDeleteIndex, errMeasure);
     }
 
-    private static String lmdExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult lmdExp(String inputDir, String workingDir, boolean isPrint) {
         String[] mus = {"500", "1000", "1500",
                 "2000", "2500", "3000"};
-        String outFile = "";
+        EvalResult bestResult = new EvalResult();
 
         IndexChecker checker = new IndexChecker();
         for (String mu : mus) {
@@ -422,16 +428,20 @@ public class Experiment {
             // System.out.println(indexSettings);
 
             String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
-            outFile = checker.runExperiment("localhost",
+            EvalResult result = checker.runExperiment("localhost",
                     "lmd_" + mu, "doc",
                     inputDir, normModes, ngramSizes, true, true,
                     workingDir, false, indexSettings, mappingStr,
                     isPrint, isDeleteIndex, errMeasure);
+
+            if (result.getValue() > bestResult.getValue()) {
+                bestResult = result;
+            }
         }
-        return outFile;
+        return bestResult;
     }
 
-    private static String lmjTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult lmjTextExp(String inputDir, String workingDir, boolean isPrint) {
         // String[] normModes = { "x" };
         String lambda = "0.1";
         int[] ngramSizes = { 1 };
@@ -447,7 +457,7 @@ public class Experiment {
                 + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
-        // System.out.println(indexSettings);
+
         return checker.runExperiment("localhost",
                 "lmj_" + lambda, "doc",
                 inputDir, normModes, ngramSizes, true, true,
@@ -455,12 +465,14 @@ public class Experiment {
                 isPrint, isDeleteIndex, errMeasure);
     }
 
-    private static void lmjExp(String inputDir, String workingDir, boolean isPrint) {
+    private static EvalResult lmjExp(String inputDir, String workingDir, boolean isPrint) {
         // String[] normModes = {"pw"};
         // int[] ngramSizes = {4};
         String[] lambdas = { "0.1", "0.2", "0.3", "0.4", "0.5",
                 "0.6", "0.7", "0.8", "0.9", "1.0" };
         IndexChecker checker = new IndexChecker();
+        EvalResult bestResult = new EvalResult();
+
         for (String lambda : lambdas) {
             String indexSettings = "{ \"number_of_shards\": 1," +
                     "\"similarity\": "
@@ -473,13 +485,18 @@ public class Experiment {
                     + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
 
             String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
-            // System.out.println(indexSettings);
-            checker.runExperiment("localhost",
+
+            EvalResult result = checker.runExperiment("localhost",
                     "lmj_" + lambda, "doc",
                     inputDir, normModes, ngramSizes, true, true,
                     workingDir, false, indexSettings, mappingStr,
                     isPrint, isDeleteIndex, errMeasure);
+
+            if (result.getValue() > bestResult.getValue())
+                bestResult = result;
         }
+
+        return bestResult;
     }
 
 	/* New similarity (does not work in the current Elasticsearch version */

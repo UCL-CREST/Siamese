@@ -16,7 +16,7 @@ public class Evaluator {
     private HashMap<String, ArrayList<MethodClone>> cloneCluster;
     private HashMap<String, ArrayList<String>> searchKey;
 
-    public Evaluator(String clonePairFile, String index, String outputDir) {
+    Evaluator(String clonePairFile, String index, String outputDir) {
         this.clonePairFile = clonePairFile;
         this.index = index;
         this.outputDir = outputDir;
@@ -43,7 +43,7 @@ public class Evaluator {
         System.out.println("--> No. of clusters = " + cloneCluster.size());
     }
 
-    public void generateSearchKey() {
+    void generateSearchKey() {
         searchKey = new HashMap<String, ArrayList<String>>();
         Iterator it = cloneCluster.entrySet().iterator();
         String textToPrint = "";
@@ -88,7 +88,7 @@ public class Evaluator {
         System.out.println("Done generating search key ... ");
     }
 
-    public String fixPath(String pathToFix) {
+    private String fixPath(String pathToFix) {
         return pathToFix.replace("/0_orig/", "/0_orig_")
                 .replace("/1_artifice/", "/1_artifice_")
                 .replace("/test_0_orig_no_krakatau/", "/test_0_orig_no_krakatau_")
@@ -97,7 +97,7 @@ public class Evaluator {
                 .replace("/test_1_artifice_no_procyon/", "/test_1_artifice_no_procyon_");
     }
 
-    public String getMethodName(String methodHeader) {
+    private String getMethodName(String methodHeader) {
         String[] headerSplit = methodHeader.split(" ");
         String methodName = "";
         for (String h: headerSplit) {
@@ -118,17 +118,19 @@ public class Evaluator {
             }
             textToPrint += "\n";
         }
-        writeToFile("resources", "searchkey.csv", textToPrint, false);
+        Experiment.writeToFile("resources", "searchkey.csv", textToPrint, false);
     }
 
-    public double evaluteRPrec(String outputFile, int r) {
+    double evaluteRPrec(String outputFile, int r) {
         System.out.println("Evaluating " + r + "-precision from the output file: " + outputFile);
         String RPrecToPrint = "";
         double arp = 0.0;
 
         try {
-        /* copied from http://howtodoinjava.com/3rd-party/parse-read-write-csv-files-opencsv-tutorial/ */
+
+            /* copied from http://howtodoinjava.com/3rd-party/parse-read-write-csv-files-opencsv-tutorial/ */
             CSVReader reader = new CSVReader(new FileReader(outputFile), ',', '"', 0);
+
             //Read CSV line by line and use the string array as you want
             String[] nextLine;
             double sumRPrec = 0.0;
@@ -147,94 +149,72 @@ public class Evaluator {
                 int checkSize = r;
                 if (nextLine.length < r)
                     checkSize = nextLine.length;
+
                 // check the results with the key
                 for (int i = 1; i <= r; i++) {
+
                     // limit the check to the number of relevant results obtained (nextLine.length)
                     if (i < nextLine.length) {
                         if (relevantResults.contains(nextLine[i]))
                             tp++;
                     }
                 }
+
                 // calculate r-precision up to the number of relevant results obtained (if <= r)
                 float rprec = (float) tp/r;
+
                 if (Experiment.isPrint)
                     System.out.println("  " + r + "-prec = " + rprec);
                 RPrecToPrint += rprec + "\n";
+
                 // sum up r-precision
                 sumRPrec += rprec;
+
             }
+
             // calculate average r-precision
             arp = sumRPrec/noOfQueries;
             System.out.println("--> No. of query = " + noOfQueries);
 
             String outFile = "rprec_" + index + ".csv";
-            writeToFile(outputDir, outFile , RPrecToPrint, false);
-
-            // System.out.println("  Results written to file: " + outputDir + "/" + outFile);
+            Experiment.writeToFile(outputDir, outFile , RPrecToPrint, false);
             System.out.println("ARP = " + arp);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return arp;
     }
 
-    public ArrayList<MethodClone> readCSV(String csvFile) {
+    private ArrayList<MethodClone> readCSV(String csvFile) {
         ArrayList<MethodClone> clones = new ArrayList<MethodClone>();
         try {
+
             /* copied from http://howtodoinjava.com/3rd-party/parse-read-write-csv-files-opencsv-tutorial/ */
             CSVReader reader = new CSVReader(new FileReader(csvFile), ',', '"', 1);
+
             //Read CSV line by line and use the string array as you want
             String[] nextLine;
+
             while ((nextLine = reader.readNext()) != null) {
-                if (nextLine != null) {
-                    //Verifying the read data here
-                    if (nextLine.length == 3) {
-                        // create a clone method
-                        // fix the path name
-                        MethodClone mc = new MethodClone(nextLine[0], nextLine[1], nextLine[2]);
-                        // add to the list
-                        clones.add(mc);
-                    }
+
+                //Verifying the read data here
+                if (nextLine.length == 3) {
+
+                    // create a clone method
+                    // fix the path name
+                    MethodClone mc = new MethodClone(nextLine[0], nextLine[1], nextLine[2]);
+
+                    // add to the list
+                    clones.add(mc);
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return clones;
-    }
-
-    public void writeToFile(String location, String filename, String content, boolean isAppend) {
-        if (createDir(location)) {
-            /* copied from https://www.mkyong.com/java/how-to-write-to-file-in-java-bufferedwriter-example/ */
-            BufferedWriter bw = null;
-            FileWriter fw = null;
-
-            try {
-                fw = new FileWriter(location + "/" + filename, isAppend);
-                bw = new BufferedWriter(fw);
-                bw.write(content);
-                if (!isAppend)
-                    System.out.println("Saved as: " + filename);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (bw != null)
-                        bw.close();
-                    if (fw != null)
-                        fw.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-            }
-        } else {
-            System.out.println("ERROR: can't create a directory at: " + location);
-        }
     }
 
     public boolean createDir(String location) {
