@@ -20,7 +20,7 @@ public class Experiment {
             "djkp", "djkps", "djkpw", "djkpws"};
 
     private static int[] ngramSizes = { 1, 2, 3, 4 };
-    private static String errMeasure = "map";
+    private static String errMeasure = "arp";
 
     protected static boolean isPrint = true;
     private static boolean isDeleteIndex = true;

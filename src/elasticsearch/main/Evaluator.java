@@ -16,7 +16,7 @@ public class Evaluator {
     private HashMap<String, ArrayList<MethodClone>> cloneCluster;
     private HashMap<String, ArrayList<String>> searchKey;
 
-    Evaluator(String clonePairFile, String index, String outputDir) {
+    public Evaluator(String clonePairFile, String index, String outputDir) {
         this.clonePairFile = clonePairFile;
         this.index = index;
         this.outputDir = outputDir;
@@ -41,6 +41,7 @@ public class Evaluator {
         }
 
         System.out.println("--> No. of clusters = " + cloneCluster.size());
+        generateSearchKey();
     }
 
     void generateSearchKey() {
@@ -121,7 +122,7 @@ public class Evaluator {
         Experiment.writeToFile("resources", "searchkey.csv", textToPrint, false);
     }
 
-    double evaluateARP(String outputFile, int r) {
+    public double evaluateARP(String outputFile, int r) {
         System.out.println("Evaluating " + r + "-precision from the output file: " + outputFile);
         String RPrecToPrint = "";
         double arp = 0.0;
@@ -187,7 +188,7 @@ public class Evaluator {
         return arp;
     }
 
-    double evaluateMAP(String outputFile, int size) {
+    public double evaluateMAP(String outputFile, int size) {
         System.out.println("Evaluating MAP from the output file: " + outputFile);
         String mapToPrint = "";
         double map = 0.0;
