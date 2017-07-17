@@ -636,7 +636,7 @@ public class IndexChecker {
      */
     private EvalResult evaluate(String mode, String workingDir, String errMeasure, boolean isPrint) throws Exception {
 
-        Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode, workingDir);
+        Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode, workingDir, isPrint);
         EvalResult result = new EvalResult();
 
         switch (errMeasure) {

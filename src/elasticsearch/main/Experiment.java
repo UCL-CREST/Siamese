@@ -10,19 +10,22 @@ public class Experiment {
 
     static String prefixToRemove = "";
 
-    private static String[] normModes = {
-            "x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks",
-            "kw", "kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws",
-            "jp", "jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps",
-            "jkpw", "jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws",
-            "dk", "dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs",
-            "djw", "djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws",
-            "djkp", "djkps", "djkpw", "djkpws"};
+//    private static String[] normModes = {
+//            "x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks",
+//            "kw", "kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws",
+//            "jp", "jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps",
+//            "jkpw", "jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws",
+//            "dk", "dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs",
+//            "djw", "djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws",
+//            "djkp", "djkps", "djkpw", "djkpws"};
 
-    private static int[] ngramSizes = { 1, 2, 3, 4 };
-    private static String errMeasure = "arp";
+    private static String[] normModes = { "x" };
 
-    protected static boolean isPrint = true;
+    private static int[] ngramSizes = { 1, 2, 3, 4, 5 };
+//    private static int[] ngramSizes = { 5 };
+    private static String errMeasure = "map";
+
+    protected static boolean isPrint = false;
     private static boolean isDeleteIndex = true;
 
     public static void main(String[] args) {
@@ -88,8 +91,12 @@ public class Experiment {
                     System.out.println("No ranking function found");
             }
 
-            writeToFile(workingDir, "best_" + errMeasure + "_ngram_" + mode + ".txt",
-                    "Best " + errMeasure + " = " + bestResult.getSetting() + ", " + bestResult.getValue(),
+            String ngram = "ngram";
+            if (ngramSizes.length == 1)
+                ngram = "";
+
+            writeToFile(workingDir, "best_" + errMeasure + "_" + ngram + "_" + mode + ".txt",
+                    bestResult.getSetting() + ", " + bestResult.getValue(),
                     false);
         }
 
@@ -119,7 +126,7 @@ public class Experiment {
     private static EvalResult tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
         String discO = "true";
         String[] normModes = { "x" };
-	    int[] ngramSizes = { 1 };
+//	    int[] ngramSizes = { 1 };
         IndexChecker checker = new IndexChecker();
         String indexSettings = "";
 
@@ -172,6 +179,7 @@ public class Experiment {
 
     private static EvalResult tfidfExp(String inputDir, String workingDir, boolean isPrint) {
 
+//        String[] normModes = { "x" };
         String[] discountOverlap = {"no", "true", "false"};
         IndexChecker checker = new IndexChecker();
         EvalResult bestResult = new EvalResult();
@@ -208,7 +216,7 @@ public class Experiment {
 
     private static EvalResult bm25TextExp(String inputDir, String workingDir, boolean isPrint) {
         String[] normModes = { "x" };
-	    int[] ngramSizes = { 1 };
+//	    int[] ngramSizes = { 1 };
         double k1 = 1.2;
         double b = 0.75;
         String discO = "true";
@@ -264,8 +272,8 @@ public class Experiment {
         String bm = "be";
         String ae = "b";
         String norm = "h1";
-        // String[] normModes = {"x"};
-        int[] ngramSizes = {1};
+        String[] normModes = {"x"};
+//        int[] ngramSizes = {1};
 
         IndexChecker checker = new IndexChecker();
 
@@ -319,8 +327,8 @@ public class Experiment {
         String dist = "ll";
         String lamb = "df";
         String ibNorm = "h1";
-        int[] ngramSizes = {1};
-        // String[] normModes = { "x" };
+//        int[] ngramSizes = {1};
+        String[] normModes = { "x" };
 
         IndexChecker checker = new IndexChecker();
 
@@ -387,8 +395,8 @@ public class Experiment {
 
     private static EvalResult lmdTextExp(String inputDir, String workingDir, boolean isPrint) {
         String mu = "2000";
-        // String[] normModes = { "x" };
-         int[] ngramSizes = { 1 };
+        String[] normModes = { "x" };
+//        int[] ngramSizes = { 1 };
 
         IndexChecker checker = new IndexChecker();
         String indexSettings = "{ \"number_of_shards\": 1," +
@@ -442,9 +450,9 @@ public class Experiment {
     }
 
     private static EvalResult lmjTextExp(String inputDir, String workingDir, boolean isPrint) {
-        // String[] normModes = { "x" };
+        String[] normModes = { "x" };
         String lambda = "0.1";
-        int[] ngramSizes = { 1 };
+//        int[] ngramSizes = { 1 };
         IndexChecker checker = new IndexChecker();
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": "

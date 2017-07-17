@@ -16,14 +16,17 @@ public class Evaluator {
     private HashMap<String, ArrayList<MethodClone>> cloneCluster;
     private HashMap<String, ArrayList<String>> searchKey;
 
-    public Evaluator(String clonePairFile, String index, String outputDir) {
+    public Evaluator(String clonePairFile, String index, String outputDir, boolean isPrint) {
         this.clonePairFile = clonePairFile;
         this.index = index;
         this.outputDir = outputDir;
 
         ArrayList<MethodClone> clones = readCSV(clonePairFile);
-        System.out.println("Reading clone cluster files ... ");
-        System.out.println("--> No. of clones = " + clones.size());
+
+        if (isPrint) {
+            System.out.println("Reading clone cluster files ... ");
+            System.out.println("--> No. of clones = " + clones.size());
+        }
 
         // setup a hash map to store clone cluster
         cloneCluster = new HashMap<String, ArrayList<MethodClone>>();
@@ -40,7 +43,8 @@ public class Evaluator {
             }
         }
 
-        System.out.println("--> No. of clusters = " + cloneCluster.size());
+        if (isPrint)
+            System.out.println("--> No. of clusters = " + cloneCluster.size());
         generateSearchKey();
     }
 
@@ -214,11 +218,16 @@ public class Evaluator {
 
                 // check the results with the key
                 for (int i = 1; i <= size; i++) {
-                    if (relevantResults.contains(nextLine[i])) {
-                        tp++;
-                        // calculate precision every time a relevant result is obtained.
-                        float precision = (float) tp / i;
-                        sumPrecision += precision;
+
+                    // check if we still have results to process
+                    // (some searches do not return all results.
+                    if (i < nextLine.length) {
+                        if (relevantResults.contains(nextLine[i])) {
+                            tp++;
+                            // calculate precision every time a relevant result is obtained.
+                            float precision = (float) tp / i;
+                            sumPrecision += precision;
+                        }
                     }
 
                     // found all relevant results, stop
