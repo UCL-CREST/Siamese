@@ -1,1 +1,0 @@
-Best map = /Users/Chaiyong/IdeasProjects/ElasticCodeSearch/results/bm25_1.2_1.00_true_dkw_3_17-07-17_08-09-49.csv, 0.8399895814192644

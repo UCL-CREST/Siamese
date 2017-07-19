@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static elasticsearch.main.Experiment.isPrint;
+
 public class Evaluator {
     private String clonePairFile;
     private String index;
@@ -168,7 +170,7 @@ public class Evaluator {
                 // calculate r-precision up to the number of relevant results obtained (if <= r)
                 float rprec = (float) tp/r;
 
-                if (Experiment.isPrint)
+                if (isPrint)
                     System.out.println("  " + r + "-prec = " + rprec);
                 RPrecToPrint += rprec + "\n";
 
@@ -179,7 +181,9 @@ public class Evaluator {
 
             // calculate average r-precision
             arp = sumRPrec/noOfQueries;
-            System.out.println("--> No. of query = " + noOfQueries);
+
+            if (isPrint)
+                System.out.println("--> No. of query = " + noOfQueries);
 
             String outFile = "rprec_" + index + ".csv";
             Experiment.writeToFile(outputDir, outFile , RPrecToPrint, false);
@@ -237,7 +241,7 @@ public class Evaluator {
 
                 double averagePrec = sumPrecision / relevantResults.size();
 
-                if (Experiment.isPrint)
+                if (isPrint)
                     System.out.println("avgprec = " + averagePrec);
 
                 mapToPrint += averagePrec + "\n";
