@@ -20,8 +20,8 @@ public class Experiment {
             "djkp", "djkps", "djkpw", "djkpws"};
 //    private static String[] normModes = { "x" };
 
-//    private static int[] ngramSizes = { 1, 2, 3, 4, 5 };
-    private static int[] ngramSizes = { 1 };
+    private static int[] ngramSizes = { 1, 2, 3, 4, 5 };
+//    private static int[] ngramSizes = { 1 };
 
     private static String errMeasure = "map";
 
