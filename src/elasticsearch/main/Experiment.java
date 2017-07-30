@@ -102,32 +102,9 @@ public class Experiment {
 
     }
 
-//    private static void generate2NQueries() {
-//        File file = new File("resources/tests_code3/bubblesort/0_orig_BubbleSort.java:main/BubbleSort.java:main.java");
-//        MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
-//        ArrayList<Method> methodList = methodParser.parseMethods();
-//        for (Method method: methodList) {
-//            try {
-//                IndexChecker ic = new IndexChecker();
-//                ic.setIsPrint(true);
-//                ic.setOutputFolder("results/170404");
-//                char[] normMode = { 's', 'w' };
-//                ic.setTokenizerMode(normMode);
-//                ArrayList<String> tokens = ic.tokenizeStringToArray(ic.tokenize(method.getSrc()));
-//                // System.out.println("Array size: " + tokens.size());
-//                ArrayList<String> queries = ic.generate2NQuery(tokens);
-//                // System.out.println("Size: " + queries.size());
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
     private static EvalResult tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
         String discO = "true";
-//        String[] normModes = { "x" };
-//	    int[] ngramSizes = { 1 };
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
         String indexSettings = "";
 
         if (!discO.equals("false"))
@@ -145,43 +122,16 @@ public class Experiment {
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
 
-        return checker.runExperiment("localhost", "tfidf", "doc",
+        return isics.runExperiment("localhost", "tfidf", "doc",
                 inputDir, normModes, ngramSizes, true, true, workingDir,
                 true, indexSettings, mappingStr, isPrint, isDeleteIndex, errMeasure);
     }
 
-//    private static String[] tfidfQuerySelectionExp(String inputDir, String workingDir, boolean isPrint) {
-//        String discO = "true";
-//        // String[] normModes = Experiment.normModes;
-//        String[] normModes = { "x" };
-//        int[] ngramSizes = { 1 };
-//        IndexChecker checker = new IndexChecker();
-//        String indexSettings = "";
-//        if (!discO.equals("false"))
-//            indexSettings = "{ \"number_of_shards\": 1, " +
-//                    "\"similarity\": { \"tfidf_similarity\": " +
-//                    "{ \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
-//                    "\"analysis\": { " +
-//                    "\"analyzer\": { " +
-//                    "\"default\": { " +
-//                    "\"type\": \"whitespace\"" +
-//                    "} } } }";
-//        else {
-//            indexSettings = "{ \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } }";
-//        }
-//
-//        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
-//        checker.run2NExperiment("localhost", "tfidf", "doc",
-//                inputDir, normModes, ngramSizes, true, true, workingDir,
-//                true, indexSettings, mappingStr, isPrint, isDeleteIndex, errMeasure);
-//    }
-
 
     private static EvalResult tfidfExp(String inputDir, String workingDir, boolean isPrint) {
 
-//        String[] normModes = { "x" };
         String[] discountOverlap = {"no", "true", "false"};
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
         EvalResult bestResult = new EvalResult();
 
         for (String discO : discountOverlap) {
@@ -201,7 +151,7 @@ public class Experiment {
 
             String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
 
-            EvalResult result = checker.runExperiment("localhost", "tfidf_" + discO, "doc",
+            EvalResult result = isics.runExperiment("localhost", "tfidf_" + discO, "doc",
                     inputDir, normModes, ngramSizes, true, true,
                     workingDir, false, indexSettings, mappingStr,
                     isPrint, isDeleteIndex, errMeasure);
@@ -220,7 +170,7 @@ public class Experiment {
         double k1 = 1.2;
         double b = 0.75;
         String discO = "true";
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
 
         String indexSettings = "{ \"number_of_shards\": 1, " +
                 "\"similarity\": "
@@ -229,18 +179,19 @@ public class Experiment {
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
 
-        return checker.runExperiment("localhost", "bm25",
+        return isics.runExperiment("localhost", "bm25",
                 "doc", inputDir, normModes, ngramSizes, true,
                 true, workingDir, true, indexSettings, mappingStr,
                 isPrint, isDeleteIndex, errMeasure);
     }
 
     private static EvalResult bm25Exp(String inputDir, String workingDir, boolean isPrint) {
+
         String[] k1s = {"0.0", "0.6", "1.2", "1.8", "2.4"};
         String[] bs = {"0.0", "0.25", "0.50", "0.75", "1.00"};
         String[] discountOverlaps = {"true", "false"};
 
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
         EvalResult bestResult = new EvalResult();
 
         for (String k1 : k1s) {
@@ -252,7 +203,7 @@ public class Experiment {
                             + "\"analysis\": { \"analyzer\": { \"default\": { \"type\": \"whitespace\" } } } }";
                     String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
                     System.out.println(indexSettings);
-                    EvalResult result = checker.runExperiment("localhost",
+                    EvalResult result = isics.runExperiment("localhost",
                             "bm25_" + k1 + "_" + b + "_" + discO, "doc",
                             inputDir, normModes, ngramSizes, true, true,
                             workingDir, false, indexSettings, mappingStr,
@@ -275,7 +226,7 @@ public class Experiment {
 //        String[] normModes = {"x"};
 //        int[] ngramSizes = {1};
 
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
 
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": { \"dfr_similarity\" : { \"type\": \"DFR\", \"basic_model\": \"" + bm + "\", \"after_effect\": \"" + ae + "\", "
@@ -284,7 +235,7 @@ public class Experiment {
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 
-        return checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm,
+        return isics.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm,
                 "doc", inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr,
                 isPrint, isDeleteIndex, errMeasure);
@@ -292,11 +243,12 @@ public class Experiment {
     }
 
     private static EvalResult dfrExp(String inputDir, String workingDir, boolean isPrint) {
-        String[] basicModelArr = {"be", "d", "g", "if", "in", "ine", "p"};
+        // String[] basicModelArr = {"be", "d", "g", "if", "in", "ine", "p"};
+        String[] basicModelArr = {"ine", "p"};
         String[] afterEffectArr = {"no", "b", "l"};
         String[] dfrNormalizationArr = {"no", "h1", "h2", "h3", "z"};
 
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
         EvalResult bestResult = new EvalResult();
 
         for (String bm : basicModelArr) {
@@ -309,7 +261,7 @@ public class Experiment {
 
                     String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 
-                    EvalResult result = checker.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
+                    EvalResult result = isics.runExperiment("localhost", "dfr_" + bm + "_" + ae + "_" + norm, "doc",
                             inputDir, normModes, ngramSizes, true, true,
                             workingDir, false, indexSettings, mappingStr,
                             isPrint, isDeleteIndex, errMeasure);
@@ -330,7 +282,7 @@ public class Experiment {
 //        int[] ngramSizes = {1};
 //        String[] normModes = { "x" };
 
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
 
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": "
@@ -345,7 +297,7 @@ public class Experiment {
                 + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 
-        return checker.runExperiment("localhost",
+        return isics.runExperiment("localhost",
                 "ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
                 inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr,
@@ -358,7 +310,7 @@ public class Experiment {
         String[] lambdas = {"df", "ttf"};
         String[] ibNormalizationArr = {"no", "h1", "h2", "h3", "z"};
 
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
         EvalResult bestResult = new EvalResult();
 
         for (String dist : distributions) {
@@ -377,7 +329,7 @@ public class Experiment {
                             + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
                     String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 
-                    EvalResult result = checker.runExperiment("localhost",
+                    EvalResult result = isics.runExperiment("localhost",
                             "ib_" + dist + "_" + lamb + "_" + ibNorm, "doc",
                             inputDir, normModes, ngramSizes, true, true,
                             workingDir, false, indexSettings, mappingStr,
@@ -397,7 +349,7 @@ public class Experiment {
 //        String[] normModes = { "x" };
 //        int[] ngramSizes = { 1 };
 
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": "
                 + "{ \"lmd_similarity\" : "
@@ -409,7 +361,7 @@ public class Experiment {
                 + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
-        return checker.runExperiment("localhost",
+        return isics.runExperiment("localhost",
                 "lmd_" + mu, "doc",
                 inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr,
@@ -421,7 +373,7 @@ public class Experiment {
                 "2000", "2500", "3000"};
         EvalResult bestResult = new EvalResult();
 
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
         for (String mu : mus) {
             String indexSettings = "{ \"number_of_shards\": 1," +
                     "\"similarity\": "
@@ -435,7 +387,7 @@ public class Experiment {
             // System.out.println(indexSettings);
 
             String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
-            EvalResult result = checker.runExperiment("localhost",
+            EvalResult result = isics.runExperiment("localhost",
                     "lmd_" + mu, "doc",
                     inputDir, normModes, ngramSizes, true, true,
                     workingDir, false, indexSettings, mappingStr,
@@ -452,7 +404,7 @@ public class Experiment {
 //        String[] normModes = { "x" };
         String lambda = "0.1";
 //        int[] ngramSizes = { 1 };
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": "
                 + "{ \"lmj_similarity\" : "
@@ -465,7 +417,7 @@ public class Experiment {
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
 
-        return checker.runExperiment("localhost",
+        return isics.runExperiment("localhost",
                 "lmj_" + lambda, "doc",
                 inputDir, normModes, ngramSizes, true, true,
                 workingDir, false, indexSettings, mappingStr,
@@ -476,7 +428,7 @@ public class Experiment {
 
         String[] lambdas = { "0.1", "0.2", "0.3", "0.4", "0.5",
                 "0.6", "0.7", "0.8", "0.9", "1.0" };
-        IndexChecker checker = new IndexChecker();
+        ISiCS isics = new ISiCS();
         EvalResult bestResult = new EvalResult();
 
         for (String lambda : lambdas) {
@@ -492,7 +444,7 @@ public class Experiment {
 
             String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
 
-            EvalResult result = checker.runExperiment("localhost",
+            EvalResult result = isics.runExperiment("localhost",
                     "lmj_" + lambda, "doc",
                     inputDir, normModes, ngramSizes, true, true,
                     workingDir, false, indexSettings, mappingStr,
@@ -512,7 +464,7 @@ public class Experiment {
         String[] normModes = { "x" };
         int[] ngramSizes = { 1 };
 
-        IndexChecker checker = new IndexChecker();
+        Main checker = new Main();
 
         String indexSettings = "{ \"similarity\": "
                 + "{ \"dfi_similarity\" : "

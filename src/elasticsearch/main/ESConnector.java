@@ -6,12 +6,10 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import elasticsearch.document.Document;
-import org.elasticsearch.action.admin.indices.close.CloseIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
-import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexResponse;
@@ -31,16 +29,18 @@ public class ESConnector {
 	private Client client;
 	private String host;
 
-	public ESConnector(String host) {
+	ESConnector(String host) {
 		this.host = host;
 	}
 
-	public void startup() throws UnknownHostException {
+	Client startup() throws UnknownHostException {
 		org.elasticsearch.common.settings.Settings settings = org.elasticsearch.common.settings.Settings
 				.settingsBuilder().put("cluster.name", "stackoverflow").build();
 		// on startup
 		client = TransportClient.builder().settings(settings).build()
 				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), 9300));
+
+		return client;
 	}
 
 	public void shutdown() {
@@ -168,7 +168,7 @@ public class ESConnector {
 		return response.isAcknowledged();
 	}
 	
-    boolean isIndexExist(String indexName) {
+    boolean doesIndexExist(String indexName) {
 		return client.admin().indices()
 			    .prepareExists(indexName)
 			    .execute().actionGet().isExists();

@@ -97,7 +97,7 @@ public class ISICSIndexReader {
      */
     private static String getSelectedTerms(String terms, int selectedSize) {
         String[] termsArr = terms.split(" ");
-        // ArrayList<IndexChecker.SelectedTerm> selectedTermIndexes = new ArrayList<>();
+        // ArrayList<Main.SelectedTerm> selectedTermIndexes = new ArrayList<>();
         String selectedTerms = "";
         SelectedTerm firstMinTerm = new SelectedTerm("x", 9999999);
         SelectedTerm secondMinTerm = new SelectedTerm("x", 9999999);
@@ -128,14 +128,14 @@ public class ISICSIndexReader {
                     // System.out.println(term + ": " + freq);
                     // first term, just insert
 //                if (selectedTermIndexes.size() == 0) {
-//                    selectedTermIndexes.add(new IndexChecker.SelectedTerm(termsArr[i], freq));
+//                    selectedTermIndexes.add(new Main.SelectedTerm(termsArr[i], freq));
 //                } else {
 //                    int size = selectedTermIndexes.size();
 //                    // if not the first one, add it according to its frequency (ascending)
 //                    for (int j = 0; j < size; j++) {
-//                        IndexChecker.SelectedTerm sti = selectedTermIndexes.get(j);
+//                        Main.SelectedTerm sti = selectedTermIndexes.get(j);
 //                        if (freq < sti.getFrequency()) {
-//                            IndexChecker.SelectedTerm newSti = new IndexChecker.SelectedTerm(termsArr[i], freq);
+//                            Main.SelectedTerm newSti = new Main.SelectedTerm(termsArr[i], freq);
 //                            selectedTermIndexes.add(j, newSti);
 //                            break;
 //                        }

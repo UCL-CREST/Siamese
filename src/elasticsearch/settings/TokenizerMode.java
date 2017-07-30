@@ -45,6 +45,42 @@ public class TokenizerMode {
 		datatype = Settings.Normalize.DATATYPE_NORM_OFF;
 	}
 
+	public TokenizerMode setTokenizerMode(char[] normOptions) {
+
+		TokenizerMode modes = new TokenizerMode();
+
+		for (char c : normOptions) {
+			// setting all normalisation options: w, d, j, p, k, v, s
+			if (c == 'w')
+				modes.setWord(Settings.Normalize.WORD_NORM_ON);
+			else if (c == 'd')
+				modes.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
+			else if (c == 'j')
+				modes.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
+			else if (c == 'p')
+				modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_ON);
+			else if (c == 'k')
+				modes.setKeyword(Settings.Normalize.KEYWORD_NORM_ON);
+			else if (c == 'v')
+				modes.setValue(Settings.Normalize.VALUE_NORM_ON);
+			else if (c == 's')
+				modes.setString(Settings.Normalize.STRING_NORM_ON);
+			else if (c == 'x') {
+				modes.setWord(Settings.Normalize.WORD_NORM_OFF);
+				modes.setDatatype(Settings.Normalize.DATATYPE_NORM_OFF);
+				modes.setJavaClass(Settings.Normalize.JAVACLASS_NORM_OFF);
+				modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_OFF);
+				modes.setKeyword(Settings.Normalize.KEYWORD_NORM_OFF);
+				modes.setValue(Settings.Normalize.VALUE_NORM_OFF);
+				modes.setValue(Settings.Normalize.STRING_NORM_OFF);
+			} else if (c == 'e') {
+				modes.setEscape(Settings.Normalize.ESCAPE_ON);
+			}
+		}
+
+		return modes;
+	}
+
 	public int getWord() {
 		return word;
 	}
