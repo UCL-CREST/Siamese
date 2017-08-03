@@ -89,11 +89,13 @@ public class ISiCS {
         // initialise the n-gram generator
         ngen = new nGramGenerator(ngramSize);
 
-        String indexSettings = IndexSettings.DFR.getIndexSettings(
-                IndexSettings.DFR.bmIF,
-                IndexSettings.DFR.aeL,
-                IndexSettings.DFR.normH1);
-        String mappingStr = IndexSettings.DFR.mappingStr;
+//        String indexSettings = IndexSettings.DFR.getIndexSettings(
+//                IndexSettings.DFR.bmIF,
+//                IndexSettings.DFR.aeL,
+//                IndexSettings.DFR.normH1);
+//        String mappingStr = IndexSettings.DFR.mappingStr;
+        String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
+        String mappingStr = IndexSettings.TFIDF.mappingStr;
 
         try {
             Client isicsClient = es.startup();
@@ -678,7 +680,7 @@ public class ISiCS {
 
             bw.close();
 
-            System.out.println("Searching done. See output at " + outfile.getAbsolutePath());
+            System.out.println("Searching done " + count + " times. See output at " + outfile.getAbsolutePath());
 
         } else {
             throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());

@@ -1,0 +1,1 @@
+/Users/Chaiyong/IdeasProjects/ElasticCodeSearch/results/tfidf_w_2_30-07-17_23-32-55.csv, 0.8412455758445111

@@ -4,9 +4,14 @@ package elasticsearch.settings;
  * Created by Chaiyong on 5/24/16.
  */
 public class IndexSettings {
-    public class TFIDF {
-        public String[] discountOverlap = { "no", "true", "false" };
-        public String genIndexSettings(String discO) {
+    public static class TFIDF {
+        public static class DisCountOverlap {
+            public static String NO = "no";
+            public static String TRUE = "true";
+            public static String FALSE = "false";
+        }
+
+        public static String getIndexSettings(String discO) {
             return "{ \"similarity\": { \"tfidf_similarity\": { \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
                     "\"analysis\": { " +
                     "\"analyzer\": { " +
@@ -14,7 +19,7 @@ public class IndexSettings {
                     "\"type\": \"whitespace\"" +
                     "} } } }";
         }
-        public String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
+        public static String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
     }
 
     public class BM25 {

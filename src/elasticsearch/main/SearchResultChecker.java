@@ -12,7 +12,7 @@ public class SearchResultChecker {
         SearchResultChecker checker = new SearchResultChecker();
         try {
             checker.run(
-                    "/Users/Chaiyong/Desktop/so_30-07-17_21-16-10.csv",
+                    "/Users/Chaiyong/Desktop/so_01-08-17_21-09-18.csv",
                     "/Users/Chaiyong/Desktop/112_A_true_clones.csv",
                     "/Users/Chaiyong/Desktop/results.csv"
             );
