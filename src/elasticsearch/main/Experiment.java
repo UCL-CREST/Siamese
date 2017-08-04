@@ -10,18 +10,18 @@ public class Experiment {
 
     static String prefixToRemove = "";
 
-    private static String[] normModes = {
-            "x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks",
-            "kw", "kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws",
-            "jp", "jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps",
-            "jkpw", "jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws",
-            "dk", "dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs",
-            "djw", "djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws",
-            "djkp", "djkps", "djkpw", "djkpws"};
-//    private static String[] normModes = { "x" };
+//    private static String[] normModes = {
+//            "x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks",
+//            "kw", "kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws",
+//            "jp", "jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps",
+//            "jkpw", "jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws",
+//            "dk", "dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs",
+//            "djw", "djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws",
+//            "djkp", "djkps", "djkpw", "djkpws"};
+    private static String[] normModes = { "x" };
 
-    private static int[] ngramSizes = { 1, 2, 3, 4, 5 };
-//    private static int[] ngramSizes = { 1 };
+//    private static int[] ngramSizes = { 1, 2, 3, 4, 5 };
+    private static int[] ngramSizes = { 1 };
 
     private static String errMeasure = "map";
 

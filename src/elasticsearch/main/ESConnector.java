@@ -145,6 +145,8 @@ public class ESConnector {
 
             count++;
         }
+		if (isPrint)
+			System.out.println("------");
 
         return results;
     }

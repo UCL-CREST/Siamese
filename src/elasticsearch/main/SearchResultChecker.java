@@ -12,16 +12,22 @@ public class SearchResultChecker {
         SearchResultChecker checker = new SearchResultChecker();
         try {
             checker.run(
-                    "/Users/Chaiyong/Desktop/so_01-08-17_21-09-18.csv",
+                    "/Users/Chaiyong/Desktop/so_04-08-17_00-53-06.csv",
                     "/Users/Chaiyong/Desktop/112_A_true_clones.csv",
-                    "/Users/Chaiyong/Desktop/results.csv"
+                    "/Users/Chaiyong/Desktop/results.csv",
+                    "/Users/Chaiyong/Desktop/queries/",
+                    "/Users/Chaiyong/Downloads/stackoverflow/stackoverflow_formatted/"
             );
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void run(String resultFile, String trueCloneFile, String outputFile) throws IOException {
+    public void run(String resultFile,
+                    String trueCloneFile,
+                    String outputFile,
+                    String queryPrefix,
+                    String resultPrefix) throws IOException {
 
         BufferedReader br = null;
         String line = "";
@@ -69,7 +75,11 @@ public class SearchResultChecker {
 
             // start searching
             for (List<String> sResult : resultList) {
-                String[] query = sResult.get(0).replace("\uFEFF", "").split(".java");
+                String[] query = sResult.get(0)
+                        .replace("\uFEFF", "")
+                        .replace(queryPrefix, "")
+                        .replace(resultPrefix, "")
+                        .split(".java");
                 String correctResult = correctResultList.get(Integer.parseInt(query[0]) - 1);
 
                 String matchedResults = "";

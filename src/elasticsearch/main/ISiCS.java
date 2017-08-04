@@ -467,73 +467,32 @@ public class ISiCS {
      * @param selectedSize size of the selected terms
      * @return selected top-selectedSize terms
      */
-    private String getSelectedTerms(String indexName, String terms, int selectedSize) {
+    private ArrayList<JavaTerm> getSelectedTerms(String indexName, String terms, int selectedSize) {
+
         String indexFile = "/Users/Chaiyong/elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
-        String selectedTerms = "";
+        ArrayList<JavaTerm> selectedTermsArray = new ArrayList<>();
+
         try {
             IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
-
             String[] termsArr = terms.split(" ");
-
-            // TODO: fix this constant values!!
-
-            SelectedTerm firstMinTerm = new SelectedTerm("x", 9999999);
-            SelectedTerm secondMinTerm = new SelectedTerm("x", 9999999);
-            SelectedTerm thirdMinTerm = new SelectedTerm("x", 9999999);
-            SelectedTerm fourthMinTerm = new SelectedTerm("x", 9999999);
-            SelectedTerm fifthMinTerm = new SelectedTerm("x", 9999999);
-
             for (String term: termsArr) {
                 // TODO: get rid of the blank term (why it's blank?)
                 if (!term.equals("")) {
                     Term t = new Term("src", term);
                     int freq = reader.docFreq(t);
-
-                    if (freq < firstMinTerm.getFrequency()) {
-                        firstMinTerm.setFrequency(freq);
-                        firstMinTerm.setTerm(term);
-                    } else if (!term.equals(firstMinTerm.getTerm()) &&
-                            freq < secondMinTerm.getFrequency()) {
-                        secondMinTerm.setFrequency(freq);
-                        secondMinTerm.setTerm(term);
-                    } else if (!term.equals(firstMinTerm.getTerm()) &&
-                            !term.equals(secondMinTerm.getTerm()) &&
-                            freq < thirdMinTerm.getFrequency()) {
-                        thirdMinTerm.setFrequency(freq);
-                        thirdMinTerm.setTerm(term);
-                    } else if (!term.equals(firstMinTerm.getTerm()) &&
-                            !term.equals(secondMinTerm.getTerm()) &&
-                            !term.equals(thirdMinTerm.getTerm()) &&
-                            freq < fourthMinTerm.getFrequency()) {
-                        fourthMinTerm.setFrequency(freq);
-                        fourthMinTerm.setTerm(term);
-                    } else if (!term.equals(firstMinTerm.getTerm()) &&
-                            !term.equals(secondMinTerm.getTerm()) &&
-                            !term.equals(thirdMinTerm.getTerm()) &&
-                            !term.equals(fourthMinTerm.getTerm()) &&
-                            freq < fifthMinTerm.getFrequency()) {
-                        fifthMinTerm.setFrequency(freq);
-                        fifthMinTerm.setTerm(term);
-                    }
+                    selectedTermsArray.add(new JavaTerm(term, freq));
                 }
             }
 
-            selectedTerms = "\"" + firstMinTerm.getTerm().replace("\"", "&quot;") + "\"," + firstMinTerm.getFrequency() +
-                    ",\"" + secondMinTerm.getTerm().replace("\"", "&quot;") + "\"," + secondMinTerm.getFrequency() +
-                    ",\"" + thirdMinTerm.getTerm().replace("\"", "&quot;") + "\"," + thirdMinTerm.getFrequency() +
-                    ",\"" + fourthMinTerm.getTerm().replace("\"", "&quot;") + "\"," + fourthMinTerm.getFrequency() +
-                    ",\"" + fifthMinTerm.getTerm().replace("\"", "&quot;") + "\"," + fifthMinTerm.getFrequency();
-
-            System.out.println(selectedTerms);
-
-            selectedTerms = firstMinTerm.getTerm() +  " " + secondMinTerm.getTerm() + " " + thirdMinTerm.getTerm() + " " + fourthMinTerm + " " + fifthMinTerm;
+            /* copied from https://stackoverflow.com/questions/18441846/how-to-sort-an-arraylist-in-java */
+            Collections.sort(selectedTermsArray);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return selectedTerms;
+        return selectedTermsArray;
     }
 
     /***
@@ -608,6 +567,7 @@ public class ISiCS {
             List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
 
             int count = 0;
+            int methodCount = 0;
 
             for (File file : listOfFiles) {
                 if (isPrint)
@@ -632,9 +592,21 @@ public class ISiCS {
                             // write output to file
                             outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
                                     + method.getName() + "," ;
-
                             query = tokenize(method.getSrc());
-//                            query = getSelectedTerms(index, tmpQuery, 3);
+
+                            // find the top-5 rare terms in the query
+                            String tmpQuery = query;
+                            int selectedAmount = 10;
+                            ArrayList<JavaTerm> selectedTerms = getSelectedTerms(index, tmpQuery, selectedAmount);
+
+                            int limit = selectedAmount;
+                            if (selectedTerms.size() < selectedAmount)
+                                limit = selectedTerms.size();
+
+                            for (int i=0; i<limit; i++) {
+                                // System.out.println("S" + i + ": " + selectedTerms.get(i));
+                                query += selectedTerms.get(i) + " ";
+                            }
 
                             // search for results
                             results = es.search(index, type, query, isPrint, isDFS, offset, size);
@@ -647,7 +619,9 @@ public class ISiCS {
                                 outToFile += d.getFile();
                                 resultCount++;
                             }
+
                             outToFile += "\n";
+                            methodCount++;
                         }
                     } else {
                         query = tokenize(file);
@@ -680,7 +654,8 @@ public class ISiCS {
 
             bw.close();
 
-            System.out.println("Searching done " + count + " times. See output at " + outfile.getAbsolutePath());
+            System.out.println("Searching done for " + count + " files. For " + methodCount + " times. " +
+                    "See output at " + outfile.getAbsolutePath());
 
         } else {
             throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
@@ -727,32 +702,6 @@ public class ISiCS {
         output += input.replace("\\", "\\\\").replace("\"", "\\\"").replace("/", "\\/").replace("\b", "\\b")
                 .replace("\f", "\\f").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
         return output;
-    }
-
-    public class SelectedTerm {
-        private String term;
-        private int frequency;
-
-        public SelectedTerm(String term, int frequency) {
-            this.term = term;
-            this.frequency = frequency;
-        }
-
-        public String getTerm() {
-            return term;
-        }
-
-        public void setTerm(String term) {
-            this.term = term;
-        }
-
-        public int getFrequency() {
-            return frequency;
-        }
-
-        public void setFrequency(int frequency) {
-            this.frequency = frequency;
-        }
     }
 
     public void setIsPrint(boolean isPrint) {
