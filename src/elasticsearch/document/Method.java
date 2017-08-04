@@ -1,45 +1,55 @@
 package elasticsearch.document;
 
-import com.github.javaparser.ast.body.Parameter;
+import elasticsearch.document.Parameter;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Method {
     private String file;
+    private String methodPackage;
+    private String className;
     private String name;
-    private String fullHeader;
+    private String header;
     private String src;
     private int startLine;
     private int endLine;
     private List<Parameter> params;
 
     public Method() {
-
+        /* create a blank method */
+        this.methodPackage = "";
+        this.name = "";
+        this.className = "";
+        this.params = new ArrayList<>();
     }
 
-    public Method(String name, String src) {
-        this.name = name;
-        this.src = src;
-    }
-
-    public Method(String file, String name, String src, int startLine, int endLine, List<Parameter> params, String fullHeader) {
+    public Method(String file,
+                  String methodPackage,
+                  String className,
+                  String name,
+                  String src,
+                  int startLine,
+                  int endLine,
+                  List<Parameter> params,
+                  String header) {
         this.file = file;
+        this.methodPackage = methodPackage;
+        this.className = className;
         this.name = name;
         this.src = src;
         this.startLine = startLine;
         this.endLine = endLine;
         this.params = params;
-        this.fullHeader = fullHeader;
+        this.header = header;
     }
 
-    public String getFullHeader() {
-        return fullHeader;
+    public String getHeader() {
+        return header;
     }
 
-    public void setFullHeader(String fullHeader) {
-        this.fullHeader = fullHeader;
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public String getFile() {
@@ -52,6 +62,24 @@ public class Method {
 
     public String getName() {
         return name;
+    }
+
+    public String getFullyQualifiedMethodName() {
+
+        String paramsStr = "";
+
+        for (int i=0; i<params.size(); i++) {
+            Parameter p = params.get(i);
+            if (i == 0)
+                paramsStr = p.getType() + " " + p.getId();
+            else
+                paramsStr += ", " + p.getType() + " " + p.getId();
+        }
+
+        return this.getMethodPackage() + "."
+                + this.getClassName() + "#"
+                + this.getName() + "("
+                + paramsStr + ")";
     }
 
     public void setName(String name) {
@@ -90,16 +118,62 @@ public class Method {
         this.params = params;
     }
 
-    public String getHeader() {
-        return name;
+    public String getMethodPackage() {
+        return methodPackage;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getClassName() {
+        return this.className;
+    }
+
+    public void setMethodPackage(String methodPackage) {
+        this.methodPackage = methodPackage;
     }
 
     public String toString() {
-        return file + ": " + fullHeader;
+        return methodPackage + "." + className + "." + name + "," + params;
+    }
+
+    @Override
+    public int hashCode(){
+
+        // adapted from https://www.mkyong.com/java/java-how-to-overrides-equals-and-hashcode/
+
+        int result = 17;
+        result = 31 * result + methodPackage.hashCode();
+        result = 31 * result + className.hashCode();
+        result = 31 * result + name.hashCode();
+
+        for (Parameter p: params) {
+            result = 31 * result + p.hashCode();
+        }
+
+        return result;
     }
 
     public boolean equals(Object o) {
         Method m = (Method) o;
-        return ((file.equals(m.getFile())) && (fullHeader.equals(m.fullHeader)));
+
+        int countParamsMatches = 0;
+
+        // if the no. of params is different, they're not equal
+        if (params.size() != m.getParams().size())
+            return false;
+        else {
+            for (int i = 0; i < params.size(); i++) {
+                if (params.get(i).equals(m.getParams().get(i))) {
+                    countParamsMatches++;
+                }
+            }
+
+            return methodPackage.equals(m.getMethodPackage())
+                    && className.equals(m.getClassName())
+                    && name.equals(m.getName())
+                    && countParamsMatches == params.size();
+        }
     }
 }

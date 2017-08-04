@@ -354,8 +354,6 @@ public class ISiCS {
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
         src = printArray(tokens, false);
 
-        System.out.println("NORM SRC: " + src);
-
         // enter ngram mode
         if (isNgram) {
             src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
@@ -586,8 +584,6 @@ public class ISiCS {
                             // write output to file
                             outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
                                     + method.getName() + "," ;
-
-                            System.out.println("SOURCE: " + method.getSrc());
 
                             query = tokenize(method.getSrc());
 

@@ -64,8 +64,8 @@ public class Evaluator {
                 MethodClone clone = clones.get(i);
                 String filename = clone.getFile().substring(clone.getFile().lastIndexOf("/") + 1);
                 String query = fixPath(clone.getFile())
-                        + ":" + getMethodName(clone.getFullHeader()) + "/" + filename
-                        + ":" + getMethodName(clone.getFullHeader()) + ".java_method";
+                        + ":" + getMethodName(clone.getHeader()) + "/" + filename
+                        + ":" + getMethodName(clone.getHeader()) + ".java_method";
                 textToPrint += query;
                 ArrayList<String> relevantResults = new ArrayList<String>();
 
@@ -78,9 +78,9 @@ public class Evaluator {
                     if (i!=j) {
                         filename = clones.get(j).getFile().substring(clones.get(j).getFile().lastIndexOf("/") + 1);
                         String result = fixPath(clones.get(j).getFile())
-                                + ":" + getMethodName(clones.get(j).getFullHeader())
+                                + ":" + getMethodName(clones.get(j).getHeader())
                                 + "/" + filename
-                                + ":" + getMethodName(clones.get(j).getFullHeader()) + ".java_method";
+                                + ":" + getMethodName(clones.get(j).getHeader()) + ".java_method";
                         relevantResults.add(result);
                         textToPrint += "," + result;
                     }

@@ -1,6 +1,6 @@
 package elasticsearch.document;
 
-import com.github.javaparser.ast.body.Parameter;
+import elasticsearch.document.Parameter;
 import java.util.List;
 
 /**
@@ -9,15 +9,15 @@ import java.util.List;
 public class MethodClone extends Method {
     private String cluster;
 
-    public MethodClone(String file, String name, String src, int startLine, int endLine, List<Parameter> params, String fullHeader, String cluster) {
-        super(file, name, src, startLine, endLine, params, fullHeader);
+    public MethodClone(String file, String methodPackage, String name, String className, String src, int startLine, int endLine, List<Parameter> params, String fullHeader, String cluster) {
+        super(file, methodPackage, className, name, src, startLine, endLine, params, fullHeader);
         this.cluster = cluster;
     }
 
     public MethodClone(String file, String cluster, String header) {
         this.setFile(file);
         this.cluster = cluster;
-        this.setFullHeader(header);
+        this.setHeader(header);
     }
 
     public String getCluster() {

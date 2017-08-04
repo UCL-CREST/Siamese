@@ -13,31 +13,61 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MethodParser {
     private ArrayList<Method> methodList = new ArrayList<Method>();
     private String FILE_PATH = "";
     private String PREFIX_TO_REMOVE = "";
+    public static String JAVA_PACKAGE = "";
+    public static String JAVA_CLASS = "";
 
     public MethodParser(String filePath, String prefixToRemove) {
         FILE_PATH = filePath;
         PREFIX_TO_REMOVE = prefixToRemove;
     }
 
+    /***
+     * Extract both methods and constructors
+     * @return a list of methods & constructors
+     */
     public ArrayList<Method> parseMethods() {
         try {
             FileInputStream in = new FileInputStream(FILE_PATH);
             CompilationUnit cu;
             try {
                 cu = JavaParser.parse(in);
+
+                // extract package and class name
+                JAVA_PACKAGE = cu.getPackage().getName().toString();
+
+                List<TypeDeclaration> types = cu.getTypes();
+                for (TypeDeclaration type : types) {
+                    if (type instanceof ClassOrInterfaceDeclaration) {
+                        // getting class name
+                        ClassOrInterfaceDeclaration classDec = (ClassOrInterfaceDeclaration) type;
+                        JAVA_CLASS = classDec.getName();
+                    }
+                }
+
                 new MethodVisitor().visit(cu, null);
                 new ConstructorVisitor().visit(cu, null);
+
             } catch (Throwable e) {
                 if (Experiment.isPrint)
                     System.out.println("Unparseable method (use whole fragment)");
                 String content = new Scanner(new File(FILE_PATH)).useDelimiter("\\Z").next();
-                Method m = new Method(FILE_PATH.replace(PREFIX_TO_REMOVE, ""), "method", content, -1, -1, new LinkedList<Parameter>(), "");
+                Method m = new Method(
+                        FILE_PATH.replace(PREFIX_TO_REMOVE, ""),
+                        "package",
+                        "ClassName",
+                        "method",
+                        content,
+                        -1,
+                        -1,
+                        new LinkedList<elasticsearch.document.Parameter>(),
+                        "");
                 methodList.add(m);
             } finally {
                 in.close();
@@ -59,32 +89,68 @@ public class MethodParser {
         return methodName;
     }
 
+    /***
+     * Extract methods
+     */
     private class MethodVisitor extends VoidVisitorAdapter {
         @Override
         public void visit(MethodDeclaration n, Object arg) {
-            BlockStmt bodyStmt = n.getBody();
-            Method m = new Method(FILE_PATH.replace(PREFIX_TO_REMOVE, "")
-                    , getOnlyMethodName(n.getDeclarationAsString())
-                    , bodyStmt.toString()
+
+            List<Parameter> parameterArrayList = n.getParameters();
+            ArrayList<elasticsearch.document.Parameter> paramsList = new ArrayList<>();
+            for (Parameter p: parameterArrayList) {
+                paramsList.add(
+                        new elasticsearch.document.Parameter(
+                                p.getType().toString(),
+                                p.getId().toString()));
+            }
+
+            Method m = new Method(
+                    FILE_PATH.replace(PREFIX_TO_REMOVE, "")
+                    , JAVA_PACKAGE
+                    , JAVA_CLASS
+                    , n.getName()
+                    // copied the regex from
+                    // http://stackoverflow.com/questions/9205988/writing-a-java-program-to-remove-the-comments-in-same-java-program
+                    , n.toStringWithoutComments()
+                    .replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","")
                     , n.getBeginLine()
                     , n.getEndLine()
-                    , n.getParameters()
+                    , paramsList
                     , n.getDeclarationAsString());
             methodList.add(m);
             super.visit(n, arg);
         }
     }
 
+    /***
+     * Extract constructors
+     */
     private class ConstructorVisitor extends VoidVisitorAdapter {
         @Override
         public void visit(ConstructorDeclaration c, Object arg) {
-            BlockStmt bodyStmt = c.getBlock();
-            Method m = new Method(FILE_PATH.replace(PREFIX_TO_REMOVE, "")
-                    , getOnlyMethodName(c.getDeclarationAsString())
-                    , bodyStmt.toString()
+
+            List<Parameter> parameterArrayList = c.getParameters();
+            ArrayList<elasticsearch.document.Parameter> paramsList = new ArrayList<>();
+            for (Parameter p: parameterArrayList) {
+                paramsList.add(
+                        new elasticsearch.document.Parameter(
+                                p.getType().toString(),
+                                p.getId().toString()));
+            }
+
+            Method m = new Method(
+                    FILE_PATH.replace(PREFIX_TO_REMOVE, "")
+                    , JAVA_PACKAGE
+                    , JAVA_CLASS
+                    , c.getName()
+                    // copied the regex from
+                    // http://stackoverflow.com/questions/9205988/writing-a-java-program-to-remove-the-comments-in-same-java-program
+                    , c.toStringWithoutComments()
+                    .replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", "")
                     , c.getBeginLine()
                     , c.getEndLine()
-                    , c.getParameters()
+                    , paramsList
                     , c.getDeclarationAsString());
             methodList.add(m);
             super.visit(c, arg);
