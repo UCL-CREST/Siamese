@@ -603,10 +603,12 @@ public class ISiCS {
                             if (selectedTerms.size() < selectedAmount)
                                 limit = selectedTerms.size();
 
+//                            System.out.println("LIMIT: " + limit);
+
                             for (int i=0; i<limit; i++) {
-                                // System.out.println("S" + i + ": " + selectedTerms.get(i));
-                                query += selectedTerms.get(i) + " ";
+                                query += selectedTerms.get(i).getTerm() + " ";
                             }
+//                            System.out.println("QUERY: " + query);
 
                             // search for results
                             results = es.search(index, type, query, isPrint, isDFS, offset, size);
@@ -646,7 +648,7 @@ public class ISiCS {
 
                 } catch (Exception e) {
                     System.out.println(e.getCause());
-                    System.out.println("Error: query term size exceeds 4096 (too big).");
+                    System.out.println("Error: file " + count +" generates query term size exceeds 4096 (too big).");
                 }
 
                 bw.write(outToFile);
@@ -654,7 +656,7 @@ public class ISiCS {
 
             bw.close();
 
-            System.out.println("Searching done for " + count + " files. For " + methodCount + " times. " +
+            System.out.println("Searching done for " + count + " files (" + methodCount + " methods). " +
                     "See output at " + outfile.getAbsolutePath());
 
         } else {
