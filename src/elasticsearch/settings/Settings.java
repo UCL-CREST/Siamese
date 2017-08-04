@@ -17,6 +17,7 @@ public class Settings {
 		public static final int JAVACLASS_NORM_OFF = 0;
 		public static final int KEYWORD_NORM_ON = 1;
 		public static final int KEYWORD_NORM_OFF = 0;
+		public static final int KEYWORD_REMOVE = -1;
 		public static final int ESCAPE_ON = 1;
 		public static final int ESCAPE_OFF = 0;
 		public static final int JAVAPACKAGE_NORM_ON = 1;

@@ -89,13 +89,13 @@ public class ISiCS {
         // initialise the n-gram generator
         ngen = new nGramGenerator(ngramSize);
 
-//        String indexSettings = IndexSettings.DFR.getIndexSettings(
-//                IndexSettings.DFR.bmIF,
-//                IndexSettings.DFR.aeL,
-//                IndexSettings.DFR.normH1);
-//        String mappingStr = IndexSettings.DFR.mappingStr;
-        String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
-        String mappingStr = IndexSettings.TFIDF.mappingStr;
+        String indexSettings = IndexSettings.DFR.getIndexSettings(
+                IndexSettings.DFR.bmIF,
+                IndexSettings.DFR.aeL,
+                IndexSettings.DFR.normH1);
+        String mappingStr = IndexSettings.DFR.mappingStr;
+//        String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
+//        String mappingStr = IndexSettings.TFIDF.mappingStr;
 
         try {
             Client isicsClient = es.startup();
@@ -229,9 +229,7 @@ public class ISiCS {
         boolean isIndexed = true;
         ArrayList<Document> docArray = new ArrayList<>();
         File folder = new File(inputFolder);
-
         List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
-
         // counter for id
         int count = 0;
 
@@ -245,32 +243,25 @@ public class ISiCS {
 
             try {
                 methodList = methodParser.parseMethods();
-
                 // check if there's a method
                 if (methodList.size() > 0) {
-
                     for (Method method : methodList) {
-
                         // Create Document object and put in an array list
                         String src = tokenize(method.getSrc());
-
                         // Use file name as id
-                        Document d = new Document(String.valueOf(count),
+                        Document d = new Document(
+                                String.valueOf(count),
                                 filePath + "_" + method.getName(),
                                 src);
-
                         // add document to array
                         docArray.add(d);
                         count++;
                     }
                 } else {
-
                     // cannot parse, use the whole file
                     String src = tokenize(file);
-
                     // Use file name as id
                     Document d = new Document(String.valueOf(count), filePath + "_raw", src);
-
                     // add document to array
                     docArray.add(d);
                     count++;
@@ -362,10 +353,14 @@ public class ISiCS {
         // generate tokens
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
         src = printArray(tokens, false);
+
+        System.out.println("NORM SRC: " + src);
+
         // enter ngram mode
         if (isNgram) {
             src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
         }
+
         return src;
     }
 
@@ -403,7 +398,6 @@ public class ISiCS {
 //					, "queries.txt"
 //					, newSet.toString().replace("[","").replace(",","").replace("]","\n")
 //					, true);
-            // System.out.println(newSet);
             sets.add(newSet);
             sets.add(set);
         }
@@ -592,23 +586,24 @@ public class ISiCS {
                             // write output to file
                             outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
                                     + method.getName() + "," ;
+
+                            System.out.println("SOURCE: " + method.getSrc());
+
                             query = tokenize(method.getSrc());
 
-                            // find the top-5 rare terms in the query
-                            String tmpQuery = query;
-                            int selectedAmount = 10;
-                            ArrayList<JavaTerm> selectedTerms = getSelectedTerms(index, tmpQuery, selectedAmount);
-
-                            int limit = selectedAmount;
-                            if (selectedTerms.size() < selectedAmount)
-                                limit = selectedTerms.size();
-
-//                            System.out.println("LIMIT: " + limit);
-
-                            for (int i=0; i<limit; i++) {
-                                query += selectedTerms.get(i).getTerm() + " ";
-                            }
-//                            System.out.println("QUERY: " + query);
+//
+//                            // find the top-5 rare terms in the query
+//                            String tmpQuery = query;
+//                            int selectedAmount = 10;
+//                            ArrayList<JavaTerm> selectedTerms = getSelectedTerms(index, tmpQuery, selectedAmount);
+//
+//                            int limit = selectedAmount;
+//                            if (selectedTerms.size() < selectedAmount)
+//                                limit = selectedTerms.size();
+//
+//                            for (int i=0; i<limit; i++) {
+//                                query += selectedTerms.get(i).getTerm() + " ";
+//                            }
 
                             // search for results
                             results = es.search(index, type, query, isPrint, isDFS, offset, size);

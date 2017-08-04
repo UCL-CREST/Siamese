@@ -69,8 +69,13 @@ public class JavaTokenizer {
 			if (prevChar.equals("=")) {
 				tokens.add("=");
 				prevChar = "";
-			} else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") || prevChar.equals("/")
-					|| prevChar.equals("%") || prevChar.equals("<") || prevChar.equals(">")) {
+			} else if (prevChar.equals("+")
+                    || prevChar.equals("-")
+                    || prevChar.equals("*")
+                    || prevChar.equals("/")
+					|| prevChar.equals("%")
+                    || prevChar.equals("<")
+                    || prevChar.equals(">")) {
 				tokens.add(prevChar);
 				prevChar = "";
 			}
@@ -97,26 +102,31 @@ public class JavaTokenizer {
 			if (prevChar.equals("=")) {
 				tokens.add("=");
 				prevChar = "";
-			} else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") || prevChar.equals("/")
-					|| prevChar.equals("%") || prevChar.equals("<") || prevChar.equals(">")) {
+			} else if (prevChar.equals("+")
+                    || prevChar.equals("-")
+                    || prevChar.equals("*")
+                    || prevChar.equals("/")
+					|| prevChar.equals("%")
+                    || prevChar.equals("<")
+                    || prevChar.equals(">")) {
 				tokens.add(prevChar);
 				prevChar = "";
 			}
 
 			String word = tokenizer.sval;
-			// System.out.println("|" + word + "|");
 			// Convert keywords to "K"
 			if (datatypeMap.containsKey(word)) {
 				if (modes.getDatatype() == Settings.Normalize.DATATYPE_NORM_ON) {
 					tokens.add("D");
 				} else
 					tokens.add(word);
-				// set the value of the latest seen data type (for converting to
-				// the right value)
+				// set the value of the latest seen data type (for converting to the right value)
 				prevDatatype = word;
 			} else if (keywordMap.containsKey(word)) {
 				if (modes.getKeyword() == Settings.Normalize.KEYWORD_NORM_ON)
 					tokens.add("K");
+				else if (modes.getKeyword() == Settings.Normalize.KEYWORD_REMOVE)
+				    ; // remove keywords by not adding them to the result tokens
 				else
 					tokens.add(word);
 			} else if (javaClassMap.containsKey(word)) {
@@ -130,7 +140,6 @@ public class JavaTokenizer {
 				else
 					tokens.add(word);
 			} else if (word.contains(".")) {
-				//System.out.println("|" + word + "|");
 				String[] splitWord = word.split("\\.");
 				for (int i=0; i<splitWord.length; i++) {
 					String s = splitWord[i];
@@ -156,7 +165,7 @@ public class JavaTokenizer {
 				tokens.add("W");
 			} else {
 				tokens.add(word);
-				/*
+                /*
 				 * if (!wordMap.containsKey(word)) { wordMap.put(word, 1);
 				 * wordList.add(word); }
 				 */
@@ -171,8 +180,13 @@ public class JavaTokenizer {
 			if (prevChar.equals("=")) {
 				tokens.add("=");
 				prevChar = "";
-			} else if (prevChar.equals("+") || prevChar.equals("-") || prevChar.equals("*") || prevChar.equals("/")
-					|| prevChar.equals("%") || prevChar.equals("<") || prevChar.equals(">")) {
+			} else if (prevChar.equals("+")
+                            || prevChar.equals("-")
+                            || prevChar.equals("*")
+                            || prevChar.equals("/")
+                            || prevChar.equals("%")
+                            || prevChar.equals("<")
+                            || prevChar.equals(">")) {
 				tokens.add(prevChar);
 				prevChar = "";
 			}
@@ -215,7 +229,13 @@ public class JavaTokenizer {
 		default:
 			char character = (char) tokenizer.ttype;
 			String cStr = String.valueOf(character);
-			if (!Character.isWhitespace(character) && character != '\n' && character != '\r') {
+
+            if (!Character.isWhitespace(character) && character != '\n' && character != '\r') {
+                if (cStr.equals("{") || cStr.equals("}") || cStr.equals("(") || cStr.equals(")")) {
+                    if (modes.getKeyword() == Settings.Normalize.KEYWORD_REMOVE)
+                        break; // remove keywords by not adding them to the result tokens
+                }
+
                 if (cStr.equals("+") || cStr.equals("-")
                         || cStr.equals("*") || cStr.equals("/")
                         || cStr.equals("%")) {
@@ -275,7 +295,7 @@ public class JavaTokenizer {
 				} else if (cStr.equals(",")) {
 					tokens.add(",");
 					prevChar = ",";
-				} else if (character >= 32){ // only deal with printable characters
+				} else if (character >= 32) { // only deal with printable characters
 					tokens.add(cStr);
 					prevChar = "";
 				}
