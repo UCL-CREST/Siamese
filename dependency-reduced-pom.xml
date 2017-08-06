@@ -19,7 +19,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>elasticsearch.main.Main</mainClass>
+                  <mainClass>crest.isics.main.Main</mainClass>
                 </transformer>
                 <transformer />
               </transformers>

@@ -1,0 +1,125 @@
+2015-05-11  dmg  <dmg@uvic.ca>
+	
+	* Released version 1.3
+	
+2015-05-11  dmg  <dmg@uvic.ca>
+
+	* senttok/licensesentence.dict: 
+	  - added AlternTrolltechKDE-approved, 
+	  - in MITX11 liability, there might be commas between names. Regexp is greedy, so we are ok
+
+2015-05-01  dmg  <dmg@uvic.ca>
+
+	* Removed original abbrev.txt file and replaced it with
+	abbreviations from SCOWL. This means Ninka is now free software in
+	its entirety.
+	
+2015-01-10  dmg  <dmg@uvic.ca>
+
+	* Bumped to version 1.3 RC 1
+
+	* ninka-sqlite.pl, ninka-excel.pl: prepared them for release
+
+	* ninka.pl: fixed bug in finding the path of where ninka was being executed from (reported by Ryan Biesemeyer)
+
+	* Fixed quotes in perl (René bScheibe)
+
+2015-01-05  dmg  <dmg@uvic.ca>
+
+	* filter/criticalword.dict: MIT+no-false-attribs license missing one sentence
+
+	* senttok/licensesentence.dict (MITpermissionExtrict): there was a space where no space should have been
+
+2014-06-09  dmg  <dmg@uvic.ca>
+
+	* Version 1.2
+
+	* Changed license to GPLv2+
+
+2013-07-07  dmg  <dmg@uvic.ca>
+
+	* Version 1.1
+
+	* Cleaned up the output of Apache v2
+
+2013-07-03  dmg  <dmg@uvic.ca>
+
+	* Version to 1.1 RC2
+
+	* Added qt variants and fixed more GPL related unknowns.
+
+	* When the license is unknown "UNKNOWN" is printed.
+
+2013-07-02  dmg  <dmg@uvic.ca>
+
+	* Added version to ninka.pl, set to 1.1 RC1
+
+	* matcher/rules.dict: Added CDDLorGPLv2, CPLv1orGPLv2+orLGPLv2, QtorGPLv2orv3
+
+	* senttok/licensesentence.dict: the boost license sometimes contains just the URL refernece, fixed several regressions.
+
+	* matcher/rules.dict: Renamed the openSSLvar2 to Apachev1.0
+
+	* matcher/matcher.pl: added fields to ignore in MPLv1.1
+
+	* the mozilla trilicense was not properly identified in the GPLv2+ or LGPLv2.1+
+
+	* matcher/matcher.pl: Added GPL2orOpenIB to the rules. Allowed
+	spaces in the defintion of the rules
+
+2013-07-01  dmg  <dmg@uvic.ca>
+
+	* filter/criticalword.dict: tighten some definitions to avoid
+	false positives without hurting precision. In particular, removed
+	"subject" as a "legal" term.
+
+	* senttok/licensesentence.dict (publicDomain): Added another public domain.
+
+2011-02-08    <dmg@uvic.ca>
+
+	* senttok/licensesentence.dict: Renamed the GPLVer2+KDE to
+	GPLVer2or3KDE+, which I believe is more appropriate (license GPL
+	v2, v3 or any further version approved by the KDE e.v.
+
+2011-02-03    <dmg@uvic.ca>
+
+	* extComments/extComments.pl (Determine_Comments_Extractor): Fixed
+	a bug introduced in the comments extractor.
+
+	* matcher/rules.dict: Fixed a bug in the sunRPM license. It wasn't detected.
+
+	* filter/criticalword.dict: strenghten some rules to avoid some
+	false positives in good sentences.
+
+2011-01-28    <dmg@uvic.ca>
+
+	* senttok/senttok.pl (Normalize_GPL): Fixed a bug in the parsing
+	of version strings. "v." is considered a version iff followed by a
+	number.
+
+	* matcher/rules.dict, licensesentence.dict: added a new license
+	GPLVer2+KDE (a variant of the GPLv2+ where the KDE has a say in
+	terms of which license it can be replaced with in the future).
+
+2010-11-19  dmg  <dmg@uvic.ca>
+
+	* ninka.pl: Uncommented a line that I left commented by mistake.
+
+2010-11-10  dmg  <dmg@uvic.ca>
+
+	* Released pre-release version 1.0-pre2
+
+	* Added path to the files in the tar file.
+
+	* README: Fixed errors (patch by Armijn Hemel)
+
+	* extComments/extComments.pl (Determine_Comments_Extractor): Added
+	the option to not use the comments extractor.
+
+	* Now that Paul has given us permission, remove patching process.
+
+	* Cleanup files
+
+2010-08-07  dmg  <dmg@uvic.ca>
+
+	* Prepared the release to the public.
