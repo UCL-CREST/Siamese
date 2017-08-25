@@ -7,9 +7,11 @@ import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import crest.isics.document.Method;
 import crest.isics.main.Experiment;
+import crest.isics.settings.Settings;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,12 +22,14 @@ public class MethodParser {
     private ArrayList<Method> methodList = new ArrayList<Method>();
     private String FILE_PATH = "";
     private String PREFIX_TO_REMOVE = "";
+    private String MODE = Settings.MethodParserType.METHOD;
     public static String JAVA_PACKAGE = "";
     public static String JAVA_CLASS = "";
 
-    public MethodParser(String filePath, String prefixToRemove) {
+    public MethodParser(String filePath, String prefixToRemove, String mode) {
         FILE_PATH = filePath;
         PREFIX_TO_REMOVE = prefixToRemove;
+        MODE = mode;
     }
 
     /***
@@ -36,43 +40,53 @@ public class MethodParser {
         try {
             FileInputStream in = new FileInputStream(FILE_PATH);
             CompilationUnit cu;
-            try {
-                cu = JavaParser.parse(in);
+            // method-level parser
+            if (MODE == Settings.MethodParserType.METHOD) {
+                try {
+                    cu = JavaParser.parse(in);
 
-                List<TypeDeclaration> types = cu.getTypes();
-                for (TypeDeclaration type : types) {
-                    if (type instanceof ClassOrInterfaceDeclaration) {
-                        // getting class name
-                        ClassOrInterfaceDeclaration classDec = (ClassOrInterfaceDeclaration) type;
-                        JAVA_CLASS = classDec.getName();
+                    List<TypeDeclaration> types = cu.getTypes();
+                    for (TypeDeclaration type : types) {
+                        if (type instanceof ClassOrInterfaceDeclaration) {
+                            // getting class name
+                            ClassOrInterfaceDeclaration classDec = (ClassOrInterfaceDeclaration) type;
+                            JAVA_CLASS = classDec.getName();
+                        }
                     }
+
+                    new MethodVisitor().visit(cu, null);
+                    new ConstructorVisitor().visit(cu, null);
+
+                } catch (Throwable e) {
+                    if (Experiment.isPrint)
+                        System.out.println("Unparseable method (use whole fragment)");
+                    methodList.add(getWholeFragment());
+                } finally {
+                    in.close();
                 }
-
-                new MethodVisitor().visit(cu, null);
-                new ConstructorVisitor().visit(cu, null);
-
-            } catch (Throwable e) {
-                if (Experiment.isPrint)
-                    System.out.println("Unparseable method (use whole fragment)");
-                String content = new Scanner(new File(FILE_PATH)).useDelimiter("\\Z").next();
-                Method m = new Method(
-                        FILE_PATH.replace(PREFIX_TO_REMOVE, ""),
-                        "package",
-                        "ClassName",
-                        "method",
-                        content,
-                        -1,
-                        -1,
-                        new LinkedList<crest.isics.document.Parameter>(),
-                        "");
-                methodList.add(m);
-            } finally {
-                in.close();
+            } else {
+                // file-level parser
+                methodList.add(getWholeFragment());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return methodList;
+    }
+
+    private Method getWholeFragment() throws FileNotFoundException {
+        String content = new Scanner(new File(FILE_PATH)).useDelimiter("\\Z").next();
+        Method m = new Method(
+                FILE_PATH.replace(PREFIX_TO_REMOVE, ""),
+                "package",
+                "ClassName",
+                "method",
+                content,
+                -1,
+                -1,
+                new LinkedList<crest.isics.document.Parameter>(),
+                "");
+        return m;
     }
 
     private String getOnlyMethodName(String methodHeader) {

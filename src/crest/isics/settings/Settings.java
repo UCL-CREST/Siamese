@@ -2,6 +2,11 @@ package crest.isics.settings;
 
 public class Settings {
 
+	public static class MethodParserType {
+		public static String METHOD = "METHOD-LEVEL";
+		public static String FILE = "FILE-LEVEL";
+	}
+
     public static class ErrorMeasure {
         public static String ARP = "ARP";
         public static String MAP = "MAP";

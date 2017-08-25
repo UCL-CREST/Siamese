@@ -23,6 +23,7 @@ public class Main {
 	private static boolean writeToFile = false;
     private static String[] extensions = { "java" };
     private static String command = "index";
+    private static int minCloneLine = 10;
 
 	public static void main(String[] args) {
 
@@ -46,9 +47,11 @@ public class Main {
                 outputFolder,
                 writeToFile,
                 extensions,
+                minCloneLine,
                 resultOffset,
                 resultsSize,
-                querySizeLimit);
+                querySizeLimit,
+				Settings.MethodParserType.METHOD);
 
         isics.execute(command, Settings.RankingFunction.TFIDF);
     }
@@ -68,7 +71,8 @@ public class Main {
 		options.addOption("p", "print", false, "print the generated tokens");
 		options.addOption("f", "dfs", false, "use DFS mode [default=no]");
 		options.addOption("o", "output", true, "output file location [optional]");
-		options.addOption("c", "command", true, "command to do [index, search]");
+		options.addOption("c", "minline", true, "minimum clone size (lines)");
+        options.addOption("z", "command", true, "command to do [index, search]");
 		options.addOption("h", "help", false, "print help");
 
 		// check if no parameter given, print help and quit
@@ -134,6 +138,8 @@ public class Main {
 			if (line.hasOption("p")) { isPrint = true; }
 
 			if (line.hasOption("f")) { isDFS = true; }
+
+            if (line.hasOption("z")) { minCloneLine = Integer.valueOf(line.getOptionValue("z")); }
 
 		} catch (ParseException exp) {
 			System.out.println("Warning: " + exp.getMessage());

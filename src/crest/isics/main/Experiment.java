@@ -30,32 +30,37 @@ public class Experiment {
 
     private static String errMeasure = Settings.ErrorMeasure.MAP;
     public static boolean isPrint = false;
-    private static boolean deleteIndexAfterUse = false;
+    private static boolean deleteIndexAfterUse = true;
     private static int resultOffset = 0;
     private static int resultSize = 204;
     private static int querySizeLimit = 100;
+    private static int minCloneline = 0;
+    private static String methodParserMode = Settings.MethodParserType.METHOD;
 
     public static void main(String[] args) {
 
-        if (args.length < 3) {
+        if (args.length < 4) {
             // If missing some arguments, show the help
-            System.out.println("Usage: java Experiment <similarity> <input folder> <working dir>");
+            System.out.println("Usage: java Experiment <similarity> <input folder> <working dir> <mode [file/method]>");
             System.exit(-1);
 
         } else {
 
             String outputFile = "";
 
-            /* TODO: FIX THIS
+            /* TODO: FIX THIS */
             String mode = args[0];
             String inputDir = args[1];
             String workingDir = args[2];
-            */
+            String methodParserMode = Settings.MethodParserType.METHOD;
+            if (args[3].equals("file"))
+                methodParserMode = Settings.MethodParserType.FILE;
+
             // Use input here for easiness
             // TODO: FIX THIS
-            String mode = "tfidf_text";
-            String inputDir = "/Users/Chaiyong/Documents/phd/2016/cloplag/tests_andrea";
-            String workingDir = "/Users/Chaiyong/Downloads/isics_results";
+//            String mode = "tfidf_text";
+//            String inputDir = "/Users/Chaiyong/Documents/phd/2016/cloplag/tests_andrea";
+//            String workingDir = "/Users/Chaiyong/Downloads/isics_results";
 
             if (mode.endsWith("_text")) {
                 normModes = normModesText;
@@ -64,6 +69,9 @@ public class Experiment {
                 normModes = normModesText;
                 ngramSizes = ngramSizesAll;
             } else if (mode.endsWith("_codenorm")) {
+                normModes = normModesAll;
+                ngramSizes = ngramSizesText;
+            } else if (mode.endsWith("_both")) {
                 normModes = normModesAll;
                 ngramSizes = ngramSizesAll;
             } else {
@@ -80,32 +88,38 @@ public class Experiment {
             switch(mode) {
                 case "tfidf_text":
                 case "tfidf_text_ngram":
-                case "tfidf_text_ngram_codenorm":
+                case "tfidf_text_codenorm":
+                case "tfidf_text_both":
                     bestResult = tfidfTextExp(inputDir, workingDir, isPrint);
                     break;
                 case "bm25_text":
                 case "bm25_text_ngram":
-                case "bm25_text_ngram_codenorm":
+                case "bm25_text_codenorm":
+                case "bm25_text_both":
                     bestResult = bm25TextExp(inputDir, workingDir, isPrint);
                     break;
                 case "dfr_text":
                 case "dfr_text_ngram":
-                case "dfr_text_ngram_codenorm":
+                case "dfr_text_codenorm":
+                case "dfr_text_both":
                     bestResult = dfrTextExp(inputDir, workingDir, isPrint);
                     break;
                 case "ib_text":
                 case "ib_text_ngram":
-                case "ib_text_ngram_codenorm":
+                case "ib_text_codenorm":
+                case "ib_text_both":
                     bestResult = ibTextExp(inputDir, workingDir, isPrint);
                     break;
                 case "lmd_text":
                 case "lmd_text_ngram":
-                case "lmd_text_ngram_codenorm":
+                case "lmd_text_codenorm":
+                case "lmd_text_both":
                     bestResult = lmdTextExp(inputDir, workingDir, isPrint);
                     break;
                 case "lmj_text":
                 case "lmj_text_ngram":
-                case "lmj_text_ngram_codenorm":
+                case "lmj_text_codenorm":
+                case "lmj_text_both":
                     bestResult = lmjTextExp(inputDir, workingDir, isPrint);
                     break;
                 case "tfidf": /* normal mode (search all parameters + grams + normalisation) */
@@ -161,7 +175,8 @@ public class Experiment {
             indexSettings = "{ \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } }";
         }
 
-        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
+        String mappingStr = "{ \"properties\": { \"src\": " +
+                "{ \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
 
         return isics.runExperiment(
                 "localhost",
@@ -181,7 +196,9 @@ public class Experiment {
                 errMeasure,
                 resultOffset,
                 resultSize,
-                querySizeLimit);
+                querySizeLimit,
+                minCloneline,
+                methodParserMode);
     }
 
 
@@ -196,7 +213,8 @@ public class Experiment {
             String indexSettings = "";
             if (!discO.equals("no"))
                 indexSettings = "{ \"number_of_shards\": 1, " +
-                        "\"similarity\": { \"tfidf_similarity\": { \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
+                        "\"similarity\": { \"tfidf_similarity\": " +
+                        "{ \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
                         "\"analysis\": { " +
                         "\"analyzer\": { " +
                         "\"default\": { " +
@@ -206,7 +224,8 @@ public class Experiment {
                 indexSettings = "{ \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } }";
             }
 
-            String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
+            String mappingStr = "{ \"properties\": { \"src\": " +
+                    "{ \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
 
             EvalResult result = isics.runExperiment(
                     "localhost",
@@ -225,7 +244,10 @@ public class Experiment {
                     deleteIndexAfterUse,
                     errMeasure,
                     resultOffset,
-                    resultSize, querySizeLimit);
+                    resultSize,
+                    querySizeLimit,
+                    minCloneline,
+                    methodParserMode);
 
             if (result.getValue() > bestResult.getValue()) {
                 bestResult = result;
@@ -236,8 +258,6 @@ public class Experiment {
     }
 
     private static EvalResult bm25TextExp(String inputDir, String workingDir, boolean isPrint) {
-//        String[] normModes = { "x" };
-//	    int[] ngramSizes = { 1 };
         double k1 = 1.2;
         double b = 0.75;
         String discO = "true";
@@ -245,10 +265,12 @@ public class Experiment {
 
         String indexSettings = "{ \"number_of_shards\": 1, " +
                 "\"similarity\": "
-                + "{ \"bm25_similarity\": { \"type\": \"BM25\", \"k1\": \"" + k1 + "\", \"b\": \"" + b + "\", \"discount_overlap\": \"" + discO + "\" } }, "
+                + "{ \"bm25_similarity\": " +
+                "{ \"type\": \"BM25\", \"k1\": \"" + k1 + "\", \"b\": \"" + b + "\", \"discount_overlap\": \"" + discO + "\" } }, "
                 + "\"analysis\": { \"analyzer\": { \"default\": { \"type\": \"whitespace\" } } } }";
 
-        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
+        String mappingStr = "{ \"properties\": { \"src\": " +
+                "{ \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
 
         return isics.runExperiment(
                 "localhost",
@@ -268,7 +290,9 @@ public class Experiment {
                 errMeasure,
                 resultOffset,
                 resultSize,
-                querySizeLimit);
+                querySizeLimit,
+                minCloneline,
+                methodParserMode);
     }
 
     private static EvalResult bm25Exp(String inputDir, String workingDir, boolean isPrint) {
@@ -285,9 +309,11 @@ public class Experiment {
                 for (String discO : discountOverlaps) {
                     String indexSettings = "{ \"number_of_shards\": 1," +
                             "\"similarity\": "
-                            + "{ \"bm25_similarity\": { \"type\": \"BM25\", \"k1\": \"" + k1 + "\", \"b\": \"" + b + "\", \"discount_overlap\": \"" + discO + "\" } }, "
+                            + "{ \"bm25_similarity\": " +
+                            "{ \"type\": \"BM25\", \"k1\": \"" + k1 + "\", \"b\": \"" + b + "\", \"discount_overlap\": \"" + discO + "\" } }, "
                             + "\"analysis\": { \"analyzer\": { \"default\": { \"type\": \"whitespace\" } } } }";
-                    String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
+                    String mappingStr = "{ \"properties\": { \"src\": " +
+                            "{ \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
                     System.out.println(indexSettings);
                     EvalResult result = isics.runExperiment(
                             "localhost",
@@ -307,7 +333,9 @@ public class Experiment {
                             errMeasure,
                             resultOffset,
                             resultSize,
-                            querySizeLimit);
+                            querySizeLimit,
+                            minCloneline,
+                            methodParserMode);
 
                     if (result.getValue() > bestResult.getValue()) {
                         bestResult = result;
@@ -323,17 +351,17 @@ public class Experiment {
         String bm = "be";
         String ae = "b";
         String norm = "h1";
-//        String[] normModes = {"x"};
-//        int[] ngramSizes = {1};
 
         ISiCS isics = new ISiCS();
 
         String indexSettings = "{ \"number_of_shards\": 1," +
-                "\"similarity\": { \"dfr_similarity\" : { \"type\": \"DFR\", \"basic_model\": \"" + bm + "\", \"after_effect\": \"" + ae + "\", "
+                "\"similarity\": { \"dfr_similarity\" : " +
+                "{ \"type\": \"DFR\", \"basic_model\": \"" + bm + "\", \"after_effect\": \"" + ae + "\", "
                 + "\"normalization\": \"" + norm + "\", \"normalization.h2.c\": \"3.0\"} },  "
                 + "\"analysis\" : { \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } } }";
 
-        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
+        String mappingStr = "{ \"properties\": { \"src\": " +
+                "{ \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 
         return isics.runExperiment(
                 "localhost",
@@ -353,13 +381,14 @@ public class Experiment {
                 errMeasure,
                 resultOffset,
                 resultSize,
-                querySizeLimit);
+                querySizeLimit,
+                minCloneline,
+                methodParserMode);
 
     }
 
     private static EvalResult dfrExp(String inputDir, String workingDir, boolean isPrint) {
-        // String[] basicModelArr = {"be", "d", "g", "if", "in", "ine", "p"};
-        String[] basicModelArr = {"ine", "p"};
+        String[] basicModelArr = {"be", "d", "g", "if", "in", "ine", "p"};
         String[] afterEffectArr = {"no", "b", "l"};
         String[] dfrNormalizationArr = {"no", "h1", "h2", "h3", "z"};
 
@@ -370,11 +399,13 @@ public class Experiment {
             for (String ae : afterEffectArr) {
                 for (String norm : dfrNormalizationArr) {
                     String indexSettings = "{ \"number_of_shards\": 1," +
-                            "\"similarity\": { \"dfr_similarity\" : { \"type\": \"DFR\", \"basic_model\": \"" + bm + "\", \"after_effect\": \"" + ae + "\", "
+                            "\"similarity\": { \"dfr_similarity\" : " +
+                            "{ \"type\": \"DFR\", \"basic_model\": \"" + bm + "\", \"after_effect\": \"" + ae + "\", "
                             + "\"normalization\": \"" + norm + "\", \"normalization.h2.c\": \"3.0\"} },  "
                             + "\"analysis\" : { \"analyzer\" : { \"default\" : { \"type\" : \"whitespace\" } } } }";
 
-                    String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
+                    String mappingStr = "{ \"properties\": { \"src\": " +
+                            "{ \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 
                     EvalResult result = isics.runExperiment(
                             "localhost",
@@ -394,7 +425,9 @@ public class Experiment {
                             errMeasure,
                             resultOffset,
                             resultSize,
-                            querySizeLimit);
+                            querySizeLimit,
+                            minCloneline,
+                            methodParserMode);
 
                     if (result.getValue() > bestResult.getValue()) {
                         bestResult = result;
@@ -409,8 +442,6 @@ public class Experiment {
         String dist = "ll";
         String lamb = "df";
         String ibNorm = "h1";
-//        int[] ngramSizes = {1};
-//        String[] normModes = { "x" };
 
         ISiCS isics = new ISiCS();
 
@@ -425,7 +456,8 @@ public class Experiment {
                 + "},  "
                 + "\"analysis\" : { \"analyzer\" : "
                 + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
-        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
+        String mappingStr = "{ \"properties\": { \"src\": " +
+                "{ \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 
         return isics.runExperiment(
                 "localhost",
@@ -445,7 +477,9 @@ public class Experiment {
                 errMeasure,
                 resultOffset,
                 resultSize,
-                querySizeLimit);
+                querySizeLimit,
+                minCloneline,
+                methodParserMode);
 
     }
 
@@ -471,7 +505,8 @@ public class Experiment {
                             + "},  "
                             + "\"analysis\" : { \"analyzer\" : "
                             + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
-                    String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
+                    String mappingStr = "{ \"properties\": { \"src\": " +
+                            "{ \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 
                     EvalResult result = isics.runExperiment(
                             "localhost",
@@ -491,7 +526,9 @@ public class Experiment {
                             errMeasure,
                             resultOffset,
                             resultSize,
-                            querySizeLimit);
+                            querySizeLimit,
+                            minCloneline,
+                            methodParserMode);
 
                     if (result.getValue() > bestResult.getValue()) {
                         bestResult = result;
@@ -504,8 +541,6 @@ public class Experiment {
 
     private static EvalResult lmdTextExp(String inputDir, String workingDir, boolean isPrint) {
         String mu = "2000";
-//        String[] normModes = { "x" };
-//        int[] ngramSizes = { 1 };
 
         ISiCS isics = new ISiCS();
         String indexSettings = "{ \"number_of_shards\": 1," +
@@ -537,7 +572,9 @@ public class Experiment {
                 errMeasure,
                 resultOffset,
                 resultSize,
-                querySizeLimit);
+                querySizeLimit,
+                minCloneline,
+                methodParserMode);
     }
 
     private static EvalResult lmdExp(String inputDir, String workingDir, boolean isPrint) {
@@ -558,7 +595,8 @@ public class Experiment {
                     + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
             // System.out.println(indexSettings);
 
-            String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
+            String mappingStr = "{ \"properties\": { \"src\": " +
+                    "{ \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
             EvalResult result = isics.runExperiment(
                     "localhost",
                     "lmd_" + mu,
@@ -577,7 +615,9 @@ public class Experiment {
                     errMeasure,
                     resultOffset,
                     resultSize,
-                    querySizeLimit);
+                    querySizeLimit,
+                    minCloneline,
+                    methodParserMode);
 
             if (result.getValue() > bestResult.getValue()) {
                 bestResult = result;
@@ -587,9 +627,8 @@ public class Experiment {
     }
 
     private static EvalResult lmjTextExp(String inputDir, String workingDir, boolean isPrint) {
-//        String[] normModes = { "x" };
+
         String lambda = "0.1";
-//        int[] ngramSizes = { 1 };
         ISiCS isics = new ISiCS();
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": "
@@ -601,7 +640,8 @@ public class Experiment {
                 + "\"analysis\" : { \"analyzer\" : "
                 + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
 
-        String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
+        String mappingStr = "{ \"properties\": { \"src\": " +
+                "{ \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
 
         return isics.runExperiment(
                 "localhost",
@@ -619,7 +659,9 @@ public class Experiment {
                 errMeasure,
                 resultOffset,
                 resultSize,
-                querySizeLimit);
+                querySizeLimit,
+                minCloneline,
+                methodParserMode);
     }
 
     private static EvalResult lmjExp(String inputDir, String workingDir, boolean isPrint) {
@@ -640,7 +682,8 @@ public class Experiment {
                     + "\"analysis\" : { \"analyzer\" : "
                     + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
 
-            String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
+            String mappingStr = "{ \"properties\": { \"src\": " +
+                    "{ \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
 
             EvalResult result = isics.runExperiment(
                     "localhost",
@@ -660,7 +703,9 @@ public class Experiment {
                     errMeasure,
                     resultOffset,
                     resultSize,
-                    querySizeLimit);
+                    querySizeLimit,
+                    minCloneline,
+                    methodParserMode);
 
             if (result.getValue() > bestResult.getValue())
                 bestResult = result;

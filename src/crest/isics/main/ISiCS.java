@@ -42,9 +42,11 @@ public class ISiCS {
     private String outputFolder = "";
     private boolean writeToFile = false;
     private String[] extensions = { "java" };
+    private int minCloneLine = 10;
     private int resultOffset = 0;
     private int resultsSize = 10;
     private int querySizeLimit = 100;
+    private String methodParserMode = Settings.MethodParserType.FILE;
 
     public ISiCS() {
 
@@ -64,9 +66,11 @@ public class ISiCS {
             String outputFolder,
             boolean writeToFile,
             String[] extensions,
+            int minCloneLine,
             int resultOffset,
             int resultsSize,
-            int querySizeLimit) {
+            int querySizeLimit,
+            String methodParserMode) {
         // setup all parameter values
         this.server = server;
         this.index = index;
@@ -81,9 +85,11 @@ public class ISiCS {
         this.outputFolder = outputFolder;
         this.writeToFile = writeToFile;
         this.extensions = extensions;
+        this.minCloneLine = minCloneLine;
         this.resultOffset = resultOffset;
         this.resultsSize = resultsSize;
         this.querySizeLimit = querySizeLimit; // 0 means no limit
+        this.methodParserMode = methodParserMode;
     }
 
     public void execute(String command, int rankingFunc) {
@@ -186,7 +192,10 @@ public class ISiCS {
                                        boolean isDeleteIndex,
                                        String errMeasure,
                                        int resultOffset,
-                                       int resultSize, int querySizeLimit) {
+                                       int resultSize,
+                                       int querySizeLimit,
+                                       int minCloneLine,
+                                       String methodParserMode) {
 
         server = hostname;
         type = typeName;
@@ -199,6 +208,8 @@ public class ISiCS {
         this.resultOffset = resultOffset;
         this.resultsSize = resultSize;
         this.querySizeLimit = querySizeLimit;
+        this.minCloneLine = minCloneLine;
+        this.methodParserMode = methodParserMode;
 
         // create a connector
         es = new ESConnector(server);
@@ -286,7 +297,8 @@ public class ISiCS {
         for (File file : listOfFiles) {
 
             // extract license (if any) using Ninka
-            String license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
+            // String license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
+            String license = "NONE";
 
             String filePath = file.getAbsolutePath().replace(Experiment.prefixToRemove, "");
 
@@ -294,7 +306,7 @@ public class ISiCS {
                 System.out.println(count + ": " + filePath);
 
             // parse each file into method (if possible)
-            MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
+            MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove, methodParserMode);
             ArrayList<Method> methodList;
 
             try {
@@ -302,19 +314,23 @@ public class ISiCS {
                 // check if there's a method
                 if (methodList.size() > 0) {
                     for (Method method : methodList) {
-                        // Create Document object and put in an array list
-                        String normSource = tokenize(method.getSrc());
-                        // Use file name as id
-                        Document d = new Document(
-                                String.valueOf(count),
-                                filePath + "_" + method.getName(),
-                                normSource,
-                                method.getSrc(),
-                                license,
-                                "");
-                        // add document to array
-                        docArray.add(d);
-                        count++;
+                        // check minimum size
+                        // TODO: should we check for size here?
+//                        if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
+                            // Create Document object and put in an array list
+                            String normSource = tokenize(method.getSrc());
+                            // Use file name as id
+                            Document d = new Document(
+                                    String.valueOf(count),
+                                    filePath + "_" + method.getName(),
+                                    normSource,
+                                    method.getSrc(),
+                                    license,
+                                    "");
+                            // add document to array
+                            docArray.add(d);
+                            count++;
+//                        }
                     }
                 }
                 // TODO: Check. No longer used?
@@ -384,6 +400,144 @@ public class ISiCS {
         System.out.println("Successfully indexed documents.");
 
         return true;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private String search(String inputFolder, int offset, int size) throws Exception {
+
+        String outToFile = "";
+
+        DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
+        Date dateobj = new Date();
+        File outfile = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
+
+        // if file doesn't exists, then create it
+        boolean isCreated = false;
+        if (!outfile.exists()) {
+            isCreated = outfile.createNewFile();
+        }
+
+        if (isCreated) {
+            FileWriter fw = new FileWriter(outfile.getAbsoluteFile(), true);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            File folder = new File(inputFolder);
+            List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
+
+            int count = 0;
+            int methodCount = 0;
+
+            for (File file : listOfFiles) {
+                if (isPrint)
+                    System.out.println("File: " + file.getAbsolutePath());
+
+                // reset the output buffer
+                outToFile = "";
+
+                // parse each file into method (if possible)
+                MethodParser methodParser = new MethodParser(
+                        file.getAbsolutePath(),
+                        Experiment.prefixToRemove,
+                        methodParserMode);
+                ArrayList<Method> methodList;
+                String query = "";
+
+                try {
+                    methodList = methodParser.parseMethods();
+                    ArrayList<Document> results = new ArrayList<>();
+
+                    // check if there's a method
+                    if (methodList.size() > 0) {
+                        for (Method method : methodList) {
+                            // check minimum size
+                            if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
+                                // write output to file
+                                outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
+                                        + method.getName() + ",";
+
+                                query = tokenize(method.getSrc());
+
+                                // query size limit is enforced
+                                if (querySizeLimit != 0) {
+                                    // find the top-N rare terms in the query
+                                    String tmpQuery = query;
+                                    // clear the query
+                                    query = "";
+                                    ArrayList<JavaTerm> selectedTerms = getSelectedTerms(index, tmpQuery, querySizeLimit);
+                                    int limit = querySizeLimit;
+
+                                    if (selectedTerms.size() < querySizeLimit)
+                                        limit = selectedTerms.size();
+
+                                    for (int i = 0; i < limit; i++) {
+                                        if (isPrint)
+                                            System.out.println(selectedTerms.get(i).getFreq()
+                                                    + ":"
+                                                    + selectedTerms.get(i).getTerm());
+                                        query += selectedTerms.get(i).getTerm() + " ";
+                                    }
+                                    if (isPrint)
+                                        System.out.println("QUERY" + methodCount + " : " + query);
+                                }
+
+                                // search for results
+                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
+
+                                int resultCount = 0;
+                                for (Document d : results) {
+                                    if (resultCount > 0)
+                                        outToFile += ","; // add comma in between
+
+                                    outToFile += d.getFile();
+                                    resultCount++;
+                                }
+
+                                outToFile += "\n";
+                                methodCount++;
+                            }
+                        }
+                    } else {
+                        // check minimum size
+                        if (MyUtils.countLines(file.getAbsolutePath()) >= minCloneLine) {
+                            query = tokenize(file);
+                            // search for results
+                            results = es.search(index, type, query, isPrint, isDFS, offset, size);
+                            outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
+                                    "_noMethod" +
+                                    ",";
+                            int resultCount = 0;
+                            for (Document d : results) {
+                                if (resultCount > 0)
+                                    outToFile += ","; // add comma in between
+
+                                outToFile += d.getFile();
+                                resultCount++;
+                            }
+                            outToFile += "\n";
+                        }
+                    }
+
+                    count++;
+
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Error: file " + count +" generates query term size exceeds 4096 (too big).");
+                }
+
+                bw.write(outToFile);
+            }
+
+            bw.close();
+
+            System.out.println("Searching done for " + count + " files (" + methodCount + " methods). " +
+                    "See output at " + outfile.getAbsolutePath());
+
+        } else {
+            throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
+        }
+
+        return outfile.getAbsolutePath();
     }
 
     private String tokenize(File file) throws Exception {
@@ -494,7 +648,7 @@ public class ISiCS {
         return querySet;
     }
 
-    private String performSearch(String query, String outputFileLocation, String fileName, String output) {
+    private String performSearch(String query, String outputFileLocation, String fileName, String output) throws Exception {
 
         String outToFile = output;
         outToFile += query + ",";
@@ -567,13 +721,17 @@ public class ISiCS {
                                 String errMeasure,
                                 boolean isPrint) throws Exception {
 
-        Evaluator evaluator = new Evaluator("resources/clone_clusters.csv", mode, workingDir, isPrint);
+        MethodLevelEvaluator methodLevelEvaluator = new MethodLevelEvaluator(
+                "resources/clone_clusters_" + this.methodParserMode + ".csv",
+                mode,
+                workingDir,
+                isPrint);
         EvalResult result = new EvalResult();
 
         String outputFile = "";
         if (errMeasure.equals(Settings.ErrorMeasure.ARP)) {
             outputFile = search(inputFolder, resultOffset, resultsSize);
-            double arp = evaluator.evaluateARP(outputFile, resultsSize);
+            double arp = methodLevelEvaluator.evaluateARP(outputFile, resultsSize);
             if (isPrint)
                 System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
             // update the max ARP value
@@ -583,7 +741,7 @@ public class ISiCS {
             }
         } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
             outputFile = search(inputFolder, resultOffset, resultsSize);
-            double map = evaluator.evaluateMAP(outputFile, resultsSize);
+            double map = methodLevelEvaluator.evaluateMAP(outputFile, resultsSize);
             if (isPrint)
                 System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
             // update the max MAP value
@@ -601,136 +759,6 @@ public class ISiCS {
                 true);
 
         return result;
-    }
-
-    @SuppressWarnings("unchecked")
-    private String search(String inputFolder, int offset, int size) throws Exception {
-
-        String outToFile = "";
-
-        DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
-        Date dateobj = new Date();
-        File outfile = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
-
-        // if file doesn't exists, then create it
-        boolean isCreated = false;
-        if (!outfile.exists()) {
-            isCreated = outfile.createNewFile();
-        }
-
-        if (isCreated) {
-            FileWriter fw = new FileWriter(outfile.getAbsoluteFile(), true);
-            BufferedWriter bw = new BufferedWriter(fw);
-
-            File folder = new File(inputFolder);
-            List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
-
-            int count = 0;
-            int methodCount = 0;
-
-            for (File file : listOfFiles) {
-                if (isPrint)
-                    System.out.println("File: " + file.getAbsolutePath());
-
-                // reset the output buffer
-                outToFile = "";
-
-                // parse each file into method (if possible)
-                MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove);
-                ArrayList<Method> methodList;
-                String query = "";
-
-                try {
-                    methodList = methodParser.parseMethods();
-                    ArrayList<Document> results = new ArrayList<>();
-
-                    // check if there's a method
-                    if (methodList.size() > 0) {
-                        for (Method method : methodList) {
-
-                            // write output to file
-                            outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
-                                    + method.getName() + "," ;
-
-                            query = tokenize(method.getSrc());
-
-                            // query size limit is enforced
-                            if (querySizeLimit != 0) {
-                                // find the top-N rare terms in the query
-                                String tmpQuery = query;
-                                // clear the query
-                                query = "";
-                                ArrayList<JavaTerm> selectedTerms = getSelectedTerms(index, tmpQuery, querySizeLimit);
-                                int limit = querySizeLimit;
-
-                                if (selectedTerms.size() < querySizeLimit)
-                                    limit = selectedTerms.size();
-
-                                for (int i = 0; i < limit; i++) {
-                                    if (isPrint)
-                                        System.out.println(selectedTerms.get(i).getFreq()
-                                                + ":"
-                                                + selectedTerms.get(i).getTerm());
-                                    query += selectedTerms.get(i).getTerm() + " ";
-                                }
-                                if (isPrint)
-                                    System.out.println("QUERY" + methodCount + " : " + query);
-                            }
-
-                            // search for results
-                            results = es.search(index, type, query, isPrint, isDFS, offset, size);
-
-                            int resultCount = 0;
-                            for (Document d : results) {
-                                if (resultCount>0)
-                                    outToFile += ","; // add comma in between
-
-                                outToFile += d.getFile();
-                                resultCount++;
-                            }
-
-                            outToFile += "\n";
-                            methodCount++;
-                        }
-                    } else {
-                        query = tokenize(file);
-
-                        // search for results
-                        results = es.search(index, type, query, isPrint, isDFS, offset, size);
-                        outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
-                                "_noMethod" +
-                                ",";
-                        int resultCount = 0;
-                        for (Document d : results) {
-                            if (resultCount>0)
-                                outToFile += ","; // add comma in between
-
-                            outToFile += d.getFile();
-                            resultCount++;
-                        }
-                        outToFile += "\n";
-                    }
-
-                    count++;
-
-                } catch (Exception e) {
-                    System.out.println(e.getCause());
-                    System.out.println("Error: file " + count +" generates query term size exceeds 4096 (too big).");
-                }
-
-                bw.write(outToFile);
-            }
-
-            bw.close();
-
-            System.out.println("Searching done for " + count + " files (" + methodCount + " methods). " +
-                    "See output at " + outfile.getAbsolutePath());
-
-        } else {
-            throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
-        }
-
-        return outfile.getAbsolutePath();
     }
 
     private int findTP(ArrayList<String> results, String query) {

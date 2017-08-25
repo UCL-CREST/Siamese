@@ -1,9 +1,6 @@
 package crest.isics.helpers;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class LicenseExtractor {
 
@@ -47,8 +44,13 @@ public class LicenseExtractor {
             BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
             String line=null;
             while((line=input.readLine()) != null) {
-//                System.out.println(line);
                 result += line;
+            }
+
+            // delete the generated license file
+            File f = new File(filename + ".license");
+            if (!f.delete()) {
+                System.out.println("ERROR: Can't delete the license file: " + filename + ".license");
             }
 
             int exitVal = pr.waitFor();

@@ -67,7 +67,11 @@ public class ISICSIndexReader {
                     .replace("/" + file.getName(), "");
             // reset the output buffer
             // parse each file into method (if possible)
-            MethodParser methodParser = new MethodParser(file.getAbsolutePath(), crest.isics.main.Experiment.prefixToRemove);
+            MethodParser methodParser = new MethodParser(
+                    file.getAbsolutePath(),
+                    crest.isics.main.Experiment.prefixToRemove,
+                    Settings.MethodParserType.METHOD
+                    );
             ArrayList<Method> methodList;
             String query = "";
 

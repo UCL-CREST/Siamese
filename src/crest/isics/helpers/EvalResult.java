@@ -20,7 +20,7 @@ public class EvalResult {
 
     @Override
     public String toString() {
-        return this.setting + ": " + this.value;
+        return this.setting + "," + this.value;
     }
 
     public String getSetting() {

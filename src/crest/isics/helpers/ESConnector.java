@@ -119,7 +119,7 @@ public class ESConnector {
 	}
 
     public ArrayList<Document> search(String index, String type, String query, boolean isPrint
-			, boolean isDFS, int resultOffset, int resultSize) {
+			, boolean isDFS, int resultOffset, int resultSize) throws Exception {
 
         ArrayList<Document> results = new ArrayList<Document>();
         SearchType searchType;
@@ -144,15 +144,19 @@ public class ESConnector {
             if (isPrint)
                 System.out.println("ANS," + hit.getId() + "," + hit.getScore());
 
-            Document d = new Document(hit.getId(),
-                    hit.getSource().get("file").toString(),
-                    hit.getSource().get("src").toString(),
-                    hit.getSource().get("origsrc").toString(),
-                    hit.getSource().get("license").toString(),
-                    hit.getSource().get("url").toString());
-            results.add(d);
+            try {
+                Document d = new Document(hit.getId(),
+                        hit.getSource().get("file").toString(),
+                        hit.getSource().get("src").toString(),
+                        hit.getSource().get("origsrc").toString(),
+                        hit.getSource().get("license").toString(),
+                        hit.getSource().get("url").toString());
+                results.add(d);
 
-            count++;
+                count++;
+            } catch (NullPointerException e) {
+                throw new Exception("ERROR: Query failed because of null value(s).");
+            }
         }
 		if (isPrint)
 			System.out.println("------");
