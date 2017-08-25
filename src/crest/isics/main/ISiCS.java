@@ -42,10 +42,10 @@ public class ISiCS {
     private String outputFolder = "";
     private boolean writeToFile = false;
     private String[] extensions = { "java" };
-    private int minCloneLine = 10;
-    private int resultOffset = 0;
-    private int resultsSize = 10;
-    private int querySizeLimit = 100;
+    private int minCloneLine = 10; // default min clone line
+    private int resultOffset = 0; // default result offset
+    private int resultsSize = 10; // default result size
+    private int querySizeLimit = 100;  // default query size limit
     private String methodParserMode = Settings.MethodParserType.FILE;
 
     public ISiCS() {
@@ -192,7 +192,6 @@ public class ISiCS {
                                        boolean isDeleteIndex,
                                        String errMeasure,
                                        int resultOffset,
-                                       int resultSize,
                                        int querySizeLimit,
                                        int minCloneLine,
                                        String methodParserMode) {
@@ -206,7 +205,6 @@ public class ISiCS {
         writeToFile = writeToOutputFile;
         isPrint = printLog;
         this.resultOffset = resultOffset;
-        this.resultsSize = resultSize;
         this.querySizeLimit = querySizeLimit;
         this.minCloneLine = minCloneLine;
         this.methodParserMode = methodParserMode;
@@ -530,8 +528,8 @@ public class ISiCS {
 
             bw.close();
 
-            System.out.println("Searching done for " + count + " files (" + methodCount + " methods). " +
-                    "See output at " + outfile.getAbsolutePath());
+            System.out.println("Searching done for " + count + " files (" + methodCount + " methods).");
+            System.out.println("See output at " + outfile.getAbsolutePath());
 
         } else {
             throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
@@ -721,17 +719,29 @@ public class ISiCS {
                                 String errMeasure,
                                 boolean isPrint) throws Exception {
 
-        MethodLevelEvaluator methodLevelEvaluator = new MethodLevelEvaluator(
+        // default is method-level evaluator
+        Evaluator evaluator = new MethodLevelEvaluator(
                 "resources/clone_clusters_" + this.methodParserMode + ".csv",
                 mode,
                 workingDir,
                 isPrint);
+
+        // if file-level is specified, switch to file-level evaluator
+        if (methodParserMode.equals(Settings.MethodParserType.FILE))
+            evaluator = new FileLevelEvaluator("resources/clone_clusters_" + this.methodParserMode + ".csv",
+                    mode,
+                    workingDir,
+                    isPrint);
+
+        // generate a search key and retrieve result size
+        resultsSize = evaluator.generateSearchKey();
+
         EvalResult result = new EvalResult();
 
         String outputFile = "";
         if (errMeasure.equals(Settings.ErrorMeasure.ARP)) {
             outputFile = search(inputFolder, resultOffset, resultsSize);
-            double arp = methodLevelEvaluator.evaluateARP(outputFile, resultsSize);
+            double arp = evaluator.evaluateARP(outputFile, resultsSize);
             if (isPrint)
                 System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
             // update the max ARP value
@@ -741,7 +751,7 @@ public class ISiCS {
             }
         } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
             outputFile = search(inputFolder, resultOffset, resultsSize);
-            double map = methodLevelEvaluator.evaluateMAP(outputFile, resultsSize);
+            double map = evaluator.evaluateMAP(outputFile, resultsSize);
             if (isPrint)
                 System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
             // update the max MAP value

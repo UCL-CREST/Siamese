@@ -52,9 +52,12 @@ public class Evaluator {
             System.out.println("--> No. of clusters = " + cloneCluster.size());
     }
 
-    void generateSearchKey() {
+    public int generateSearchKey() {
         // to be overridden
+        return 0;
     }
+
+
 
     public void printSearchKey() {
         String textToPrint = "";
@@ -71,7 +74,7 @@ public class Evaluator {
     }
 
     public double evaluateARP(String outputFile, int r) {
-        System.out.println("Evaluating " + r + "-precision from the output file: " + outputFile);
+        System.out.println("Evaluating " + r + "-precision ...");
         String RPrecToPrint = "";
         double arp = 0.0;
 
@@ -129,7 +132,7 @@ public class Evaluator {
 
             String outFile = "rprec_" + index + ".csv";
             Experiment.writeToFile(outputDir, outFile , RPrecToPrint, false);
-            System.out.println("ARP = " + arp);
+            System.out.println("ARP = " + arp + "\n");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,7 +142,7 @@ public class Evaluator {
     }
 
     public double evaluateMAP(String outputFile, int size) {
-        System.out.println("Evaluating MAP from the output file: " + outputFile);
+        System.out.println("Evaluating MAP ...");
         String mapToPrint = "";
         double map = 0.0;
 
@@ -196,7 +199,7 @@ public class Evaluator {
 
             String outFile = "map_" + index + ".csv";
             Experiment.writeToFile(outputDir, outFile , mapToPrint, false);
-            System.out.println("MAP = " + map);
+            System.out.println("MAP = " + map + "\n");
 
         } catch (IOException e) {
             e.printStackTrace();

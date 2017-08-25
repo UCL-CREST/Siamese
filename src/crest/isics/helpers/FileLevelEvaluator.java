@@ -13,11 +13,10 @@ public class FileLevelEvaluator extends Evaluator {
 
     public FileLevelEvaluator(String clonePairFile, String index, String outputDir, boolean isPrint) {
         super(clonePairFile, index, outputDir, isPrint);
-        generateSearchKey();
     }
 
     @Override
-    void generateSearchKey() {
+    public int generateSearchKey() {
         searchKey = new HashMap<String, ArrayList<String>>();
         Iterator it = cloneCluster.entrySet().iterator();
         String textToPrint = "";
@@ -30,7 +29,7 @@ public class FileLevelEvaluator extends Evaluator {
 
                 MethodClone clone = clones.get(i);
                 String filename = clone.getFile().substring(clone.getFile().lastIndexOf("/") + 1);
-                String query = clone.getFile();
+                String query = clone.getFile() + "_method";
                 textToPrint += query;
                 ArrayList<String> relevantResults = new ArrayList<String>();
 
@@ -42,7 +41,7 @@ public class FileLevelEvaluator extends Evaluator {
                     // other relevant results
                     if (i!=j) {
                         filename = clones.get(j).getFile().substring(clones.get(j).getFile().lastIndexOf("/") + 1);
-                        String result = clones.get(j).getFile();
+                        String result = clones.get(j).getFile() + "_method";
                         relevantResults.add(result);
                         textToPrint += "," + result;
                     }
@@ -55,5 +54,7 @@ public class FileLevelEvaluator extends Evaluator {
 
         writeToFile("resources", "searchkey.csv", textToPrint, false);
         System.out.println("Done generating search key ... ");
+
+        return searchKey.size();
     }
 }

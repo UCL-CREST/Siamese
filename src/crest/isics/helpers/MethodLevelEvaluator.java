@@ -15,11 +15,10 @@ public class MethodLevelEvaluator extends Evaluator {
 
     public MethodLevelEvaluator(String clonePairFile, String index, String outputDir, boolean isPrint) {
         super(clonePairFile, index, outputDir, isPrint);
-        generateSearchKey();
     }
 
     @Override
-    void generateSearchKey() {
+    public int generateSearchKey() {
         searchKey = new HashMap<String, ArrayList<String>>();
         Iterator it = cloneCluster.entrySet().iterator();
         String textToPrint = "";
@@ -62,6 +61,8 @@ public class MethodLevelEvaluator extends Evaluator {
 
         writeToFile("resources", "searchkey.csv", textToPrint, false);
         System.out.println("Done generating search key ... ");
+
+        return searchKey.size();
     }
 
     private String getMethodName(String methodHeader) {

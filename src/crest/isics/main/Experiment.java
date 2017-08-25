@@ -32,7 +32,6 @@ public class Experiment {
     public static boolean isPrint = false;
     private static boolean deleteIndexAfterUse = true;
     private static int resultOffset = 0;
-    private static int resultSize = 204;
     private static int querySizeLimit = 100;
     private static int minCloneline = 0;
     private static String methodParserMode = Settings.MethodParserType.METHOD;
@@ -48,19 +47,14 @@ public class Experiment {
 
             String outputFile = "";
 
-            /* TODO: FIX THIS */
+            /* TODO: Properly handle this */
             String mode = args[0];
             String inputDir = args[1];
             String workingDir = args[2];
-            String methodParserMode = Settings.MethodParserType.METHOD;
+
+            methodParserMode = Settings.MethodParserType.METHOD;
             if (args[3].equals("file"))
                 methodParserMode = Settings.MethodParserType.FILE;
-
-            // Use input here for easiness
-            // TODO: FIX THIS
-//            String mode = "tfidf_text";
-//            String inputDir = "/Users/Chaiyong/Documents/phd/2016/cloplag/tests_andrea";
-//            String workingDir = "/Users/Chaiyong/Downloads/isics_results";
 
             if (mode.endsWith("_text")) {
                 normModes = normModesText;
@@ -150,11 +144,11 @@ public class Experiment {
             if (ngramSizes.length == 1)
                 ngram = "";
 
+            System.out.println("Best " + errMeasure + " = " + bestResult.getSetting() + ", " + bestResult.getValue());
             writeToFile(workingDir, "best_" + errMeasure + "_" + ngram + mode + ".txt",
                     bestResult.getSetting() + ", " + bestResult.getValue(),
                     false);
         }
-
     }
 
     private static EvalResult tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
@@ -195,7 +189,6 @@ public class Experiment {
                 deleteIndexAfterUse,
                 errMeasure,
                 resultOffset,
-                resultSize,
                 querySizeLimit,
                 minCloneline,
                 methodParserMode);
@@ -244,7 +237,6 @@ public class Experiment {
                     deleteIndexAfterUse,
                     errMeasure,
                     resultOffset,
-                    resultSize,
                     querySizeLimit,
                     minCloneline,
                     methodParserMode);
@@ -289,7 +281,6 @@ public class Experiment {
                 deleteIndexAfterUse,
                 errMeasure,
                 resultOffset,
-                resultSize,
                 querySizeLimit,
                 minCloneline,
                 methodParserMode);
@@ -332,7 +323,6 @@ public class Experiment {
                             deleteIndexAfterUse,
                             errMeasure,
                             resultOffset,
-                            resultSize,
                             querySizeLimit,
                             minCloneline,
                             methodParserMode);
@@ -380,7 +370,6 @@ public class Experiment {
                 deleteIndexAfterUse,
                 errMeasure,
                 resultOffset,
-                resultSize,
                 querySizeLimit,
                 minCloneline,
                 methodParserMode);
@@ -424,7 +413,6 @@ public class Experiment {
                             deleteIndexAfterUse,
                             errMeasure,
                             resultOffset,
-                            resultSize,
                             querySizeLimit,
                             minCloneline,
                             methodParserMode);
@@ -476,7 +464,6 @@ public class Experiment {
                 deleteIndexAfterUse,
                 errMeasure,
                 resultOffset,
-                resultSize,
                 querySizeLimit,
                 minCloneline,
                 methodParserMode);
@@ -525,7 +512,6 @@ public class Experiment {
                             deleteIndexAfterUse,
                             errMeasure,
                             resultOffset,
-                            resultSize,
                             querySizeLimit,
                             minCloneline,
                             methodParserMode);
@@ -571,7 +557,6 @@ public class Experiment {
                 deleteIndexAfterUse,
                 errMeasure,
                 resultOffset,
-                resultSize,
                 querySizeLimit,
                 minCloneline,
                 methodParserMode);
@@ -614,7 +599,6 @@ public class Experiment {
                     deleteIndexAfterUse,
                     errMeasure,
                     resultOffset,
-                    resultSize,
                     querySizeLimit,
                     minCloneline,
                     methodParserMode);
@@ -658,7 +642,6 @@ public class Experiment {
                 deleteIndexAfterUse,
                 errMeasure,
                 resultOffset,
-                resultSize,
                 querySizeLimit,
                 minCloneline,
                 methodParserMode);
@@ -702,7 +685,6 @@ public class Experiment {
                     deleteIndexAfterUse,
                     errMeasure,
                     resultOffset,
-                    resultSize,
                     querySizeLimit,
                     minCloneline,
                     methodParserMode);
