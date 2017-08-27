@@ -74,7 +74,7 @@ public class Evaluator {
     }
 
     public double evaluateARP(String outputFile, int r) {
-        System.out.println("Evaluating " + r + "-precision ...");
+        System.out.println("Evaluating r-precision ...");
         String RPrecToPrint = "";
         double arp = 0.0;
 
@@ -90,45 +90,45 @@ public class Evaluator {
 
             while ((nextLine = reader.readNext()) != null) {
                 int tp = 0;
-                // increase query count
-                noOfQueries++;
-
                 String query = nextLine[0];
 
                 // get the answer key of this query
                 ArrayList<String> relevantResults = searchKey.get(query);
 
-                int checkSize = r;
-                if (nextLine.length < r)
-                    checkSize = nextLine.length;
+                // skip the one that's not in the search key
+                if (relevantResults != null) {
+                    // set r equals to the number of relevant results
+                    r = relevantResults.size();
 
-                // check the results with the key
-                for (int i = 1; i <= r; i++) {
+                    // increase query count
+                    noOfQueries++;
 
-                    // limit the check to the number of relevant results obtained (nextLine.length)
-                    if (i < nextLine.length) {
-                        if (relevantResults.contains(nextLine[i]))
-                            tp++;
+                    // check the results with the key
+                    for (int i = 1; i <= relevantResults.size(); i++) {
+                        // limit the check to the number of relevant results obtained (nextLine.length)
+                        if (i < nextLine.length) {
+                            if (relevantResults.contains(nextLine[i]))
+                                tp++;
+                        }
                     }
+
+                    // calculate r-precision up to the number of relevant results obtained (if <= r)
+                    float rprec = (float) tp / r;
+
+                    if (Experiment.isPrint)
+                        System.out.println("  " + r + "-prec = " + rprec);
+                    RPrecToPrint += rprec + "\n";
+
+                    // sum up r-precision
+                    sumRPrec += rprec;
                 }
-
-                // calculate r-precision up to the number of relevant results obtained (if <= r)
-                float rprec = (float) tp/r;
-
-                if (Experiment.isPrint)
-                    System.out.println("  " + r + "-prec = " + rprec);
-                RPrecToPrint += rprec + "\n";
-
-                // sum up r-precision
-                sumRPrec += rprec;
-
             }
 
             // calculate average r-precision
             arp = sumRPrec/noOfQueries;
 
-            if (Experiment.isPrint)
-                System.out.println("--> No. of query = " + noOfQueries);
+//            if (Experiment.isPrint)
+            System.out.println("No. of processed queries = " + noOfQueries);
 
             String outFile = "rprec_" + index + ".csv";
             Experiment.writeToFile(outputDir, outFile , RPrecToPrint, false);
@@ -157,45 +157,50 @@ public class Evaluator {
             while ((nextLine = reader.readNext()) != null) {
 
                 int tp = 0;
-                // increase query count
-                noOfQueries++;
                 String query = nextLine[0];
                 sumPrecision = 0.0;
 
                 // get the answer key of this query
                 ArrayList<String> relevantResults = searchKey.get(query);
 
-                // check the results with the key
-                for (int i = 1; i <= size; i++) {
+                // skip the one that's not in the search key
+                if (relevantResults != null) {
+//                    System.out.println(query);
+                    // increase query count
+                    noOfQueries++;
 
-                    // check if we still have results to process
-                    // (some searches do not return all results.
-                    if (i < nextLine.length) {
-                        if (relevantResults.contains(nextLine[i])) {
-                            tp++;
-                            // calculate precision every time a relevant result is obtained.
-                            float precision = (float) tp / i;
-                            sumPrecision += precision;
+                    // check the results with the key
+                    for (int i = 1; i <= size; i++) {
+
+                        // check if we still have results to process
+                        // (some searches do not return all results.
+                        if (i < nextLine.length) {
+                            if (relevantResults.contains(nextLine[i])) {
+                                tp++;
+                                // calculate precision every time a relevant result is obtained.
+                                float precision = (float) tp / i;
+                                sumPrecision += precision;
+                            }
                         }
+
+                        // found all relevant results, stop
+                        if (tp == relevantResults.size())
+                            break;
                     }
 
-                    // found all relevant results, stop
-                    if (tp == relevantResults.size())
-                        break;
+                    double averagePrec = sumPrecision / relevantResults.size();
+
+                    if (Experiment.isPrint)
+                        System.out.println("avgprec = " + averagePrec);
+
+                    mapToPrint += averagePrec + "\n";
+                    sumAvgPrec += averagePrec;
                 }
-
-                double averagePrec = sumPrecision / relevantResults.size();
-
-                if (Experiment.isPrint)
-                    System.out.println("avgprec = " + averagePrec);
-
-                mapToPrint += averagePrec + "\n";
-                sumAvgPrec += averagePrec;
             }
 
             // calculate MAP
             map = sumAvgPrec/noOfQueries;
-            System.out.println("--> No. of query = " + noOfQueries);
+            System.out.println("No. of processed queries = " + noOfQueries);
 
             String outFile = "map_" + index + ".csv";
             Experiment.writeToFile(outputDir, outFile , mapToPrint, false);

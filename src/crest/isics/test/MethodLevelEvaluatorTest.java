@@ -16,7 +16,8 @@ public class MethodLevelEvaluatorTest {
 
     @org.junit.Test
     public void TestARP1() {
-        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        e.generateSearchKey();
         double arp = e.evaluateARP("resources/example_results_all_T.csv", 10);
         assertEquals(1.0, arp);
 
@@ -27,7 +28,8 @@ public class MethodLevelEvaluatorTest {
 
     @org.junit.Test
     public void TestARP2() {
-        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        e.generateSearchKey();
         double arp = e.evaluateARP("resources/example_results_all_F.csv", 10);
         assertEquals(0.0, arp);
 
@@ -38,9 +40,10 @@ public class MethodLevelEvaluatorTest {
 
     @org.junit.Test
     public void TestARP3() {
-        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        e.generateSearchKey();
         double arp = e.evaluateARP("resources/example_results_all_H.csv", 10);
-        assertEquals(0.6, arp, 0.0001);
+        assertEquals(1.0, arp, 0.0001);
 
         // delete the result file
         File resultFile = new File(outputDir + "/rprec_" + mode + ".csv");
@@ -49,7 +52,8 @@ public class MethodLevelEvaluatorTest {
 
     @org.junit.Test
     public void TestMAP1() {
-        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        e.generateSearchKey();
         double map = e.evaluateMAP("resources/example_results_all_T.csv", 10);
         assertEquals(1.0, map);
 
@@ -60,7 +64,8 @@ public class MethodLevelEvaluatorTest {
 
     @org.junit.Test
     public void TestMAP2() {
-        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        e.generateSearchKey();
         double map = e.evaluateMAP("resources/example_results_all_F.csv", 10);
         assertEquals(0.0, map);
 
@@ -71,7 +76,8 @@ public class MethodLevelEvaluatorTest {
 
     @org.junit.Test
     public void TestMAP3() {
-        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
+        e.generateSearchKey();
         double map = e.evaluateMAP("resources/example_results_all_H.csv", 10);
         assertEquals(1.0, map);
 

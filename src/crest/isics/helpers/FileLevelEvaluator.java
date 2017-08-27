@@ -17,7 +17,7 @@ public class FileLevelEvaluator extends Evaluator {
 
     @Override
     public int generateSearchKey() {
-        searchKey = new HashMap<String, ArrayList<String>>();
+        searchKey = new HashMap<>();
         Iterator it = cloneCluster.entrySet().iterator();
         String textToPrint = "";
 

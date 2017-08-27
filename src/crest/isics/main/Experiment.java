@@ -28,19 +28,26 @@ public class Experiment {
     private static int[] ngramSizesAll = { 1, 2, 3, 4, 5 };
     private static int[] ngramSizesText = { 1 };
 
-    private static String errMeasure = Settings.ErrorMeasure.MAP;
+    private static String errMeasure = Settings.ErrorMeasure.ARP;
     public static boolean isPrint = false;
     private static boolean deleteIndexAfterUse = true;
     private static int resultOffset = 0;
     private static int querySizeLimit = 100;
     private static int minCloneline = 0;
     private static String methodParserMode = Settings.MethodParserType.METHOD;
+    private static String cloneClusterFilePreix = "clone_clusters";
 
     public static void main(String[] args) {
 
-        if (args.length < 4) {
+        if (args.length < 6) {
             // If missing some arguments, show the help
-            System.out.println("Usage: java Experiment <similarity> <input folder> <working dir> <mode [file/method]>");
+            System.out.println("Usage: java Experiment " +
+                    "<similarity> " +
+                    "<input folder> " +
+                    "<working dir> " +
+                    "<mode [file/method]> " +
+                    "<clone cluster file [cloplag/soco]> " +
+                    "<error measure [arp/map]");
             System.exit(-1);
 
         } else {
@@ -55,6 +62,10 @@ public class Experiment {
             methodParserMode = Settings.MethodParserType.METHOD;
             if (args[3].equals("file"))
                 methodParserMode = Settings.MethodParserType.FILE;
+
+            cloneClusterFilePreix = args[4] + "_" + cloneClusterFilePreix;
+            if (args[5].equals("map"))
+                errMeasure = Settings.ErrorMeasure.MAP;
 
             if (mode.endsWith("_text")) {
                 normModes = normModesText;
@@ -191,7 +202,8 @@ public class Experiment {
                 resultOffset,
                 querySizeLimit,
                 minCloneline,
-                methodParserMode);
+                methodParserMode,
+                cloneClusterFilePreix);
     }
 
 
@@ -239,7 +251,8 @@ public class Experiment {
                     resultOffset,
                     querySizeLimit,
                     minCloneline,
-                    methodParserMode);
+                    methodParserMode,
+                    cloneClusterFilePreix);
 
             if (result.getValue() > bestResult.getValue()) {
                 bestResult = result;
@@ -283,7 +296,8 @@ public class Experiment {
                 resultOffset,
                 querySizeLimit,
                 minCloneline,
-                methodParserMode);
+                methodParserMode,
+                cloneClusterFilePreix);
     }
 
     private static EvalResult bm25Exp(String inputDir, String workingDir, boolean isPrint) {
@@ -325,7 +339,8 @@ public class Experiment {
                             resultOffset,
                             querySizeLimit,
                             minCloneline,
-                            methodParserMode);
+                            methodParserMode,
+                            cloneClusterFilePreix);
 
                     if (result.getValue() > bestResult.getValue()) {
                         bestResult = result;
@@ -372,7 +387,8 @@ public class Experiment {
                 resultOffset,
                 querySizeLimit,
                 minCloneline,
-                methodParserMode);
+                methodParserMode,
+                cloneClusterFilePreix);
 
     }
 
@@ -415,7 +431,8 @@ public class Experiment {
                             resultOffset,
                             querySizeLimit,
                             minCloneline,
-                            methodParserMode);
+                            methodParserMode,
+                            cloneClusterFilePreix);
 
                     if (result.getValue() > bestResult.getValue()) {
                         bestResult = result;
@@ -466,7 +483,8 @@ public class Experiment {
                 resultOffset,
                 querySizeLimit,
                 minCloneline,
-                methodParserMode);
+                methodParserMode,
+                cloneClusterFilePreix);
 
     }
 
@@ -514,7 +532,8 @@ public class Experiment {
                             resultOffset,
                             querySizeLimit,
                             minCloneline,
-                            methodParserMode);
+                            methodParserMode,
+                            cloneClusterFilePreix);
 
                     if (result.getValue() > bestResult.getValue()) {
                         bestResult = result;
@@ -559,7 +578,8 @@ public class Experiment {
                 resultOffset,
                 querySizeLimit,
                 minCloneline,
-                methodParserMode);
+                methodParserMode,
+                cloneClusterFilePreix);
     }
 
     private static EvalResult lmdExp(String inputDir, String workingDir, boolean isPrint) {
@@ -601,7 +621,8 @@ public class Experiment {
                     resultOffset,
                     querySizeLimit,
                     minCloneline,
-                    methodParserMode);
+                    methodParserMode,
+                    cloneClusterFilePreix);
 
             if (result.getValue() > bestResult.getValue()) {
                 bestResult = result;
@@ -644,7 +665,8 @@ public class Experiment {
                 resultOffset,
                 querySizeLimit,
                 minCloneline,
-                methodParserMode);
+                methodParserMode,
+                cloneClusterFilePreix);
     }
 
     private static EvalResult lmjExp(String inputDir, String workingDir, boolean isPrint) {
@@ -687,7 +709,8 @@ public class Experiment {
                     resultOffset,
                     querySizeLimit,
                     minCloneline,
-                    methodParserMode);
+                    methodParserMode,
+                    cloneClusterFilePreix);
 
             if (result.getValue() > bestResult.getValue())
                 bestResult = result;

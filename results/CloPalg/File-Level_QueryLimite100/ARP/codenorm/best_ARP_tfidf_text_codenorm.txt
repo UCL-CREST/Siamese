@@ -1,0 +1,1 @@
+/Users/Chaiyong/Downloads/isics_results/tfidf_djkw_1_26-08-17_00-11-04.csv, 0.9969999992847443

@@ -1,0 +1,1 @@
+/Users/Chaiyong/Downloads/isics_results/tfidf_kpws_3_27-08-17_00-29-48.csv, 0.988405797533367

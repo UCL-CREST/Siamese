@@ -45,8 +45,10 @@ public class ISiCS {
     private int minCloneLine = 10; // default min clone line
     private int resultOffset = 0; // default result offset
     private int resultsSize = 10; // default result size
+    private int totalDocuments = 100; // default number of documents (from CloPlag file-level)
     private int querySizeLimit = 100;  // default query size limit
     private String methodParserMode = Settings.MethodParserType.FILE;
+    private String cloneClusterFile = "resources/clone_clusters_" + this.methodParserMode + ".csv";
 
     public ISiCS() {
 
@@ -138,14 +140,14 @@ public class ISiCS {
 
                     createIndex(indexSettings, mappingStr);
 
-                    boolean status = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+                    int insertSize = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
 
-                    if (status) {
+                    if (insertSize != 0) {
                         // if ok, refresh the index, then search
                         es.refresh(index);
                         System.out.println("Successfully creating index.");
                     } else {
-                        System.out.println("Indexing error: please check!");
+                        System.out.println("Indexing zero file: please check!");
                     }
 
                 } else if (command.toLowerCase().equals("search")) {
@@ -194,7 +196,9 @@ public class ISiCS {
                                        int resultOffset,
                                        int querySizeLimit,
                                        int minCloneLine,
-                                       String methodParserMode) {
+                                       String methodParserMode,
+                                       String cloneClusterFilePrefix
+    ) {
 
         server = hostname;
         type = typeName;
@@ -208,6 +212,7 @@ public class ISiCS {
         this.querySizeLimit = querySizeLimit;
         this.minCloneLine = minCloneLine;
         this.methodParserMode = methodParserMode;
+        this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.methodParserMode + ".csv";
 
         // create a connector
         es = new ESConnector(server);
@@ -250,10 +255,9 @@ public class ISiCS {
 
                     // initialise the ngram generator
                     ngen = new nGramGenerator(ngramSize);
-                    boolean insertStatus = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+                    totalDocuments = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
 
-                    if (insertStatus) {
-
+                    if (totalDocuments != 0) {
                         // if ok, refresh the index, then search
                         es.refresh(index);
                         EvalResult result = evaluate(index, outputDir, errMeasure, isPrint);
@@ -284,7 +288,7 @@ public class ISiCS {
     }
 
     @SuppressWarnings("unchecked")
-    private boolean insert(String inputFolder, int indexMode) throws Exception {
+    private int insert(String inputFolder, int indexMode) throws Exception {
         boolean isIndexed = true;
         ArrayList<Document> docArray = new ArrayList<>();
         File folder = new File(inputFolder);
@@ -397,13 +401,13 @@ public class ISiCS {
         // successfully indexed, return true
         System.out.println("Successfully indexed documents.");
 
-        return true;
+        return count;
     }
 
 
     @SuppressWarnings("unchecked")
     private String search(String inputFolder, int offset, int size) throws Exception {
-
+        System.out.println("Query size limit = " + querySizeLimit);
         String outToFile = "";
 
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
@@ -721,24 +725,24 @@ public class ISiCS {
 
         // default is method-level evaluator
         Evaluator evaluator = new MethodLevelEvaluator(
-                "resources/clone_clusters_" + this.methodParserMode + ".csv",
+                this.cloneClusterFile,
                 mode,
                 workingDir,
                 isPrint);
 
         // if file-level is specified, switch to file-level evaluator
         if (methodParserMode.equals(Settings.MethodParserType.FILE))
-            evaluator = new FileLevelEvaluator("resources/clone_clusters_" + this.methodParserMode + ".csv",
+            evaluator = new FileLevelEvaluator(
+                    this.cloneClusterFile,
                     mode,
                     workingDir,
                     isPrint);
 
-        // generate a search key and retrieve result size
-        resultsSize = evaluator.generateSearchKey();
-
+        // generate a search key and retrieve result size (if MAP)
+        int searchKeySize = evaluator.generateSearchKey();
         EvalResult result = new EvalResult();
-
         String outputFile = "";
+
         if (errMeasure.equals(Settings.ErrorMeasure.ARP)) {
             outputFile = search(inputFolder, resultOffset, resultsSize);
             double arp = evaluator.evaluateARP(outputFile, resultsSize);
@@ -750,8 +754,8 @@ public class ISiCS {
                 result.setSetting(outputFile);
             }
         } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
-            outputFile = search(inputFolder, resultOffset, resultsSize);
-            double map = evaluator.evaluateMAP(outputFile, resultsSize);
+            outputFile = search(inputFolder, resultOffset, totalDocuments);
+            double map = evaluator.evaluateMAP(outputFile, totalDocuments);
             if (isPrint)
                 System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
             // update the max MAP value
