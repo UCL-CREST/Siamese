@@ -151,7 +151,7 @@ public class ISiCS {
                         es.refresh(index);
                         System.out.println("Successfully creating index.");
                     } else {
-                        System.out.println("Indexing zero file: please check!");
+                        System.out.println("Indexed zero file: please check!");
                     }
 
                 } else if (command.toLowerCase().equals("search")) {

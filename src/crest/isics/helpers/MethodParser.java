@@ -8,12 +8,13 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import crest.isics.document.Method;
 import crest.isics.main.Experiment;
 import crest.isics.settings.Settings;
+import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MethodParser {
     private ArrayList<Method> methodList = new ArrayList<Method>();
@@ -77,20 +78,29 @@ public class MethodParser {
 
     private Method getWholeFragment() throws FileNotFoundException {
         try {
-            String content = new Scanner(new File(FILE_PATH)).useDelimiter("\\Z").next();
+            File f = new File(FILE_PATH);
+            InputStream fStream = FileUtils.openInputStream(f);
+            String content = org.apache.commons.io.IOUtils.toString(fStream, "UTF-8");
+            int lines = content.split("\r\n|\r|\n").length;
+//            String content = new Scanner(new File(FILE_PATH)).useDelimiter("\\Z").next();
             Method m = new Method(
                     FILE_PATH.replace(PREFIX_TO_REMOVE, ""),
                     "package",
                     "ClassName",
                     "method",
                     content,
-                    -1,
-                    -1,
+                    1,
+                    lines,
                     new LinkedList<crest.isics.document.Parameter>(),
                     "");
             return m;
         } catch (NoSuchElementException e) {
             System.out.println("ERROR: can't parse + get whole fragment from file " + FILE_PATH);
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            System.out.println("ERROR: couldn't find the file " + FILE_PATH);
+            e.printStackTrace();
             return null;
         }
     }
