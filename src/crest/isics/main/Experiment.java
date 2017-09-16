@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 public class Experiment {
 
     public static String prefixToRemove = "";
-
     private static String[] normModes = {};
     private static int[] ngramSizes = {};
 
@@ -28,7 +27,7 @@ public class Experiment {
     private static int[] ngramSizesAll = { 1, 2, 3, 4, 5 };
     private static int[] ngramSizesText = { 1 };
 
-    private static String errMeasure = Settings.ErrorMeasure.ARP;
+    private static String errMeasure = Settings.ErrorMeasure.ARP; // default is map
     public static boolean isPrint = false;
     private static boolean deleteIndexAfterUse = true;
     private static int resultOffset = 0;

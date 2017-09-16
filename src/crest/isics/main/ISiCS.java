@@ -47,8 +47,10 @@ public class ISiCS {
     private int resultsSize = 10; // default result size
     private int totalDocuments = 100; // default number of documents (from CloPlag file-level)
     private int querySizeLimit = 100;  // default query size limit
+    private boolean recreateIndexIfExists = true;
     private String methodParserMode = Settings.MethodParserType.FILE;
     private String cloneClusterFile = "resources/clone_clusters_" + this.methodParserMode + ".csv";
+    private int printEvery = 10000;
 
     public ISiCS() {
 
@@ -138,7 +140,9 @@ public class ISiCS {
             if (isicsClient != null) {
                 if (command.toLowerCase().equals("index")) {
 
-                    createIndex(indexSettings, mappingStr);
+                    if (recreateIndexIfExists) {
+                        createIndex(indexSettings, mappingStr);
+                    }
 
                     int insertSize = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
 
@@ -295,94 +299,90 @@ public class ISiCS {
         List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
         // counter for id
         int count = 0;
-
+        int fileCount = 0;
+        System.out.println("Found " + listOfFiles.size() + " files.");
         for (File file : listOfFiles) {
-
-            // extract license (if any) using Ninka
-            // String license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
-            String license = "NONE";
-
-            String filePath = file.getAbsolutePath().replace(Experiment.prefixToRemove, "");
-
-            if (isPrint)
-                System.out.println(count + ": " + filePath);
-
-            // parse each file into method (if possible)
-            MethodParser methodParser = new MethodParser(file.getAbsolutePath(), Experiment.prefixToRemove, methodParserMode);
-            ArrayList<Method> methodList;
-
+            fileCount++;
+            if (fileCount % printEvery == 0)
+                System.out.println("Indexed " + fileCount + " documents.");
             try {
-                methodList = methodParser.parseMethods();
-                // check if there's a method
-                if (methodList.size() > 0) {
-                    for (Method method : methodList) {
-                        // check minimum size
-                        // TODO: should we check for size here?
-//                        if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
-                            // Create Document object and put in an array list
-                            String normSource = tokenize(method.getSrc());
-                            // Use file name as id
-                            Document d = new Document(
-                                    String.valueOf(count),
-                                    filePath + "_" + method.getName(),
-                                    normSource,
-                                    method.getSrc(),
-                                    license,
-                                    "");
-                            // add document to array
-                            docArray.add(d);
-                            count++;
-//                        }
-                    }
-                }
-                // TODO: Check. No longer used?
-//                else {
-//                    // cannot parse, use the whole file
-//                    String normSource = tokenize(file);
-//                    // Use file name as id
-//                    Document d = new Document(
-//                            String.valueOf(count),
-//                            filePath + "_raw",
-//                            normSource,
-//
-//                            );
-//                    // add document to array
-//                    docArray.add(d);
-//                    count++;
-//                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                // extract license (if any) using Ninka
+                // String license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
+                String license = "NONE";
 
-            if (indexMode == Settings.IndexingMode.SEQUENTIAL) {
+                String filePath = file.getAbsolutePath().replace(Experiment.prefixToRemove, "");
+
+                if (isPrint)
+                    System.out.println(count + ": " + filePath);
+
+                // parse each file into method (if possible)
+                MethodParser methodParser = new MethodParser(
+                        file.getAbsolutePath(),
+                        Experiment.prefixToRemove,
+                        methodParserMode);
+                ArrayList<Method> methodList;
+
                 try {
-                    isIndexed = es.sequentialInsert(index, type, docArray);
+                    methodList = methodParser.parseMethods();
+                    // check if there's a method
+                    if (methodList.size() > 0) {
+                        for (Method method : methodList) {
+                            // check minimum size
+                            // TODO: should we check for size here?
+                            if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
+                                // Create Document object and put in an array list
+                                String normSource = tokenize(method.getSrc());
+                                // Use file name as id
+                                Document d = new Document(
+                                        String.valueOf(count),
+                                        filePath + "_" + method.getName(),
+                                        normSource,
+                                        method.getSrc(),
+                                        license,
+                                        "");
+                                // add document to array
+                                docArray.add(d);
+                                count++;
+                            }
+                        }
+                    }
                 } catch (Exception e) {
-                    System.out.print(e.getMessage());
-                    System.exit(0);
+                    System.out.println("ERROR: error while extracting methods.");
+                    e.printStackTrace();
                 }
 
-                // something wrong with indexing, return false
-                if (!isIndexed)
-                    throw new Exception("Cannot insert docId " + count + " in sequential mode");
-                else {
-                    // reset the array list
-                    docArray.clear();
-                }
-            }
-            // index every 100 docs
-            // doing indexing (can choose between bulk/sequential)
-            else if (indexMode == Settings.IndexingMode.BULK) {
-                if (docArray.size() >= Settings.BULK_SIZE) {
-                    isIndexed = es.bulkInsert(index, type, docArray);
+                if (indexMode == Settings.IndexingMode.SEQUENTIAL) {
+                    try {
+                        isIndexed = es.sequentialInsert(index, type, docArray);
+                    } catch (Exception e) {
+                        System.out.print(e.getMessage());
+                        System.exit(0);
+                    }
 
+                    // something wrong with indexing, return false
                     if (!isIndexed)
-                        throw new Exception("Cannot bulk insert documents");
+                        throw new Exception("Cannot insert docId " + count + " in sequential mode");
                     else {
                         // reset the array list
                         docArray.clear();
                     }
                 }
+                // index every 100 docs
+                // doing indexing (can choose between bulk/sequential)
+                else if (indexMode == Settings.IndexingMode.BULK) {
+                    if (docArray.size() >= Settings.BULK_SIZE) {
+                        isIndexed = es.bulkInsert(index, type, docArray);
+
+                        if (!isIndexed)
+                            throw new Exception("Cannot bulk insert documents");
+                        else {
+                            // reset the array list
+                            docArray.clear();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR: error while indexing a file: " + file.getAbsolutePath() + ". Skip.");
             }
         }
 

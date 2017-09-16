@@ -5,6 +5,10 @@ import crest.isics.settings.Settings;
 import crest.isics.settings.TokenizerMode;
 import org.apache.commons.cli.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Main {
 
 	private static String server;
@@ -28,10 +32,12 @@ public class Main {
 	public static void main(String[] args) {
 
         int resultOffset = 0;
-        int resultsSize = 204;
-        int querySizeLimit = 50;
+        int resultsSize = 100;
+        int querySizeLimit = 100;
 
         processCommandLine(args);
+
+        Date startDate = getCurrentTime();
 
         ISiCS isics = new ISiCS(
                 server,
@@ -54,6 +60,9 @@ public class Main {
 				Settings.MethodParserType.METHOD);
 
         isics.execute(command, Settings.RankingFunction.TFIDF);
+
+        Date endDate = getCurrentTime();
+        System.out.println("Elapse time (ms): " + (endDate.getTime() - startDate.getTime()));
     }
 
 	private static void processCommandLine(String[] args) {
@@ -150,6 +159,13 @@ public class Main {
 		HelpFormatter formater = new HelpFormatter();
 		formater.printHelp("(v 0.3) $java -jar isics.jar", options);
 		System.exit(0);
+	}
+
+	private static Date getCurrentTime() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+        return date;
 	}
 
 }

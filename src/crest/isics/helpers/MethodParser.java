@@ -13,10 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MethodParser {
     private ArrayList<Method> methodList = new ArrayList<Method>();
@@ -60,13 +57,17 @@ public class MethodParser {
                 } catch (Throwable e) {
                     if (Experiment.isPrint)
                         System.out.println("Unparseable method (use whole fragment)");
-                    methodList.add(getWholeFragment());
+                    Method m = getWholeFragment();
+                    if (m != null)
+                        methodList.add(m);
                 } finally {
                     in.close();
                 }
             } else {
                 // file-level parser
-                methodList.add(getWholeFragment());
+                Method m = getWholeFragment();
+                if (m != null)
+                    methodList.add(m);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,18 +76,23 @@ public class MethodParser {
     }
 
     private Method getWholeFragment() throws FileNotFoundException {
-        String content = new Scanner(new File(FILE_PATH)).useDelimiter("\\Z").next();
-        Method m = new Method(
-                FILE_PATH.replace(PREFIX_TO_REMOVE, ""),
-                "package",
-                "ClassName",
-                "method",
-                content,
-                -1,
-                -1,
-                new LinkedList<crest.isics.document.Parameter>(),
-                "");
-        return m;
+        try {
+            String content = new Scanner(new File(FILE_PATH)).useDelimiter("\\Z").next();
+            Method m = new Method(
+                    FILE_PATH.replace(PREFIX_TO_REMOVE, ""),
+                    "package",
+                    "ClassName",
+                    "method",
+                    content,
+                    -1,
+                    -1,
+                    new LinkedList<crest.isics.document.Parameter>(),
+                    "");
+            return m;
+        } catch (NoSuchElementException e) {
+            System.out.println("ERROR: can't parse + get whole fragment from file " + FILE_PATH);
+            return null;
+        }
     }
 
     private String getOnlyMethodName(String methodHeader) {
