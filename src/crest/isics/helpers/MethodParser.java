@@ -3,8 +3,10 @@ package crest.isics.helpers;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.printer.PrettyPrinterConfiguration;
 import crest.isics.document.Method;
 import crest.isics.main.Experiment;
 import crest.isics.settings.Settings;
@@ -43,12 +45,12 @@ public class MethodParser {
                 try {
                     cu = JavaParser.parse(in);
 
-                    List<TypeDeclaration> types = cu.getTypes();
+                    NodeList<TypeDeclaration<?>> types = cu.getTypes();
                     for (TypeDeclaration type : types) {
                         if (type instanceof ClassOrInterfaceDeclaration) {
                             // getting class name
                             ClassOrInterfaceDeclaration classDec = (ClassOrInterfaceDeclaration) type;
-                            JAVA_CLASS = classDec.getName();
+                            JAVA_CLASS = classDec.getName().asString();
                         }
                     }
 
@@ -56,6 +58,8 @@ public class MethodParser {
                     new ConstructorVisitor().visit(cu, null);
 
                 } catch (Throwable e) {
+//                    System.out.println("File: " + FILE_PATH);
+//                    System.out.println(e.getMessage());
                     if (Experiment.isPrint)
                         System.out.println("Unparseable method (use whole fragment)");
                     Method m = getWholeFragment();
@@ -129,20 +133,27 @@ public class MethodParser {
                 paramsList.add(
                         new crest.isics.document.Parameter(
                                 p.getType().toString(),
-                                p.getId().toString()));
+                                p.getNameAsString()));
             }
+
+            // do not include comments in the indexed code
+            PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
+            ppc.setPrintComments(false);
 
             Method m = new Method(
                     FILE_PATH.replace(PREFIX_TO_REMOVE, "")
                     , JAVA_PACKAGE
                     , JAVA_CLASS
-                    , n.getName()
+                    , n.getName().asString()
                     // copied the regex from
                     // http://stackoverflow.com/questions/9205988/writing-a-java-program-to-remove-the-comments-in-same-java-program
-                    , n.toStringWithoutComments()
-                    .replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","")
-                    , n.getBeginLine()
-                    , n.getEndLine()
+                    , n.toString(ppc)
+//                    , n.toStringWithoutComments()
+//                    .replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","")
+                    , n.getBegin().get().line
+//                    , n.getBeginLine()
+//                    , n.getEndLine()
+                    , n.getEnd().get().line
                     , paramsList
                     , n.getDeclarationAsString());
             methodList.add(m);
@@ -163,20 +174,23 @@ public class MethodParser {
                 paramsList.add(
                         new crest.isics.document.Parameter(
                                 p.getType().toString(),
-                                p.getId().toString()));
+                                p.getNameAsString()));
             }
+
+            // do not include comments in the indexed code
+            PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
+            ppc.setPrintComments(false);
 
             Method m = new Method(
                     FILE_PATH.replace(PREFIX_TO_REMOVE, "")
                     , JAVA_PACKAGE
                     , JAVA_CLASS
-                    , c.getName()
+                    , c.getName().asString()
                     // copied the regex from
                     // http://stackoverflow.com/questions/9205988/writing-a-java-program-to-remove-the-comments-in-same-java-program
-                    , c.toStringWithoutComments()
-                    .replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", "")
-                    , c.getBeginLine()
-                    , c.getEndLine()
+                    , c.toString(ppc)
+                    , c.getBegin().get().line
+                    , c.getEnd().get().line
                     , paramsList
                     , c.getDeclarationAsString());
             methodList.add(m);
@@ -187,14 +201,10 @@ public class MethodParser {
     public void printMethods(String javaFile) throws IOException {
         FileInputStream in = new FileInputStream(javaFile);
         CompilationUnit cu;
-        try {
-            cu = JavaParser.parse(in);
-            new MethodVisitor().visit(cu, null);
-            new ConstructorVisitor().visit(cu, null);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } finally {
-            in.close();
-        }
+
+        cu = JavaParser.parse(in);
+        new MethodVisitor().visit(cu, null);
+        new ConstructorVisitor().visit(cu, null);
+        in.close();
     }
 }

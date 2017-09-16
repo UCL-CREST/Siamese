@@ -53,7 +53,7 @@
 		<dependency>
 			<groupId>com.github.javaparser</groupId>
 			<artifactId>javaparser-core</artifactId>
-			<version>2.4.0</version>
+			<version>3.3.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
