@@ -92,7 +92,8 @@ public class MethodParser {
                     "package",
                     "ClassName",
                     "method",
-                    content,
+                    content
+                    .replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)",""),
                     1,
                     lines,
                     new LinkedList<crest.isics.document.Parameter>(),
