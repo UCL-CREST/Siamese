@@ -23,6 +23,8 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
 
@@ -132,10 +134,12 @@ public class ESConnector {
         else
             searchType = SearchType.QUERY_THEN_FETCH;
 
-        SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
-                .setQuery(QueryBuilders.matchQuery("src", query)).setFrom(resultOffset).setSize(resultSize).execute()
-                .actionGet();
-        SearchHit[] hits = response.getHits().getHits();
+		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
+				.addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
+				.addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
+				.setQuery(QueryBuilders.matchQuery("src", query)).setFrom(resultOffset).setSize(resultSize).execute()
+				.actionGet();
+		SearchHit[] hits = response.getHits().getHits();
 
         int count = 0;
         for (SearchHit hit : hits) {
