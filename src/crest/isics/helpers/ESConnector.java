@@ -16,6 +16,7 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.NoNodeAvailableException;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
@@ -63,6 +64,8 @@ public class ESConnector {
 			    XContentBuilder builder = jsonBuilder()
                         .startObject()
                         .field("file", d.getFile())
+                        .field("startline", d.getStartLine())
+                        .field("endline", d.getEndLine())
                         .field("src", d.getSource())
                         .field("origsrc", d.getOriginalSource())
                         .field("license", d.getLicense())
@@ -145,8 +148,11 @@ public class ESConnector {
                 System.out.println("ANS," + hit.getId() + "," + hit.getScore());
 
             try {
-                Document d = new Document(hit.getId(),
+                Document d = new Document(
+                        hit.getId(),
                         hit.getSource().get("file").toString(),
+                        Integer.parseInt(hit.getSource().get("startline").toString()),
+                        Integer.parseInt(hit.getSource().get("endline").toString()),
                         hit.getSource().get("src").toString(),
                         hit.getSource().get("origsrc").toString(),
                         hit.getSource().get("license").toString(),
@@ -183,10 +189,15 @@ public class ESConnector {
 		return response.isAcknowledged();
 	}
 
-    public boolean doesIndexExist(String indexName) {
-		return client.admin().indices()
-			    .prepareExists(indexName)
-			    .execute().actionGet().isExists();
+    public boolean doesIndexExist(String indexName) throws NoNodeAvailableException {
+        try {
+             boolean status = client.admin().indices()
+                    .prepareExists(indexName)
+                    .execute().actionGet().isExists();
+             return status;
+        } catch (NoNodeAvailableException e) {
+            throw e;
+        }
 	}
 
     public void refresh(String indexName) {

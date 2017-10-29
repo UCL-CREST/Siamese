@@ -49,6 +49,7 @@ public class MethodLevelEvaluator extends Evaluator {
                                 + ":" + getMethodName(clones.get(j).getHeader())
                                 + "/" + filename
                                 + ":" + getMethodName(clones.get(j).getHeader()) + ".java_method";
+
                         relevantResults.add(result);
                         textToPrint += "," + result;
                     }

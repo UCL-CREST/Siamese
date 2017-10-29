@@ -3,18 +3,30 @@ package crest.isics.document;
 public class Document {
 	private String id;
 	private String file;
+	private int startline;
+	private int endline;
 	private String source;
 	private String originalSource;
 	private String license;
 	private String url;
 
-    public Document() {
-
+	public Document() {
+	    super();
     }
-	
-	public Document(String id, String file, String source, String originalSource, String license, String url) {
+
+	public Document(
+	        String id,
+            String file,
+            int startline,
+            int endline,
+            String source,
+            String originalSource,
+            String license,
+            String url) {
 		this.id = id;
         this.file = file;
+        this.startline = startline;
+        this.endline = endline;
 		this.source = source;
 		this.originalSource = originalSource;
 		this.license = license;
@@ -43,6 +55,8 @@ public class Document {
     public String getFile() { return this.file; }
     public void setUrl(String url) { this.url = url; }
     public String getUrl() { return this.url; }
+    public int getStartLine() { return this.startline; }
+    public int getEndLine() { return this.endline; }
 
 	public String toString() {
 		return id + ":" + file + ": " + source;

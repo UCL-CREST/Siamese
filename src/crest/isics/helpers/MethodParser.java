@@ -86,7 +86,6 @@ public class MethodParser {
             InputStream fStream = FileUtils.openInputStream(f);
             String content = org.apache.commons.io.IOUtils.toString(fStream, "UTF-8");
             int lines = content.split("\r\n|\r|\n").length;
-//            String content = new Scanner(new File(FILE_PATH)).useDelimiter("\\Z").next();
             Method m = new Method(
                     FILE_PATH.replace(PREFIX_TO_REMOVE, ""),
                     "package",
@@ -146,14 +145,8 @@ public class MethodParser {
                     , JAVA_PACKAGE
                     , JAVA_CLASS
                     , n.getName().asString()
-                    // copied the regex from
-                    // http://stackoverflow.com/questions/9205988/writing-a-java-program-to-remove-the-comments-in-same-java-program
                     , n.toString(ppc)
-//                    , n.toStringWithoutComments()
-//                    .replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","")
                     , n.getBegin().get().line
-//                    , n.getBeginLine()
-//                    , n.getEndLine()
                     , n.getEnd().get().line
                     , paramsList
                     , n.getDeclarationAsString());
@@ -187,8 +180,6 @@ public class MethodParser {
                     , JAVA_PACKAGE
                     , JAVA_CLASS
                     , c.getName().asString()
-                    // copied the regex from
-                    // http://stackoverflow.com/questions/9205988/writing-a-java-program-to-remove-the-comments-in-same-java-program
                     , c.toString(ppc)
                     , c.getBegin().get().line
                     , c.getEnd().get().line

@@ -46,7 +46,7 @@ public class Experiment {
                     "<working dir> " +
                     "<mode [file/method]> " +
                     "<clone cluster file [cloplag/soco]> " +
-                    "<error measure [arp/map]");
+                    "<error measure [arp/map]>");
             System.exit(-1);
 
         } else {

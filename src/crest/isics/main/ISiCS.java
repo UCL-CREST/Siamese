@@ -15,6 +15,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.FSDirectory;
+import org.elasticsearch.client.transport.NoNodeAvailableException;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -96,7 +97,7 @@ public class ISiCS {
         this.methodParserMode = methodParserMode;
     }
 
-    public void execute(String command, int rankingFunc) {
+    public void execute(String command, int rankingFunc) throws NoNodeAvailableException {
 
         // create a connector
         es = new ESConnector(server);
@@ -161,25 +162,30 @@ public class ISiCS {
             } else {
                 System.out.println("ERROR: cannot create Elasticsearch client ... ");
             }
-        } catch (Exception e) {
+        } catch (NoNodeAvailableException noNodeException) {
+            throw noNodeException;
+        }  catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private boolean createIndex(String indexSettings, String mappingStr) {
+    private boolean createIndex(String indexSettings, String mappingStr) throws NoNodeAvailableException {
+        try {
+            if (isPrint) System.out.println("INDEX," + index);
 
-        if (isPrint) System.out.println("INDEX," + index);
-
-        // delete the index if it exists
-        if (es.doesIndexExist(index)) {
-            es.deleteIndex(index);
+            // delete the index if it exists
+            if (es.doesIndexExist(index)) {
+                es.deleteIndex(index);
+            }
+            // create index
+            boolean isCreated = es.createIndex(index, type, indexSettings, mappingStr);
+            if (!isCreated) {
+                System.err.println("Cannot create index: " + index);
+            }
+            return isCreated;
+        } catch (NoNodeAvailableException e) {
+            throw e;
         }
-        // create index
-        boolean isCreated = es.createIndex(index, type, indexSettings, mappingStr);
-        if (!isCreated) {
-            System.err.println("Cannot create index: " + index);
-        }
-        return isCreated;
     }
 
     protected EvalResult runExperiment(String hostname,
@@ -336,6 +342,8 @@ public class ISiCS {
                                 Document d = new Document(
                                         String.valueOf(count),
                                         filePath + "_" + method.getName(),
+                                        method.getStartLine(),
+                                        method.getEndLine(),
                                         normSource,
                                         method.getSrc(),
                                         license,
@@ -683,7 +691,7 @@ public class ISiCS {
      */
     private ArrayList<JavaTerm> getSelectedTerms(String indexName, String terms, int selectedSize) {
 
-        String indexFile = "/Users/Chaiyong/elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/"
+        String indexFile = "elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
         ArrayList<JavaTerm> selectedTermsArray = new ArrayList<>();
 

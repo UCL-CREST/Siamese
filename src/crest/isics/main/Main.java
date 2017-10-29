@@ -4,6 +4,7 @@ import crest.isics.helpers.nGramGenerator;
 import crest.isics.settings.Settings;
 import crest.isics.settings.TokenizerMode;
 import org.apache.commons.cli.*;
+import org.elasticsearch.client.transport.NoNodeAvailableException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,7 +60,13 @@ public class Main {
                 querySizeLimit,
 				Settings.MethodParserType.METHOD);
 
-        isics.execute(command, Settings.RankingFunction.TFIDF);
+        try {
+			isics.execute(command, Settings.RankingFunction.TFIDF);
+		} catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Elasticsearch is not running. Please execute the following command:\n" +
+					"./elasticsearch-2.2.0/bin/elasticsearch -d");
+		}
 
         Date endDate = getCurrentTime();
         System.out.println("Elapse time (ms): " + (endDate.getTime() - startDate.getTime()));

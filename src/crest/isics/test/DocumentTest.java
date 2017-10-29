@@ -17,6 +17,8 @@ public class DocumentTest {
         Document d2 = new Document(
                 "0",
                 "/my/test/file",
+                1,
+                1,
                 "import java.io.*; class BubbleSort { public static void main ( String[] args )",
                 "import java.io.*; class BubbleSort { public static void main ( String[] args )",
                 "",
@@ -36,6 +38,8 @@ public class DocumentTest {
         Document d3 = new Document(
                 "1",
                 "/my/file",
+                1,
+                1,
                 "Hello world!",
                 "Hello world!",
                 "MIT",
