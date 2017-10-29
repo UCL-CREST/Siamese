@@ -156,7 +156,7 @@ public class ISiCS {
                     }
 
                 } else if (command.toLowerCase().equals("search")) {
-                    search(inputFolder, resultOffset, resultsSize);
+                    search(inputFolder, resultOffset, resultsSize, 100);
                 }
                 es.shutdown();
             } else {
@@ -414,13 +414,13 @@ public class ISiCS {
 
 
     @SuppressWarnings("unchecked")
-    private String search(String inputFolder, int offset, int size) throws Exception {
-        System.out.println("Query size limit = " + querySizeLimit);
+    private String search(String inputFolder, int offset, int size, double querySizeLimitRatio) throws Exception {
+        System.out.println("Query size limit ratio = " + querySizeLimitRatio);
         String outToFile = "";
 
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
         Date dateobj = new Date();
-        File outfile = new File(outputFolder + "/" + index + "_" + df.format(dateobj) + ".csv");
+        File outfile = new File(outputFolder + "/" + index + "_" + querySizeLimitRatio + "_" + df.format(dateobj) + ".csv");
 
         // if file doesn't exists, then create it
         boolean isCreated = false;
@@ -469,23 +469,26 @@ public class ISiCS {
                                 query = tokenize(method.getSrc());
 
                                 // query size limit is enforced
-                                if (querySizeLimit != 0) {
+                                if (querySizeLimitRatio != 0) {
                                     // find the top-N rare terms in the query
                                     String tmpQuery = query;
                                     // clear the query
                                     query = "";
-                                    ArrayList<JavaTerm> selectedTerms = getSelectedTerms(index, tmpQuery, querySizeLimit);
-                                    int limit = querySizeLimit;
+                                    ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, tmpQuery);
+                                    double limit = querySizeLimitRatio * sortedTerms.size();
 
-                                    if (selectedTerms.size() < querySizeLimit)
-                                        limit = selectedTerms.size();
+                                    limit = 100;
+
+                                    // if no. of terms is smaller than the limit, use every term.
+                                    if (sortedTerms.size() < limit)
+                                        limit = sortedTerms.size();
 
                                     for (int i = 0; i < limit; i++) {
                                         if (isPrint)
-                                            System.out.println(selectedTerms.get(i).getFreq()
+                                            System.out.println(sortedTerms.get(i).getFreq()
                                                     + ":"
-                                                    + selectedTerms.get(i).getTerm());
-                                        query += selectedTerms.get(i).getTerm() + " ";
+                                                    + sortedTerms.get(i).getTerm());
+                                        query += sortedTerms.get(i).getTerm() + " ";
                                     }
                                     if (isPrint)
                                         System.out.println("QUERY" + methodCount + " : " + query);
@@ -531,6 +534,7 @@ public class ISiCS {
                     count++;
 
                 } catch (Exception e) {
+                    e.printStackTrace();
                     System.out.println(e.getMessage());
                     System.out.println("Error: file " + count +" generates query term size exceeds 4096 (too big).");
                 }
@@ -685,11 +689,11 @@ public class ISiCS {
 
     /***
      * Read idf of each term in the query directly from Lucene index
+     * @param indexName name of the index
      * @param terms query containing search terms
-     * @param selectedSize size of the selected terms
-     * @return selected top-selectedSize terms
+     * @return selected top-selectionRatio terms
      */
-    private ArrayList<JavaTerm> getSelectedTerms(String indexName, String terms, int selectedSize) {
+    private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String terms) {
 
         String indexFile = "elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
@@ -752,24 +756,28 @@ public class ISiCS {
         String outputFile = "";
 
         if (errMeasure.equals(Settings.ErrorMeasure.ARP)) {
-            outputFile = search(inputFolder, resultOffset, resultsSize);
-            double arp = evaluator.evaluateARP(outputFile, resultsSize);
-            if (isPrint)
-                System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
-            // update the max ARP value
-            if (result.getValue() < arp) {
-                result.setValue(arp);
-                result.setSetting(outputFile);
+            for (int i=1; i<=10; i++) {
+                outputFile = search(inputFolder, resultOffset, resultsSize, (double)i/10);
+                double arp = evaluator.evaluateARP(outputFile, resultsSize);
+                if (isPrint)
+                    System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
+                // update the max ARP value
+                if (result.getValue() < arp) {
+                    result.setValue(arp);
+                    result.setSetting(outputFile);
+                }
             }
         } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
-            outputFile = search(inputFolder, resultOffset, totalDocuments);
-            double map = evaluator.evaluateMAP(outputFile, totalDocuments);
-            if (isPrint)
-                System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
-            // update the max MAP value
-            if (result.getValue() < map) {
-                result.setValue(map);
-                result.setSetting(outputFile);
+            for (int i=1; i<=10; i++) {
+                outputFile = search(inputFolder, resultOffset, totalDocuments,(double)i/10);
+                double map = evaluator.evaluateMAP(outputFile, totalDocuments);
+                if (isPrint)
+                    System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
+                // update the max MAP value
+                if (result.getValue() < map) {
+                    result.setValue(map);
+                    result.setSetting(outputFile);
+                }
             }
         } else {
             System.out.println("ERROR: Invalid evaluation method.");

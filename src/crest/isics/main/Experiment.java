@@ -27,7 +27,7 @@ public class Experiment {
     private static int[] ngramSizesAll = { 1, 2, 3, 4, 5 };
     private static int[] ngramSizesText = { 1 };
 
-    private static String errMeasure = Settings.ErrorMeasure.ARP; // default is map
+    private static String errMeasure = Settings.ErrorMeasure.MAP; // default is map
     public static boolean isPrint = false;
     private static boolean deleteIndexAfterUse = true;
     private static int resultOffset = 0;
