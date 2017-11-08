@@ -17,7 +17,6 @@ public class BCBExperiment {
         } else {
 
             String outputFile = "";
-
             String mode = args[0];
             String inputDir = args[1];
             String workingDir = args[2];
@@ -27,7 +26,7 @@ public class BCBExperiment {
 
     private static EvalResult tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
         String discO = "true";
-        ISiCS isics = new ISiCS();
+        ISiCS isics = new ISiCS("config.properties");
         String indexSettings = "";
         String normMode = "x";
         String ngramSize = "1";

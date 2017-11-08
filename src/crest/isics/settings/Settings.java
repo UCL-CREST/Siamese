@@ -48,16 +48,8 @@ public class Settings {
 		public static final int VALUE_NORM_OFF = 0;
 	}
 	
-	public class Ngram {
-		public static final int ON = 1;
-		public static final int OFF = 0;
-	}
-	
 	public class IndexingMode {
 		public static final int BULK = 0;
 		public static final int SEQUENTIAL = 1;
 	}
-	
-	public static final boolean Newline = true;
-	public static final boolean NoNewline = true;
 }

@@ -3,11 +3,11 @@ package crest.isics.main;
 import crest.isics.helpers.EvalResult;
 import crest.isics.settings.Settings;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Properties;
 
 public class Experiment {
 
@@ -27,44 +27,27 @@ public class Experiment {
     private static int[] ngramSizesAll = { 1, 2, 3, 4, 5 };
     private static int[] ngramSizesText = { 1 };
 
-    private static String errMeasure = Settings.ErrorMeasure.MAP; // default is map
-    public static boolean isPrint = false;
-    private static boolean deleteIndexAfterUse = true;
-    private static int resultOffset = 0;
-    private static int querySizeLimit = 100;
-    private static int minCloneline = 0;
-    private static String methodParserMode = Settings.MethodParserType.METHOD;
+    private static String inputDir;
+    private static String workingDir;
+    private static String configFile;
+    private static String errMeasure;
+    private static String mode;
+    private static String cloneClusterFile;
+    private static boolean deleteIndexAfterUse;
     private static String cloneClusterFilePreix = "clone_clusters";
 
     public static void main(String[] args) {
 
-        if (args.length < 6) {
+        if (args.length < 3) {
             // If missing some arguments, show the help
             System.out.println("Usage: java Experiment " +
                     "<similarity> " +
-                    "<input folder> " +
-                    "<working dir> " +
-                    "<mode [file/method]> " +
                     "<clone cluster file [cloplag/soco]> " +
-                    "<error measure [arp/map]>");
+                    "<config file>");
             System.exit(-1);
-
         } else {
-
-            String outputFile = "";
-
-            /* TODO: Properly handle this */
-            String mode = args[0];
-            String inputDir = args[1];
-            String workingDir = args[2];
-
-            methodParserMode = Settings.MethodParserType.METHOD;
-            if (args[3].equals("file"))
-                methodParserMode = Settings.MethodParserType.FILE;
-
-            cloneClusterFilePreix = args[4] + "_" + cloneClusterFilePreix;
-            if (args[5].equals("map"))
-                errMeasure = Settings.ErrorMeasure.MAP;
+            readFromConfigFile("config.properties");
+            cloneClusterFilePreix = args[1] + "_" + cloneClusterFilePreix;
 
             if (mode.endsWith("_text")) {
                 normModes = normModesText;
@@ -83,87 +66,131 @@ public class Experiment {
                 ngramSizes = ngramSizesAll;
             }
 
-            prefixToRemove = inputDir;
-            if (!prefixToRemove.endsWith("/"))
-                prefixToRemove += "/"; // append / at the end
-
-            EvalResult bestResult = new EvalResult();
+            ArrayList<EvalResult> bestResults = new ArrayList<>();
 
             switch(mode) {
                 case "tfidf_text":
                 case "tfidf_text_ngram":
                 case "tfidf_text_codenorm":
                 case "tfidf_text_both":
-                    bestResult = tfidfTextExp(inputDir, workingDir, isPrint);
+                    bestResults = tfidfTextExp();
                     break;
                 case "bm25_text":
                 case "bm25_text_ngram":
                 case "bm25_text_codenorm":
                 case "bm25_text_both":
-                    bestResult = bm25TextExp(inputDir, workingDir, isPrint);
+                    bestResults = bm25TextExp();
                     break;
                 case "dfr_text":
                 case "dfr_text_ngram":
                 case "dfr_text_codenorm":
                 case "dfr_text_both":
-                    bestResult = dfrTextExp(inputDir, workingDir, isPrint);
+                    bestResults = dfrTextExp();
                     break;
                 case "ib_text":
                 case "ib_text_ngram":
                 case "ib_text_codenorm":
                 case "ib_text_both":
-                    bestResult = ibTextExp(inputDir, workingDir, isPrint);
+                    bestResults = ibTextExp();
                     break;
                 case "lmd_text":
                 case "lmd_text_ngram":
                 case "lmd_text_codenorm":
                 case "lmd_text_both":
-                    bestResult = lmdTextExp(inputDir, workingDir, isPrint);
+                    bestResults = lmdTextExp();
                     break;
                 case "lmj_text":
                 case "lmj_text_ngram":
                 case "lmj_text_codenorm":
                 case "lmj_text_both":
-                    bestResult = lmjTextExp(inputDir, workingDir, isPrint);
+                    bestResults = lmjTextExp();
                     break;
                 case "tfidf": /* normal mode (search all parameters + grams + normalisation) */
-                    bestResult = tfidfExp(inputDir, workingDir, isPrint);
+                    bestResults = tfidfExp();
                     break;
                 case "bm25":
-                    bestResult = bm25Exp(inputDir, workingDir, isPrint);
+                    bestResults = bm25Exp();
                     break;
                 case "dfr":
-                    bestResult = dfrExp(inputDir, workingDir, isPrint);
+                    bestResults = dfrExp();
                     break;
                 case "ib":
-                    bestResult = ibExp(inputDir, workingDir, isPrint);
+                    bestResults = ibExp();
                     break;
                 case "lmdirichlet":
                 case "lmd":
-                    bestResult = lmdExp(inputDir, workingDir, isPrint);
+                    bestResults = lmdExp();
                     break;
                 case "lmjelinekmercer":
                 case "lmj":
-                    bestResult = lmjExp(inputDir, workingDir, isPrint);
+                    bestResults = lmjExp();
                     break;
                 default:
                     System.out.println("No ranking function found");
             }
 
-            String ngram = "ngram_";
-            if (ngramSizes.length == 1)
-                ngram = "";
-
-            System.out.println("Best " + errMeasure + " = " + bestResult.getSetting() + ", " + bestResult.getValue());
-            writeToFile(workingDir, "best_" + errMeasure + "_" + ngram + mode + ".txt",
-                    bestResult.getSetting() + ", " + bestResult.getValue(),
+            System.out.println("best " + errMeasure.toLowerCase()
+                    + " = " + bestResults.get(0).getSetting() + "," + bestResults.get(0).getValue());
+            writeToFile(workingDir, "report_" + errMeasure.toLowerCase() + "_" + mode + ".txt",
+                    formatResults(bestResults),
                     false);
         }
     }
 
-    private static EvalResult tfidfTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static void readFromConfigFile(String configFile) {
+	    /* copied from
+	    https://www.mkyong.com/java/java-properties-file-examples/
+	     */
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+
+            input = new FileInputStream("config.properties");
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            inputDir = prop.getProperty("inputFolder");
+            workingDir = prop.getProperty("outputFolder");
+
+            mode = prop.getProperty("similarityMode");
+            cloneClusterFile = prop.getProperty("cloneClusterFile");
+
+            String errMeasureConfig = prop.getProperty("errorMeasure");
+            if (errMeasureConfig.equals("arp"))
+                errMeasure = Settings.ErrorMeasure.ARP;
+            else
+                errMeasure = Settings.ErrorMeasure.MAP;
+
+            deleteIndexAfterUse = Boolean.parseBoolean(prop.getProperty("deleteIndexAfterUse"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static String formatResults(ArrayList<EvalResult> bestResults) {
+        String output = "Best result: ";
+        output += bestResults.get(0).getSetting() + "," + bestResults.get(0).getValue() + "\n";
+        output += "\nAll results:\n";
+        for (int i=1; i<bestResults.size(); i++) {
+            output += bestResults.get(i).getSetting() + "," + bestResults.get(i).getValue() + "\n";
+        }
+
+        return output;
+    }
+
+    private static ArrayList<EvalResult> tfidfTextExp() {
         String discO = "true";
-        ISiCS isics = new ISiCS();
+        ISiCS isics = new ISiCS(configFile);
         String indexSettings = "";
 
         if (!discO.equals("false"))
@@ -182,35 +209,15 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
 
-        return isics.runExperiment(
-                "localhost",
-                "tfidf",
-                "doc",
-                inputDir,
-                normModes,
-                ngramSizes,
-                true,
-                true,
-                workingDir,
-                true,
-                indexSettings,
-                mappingStr,
-                isPrint,
-                deleteIndexAfterUse,
-                errMeasure,
-                resultOffset,
-                querySizeLimit,
-                minCloneline,
-                methodParserMode,
-                cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
     }
 
 
-    private static EvalResult tfidfExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> tfidfExp() {
 
         String[] discountOverlap = {"no", "true", "false"};
-        ISiCS isics = new ISiCS();
-        EvalResult bestResult = new EvalResult();
+        ISiCS isics = new ISiCS(configFile);
+        ArrayList<EvalResult> bestResult = new ArrayList<>();
 
         for (String discO : discountOverlap) {
 
@@ -231,29 +238,9 @@ public class Experiment {
             String mappingStr = "{ \"properties\": { \"src\": " +
                     "{ \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
 
-            EvalResult result = isics.runExperiment(
-                    "localhost",
-                    "tfidf_" + discO,
-                    "doc",
-                    inputDir,
-                    normModes,
-                    ngramSizes,
-                    true,
-                    true,
-                    workingDir,
-                    false,
-                    indexSettings,
-                    mappingStr,
-                    isPrint,
-                    deleteIndexAfterUse,
-                    errMeasure,
-                    resultOffset,
-                    querySizeLimit,
-                    minCloneline,
-                    methodParserMode,
-                    cloneClusterFilePreix);
+            ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
 
-            if (result.getValue() > bestResult.getValue()) {
+            if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                 bestResult = result;
             }
         }
@@ -261,11 +248,11 @@ public class Experiment {
         return bestResult;
     }
 
-    private static EvalResult bm25TextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> bm25TextExp() {
         double k1 = 1.2;
         double b = 0.75;
         String discO = "true";
-        ISiCS isics = new ISiCS();
+        ISiCS isics = new ISiCS(configFile);
 
         String indexSettings = "{ \"number_of_shards\": 1, " +
                 "\"similarity\": "
@@ -276,37 +263,17 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
 
-        return isics.runExperiment(
-                "localhost",
-                "bm25",
-                "doc",
-                inputDir,
-                normModes,
-                ngramSizes,
-                true,
-                true,
-                workingDir,
-                true,
-                indexSettings,
-                mappingStr,
-                isPrint,
-                deleteIndexAfterUse,
-                errMeasure,
-                resultOffset,
-                querySizeLimit,
-                minCloneline,
-                methodParserMode,
-                cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
     }
 
-    private static EvalResult bm25Exp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> bm25Exp() {
 
         String[] k1s = {"0.0", "0.6", "1.2", "1.8", "2.4"};
         String[] bs = {"0.0", "0.25", "0.50", "0.75", "1.00"};
         String[] discountOverlaps = {"true", "false"};
 
-        ISiCS isics = new ISiCS();
-        EvalResult bestResult = new EvalResult();
+        ISiCS isics = new ISiCS(configFile);
+        ArrayList<EvalResult> bestResult = new ArrayList<>();
 
         for (String k1 : k1s) {
             for (String b : bs) {
@@ -319,29 +286,9 @@ public class Experiment {
                     String mappingStr = "{ \"properties\": { \"src\": " +
                             "{ \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
                     System.out.println(indexSettings);
-                    EvalResult result = isics.runExperiment(
-                            "localhost",
-                            "bm25_" + k1 + "_" + b + "_" + discO,
-                            "doc",
-                            inputDir,
-                            normModes,
-                            ngramSizes,
-                            true,
-                            true,
-                            workingDir,
-                            false,
-                            indexSettings,
-                            mappingStr,
-                            isPrint,
-                            deleteIndexAfterUse,
-                            errMeasure,
-                            resultOffset,
-                            querySizeLimit,
-                            minCloneline,
-                            methodParserMode,
-                            cloneClusterFilePreix);
+                    ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
 
-                    if (result.getValue() > bestResult.getValue()) {
+                    if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                         bestResult = result;
                     }
                 }
@@ -351,12 +298,12 @@ public class Experiment {
         return bestResult;
     }
 
-    private static EvalResult dfrTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> dfrTextExp() {
         String bm = "be";
         String ae = "b";
         String norm = "h1";
 
-        ISiCS isics = new ISiCS();
+        ISiCS isics = new ISiCS(configFile);
 
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": { \"dfr_similarity\" : " +
@@ -367,37 +314,17 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 
-        return isics.runExperiment(
-                "localhost",
-                "dfr_" + bm + "_" + ae + "_" + norm,
-                "doc",
-                inputDir,
-                normModes,
-                ngramSizes,
-                true,
-                true,
-                workingDir,
-                false,
-                indexSettings,
-                mappingStr,
-                isPrint,
-                deleteIndexAfterUse,
-                errMeasure,
-                resultOffset,
-                querySizeLimit,
-                minCloneline,
-                methodParserMode,
-                cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
 
     }
 
-    private static EvalResult dfrExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> dfrExp() {
         String[] basicModelArr = {"be", "d", "g", "if", "in", "ine", "p"};
         String[] afterEffectArr = {"no", "b", "l"};
         String[] dfrNormalizationArr = {"no", "h1", "h2", "h3", "z"};
 
-        ISiCS isics = new ISiCS();
-        EvalResult bestResult = new EvalResult();
+        ISiCS isics = new ISiCS(configFile);
+        ArrayList<EvalResult> bestResult = new ArrayList<>();
 
         for (String bm : basicModelArr) {
             for (String ae : afterEffectArr) {
@@ -411,29 +338,9 @@ public class Experiment {
                     String mappingStr = "{ \"properties\": { \"src\": " +
                             "{ \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 
-                    EvalResult result = isics.runExperiment(
-                            "localhost",
-                            "dfr_" + bm + "_" + ae + "_" + norm,
-                            "doc",
-                            inputDir,
-                            normModes,
-                            ngramSizes,
-                            true,
-                            true,
-                            workingDir,
-                            false,
-                            indexSettings,
-                            mappingStr,
-                            isPrint,
-                            deleteIndexAfterUse,
-                            errMeasure,
-                            resultOffset,
-                            querySizeLimit,
-                            minCloneline,
-                            methodParserMode,
-                            cloneClusterFilePreix);
+                    ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
 
-                    if (result.getValue() > bestResult.getValue()) {
+                    if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                         bestResult = result;
                     }
                 }
@@ -442,12 +349,12 @@ public class Experiment {
         return bestResult;
     }
 
-    private static EvalResult ibTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> ibTextExp() {
         String dist = "ll";
         String lamb = "df";
         String ibNorm = "h1";
 
-        ISiCS isics = new ISiCS();
+        ISiCS isics = new ISiCS(configFile);
 
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": "
@@ -463,37 +370,17 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 
-        return isics.runExperiment(
-                "localhost",
-                "ib_" + dist + "_" + lamb + "_" + ibNorm,
-                "doc",
-                inputDir,
-                normModes,
-                ngramSizes,
-                true,
-                true,
-                workingDir,
-                false,
-                indexSettings,
-                mappingStr,
-                isPrint,
-                deleteIndexAfterUse,
-                errMeasure,
-                resultOffset,
-                querySizeLimit,
-                minCloneline,
-                methodParserMode,
-                cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
 
     }
 
-    private static EvalResult ibExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> ibExp() {
         String[] distributions = {"ll", "spl"};
         String[] lambdas = {"df", "ttf"};
         String[] ibNormalizationArr = {"no", "h1", "h2", "h3", "z"};
 
-        ISiCS isics = new ISiCS();
-        EvalResult bestResult = new EvalResult();
+        ISiCS isics = new ISiCS(configFile);
+        ArrayList<EvalResult> bestResult = new ArrayList<>();
 
         for (String dist : distributions) {
             for (String lamb : lambdas) {
@@ -512,29 +399,9 @@ public class Experiment {
                     String mappingStr = "{ \"properties\": { \"src\": " +
                             "{ \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 
-                    EvalResult result = isics.runExperiment(
-                            "localhost",
-                            "ib_" + dist + "_" + lamb + "_" + ibNorm,
-                            "doc",
-                            inputDir,
-                            normModes,
-                            ngramSizes,
-                            true,
-                            true,
-                            workingDir,
-                            false,
-                            indexSettings,
-                            mappingStr,
-                            isPrint,
-                            deleteIndexAfterUse,
-                            errMeasure,
-                            resultOffset,
-                            querySizeLimit,
-                            minCloneline,
-                            methodParserMode,
-                            cloneClusterFilePreix);
+                    ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
 
-                    if (result.getValue() > bestResult.getValue()) {
+                    if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                         bestResult = result;
                     }
                 }
@@ -543,10 +410,9 @@ public class Experiment {
         return bestResult;
     }
 
-    private static EvalResult lmdTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> lmdTextExp() {
         String mu = "2000";
-
-        ISiCS isics = new ISiCS();
+        ISiCS isics = new ISiCS(configFile);
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": "
                 + "{ \"lmd_similarity\" : "
@@ -558,35 +424,15 @@ public class Experiment {
                 + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
-        return isics.runExperiment(
-                "localhost",
-                "lmd_" + mu,
-                "doc",
-                inputDir,
-                normModes,
-                ngramSizes,
-                true,
-                true,
-                workingDir,
-                false,
-                indexSettings,
-                mappingStr,
-                isPrint,
-                deleteIndexAfterUse,
-                errMeasure,
-                resultOffset,
-                querySizeLimit,
-                minCloneline,
-                methodParserMode,
-                cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
     }
 
-    private static EvalResult lmdExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> lmdExp() {
         String[] mus = {"500", "1000", "1500",
                 "2000", "2500", "3000"};
-        EvalResult bestResult = new EvalResult();
+        ArrayList<EvalResult> bestResult = new ArrayList<>();
 
-        ISiCS isics = new ISiCS();
+        ISiCS isics = new ISiCS(configFile);
         for (String mu : mus) {
             String indexSettings = "{ \"number_of_shards\": 1," +
                     "\"similarity\": "
@@ -601,39 +447,19 @@ public class Experiment {
 
             String mappingStr = "{ \"properties\": { \"src\": " +
                     "{ \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
-            EvalResult result = isics.runExperiment(
-                    "localhost",
-                    "lmd_" + mu,
-                    "doc",
-                    inputDir,
-                    normModes,
-                    ngramSizes,
-                    true,
-                    true,
-                    workingDir,
-                    false,
-                    indexSettings,
-                    mappingStr,
-                    isPrint,
-                    deleteIndexAfterUse,
-                    errMeasure,
-                    resultOffset,
-                    querySizeLimit,
-                    minCloneline,
-                    methodParserMode,
-                    cloneClusterFilePreix);
+            ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
 
-            if (result.getValue() > bestResult.getValue()) {
+            if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                 bestResult = result;
             }
         }
         return bestResult;
     }
 
-    private static EvalResult lmjTextExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> lmjTextExp() {
 
         String lambda = "0.1";
-        ISiCS isics = new ISiCS();
+        ISiCS isics = new ISiCS(configFile);
         String indexSettings = "{ \"number_of_shards\": 1," +
                 "\"similarity\": "
                 + "{ \"lmj_similarity\" : "
@@ -647,33 +473,15 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
 
-        return isics.runExperiment(
-                "localhost",
-                "lmj_" + lambda,
-                "doc",
-                inputDir, normModes,
-                ngramSizes, true,
-                true,
-                workingDir,
-                false,
-                indexSettings,
-                mappingStr,
-                isPrint,
-                deleteIndexAfterUse,
-                errMeasure,
-                resultOffset,
-                querySizeLimit,
-                minCloneline,
-                methodParserMode,
-                cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
     }
 
-    private static EvalResult lmjExp(String inputDir, String workingDir, boolean isPrint) {
+    private static ArrayList<EvalResult> lmjExp() {
 
         String[] lambdas = { "0.1", "0.2", "0.3", "0.4", "0.5",
                 "0.6", "0.7", "0.8", "0.9", "1.0" };
-        ISiCS isics = new ISiCS();
-        EvalResult bestResult = new EvalResult();
+        ISiCS isics = new ISiCS(configFile);
+        ArrayList<EvalResult> bestResult = new ArrayList<>();
 
         for (String lambda : lambdas) {
             String indexSettings = "{ \"number_of_shards\": 1," +
@@ -689,29 +497,9 @@ public class Experiment {
             String mappingStr = "{ \"properties\": { \"src\": " +
                     "{ \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
 
-            EvalResult result = isics.runExperiment(
-                    "localhost",
-                    "lmj_" + lambda,
-                    "doc",
-                    inputDir,
-                    normModes,
-                    ngramSizes,
-                    true,
-                    true,
-                    workingDir,
-                    false,
-                    indexSettings,
-                    mappingStr,
-                    isPrint,
-                    deleteIndexAfterUse,
-                    errMeasure,
-                    resultOffset,
-                    querySizeLimit,
-                    minCloneline,
-                    methodParserMode,
-                    cloneClusterFilePreix);
+            ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
 
-            if (result.getValue() > bestResult.getValue())
+            if (result.get(0).getValue() > bestResult.get(0).getValue())
                 bestResult = result;
         }
 

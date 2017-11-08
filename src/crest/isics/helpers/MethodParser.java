@@ -1,22 +1,17 @@
 package crest.isics.helpers;
 
 import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.PrettyPrinterConfiguration;
 import crest.isics.document.Method;
-import crest.isics.main.Experiment;
 import crest.isics.settings.Settings;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MethodParser {
     private ArrayList<Method> methodList = new ArrayList<Method>();
@@ -25,11 +20,13 @@ public class MethodParser {
     private String MODE = Settings.MethodParserType.METHOD;
     public static String JAVA_PACKAGE = "";
     public static String JAVA_CLASS = "";
+    private boolean isPrint;
 
-    public MethodParser(String filePath, String prefixToRemove, String mode) {
+    public MethodParser(String filePath, String prefixToRemove, String mode, boolean isPrint) {
         FILE_PATH = filePath;
         PREFIX_TO_REMOVE = prefixToRemove;
         MODE = mode;
+        this.isPrint = isPrint;
     }
 
     /***
@@ -60,7 +57,7 @@ public class MethodParser {
                 } catch (Throwable e) {
 //                    System.out.println("File: " + FILE_PATH);
 //                    System.out.println(e.getMessage());
-                    if (Experiment.isPrint)
+                    if (isPrint)
                         System.out.println("Unparseable method (use whole fragment)");
                     Method m = getWholeFragment();
                     if (m != null)

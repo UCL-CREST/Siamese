@@ -15,7 +15,7 @@ public class MethodParserTest {
     @org.junit.Test
     public void checkMethodParser() throws Exception {
         String srcStr = "resources/tests/guessword/0_orig/GuessWord.java";
-        MethodParser mParser = new MethodParser(srcStr, "", Settings.MethodParserType.METHOD);
+        MethodParser mParser = new MethodParser(srcStr, "", Settings.MethodParserType.METHOD, false);
         ArrayList<Method> methods = mParser.parseMethods();
 
         assertEquals(3, methods.size());
@@ -27,7 +27,7 @@ public class MethodParserTest {
     @org.junit.Test
     public void checkMethodParserFileLevel() throws Exception {
         String srcStr = "resources/tests/guessword/0_orig/GuessWord.java";
-        MethodParser mParser = new MethodParser(srcStr, "", Settings.MethodParserType.FILE);
+        MethodParser mParser = new MethodParser(srcStr, "", Settings.MethodParserType.FILE, false);
         ArrayList<Method> methods = mParser.parseMethods();
 
         assertEquals(1, methods.size());
@@ -37,7 +37,7 @@ public class MethodParserTest {
     @org.junit.Test
     public void checkMethodParser2() throws Exception {
         String srcStr = "resources/tests/bubblesort/0_orig/BubbleSort.java";
-        MethodParser mParser = new MethodParser(srcStr, "", Settings.MethodParserType.METHOD);
+        MethodParser mParser = new MethodParser(srcStr, "", Settings.MethodParserType.METHOD, false);
         ArrayList<Method> methods = mParser.parseMethods();
 
         assertEquals(1, methods.size());

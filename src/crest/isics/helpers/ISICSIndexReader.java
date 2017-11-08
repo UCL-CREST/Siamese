@@ -70,7 +70,8 @@ public class ISICSIndexReader {
             MethodParser methodParser = new MethodParser(
                     file.getAbsolutePath(),
                     crest.isics.main.Experiment.prefixToRemove,
-                    Settings.MethodParserType.METHOD
+                    Settings.MethodParserType.METHOD,
+                    false
                     );
             ArrayList<Method> methodList;
             String query = "";

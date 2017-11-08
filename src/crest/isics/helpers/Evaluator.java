@@ -17,6 +17,7 @@ public class Evaluator {
     protected String clonePairFile;
     protected String index;
     protected String outputDir;
+    private boolean isPrint;
 
     protected HashMap<String, ArrayList<MethodClone>> cloneCluster;
     protected HashMap<String, ArrayList<String>> searchKey;
@@ -25,6 +26,7 @@ public class Evaluator {
         this.clonePairFile = clonePairFile;
         this.index = index;
         this.outputDir = outputDir;
+        this.isPrint = isPrint;
 
         ArrayList<MethodClone> clones = readCSV(clonePairFile);
 
@@ -57,8 +59,6 @@ public class Evaluator {
         return 0;
     }
 
-
-
     public void printSearchKey() {
         String textToPrint = "";
         Iterator it = searchKey.entrySet().iterator();
@@ -75,7 +75,6 @@ public class Evaluator {
 
     public double evaluateARP(String outputFile, int r) {
         System.out.println("Evaluating r-precision ...");
-        String RPrecToPrint = "";
         double arp = 0.0;
 
         try {
@@ -115,9 +114,8 @@ public class Evaluator {
                     // calculate r-precision up to the number of relevant results obtained (if <= r)
                     float rprec = (float) tp / r;
 
-                    if (Experiment.isPrint)
+                    if (isPrint)
                         System.out.println("  " + r + "-prec = " + rprec);
-                    RPrecToPrint += rprec + "\n";
 
                     // sum up r-precision
                     sumRPrec += rprec;
@@ -126,14 +124,8 @@ public class Evaluator {
 
             // calculate average r-precision
             arp = sumRPrec/noOfQueries;
-
-//            if (Experiment.isPrint)
             System.out.println("No. of processed queries = " + noOfQueries);
-
-            String outFile = "rprec_" + index + ".csv";
-            Experiment.writeToFile(outputDir, outFile , RPrecToPrint, false);
             System.out.println("ARP = " + arp + "\n");
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,7 +182,7 @@ public class Evaluator {
 
                     double averagePrec = sumPrecision / relevantResults.size();
 
-                    if (Experiment.isPrint)
+                    if (isPrint)
                         System.out.println("avgprec = " + averagePrec);
 
                     mapToPrint += averagePrec + "\n";
@@ -202,8 +194,8 @@ public class Evaluator {
             map = sumAvgPrec/noOfQueries;
             System.out.println("No. of processed queries = " + noOfQueries);
 
-            String outFile = "map_" + index + ".csv";
-            Experiment.writeToFile(outputDir, outFile , mapToPrint, false);
+//            String outFile = "map_" + index + ".csv";
+//            Experiment.writeToFile(outputDir, outFile , mapToPrint, false);
             System.out.println("MAP = " + map + "\n");
 
         } catch (IOException e) {

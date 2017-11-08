@@ -2,6 +2,7 @@ package crest.isics.main;
 
 import crest.isics.document.JavaTerm;
 import crest.isics.helpers.*;
+import crest.isics.settings.CustomSettings;
 import crest.isics.settings.Settings;
 import crest.isics.settings.TokenizerMode;
 import crest.isics.document.Document;
@@ -34,70 +35,160 @@ public class ISiCS {
     private String inputFolder;
     private String normMode;
     private TokenizerMode modes = new TokenizerMode();
-    private int ngramSize = 4;
-    private boolean isNgram = false;
-    private boolean isPrint = false;
+    private int ngramSize;
+    private boolean isNgram;
+    private boolean isPrint;
     private nGramGenerator ngen;
     private Options options = new Options();
-    private boolean isDFS = true;
-    private String outputFolder = "";
-    private boolean writeToFile = false;
-    private String[] extensions = { "java" };
-    private int minCloneLine = 10; // default min clone line
-    private int resultOffset = 0; // default result offset
-    private int resultsSize = 10; // default result size
-    private int totalDocuments = 100; // default number of documents (from CloPlag file-level)
-    private int querySizeLimit = 100;  // default query size limit
-    private boolean recreateIndexIfExists = true;
-    private String methodParserMode = Settings.MethodParserType.FILE;
-    private String cloneClusterFile = "resources/clone_clusters_" + this.methodParserMode + ".csv";
-    private int printEvery = 10000;
+    private boolean isDFS;
+    private String outputFolder;
+    private boolean writeToFile;
+    private String extension;
+    private int minCloneLine;
+    private int resultOffset;
+    private int resultsSize;
+    private int totalDocuments;
+    private double querySizeRatio;
+    private boolean recreateIndexIfExists;
+    private String parseMode;
+    private String cloneClusterFile;
+    private int printEvery;
+    private String command;
+    private int rankingFunc;
+    private String errMeasure;
+    private boolean deleteIndexAfterUse;
+    private String prefixToRemove;
 
-    public ISiCS() {
-
+    public ISiCS(String configFile) {
+        readFromConfigFile(configFile);
     }
 
-    public ISiCS(
-            String server,
-            String index,
-            String type,
-            String inputFolder,
-            String normMode,
-            TokenizerMode modes,
-            boolean isNgram,
-            int ngramSize,
-            boolean isPrint,
-            boolean isDFS,
-            String outputFolder,
-            boolean writeToFile,
-            String[] extensions,
-            int minCloneLine,
-            int resultOffset,
-            int resultsSize,
-            int querySizeLimit,
-            String methodParserMode) {
-        // setup all parameter values
-        this.server = server;
-        this.index = index;
-        this.type = type;
-        this.inputFolder = inputFolder;
-        this.normMode = normMode;
-        this.modes = modes;
-        this.isNgram = isNgram;
-        this.ngramSize = ngramSize;
-        this.isPrint = isPrint;
-        this.isDFS = isDFS;
-        this.outputFolder = outputFolder;
-        this.writeToFile = writeToFile;
-        this.extensions = extensions;
-        this.minCloneLine = minCloneLine;
-        this.resultOffset = resultOffset;
-        this.resultsSize = resultsSize;
-        this.querySizeLimit = querySizeLimit; // 0 means no limit
-        this.methodParserMode = methodParserMode;
+//    public ISiCS(
+//            String configFile,
+//            String server,
+//            String index,
+//            String type,
+//            String inputFolder,
+//            String normMode,
+//            TokenizerMode modes,
+//            boolean isNgram,
+//            int ngramSize,
+//            boolean isPrint,
+//            boolean isDFS,
+//            String outputFolder,
+//            boolean writeToFile,
+//            String extension,
+//            int minCloneLine,
+//            int resultOffset,
+//            int resultsSize,
+//            int querySizeRatio,
+//            String parseMode) {
+//        // setup all parameter values
+//        this.server = server;
+//        this.index = index;
+//        this.type = type;
+//        this.inputFolder = inputFolder;
+//        this.normMode = normMode;
+//        this.modes = modes;
+//        this.isNgram = isNgram;
+//        this.ngramSize = ngramSize;
+//        this.isPrint = isPrint;
+//        this.isDFS = isDFS;
+//        this.outputFolder = outputFolder;
+//        this.writeToFile = writeToFile;
+//        this.extension = extension;
+//        this.minCloneLine = minCloneLine;
+//        this.resultOffset = resultOffset;
+//        this.resultsSize = resultsSize;
+//        this.querySizeRatio = querySizeRatio; // 0 means no limit
+//        this.parseMode = parseMode;
+//
+//        readFromConfigFile(configFile);
+//    }
+
+    private void readFromConfigFile(String configFile) {
+	    /* copied from
+	    https://www.mkyong.com/java/java-properties-file-examples/
+	     */
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+
+            input = new FileInputStream("config.properties");
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            server = prop.getProperty("server");
+            index = prop.getProperty("index");
+            type = prop.getProperty("type");
+            inputFolder = prop.getProperty("inputFolder");
+            outputFolder = prop.getProperty("outputFolder");
+            normMode = prop.getProperty("normMode");
+            ngramSize = Integer.parseInt(prop.getProperty("ngramSize"));
+            isPrint = Boolean.parseBoolean(prop.getProperty("isPrint"));
+            isDFS = Boolean.parseBoolean(prop.getProperty("dfs"));
+            writeToFile = Boolean.parseBoolean(prop.getProperty("writeToFile"));
+            extension = prop.getProperty("extension");
+            minCloneLine=Integer.parseInt(prop.getProperty("minCloneSize"));
+            command = prop.getProperty("command");
+
+            String ranking = prop.getProperty("rankingFunction");
+            if (ranking.equals("tfidf"))
+                rankingFunc = Settings.RankingFunction.TFIDF;
+            else if (ranking.equals("bm25"))
+                rankingFunc = Settings.RankingFunction.BM25;
+            else if (ranking.equals("dfr"))
+                rankingFunc = Settings.RankingFunction.DFR;
+            else if (ranking.equals("ib"))
+                rankingFunc = Settings.RankingFunction.IB;
+            else if (ranking.equals("lmd"))
+                rankingFunc = Settings.RankingFunction.LMD;
+            else if (ranking.equals("lmj"))
+                rankingFunc = Settings.RankingFunction.LMJ;
+
+            // get the property value and print it out
+            this.resultOffset = Integer.parseInt(prop.getProperty("resultOffset"));
+            this.resultsSize = Integer.parseInt(prop.getProperty("resultsSize"));
+            this.totalDocuments = Integer.parseInt(prop.getProperty("totalDocuments"));
+            this.querySizeRatio = Double.parseDouble(prop.getProperty("querySizeRatio"));
+            this.recreateIndexIfExists = Boolean.parseBoolean(prop.getProperty("recreateIndexIfExists"));
+
+            String parseModeConfig = prop.getProperty("parseMode");
+            if (parseModeConfig.equals("method"))
+                this.parseMode = Settings.MethodParserType.METHOD;
+            else
+                this.parseMode = Settings.MethodParserType.FILE;
+
+            this.printEvery = Integer.parseInt(prop.getProperty("printEvery"));
+            this.cloneClusterFile = "resources/clone_clusters_" + this.parseMode + ".csv";
+            String errMeasureConfig = prop.getProperty("errorMeasure");
+            if (errMeasureConfig.equals("arp"))
+                errMeasure = Settings.ErrorMeasure.ARP;
+            else
+                errMeasure = Settings.ErrorMeasure.MAP;
+
+            deleteIndexAfterUse = Boolean.parseBoolean(prop.getProperty("deleteIndexAfterUse"));
+
+            prefixToRemove = inputFolder;
+            if (!prefixToRemove.endsWith("/"))
+                prefixToRemove += "/"; // append / at the end
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-    public void execute(String command, int rankingFunc) throws NoNodeAvailableException {
+    public void execute() throws NoNodeAvailableException {
 
         // create a connector
         es = new ESConnector(server);
@@ -188,50 +279,23 @@ public class ISiCS {
         }
     }
 
-    protected EvalResult runExperiment(String hostname,
-                                       String indexName,
-                                       String typeName,
-                                       String inputDir,
-                                       String[] normModes,
-                                       int[] ngramSizes,
-                                       boolean useNgram,
-                                       boolean useDFS,
-                                       String outputDir,
-                                       boolean writeToOutputFile,
-                                       String indexSettings,
-                                       String mappingStr,
-                                       boolean printLog,
-                                       boolean isDeleteIndex,
-                                       String errMeasure,
-                                       int resultOffset,
-                                       int querySizeLimit,
-                                       int minCloneLine,
-                                       String methodParserMode,
-                                       String cloneClusterFilePrefix
-    ) {
+    protected ArrayList<EvalResult> runExperiment(
+            String indexSettings,
+            String mappingStr,
+            String[] normModes,
+            int[] ngramSizes,
+            String cloneClusterFilePrefix) {
 
-        server = hostname;
-        type = typeName;
-        inputFolder = inputDir;
-        isNgram = useNgram;
-        isDFS = useDFS;
-        outputFolder = outputDir;
-        writeToFile = writeToOutputFile;
-        isPrint = printLog;
-        this.resultOffset = resultOffset;
-        this.querySizeLimit = querySizeLimit;
-        this.minCloneLine = minCloneLine;
-        this.methodParserMode = methodParserMode;
-        this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.methodParserMode + ".csv";
+        this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.parseMode + ".csv";
 
         // create a connector
         es = new ESConnector(server);
 
-        EvalResult bestResult = new EvalResult();
+        ArrayList<EvalResult> resultSet = new ArrayList<>();
 
         // tries to delete the combination results of all settings if the file exist.
         // we're gonna generate this from the experiment.
-        File allErrorMeasureResults = new File("all_" + errMeasure + ".csv");
+        File allErrorMeasureResults = new File("all_" + this.errMeasure + ".csv");
         if (allErrorMeasureResults.exists())
             allErrorMeasureResults.delete();
 
@@ -249,7 +313,7 @@ public class ISiCS {
 
                 for (int ngramSize : ngramSizes) {
 
-                    index = indexName + "_" + normMode + "_" + ngramSize;
+                    index = this.index + "_" + normMode + "_" + ngramSize;
                     if (isPrint) System.out.println("INDEX," + index);
 
                     // delete the index if it exists
@@ -270,18 +334,30 @@ public class ISiCS {
                     if (totalDocuments != 0) {
                         // if ok, refresh the index, then search
                         es.refresh(index);
-                        EvalResult result = evaluate(index, outputDir, errMeasure, isPrint);
 
-                        if (result.getValue() > bestResult.getValue()) {
-                            bestResult = result;
+                        EvalResult result = evaluate(index, outputFolder, errMeasure, querySizeRatio, isPrint);
+
+                        if (resultSet.size() != 0) {
+                            EvalResult bestResult = resultSet.get(0);
+
+                            // check for best result
+                            if (result.getValue() > bestResult.getValue()) {
+                                resultSet.set(0, result);
+                            }
+                        } else {
+                            // add the first result twice since it's also the best result.
+                            resultSet.add(result);
                         }
+
+                        // collect the result
+                        resultSet.add(result);
 
                     } else {
                         System.out.println("Indexing error: please check!");
                     }
 
                     // delete index
-                    if (isDeleteIndex) {
+                    if (deleteIndexAfterUse) {
                         if (!es.deleteIndex(index)) {
                             System.err.println("Cannot delete index: " + index);
                             System.exit(-1);
@@ -294,7 +370,7 @@ public class ISiCS {
             e.printStackTrace();
         }
 
-        return bestResult;
+        return resultSet;
     }
 
     @SuppressWarnings("unchecked")
@@ -302,6 +378,11 @@ public class ISiCS {
         boolean isIndexed = true;
         ArrayList<Document> docArray = new ArrayList<>();
         File folder = new File(inputFolder);
+
+        // create an array of string for extensions
+        String[] extensions = new String[1];
+        extensions[0] = extension;
+
         List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
         // counter for id
         int count = 0;
@@ -316,7 +397,7 @@ public class ISiCS {
                 // String license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
                 String license = "NONE";
 
-                String filePath = file.getAbsolutePath().replace(Experiment.prefixToRemove, "");
+                String filePath = file.getAbsolutePath().replace(prefixToRemove, "");
 
                 if (isPrint)
                     System.out.println(count + ": " + filePath);
@@ -324,8 +405,9 @@ public class ISiCS {
                 // parse each file into method (if possible)
                 MethodParser methodParser = new MethodParser(
                         file.getAbsolutePath(),
-                        Experiment.prefixToRemove,
-                        methodParserMode);
+                        prefixToRemove,
+                        parseMode,
+                        isPrint);
                 ArrayList<Method> methodList;
 
                 try {
@@ -415,12 +497,17 @@ public class ISiCS {
 
     @SuppressWarnings("unchecked")
     private String search(String inputFolder, int offset, int size, double querySizeLimitRatio) throws Exception {
-        System.out.println("Query size limit ratio = " + querySizeLimitRatio);
+        if (querySizeLimitRatio == 0.0) {
+            System.out.println("No query reduction");
+        } else {
+            System.out.println("Query size ratio = " + querySizeLimitRatio);
+        }
         String outToFile = "";
 
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
         Date dateobj = new Date();
-        File outfile = new File(outputFolder + "/" + index + "_" + querySizeLimitRatio + "_" + df.format(dateobj) + ".csv");
+        File outfile = new File(outputFolder + "/" + index + "_" + querySizeLimitRatio + "_"
+                + df.format(dateobj) + ".csv");
 
         // if file doesn't exists, then create it
         boolean isCreated = false;
@@ -431,6 +518,10 @@ public class ISiCS {
         if (isCreated) {
             FileWriter fw = new FileWriter(outfile.getAbsoluteFile(), true);
             BufferedWriter bw = new BufferedWriter(fw);
+
+            // create an array of string for extensions
+            String[] extensions = new String[1];
+            extensions[0] = extension;
 
             File folder = new File(inputFolder);
             List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
@@ -448,8 +539,9 @@ public class ISiCS {
                 // parse each file into method (if possible)
                 MethodParser methodParser = new MethodParser(
                         file.getAbsolutePath(),
-                        Experiment.prefixToRemove,
-                        methodParserMode);
+                        prefixToRemove,
+                        parseMode,
+                        isPrint);
                 ArrayList<Method> methodList;
                 String query = "";
 
@@ -463,7 +555,7 @@ public class ISiCS {
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // write output to file
-                                outToFile += method.getFile().replace(Experiment.prefixToRemove, "") + "_"
+                                outToFile += method.getFile().replace(prefixToRemove, "") + "_"
                                         + method.getName() + ",";
 
                                 query = tokenize(method.getSrc());
@@ -476,8 +568,6 @@ public class ISiCS {
                                     query = "";
                                     ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, tmpQuery);
                                     double limit = querySizeLimitRatio * sortedTerms.size();
-
-                                    limit = 100;
 
                                     // if no. of terms is smaller than the limit, use every term.
                                     if (sortedTerms.size() < limit)
@@ -516,7 +606,7 @@ public class ISiCS {
                             query = tokenize(file);
                             // search for results
                             results = es.search(index, type, query, isPrint, isDFS, offset, size);
-                            outToFile += file.getAbsolutePath().replace(Experiment.prefixToRemove, "") +
+                            outToFile += file.getAbsolutePath().replace(prefixToRemove, "") +
                                     "_noMethod" +
                                     ",";
                             int resultCount = 0;
@@ -544,7 +634,7 @@ public class ISiCS {
 
             bw.close();
 
-            System.out.println("Searching done for " + count + " files (" + methodCount + " methods).");
+            System.out.println("Searching done for " + count + " files (" + methodCount + " methods after clone size filtering).");
             System.out.println("See output at " + outfile.getAbsolutePath());
 
         } else {
@@ -733,6 +823,7 @@ public class ISiCS {
     private EvalResult evaluate(String mode,
                                 String workingDir,
                                 String errMeasure,
+                                double querySizeRatio,
                                 boolean isPrint) throws Exception {
 
         // default is method-level evaluator
@@ -743,7 +834,7 @@ public class ISiCS {
                 isPrint);
 
         // if file-level is specified, switch to file-level evaluator
-        if (methodParserMode.equals(Settings.MethodParserType.FILE))
+        if (parseMode.equals(Settings.MethodParserType.FILE))
             evaluator = new FileLevelEvaluator(
                     this.cloneClusterFile,
                     mode,
@@ -756,8 +847,10 @@ public class ISiCS {
         String outputFile = "";
 
         if (errMeasure.equals(Settings.ErrorMeasure.ARP)) {
-            for (int i=1; i<=10; i++) {
-                outputFile = search(inputFolder, resultOffset, resultsSize, (double)i/10);
+            // 0 = no query reduction
+            // 1 -- 10 = ratio of reduced query to the original (10)
+//            for (int i=0; i<= querySizeRatio * 10; i++) {
+                outputFile = search(inputFolder, resultOffset, resultsSize, querySizeRatio);
                 double arp = evaluator.evaluateARP(outputFile, resultsSize);
                 if (isPrint)
                     System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
@@ -766,10 +859,11 @@ public class ISiCS {
                     result.setValue(arp);
                     result.setSetting(outputFile);
                 }
-            }
+                deleteOutputFile(outputFile);
+//            }
         } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
-            for (int i=1; i<=10; i++) {
-                outputFile = search(inputFolder, resultOffset, totalDocuments,(double)i/10);
+//            for (int i=0; i<= querySizeRatio * 10; i++) {
+                outputFile = search(inputFolder, resultOffset, totalDocuments,querySizeRatio);
                 double map = evaluator.evaluateMAP(outputFile, totalDocuments);
                 if (isPrint)
                     System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
@@ -778,17 +872,27 @@ public class ISiCS {
                     result.setValue(map);
                     result.setSetting(outputFile);
                 }
-            }
+                deleteOutputFile(outputFile);
+//            }
         } else {
             System.out.println("ERROR: Invalid evaluation method.");
         }
 
-        Experiment.writeToFile(workingDir,
-                "all_" + errMeasure + ".csv",
-                result.toString().replace(Experiment.prefixToRemove, "") + "\n",
-                true);
+//        Experiment.writeToFile(workingDir,
+//                "all_" + errMeasure.toLowerCase() + ".csv",
+//                result.toString().replace(Experiment.prefixToRemove, "") + "\n",
+//                true);
 
         return result;
+    }
+
+    private boolean deleteOutputFile(String outputFile) {
+        // if set to delete the output file, delete
+        if (CustomSettings.DELETE_OUTPUT_FILE) {
+            File oFile = new File(outputFile);
+            return oFile.delete();
+        }
+        return false;
     }
 
     private int findTP(ArrayList<String> results, String query) {
