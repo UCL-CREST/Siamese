@@ -8,9 +8,9 @@ import crest.isics.settings.TokenizerMode;
 import crest.isics.document.Document;
 import crest.isics.document.Method;
 import crest.isics.settings.IndexSettings;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.elasticsearch.client.Client;
 
-import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -39,7 +39,6 @@ public class ISiCS {
     private boolean isNgram;
     private boolean isPrint;
     private nGramGenerator ngen;
-    private Options options = new Options();
     private boolean isDFS;
     private String outputFolder;
     private boolean writeToFile;
@@ -48,7 +47,7 @@ public class ISiCS {
     private int resultOffset;
     private int resultsSize;
     private int totalDocuments;
-    private double querySizeRatio;
+    private boolean queryReduction;
     private boolean recreateIndexIfExists;
     private String parseMode;
     private String cloneClusterFile;
@@ -58,53 +57,12 @@ public class ISiCS {
     private String errMeasure;
     private boolean deleteIndexAfterUse;
     private String prefixToRemove;
+    private String elasticsearchLoc;
 
     public ISiCS(String configFile) {
         readFromConfigFile(configFile);
+        printConfig();
     }
-
-//    public ISiCS(
-//            String configFile,
-//            String server,
-//            String index,
-//            String type,
-//            String inputFolder,
-//            String normMode,
-//            TokenizerMode modes,
-//            boolean isNgram,
-//            int ngramSize,
-//            boolean isPrint,
-//            boolean isDFS,
-//            String outputFolder,
-//            boolean writeToFile,
-//            String extension,
-//            int minCloneLine,
-//            int resultOffset,
-//            int resultsSize,
-//            int querySizeRatio,
-//            String parseMode) {
-//        // setup all parameter values
-//        this.server = server;
-//        this.index = index;
-//        this.type = type;
-//        this.inputFolder = inputFolder;
-//        this.normMode = normMode;
-//        this.modes = modes;
-//        this.isNgram = isNgram;
-//        this.ngramSize = ngramSize;
-//        this.isPrint = isPrint;
-//        this.isDFS = isDFS;
-//        this.outputFolder = outputFolder;
-//        this.writeToFile = writeToFile;
-//        this.extension = extension;
-//        this.minCloneLine = minCloneLine;
-//        this.resultOffset = resultOffset;
-//        this.resultsSize = resultsSize;
-//        this.querySizeRatio = querySizeRatio; // 0 means no limit
-//        this.parseMode = parseMode;
-//
-//        readFromConfigFile(configFile);
-//    }
 
     private void readFromConfigFile(String configFile) {
 	    /* copied from
@@ -114,8 +72,7 @@ public class ISiCS {
         InputStream input = null;
 
         try {
-
-            input = new FileInputStream("config.properties");
+            input = new FileInputStream(configFile);
             // load a properties file
             prop.load(input);
 
@@ -126,6 +83,7 @@ public class ISiCS {
             inputFolder = prop.getProperty("inputFolder");
             outputFolder = prop.getProperty("outputFolder");
             normMode = prop.getProperty("normMode");
+            isNgram = Boolean.parseBoolean(prop.getProperty("isNgram"));
             ngramSize = Integer.parseInt(prop.getProperty("ngramSize"));
             isPrint = Boolean.parseBoolean(prop.getProperty("isPrint"));
             isDFS = Boolean.parseBoolean(prop.getProperty("dfs"));
@@ -152,7 +110,7 @@ public class ISiCS {
             this.resultOffset = Integer.parseInt(prop.getProperty("resultOffset"));
             this.resultsSize = Integer.parseInt(prop.getProperty("resultsSize"));
             this.totalDocuments = Integer.parseInt(prop.getProperty("totalDocuments"));
-            this.querySizeRatio = Double.parseDouble(prop.getProperty("querySizeRatio"));
+            this.queryReduction = Boolean.parseBoolean(prop.getProperty("queryReduction"));
             this.recreateIndexIfExists = Boolean.parseBoolean(prop.getProperty("recreateIndexIfExists"));
 
             String parseModeConfig = prop.getProperty("parseMode");
@@ -175,6 +133,8 @@ public class ISiCS {
             if (!prefixToRemove.endsWith("/"))
                 prefixToRemove += "/"; // append / at the end
 
+            elasticsearchLoc = prop.getProperty("elasticsearchLoc");
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -186,6 +146,23 @@ public class ISiCS {
                 }
             }
         }
+    }
+
+    private void printConfig() {
+        System.out.println("==== Configurations ====");
+        System.out.println("server: " + server);
+        System.out.println("index: " + index);
+        System.out.println("type: " + type);
+        System.out.println("inputFolder: " + inputFolder);
+        System.out.println("outputFolder: " + outputFolder);
+        System.out.println("normalization: " + normMode);
+        System.out.println("ngramSize: " + ngramSize);
+        System.out.println("verbose: " + isPrint);
+        System.out.println("dfs: " + isDFS);
+        System.out.println("extension: " + extension);
+        System.out.println("minCloneSize: " + minCloneLine);
+        System.out.println("command: " + command);
+        System.out.println("=========================");
     }
 
     public void execute() throws NoNodeAvailableException {
@@ -247,7 +224,7 @@ public class ISiCS {
                     }
 
                 } else if (command.toLowerCase().equals("search")) {
-                    search(inputFolder, resultOffset, resultsSize, 100);
+                    search(inputFolder, resultOffset, resultsSize, queryReduction);
                 }
                 es.shutdown();
             } else {
@@ -311,6 +288,8 @@ public class ISiCS {
                 TokenizerMode tknzMode = new TokenizerMode();
                 modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
 
+                String indexPrefix = this.index;
+
                 for (int ngramSize : ngramSizes) {
 
                     index = this.index + "_" + normMode + "_" + ngramSize;
@@ -335,7 +314,7 @@ public class ISiCS {
                         // if ok, refresh the index, then search
                         es.refresh(index);
 
-                        EvalResult result = evaluate(index, outputFolder, errMeasure, querySizeRatio, isPrint);
+                        EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
 
                         if (resultSet.size() != 0) {
                             EvalResult bestResult = resultSet.get(0);
@@ -363,6 +342,9 @@ public class ISiCS {
                             System.exit(-1);
                         }
                     }
+
+                    // restore index name
+                    this.index = indexPrefix;
                 }
             }
             es.shutdown();
@@ -416,7 +398,6 @@ public class ISiCS {
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
                             // check minimum size
-                            // TODO: should we check for size here?
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // Create Document object and put in an array list
                                 String normSource = tokenize(method.getSrc());
@@ -496,17 +477,19 @@ public class ISiCS {
 
 
     @SuppressWarnings("unchecked")
-    private String search(String inputFolder, int offset, int size, double querySizeLimitRatio) throws Exception {
-        if (querySizeLimitRatio == 0.0) {
+    private String search(String inputFolder, int offset, int size, boolean queryReduction) throws Exception {
+        String qr = "no_qr";
+        if (!queryReduction) {
             System.out.println("No query reduction");
         } else {
-            System.out.println("Query size ratio = " + querySizeLimitRatio);
+            System.out.println("Query reduction enabled");
+            qr = "qr";
         }
         String outToFile = "";
 
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
         Date dateobj = new Date();
-        File outfile = new File(outputFolder + "/" + index + "_" + querySizeLimitRatio + "_"
+        File outfile = new File(outputFolder + "/" + index + "_" + qr + "_"
                 + df.format(dateobj) + ".csv");
 
         // if file doesn't exists, then create it
@@ -561,25 +544,41 @@ public class ISiCS {
                                 query = tokenize(method.getSrc());
 
                                 // query size limit is enforced
-                                if (querySizeLimitRatio != 0) {
+                                if (queryReduction) {
                                     // find the top-N rare terms in the query
                                     String tmpQuery = query;
                                     // clear the query
                                     query = "";
                                     ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, tmpQuery);
-                                    double limit = querySizeLimitRatio * sortedTerms.size();
 
-                                    // if no. of terms is smaller than the limit, use every term.
-                                    if (sortedTerms.size() < limit)
-                                        limit = sortedTerms.size();
+//                                    double limit = queryReduction * sortedTerms.size();
 
-                                    for (int i = 0; i < limit; i++) {
-                                        if (isPrint)
-                                            System.out.println(sortedTerms.get(i).getFreq()
-                                                    + ":"
-                                                    + sortedTerms.get(i).getTerm());
-                                        query += sortedTerms.get(i).getTerm() + " ";
+                                    // switched to use median as a cut-off
+                                    double[] stats = findMedianLoc(sortedTerms);
+                                    double limit = stats[0]; // q1
+//                                    double limit = stats[1]; // median
+//                                    double limit = stats[2]; // q3
+
+                                    for (int i=0; i<sortedTerms.size(); i++) {
+//                                        System.out.println(sortedTerms.get(i).getFreq() + ": " + limit);
+                                        if (sortedTerms.get(i).getFreq() <= limit)
+                                            query += sortedTerms.get(i).getTerm() + " ";
                                     }
+
+//                                    System.out.println("limit: " + limit);
+//                                    System.out.println("query: " + query);
+
+//                                    // if no. of terms is smaller than the limit, use every term.
+//                                    if (sortedTerms.size() < limit)
+//                                        limit = sortedTerms.size();
+//
+//                                    for (int i = 0; i < limit; i++) {
+//                                        if (isPrint)
+//                                            System.out.println(sortedTerms.get(i).getFreq()
+//                                                    + ":"
+//                                                    + sortedTerms.get(i).getTerm());
+//                                        query += sortedTerms.get(i).getTerm() + " ";
+//                                    }
                                     if (isPrint)
                                         System.out.println("QUERY" + methodCount + " : " + query);
                                 }
@@ -642,6 +641,20 @@ public class ISiCS {
         }
 
         return outfile.getAbsolutePath();
+    }
+
+    public double[] findMedianLoc(ArrayList<JavaTerm> termList) {
+        double[] data = new double[termList.size()];
+        for (int i=0; i<termList.size(); i++) {
+            data[i] = termList.get(i).getFreq();
+        }
+        /* copied from http://stackoverflow.com/questions/19700704/java-api-for-calculating-interquartile-range */
+        DescriptiveStatistics da = new DescriptiveStatistics(data);
+        double[] results = new double[3];
+        results[0] = da.getPercentile(75);
+        results[1] = da.getPercentile(50);
+        results[2] = da.getPercentile(25);
+        return results;
     }
 
     private String tokenize(File file) throws Exception {
@@ -785,7 +798,7 @@ public class ISiCS {
      */
     private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String terms) {
 
-        String indexFile = "elasticsearch-2.2.0/data/stackoverflow/nodes/0/indices/"
+        String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
         ArrayList<JavaTerm> selectedTermsArray = new ArrayList<>();
 
@@ -805,7 +818,6 @@ public class ISiCS {
 
             /* copied from https://stackoverflow.com/questions/18441846/how-to-sort-an-arraylist-in-java */
             Collections.sort(selectedTermsArray);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -823,7 +835,7 @@ public class ISiCS {
     private EvalResult evaluate(String mode,
                                 String workingDir,
                                 String errMeasure,
-                                double querySizeRatio,
+                                boolean queryReduction,
                                 boolean isPrint) throws Exception {
 
         // default is method-level evaluator
@@ -849,8 +861,8 @@ public class ISiCS {
         if (errMeasure.equals(Settings.ErrorMeasure.ARP)) {
             // 0 = no query reduction
             // 1 -- 10 = ratio of reduced query to the original (10)
-//            for (int i=0; i<= querySizeRatio * 10; i++) {
-                outputFile = search(inputFolder, resultOffset, resultsSize, querySizeRatio);
+//            for (int i=0; i<= queryReduction * 10; i++) {
+                outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction);
                 double arp = evaluator.evaluateARP(outputFile, resultsSize);
                 if (isPrint)
                     System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
@@ -862,8 +874,8 @@ public class ISiCS {
                 deleteOutputFile(outputFile);
 //            }
         } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
-//            for (int i=0; i<= querySizeRatio * 10; i++) {
-                outputFile = search(inputFolder, resultOffset, totalDocuments,querySizeRatio);
+//            for (int i=0; i<= queryReduction * 10; i++) {
+                outputFile = search(inputFolder, resultOffset, totalDocuments,queryReduction);
                 double map = evaluator.evaluateMAP(outputFile, totalDocuments);
                 if (isPrint)
                     System.out.println(Settings.ErrorMeasure.MAP + ": " + map);

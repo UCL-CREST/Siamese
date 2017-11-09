@@ -37,6 +37,7 @@ public class MethodParser {
         try {
             FileInputStream in = new FileInputStream(FILE_PATH);
             CompilationUnit cu;
+
             // method-level parser
             if (MODE == Settings.MethodParserType.METHOD) {
                 try {
@@ -45,6 +46,7 @@ public class MethodParser {
                     NodeList<TypeDeclaration<?>> types = cu.getTypes();
                     for (TypeDeclaration type : types) {
                         if (type instanceof ClassOrInterfaceDeclaration) {
+
                             // getting class name
                             ClassOrInterfaceDeclaration classDec = (ClassOrInterfaceDeclaration) type;
                             JAVA_CLASS = classDec.getName().asString();
@@ -55,8 +57,6 @@ public class MethodParser {
                     new ConstructorVisitor().visit(cu, null);
 
                 } catch (Throwable e) {
-//                    System.out.println("File: " + FILE_PATH);
-//                    System.out.println(e.getMessage());
                     if (isPrint)
                         System.out.println("Unparseable method (use whole fragment)");
                     Method m = getWholeFragment();

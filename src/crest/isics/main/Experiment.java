@@ -32,6 +32,7 @@ public class Experiment {
     private static String configFile;
     private static String errMeasure;
     private static String mode;
+    private static boolean queryReduction;
     private static String cloneClusterFile;
     private static boolean deleteIndexAfterUse;
     private static String cloneClusterFilePreix = "clone_clusters";
@@ -46,7 +47,8 @@ public class Experiment {
                     "<config file>");
             System.exit(-1);
         } else {
-            readFromConfigFile("config.properties");
+            configFile = "config.properties";
+            readFromConfigFile(configFile);
             cloneClusterFilePreix = args[1] + "_" + cloneClusterFilePreix;
 
             if (mode.endsWith("_text")) {
@@ -131,7 +133,16 @@ public class Experiment {
 
             System.out.println("best " + errMeasure.toLowerCase()
                     + " = " + bestResults.get(0).getSetting() + "," + bestResults.get(0).getValue());
-            writeToFile(workingDir, "report_" + errMeasure.toLowerCase() + "_" + mode + ".txt",
+
+            String qr = "no_qr";
+            if (!queryReduction) {
+                System.out.println("No query reduction");
+            } else {
+                System.out.println("Query reduction enabled");
+                qr = "qr";
+            }
+
+            writeToFile(workingDir, "report_" + errMeasure.toLowerCase() + "_" + mode + "_" + qr + ".txt",
                     formatResults(bestResults),
                     false);
         }
@@ -164,6 +175,7 @@ public class Experiment {
                 errMeasure = Settings.ErrorMeasure.MAP;
 
             deleteIndexAfterUse = Boolean.parseBoolean(prop.getProperty("deleteIndexAfterUse"));
+            queryReduction = Boolean.parseBoolean(prop.getProperty("queryReduction"));
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {

@@ -106,8 +106,7 @@ public class Evaluator {
                     for (int i = 1; i <= relevantResults.size(); i++) {
                         // limit the check to the number of relevant results obtained (nextLine.length)
                         if (i < nextLine.length) {
-                            if (relevantResults.contains(nextLine[i]))
-                                tp++;
+                            if (relevantResults.contains(nextLine[i])) { tp++; }
                         }
                     }
 
@@ -157,7 +156,6 @@ public class Evaluator {
 
                 // skip the one that's not in the search key
                 if (relevantResults != null) {
-//                    System.out.println(query);
                     // increase query count
                     noOfQueries++;
 
@@ -193,9 +191,6 @@ public class Evaluator {
             // calculate MAP
             map = sumAvgPrec/noOfQueries;
             System.out.println("No. of processed queries = " + noOfQueries);
-
-//            String outFile = "map_" + index + ".csv";
-//            Experiment.writeToFile(outputDir, outFile , mapToPrint, false);
             System.out.println("MAP = " + map + "\n");
 
         } catch (IOException e) {
