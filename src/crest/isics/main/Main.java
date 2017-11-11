@@ -23,6 +23,11 @@ public class Main {
 
         processCommandLine(args);
 
+        if (configFile == null) {
+            System.out.println("Couldn't find the config file. Use the default one at ./config.properties");
+            configFile = "config.properties";
+        }
+
         Date startDate = getCurrentTime();
 
         ISiCS isics = new ISiCS(configFile);

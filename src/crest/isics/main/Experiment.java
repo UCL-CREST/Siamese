@@ -35,117 +35,109 @@ public class Experiment {
     private static boolean queryReduction;
     private static String cloneClusterFile;
     private static boolean deleteIndexAfterUse;
-    private static String cloneClusterFilePreix = "clone_clusters";
+    private static String cloneClusterFilePrefix = "clone_clusters";
 
     public static void main(String[] args) {
 
-        if (args.length < 3) {
-            // If missing some arguments, show the help
-            System.out.println("Usage: java Experiment " +
-                    "<similarity> " +
-                    "<clone cluster file [cloplag/soco]> " +
-                    "<config file>");
-            System.exit(-1);
+
+        configFile = "config.properties";
+        readFromConfigFile(configFile);
+        cloneClusterFilePrefix = cloneClusterFile + "_" + cloneClusterFilePrefix;
+
+        if (mode.endsWith("_text")) {
+            normModes = normModesText;
+            ngramSizes = ngramSizesText;
+        } else if (mode.endsWith("_ngram")) {
+            normModes = normModesText;
+            ngramSizes = ngramSizesAll;
+        } else if (mode.endsWith("_codenorm")) {
+            normModes = normModesAll;
+            ngramSizes = ngramSizesText;
+        } else if (mode.endsWith("_both")) {
+            normModes = normModesAll;
+            ngramSizes = ngramSizesAll;
         } else {
-            configFile = "config.properties";
-            readFromConfigFile(configFile);
-            cloneClusterFilePreix = args[1] + "_" + cloneClusterFilePreix;
-
-            if (mode.endsWith("_text")) {
-                normModes = normModesText;
-                ngramSizes = ngramSizesText;
-            } else if (mode.endsWith("_ngram")) {
-                normModes = normModesText;
-                ngramSizes = ngramSizesAll;
-            } else if (mode.endsWith("_codenorm")) {
-                normModes = normModesAll;
-                ngramSizes = ngramSizesText;
-            } else if (mode.endsWith("_both")) {
-                normModes = normModesAll;
-                ngramSizes = ngramSizesAll;
-            } else {
-                normModes = normModesAll;
-                ngramSizes = ngramSizesAll;
-            }
-
-            ArrayList<EvalResult> bestResults = new ArrayList<>();
-
-            switch(mode) {
-                case "tfidf_text":
-                case "tfidf_text_ngram":
-                case "tfidf_text_codenorm":
-                case "tfidf_text_both":
-                    bestResults = tfidfTextExp();
-                    break;
-                case "bm25_text":
-                case "bm25_text_ngram":
-                case "bm25_text_codenorm":
-                case "bm25_text_both":
-                    bestResults = bm25TextExp();
-                    break;
-                case "dfr_text":
-                case "dfr_text_ngram":
-                case "dfr_text_codenorm":
-                case "dfr_text_both":
-                    bestResults = dfrTextExp();
-                    break;
-                case "ib_text":
-                case "ib_text_ngram":
-                case "ib_text_codenorm":
-                case "ib_text_both":
-                    bestResults = ibTextExp();
-                    break;
-                case "lmd_text":
-                case "lmd_text_ngram":
-                case "lmd_text_codenorm":
-                case "lmd_text_both":
-                    bestResults = lmdTextExp();
-                    break;
-                case "lmj_text":
-                case "lmj_text_ngram":
-                case "lmj_text_codenorm":
-                case "lmj_text_both":
-                    bestResults = lmjTextExp();
-                    break;
-                case "tfidf": /* normal mode (search all parameters + grams + normalisation) */
-                    bestResults = tfidfExp();
-                    break;
-                case "bm25":
-                    bestResults = bm25Exp();
-                    break;
-                case "dfr":
-                    bestResults = dfrExp();
-                    break;
-                case "ib":
-                    bestResults = ibExp();
-                    break;
-                case "lmdirichlet":
-                case "lmd":
-                    bestResults = lmdExp();
-                    break;
-                case "lmjelinekmercer":
-                case "lmj":
-                    bestResults = lmjExp();
-                    break;
-                default:
-                    System.out.println("No ranking function found");
-            }
-
-            System.out.println("best " + errMeasure.toLowerCase()
-                    + " = " + bestResults.get(0).getSetting() + "," + bestResults.get(0).getValue());
-
-            String qr = "no_qr";
-            if (!queryReduction) {
-                System.out.println("No query reduction");
-            } else {
-                System.out.println("Query reduction enabled");
-                qr = "qr";
-            }
-
-            writeToFile(workingDir, "report_" + errMeasure.toLowerCase() + "_" + mode + "_" + qr + ".txt",
-                    formatResults(bestResults),
-                    false);
+            normModes = normModesAll;
+            ngramSizes = ngramSizesAll;
         }
+
+        ArrayList<EvalResult> bestResults = new ArrayList<>();
+
+        switch (mode) {
+            case "tfidf_text":
+            case "tfidf_text_ngram":
+            case "tfidf_text_codenorm":
+            case "tfidf_text_both":
+                bestResults = tfidfTextExp();
+                break;
+            case "bm25_text":
+            case "bm25_text_ngram":
+            case "bm25_text_codenorm":
+            case "bm25_text_both":
+                bestResults = bm25TextExp();
+                break;
+            case "dfr_text":
+            case "dfr_text_ngram":
+            case "dfr_text_codenorm":
+            case "dfr_text_both":
+                bestResults = dfrTextExp();
+                break;
+            case "ib_text":
+            case "ib_text_ngram":
+            case "ib_text_codenorm":
+            case "ib_text_both":
+                bestResults = ibTextExp();
+                break;
+            case "lmd_text":
+            case "lmd_text_ngram":
+            case "lmd_text_codenorm":
+            case "lmd_text_both":
+                bestResults = lmdTextExp();
+                break;
+            case "lmj_text":
+            case "lmj_text_ngram":
+            case "lmj_text_codenorm":
+            case "lmj_text_both":
+                bestResults = lmjTextExp();
+                break;
+            case "tfidf": /* normal mode (search all parameters + grams + normalisation) */
+                bestResults = tfidfExp();
+                break;
+            case "bm25":
+                bestResults = bm25Exp();
+                break;
+            case "dfr":
+                bestResults = dfrExp();
+                break;
+            case "ib":
+                bestResults = ibExp();
+                break;
+            case "lmdirichlet":
+            case "lmd":
+                bestResults = lmdExp();
+                break;
+            case "lmjelinekmercer":
+            case "lmj":
+                bestResults = lmjExp();
+                break;
+            default:
+                System.out.println("No ranking function found");
+        }
+
+        System.out.println("best " + errMeasure.toLowerCase()
+                + " = " + bestResults.get(0).getSetting() + "," + bestResults.get(0).getValue());
+
+        String qr = "no_qr";
+        if (!queryReduction) {
+            System.out.println("No query reduction");
+        } else {
+            System.out.println("Query reduction enabled");
+            qr = "qr";
+        }
+
+        writeToFile(workingDir, "report_" + errMeasure.toLowerCase() + "_" + mode + "_" + qr + ".txt",
+                formatResults(bestResults),
+                false);
     }
 
     private static void readFromConfigFile(String configFile) {
@@ -221,7 +213,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
 
-        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
     }
 
 
@@ -250,7 +242,7 @@ public class Experiment {
             String mappingStr = "{ \"properties\": { \"src\": " +
                     "{ \"type\": \"string\",\"similarity\": \"tfidf_similarity\" } } } } }";
 
-            ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+            ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
 
             if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                 bestResult = result;
@@ -275,7 +267,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
 
-        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
     }
 
     private static ArrayList<EvalResult> bm25Exp() {
@@ -298,7 +290,7 @@ public class Experiment {
                     String mappingStr = "{ \"properties\": { \"src\": " +
                             "{ \"type\": \"string\",\"similarity\": \"bm25_similarity\" } } } }";
                     System.out.println(indexSettings);
-                    ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+                    ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
 
                     if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                         bestResult = result;
@@ -326,7 +318,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 
-        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
 
     }
 
@@ -350,7 +342,7 @@ public class Experiment {
                     String mappingStr = "{ \"properties\": { \"src\": " +
                             "{ \"type\": \"string\",\"similarity\": \"dfr_similarity\" } } } } }";
 
-                    ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+                    ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
 
                     if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                         bestResult = result;
@@ -382,7 +374,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 
-        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
 
     }
 
@@ -411,7 +403,7 @@ public class Experiment {
                     String mappingStr = "{ \"properties\": { \"src\": " +
                             "{ \"type\": \"string\",\"similarity\": \"ib_similarity\" } } } } }";
 
-                    ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+                    ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
 
                     if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                         bestResult = result;
@@ -436,7 +428,7 @@ public class Experiment {
                 + "{ \"default\" : { \"type\" : \"whitespace\" } } } }";
 
         String mappingStr = "{ \"properties\": { \"src\": { \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
-        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
     }
 
     private static ArrayList<EvalResult> lmdExp() {
@@ -459,7 +451,7 @@ public class Experiment {
 
             String mappingStr = "{ \"properties\": { \"src\": " +
                     "{ \"type\": \"string\",\"similarity\": \"lmd_similarity\" } } } } }";
-            ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+            ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
 
             if (result.get(0).getValue() > bestResult.get(0).getValue()) {
                 bestResult = result;
@@ -485,7 +477,7 @@ public class Experiment {
         String mappingStr = "{ \"properties\": { \"src\": " +
                 "{ \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
 
-        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+        return isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
     }
 
     private static ArrayList<EvalResult> lmjExp() {
@@ -509,7 +501,7 @@ public class Experiment {
             String mappingStr = "{ \"properties\": { \"src\": " +
                     "{ \"type\": \"string\",\"similarity\": \"lmj_similarity\" } } } } }";
 
-            ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePreix);
+            ArrayList<EvalResult> result = isics.runExperiment(indexSettings, mappingStr, normModes, ngramSizes, cloneClusterFilePrefix);
 
             if (result.get(0).getValue() > bestResult.get(0).getValue())
                 bestResult = result;

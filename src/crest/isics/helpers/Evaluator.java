@@ -22,6 +22,8 @@ public class Evaluator {
     protected HashMap<String, ArrayList<MethodClone>> cloneCluster;
     protected HashMap<String, ArrayList<String>> searchKey;
 
+    public Evaluator() { }
+
     public Evaluator(String clonePairFile, String index, String outputDir, boolean isPrint) {
         this.clonePairFile = clonePairFile;
         this.index = index;
@@ -31,7 +33,7 @@ public class Evaluator {
         ArrayList<MethodClone> clones = readCSV(clonePairFile);
 
         if (isPrint) {
-            System.out.println("Reading clone cluster files ... ");
+            System.out.println("Reading clone cluster files ... " + clonePairFile);
             System.out.println("--> No. of clones = " + clones.size());
         }
 
@@ -93,6 +95,8 @@ public class Evaluator {
 
                 // get the answer key of this query
                 ArrayList<String> relevantResults = searchKey.get(query);
+//                System.out.println(query);
+//                System.out.println(relevantResults);
 
                 // skip the one that's not in the search key
                 if (relevantResults != null) {
@@ -153,6 +157,8 @@ public class Evaluator {
 
                 // get the answer key of this query
                 ArrayList<String> relevantResults = searchKey.get(query);
+//                System.out.println(query);
+//                System.out.println(relevantResults);
 
                 // skip the one that's not in the search key
                 if (relevantResults != null) {

@@ -149,20 +149,21 @@ public class ISiCS {
     }
 
     private void printConfig() {
-        System.out.println("==== Configurations ====");
-        System.out.println("server: " + server);
-        System.out.println("index: " + index);
-        System.out.println("type: " + type);
-        System.out.println("inputFolder: " + inputFolder);
-        System.out.println("outputFolder: " + outputFolder);
-        System.out.println("normalization: " + normMode);
-        System.out.println("ngramSize: " + ngramSize);
-        System.out.println("verbose: " + isPrint);
-        System.out.println("dfs: " + isDFS);
-        System.out.println("extension: " + extension);
-        System.out.println("minCloneSize: " + minCloneLine);
-        System.out.println("command: " + command);
-        System.out.println("=========================");
+        System.out.println("====== Configurations ======");
+        System.out.println("server         : " + server);
+        System.out.println("index          : " + index);
+        System.out.println("type           : " + type);
+        System.out.println("inputFolder    : " + inputFolder);
+        System.out.println("outputFolder   : " + outputFolder);
+        System.out.println("normalization  : " + normMode);
+        System.out.println("ngramSize      : " + ngramSize);
+        System.out.println("verbose        : " + isPrint);
+        System.out.println("dfs            : " + isDFS);
+        System.out.println("extension      : " + extension);
+        System.out.println("minCloneSize   : " + minCloneLine);
+        System.out.println("command        : " + command);
+        System.out.println("queryReduction : " + queryReduction);
+        System.out.println("============================");
     }
 
     public void execute() throws NoNodeAvailableException {
@@ -371,9 +372,6 @@ public class ISiCS {
         int fileCount = 0;
         System.out.println("Found " + listOfFiles.size() + " files.");
         for (File file : listOfFiles) {
-            fileCount++;
-            if (fileCount % printEvery == 0)
-                System.out.println("Indexed " + fileCount + " documents.");
             try {
                 // extract license (if any) using Ninka
                 // String license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
@@ -452,10 +450,19 @@ public class ISiCS {
                         }
                     }
                 }
+
+
+                fileCount++;
+                if (fileCount % printEvery == 0)
+                    System.out.println("Indexed " + fileCount + " documents (" + count + " methods).");
+
             } catch (Exception e) {
                 System.out.println("ERROR: error while indexing a file: " + file.getAbsolutePath() + ". Skip.");
             }
         }
+
+        if (fileCount % printEvery != 0)
+            System.out.println("Indexed " + fileCount + " documents (" + count + " methods).");
 
         // the last batch
         if (indexMode == Settings.IndexingMode.BULK && docArray.size() != 0) {
@@ -535,6 +542,7 @@ public class ISiCS {
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
+//                            System.out.println(method.getFile());
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // write output to file
@@ -542,6 +550,10 @@ public class ISiCS {
                                         + method.getName() + ",";
 
                                 query = tokenize(method.getSrc());
+//                                System.out.println(query.split(" ").length);
+//                                System.out.println("-----------------");
+//                                System.out.println(query);
+//                                System.out.println("-----------------");
 
                                 // query size limit is enforced
                                 if (queryReduction) {
@@ -859,41 +871,30 @@ public class ISiCS {
         String outputFile = "";
 
         if (errMeasure.equals(Settings.ErrorMeasure.ARP)) {
-            // 0 = no query reduction
-            // 1 -- 10 = ratio of reduced query to the original (10)
-//            for (int i=0; i<= queryReduction * 10; i++) {
-                outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction);
-                double arp = evaluator.evaluateARP(outputFile, resultsSize);
-                if (isPrint)
-                    System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
-                // update the max ARP value
-                if (result.getValue() < arp) {
-                    result.setValue(arp);
-                    result.setSetting(outputFile);
-                }
-                deleteOutputFile(outputFile);
-//            }
+            outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction);
+            double arp = evaluator.evaluateARP(outputFile, resultsSize);
+            if (isPrint)
+                System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
+            // update the max ARP value
+            if (result.getValue() < arp) {
+                result.setValue(arp);
+                result.setSetting(outputFile);
+            }
+            deleteOutputFile(outputFile);
         } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
-//            for (int i=0; i<= queryReduction * 10; i++) {
-                outputFile = search(inputFolder, resultOffset, totalDocuments,queryReduction);
-                double map = evaluator.evaluateMAP(outputFile, totalDocuments);
-                if (isPrint)
-                    System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
-                // update the max MAP value
-                if (result.getValue() < map) {
-                    result.setValue(map);
-                    result.setSetting(outputFile);
-                }
-                deleteOutputFile(outputFile);
-//            }
+            outputFile = search(inputFolder, resultOffset, totalDocuments, queryReduction);
+            double map = evaluator.evaluateMAP(outputFile, totalDocuments);
+            if (isPrint)
+                System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
+            // update the max MAP value
+            if (result.getValue() < map) {
+                result.setValue(map);
+                result.setSetting(outputFile);
+            }
+            deleteOutputFile(outputFile);
         } else {
             System.out.println("ERROR: Invalid evaluation method.");
         }
-
-//        Experiment.writeToFile(workingDir,
-//                "all_" + errMeasure.toLowerCase() + ".csv",
-//                result.toString().replace(Experiment.prefixToRemove, "") + "\n",
-//                true);
 
         return result;
     }
