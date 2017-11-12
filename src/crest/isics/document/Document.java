@@ -58,9 +58,21 @@ public class Document {
     public int getStartLine() { return this.startline; }
     public int getEndLine() { return this.endline; }
 
+	public void setStartline(int startline) {
+		this.startline = startline;
+	}
+
+	public void setEndline(int endline) {
+		this.endline = endline;
+	}
+
 	public String toString() {
 		return id + ":" + file + ": " + source;
 	}
+
+	public String getLocationString() {
+	    return file + "(" + startline + "," + endline + ")";
+    }
 
     @Override
     public boolean equals(Object obj) {

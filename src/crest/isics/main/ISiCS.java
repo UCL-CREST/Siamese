@@ -21,6 +21,7 @@ import org.elasticsearch.client.transport.NoNodeAvailableException;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.UnknownHostException;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,6 +59,8 @@ public class ISiCS {
     private boolean deleteIndexAfterUse;
     private String prefixToRemove;
     private String elasticsearchLoc;
+    private String outputFormat;
+    private Client isicsClient;
 
     public ISiCS(String configFile) {
         readFromConfigFile(configFile);
@@ -134,6 +137,7 @@ public class ISiCS {
                 prefixToRemove += "/"; // append / at the end
 
             elasticsearchLoc = prop.getProperty("elasticsearchLoc");
+            outputFormat = prop.getProperty("outputFormat");
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -166,10 +170,46 @@ public class ISiCS {
         System.out.println("============================");
     }
 
-    public void execute() throws NoNodeAvailableException {
-
+    private void connect() {
         // create a connector
         es = new ESConnector(server);
+    }
+
+    public void startup() {
+        connect();
+        try {
+            es.startup();
+            isicsClient = es.startup();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void shutdown() {
+        es.shutdown();
+    }
+
+    private OutputFormatter getOutputFormatter() {
+        OutputFormatter formatter = new OutputFormatter();
+        if (outputFormat.equals("csv")) {
+            formatter.setFormat("csv");
+            formatter.setAddStartEndLine(false);
+        } else if (outputFormat.equals("csvfline")) {
+            formatter.setFormat("csv");
+            formatter.setAddStartEndLine(true);
+        } else {
+            System.out.println("ERROR: wrong output format");
+            return null;
+        }
+
+        return formatter;
+    }
+
+    public String execute() throws Exception {
+        // check if the client is already started up
+        if (isicsClient == null) {
+            startup();
+        }
 
         // initialise the n-gram generator
         ngen = new nGramGenerator(ngramSize);
@@ -205,8 +245,9 @@ public class ISiCS {
             mappingStr = IndexSettings.LMJ.mappingStr;
         }
 
+        String outputFile = "";
+
         try {
-            Client isicsClient = es.startup();
             if (isicsClient != null) {
                 if (command.toLowerCase().equals("index")) {
 
@@ -225,17 +266,24 @@ public class ISiCS {
                     }
 
                 } else if (command.toLowerCase().equals("search")) {
-                    search(inputFolder, resultOffset, resultsSize, queryReduction);
+                    if (es.doesIndexExist(this.index)) {
+                        OutputFormatter formatter = getOutputFormatter();
+                        outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
+                    } else {
+                        // index does not exist
+                        throw new Exception("index " + this.index + " does not exist.");
+                    }
                 }
-                es.shutdown();
             } else {
                 System.out.println("ERROR: cannot create Elasticsearch client ... ");
             }
-        } catch (NoNodeAvailableException noNodeException) {
-            throw noNodeException;
+//        } catch (NoNodeAvailableException noNodeException) {
+//            throw noNodeException;
         }  catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
+
+        return outputFile;
     }
 
     private boolean createIndex(String indexSettings, String mappingStr) throws NoNodeAvailableException {
@@ -482,9 +530,13 @@ public class ISiCS {
         return count;
     }
 
+    protected String search(
+            String inputFolder,
+            int offset,
+            int size,
+            boolean queryReduction,
+            OutputFormatter formatter) throws Exception {
 
-    @SuppressWarnings("unchecked")
-    private String search(String inputFolder, int offset, int size, boolean queryReduction) throws Exception {
         String qr = "no_qr";
         if (!queryReduction) {
             System.out.println("No query reduction");
@@ -492,9 +544,10 @@ public class ISiCS {
             System.out.println("Query reduction enabled");
             qr = "qr";
         }
+
         String outToFile = "";
 
-        DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-ss");
+        DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-S");
         Date dateobj = new Date();
         File outfile = new File(outputFolder + "/" + index + "_" + qr + "_"
                 + df.format(dateobj) + ".csv");
@@ -545,9 +598,15 @@ public class ISiCS {
 //                            System.out.println(method.getFile());
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
+                                /* TODO: fix this some time. It's weird to have a list with only a single object. */
                                 // write output to file
-                                outToFile += method.getFile().replace(prefixToRemove, "") + "_"
-                                        + method.getName() + ",";
+                                ArrayList<Document> queryList = new ArrayList<>();
+                                Document d = new Document();
+                                d.setFile(method.getFile() + "_" + method.getName());
+                                d.setStartline(method.getStartLine());
+                                d.setEndline(method.getEndLine());
+                                queryList.add(d);
+                                outToFile += formatter.format(queryList, prefixToRemove) + ",";
 
                                 query = tokenize(method.getSrc());
 //                                System.out.println(query.split(" ").length);
@@ -597,16 +656,7 @@ public class ISiCS {
 
                                 // search for results
                                 results = es.search(index, type, query, isPrint, isDFS, offset, size);
-
-                                int resultCount = 0;
-                                for (Document d : results) {
-                                    if (resultCount > 0)
-                                        outToFile += ","; // add comma in between
-
-                                    outToFile += d.getFile();
-                                    resultCount++;
-                                }
-
+                                outToFile += formatter.format(results, prefixToRemove);
                                 outToFile += "\n";
                                 methodCount++;
                             }
@@ -620,14 +670,7 @@ public class ISiCS {
                             outToFile += file.getAbsolutePath().replace(prefixToRemove, "") +
                                     "_noMethod" +
                                     ",";
-                            int resultCount = 0;
-                            for (Document d : results) {
-                                if (resultCount > 0)
-                                    outToFile += ","; // add comma in between
-
-                                outToFile += d.getFile();
-                                resultCount++;
-                            }
+                            outToFile += formatter.format(results, prefixToRemove);
                             outToFile += "\n";
                         }
                     }
@@ -637,7 +680,7 @@ public class ISiCS {
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());
-                    System.out.println("Error: file " + count +" generates query term size exceeds 4096 (too big).");
+                    System.out.println("ERROR: file " + count +" generates query term size exceeds 4096 (too big).");
                 }
 
                 bw.write(outToFile);
@@ -653,6 +696,72 @@ public class ISiCS {
         }
 
         return outfile.getAbsolutePath();
+    }
+
+
+    /***
+     * Evaluate the search results by either r-precision or mean average precision (MAP)
+     * @param mode parameter settings
+     * @param workingDir location of the results
+     * @param errMeasure type of error measure
+     * @return A pair of the best performance (either ARP or MAP) and its value
+     */
+    private EvalResult evaluate(String mode,
+                                String workingDir,
+                                String errMeasure,
+                                boolean queryReduction,
+                                boolean isPrint) throws Exception {
+
+        // default is method-level evaluator
+        Evaluator evaluator = new MethodLevelEvaluator(
+                this.cloneClusterFile,
+                mode,
+                workingDir,
+                isPrint);
+
+        // if file-level is specified, switch to file-level evaluator
+        if (parseMode.equals(Settings.MethodParserType.FILE))
+            evaluator = new FileLevelEvaluator(
+                    this.cloneClusterFile,
+                    mode,
+                    workingDir,
+                    isPrint);
+
+        // generate a search key and retrieve result size (if MAP)
+        int searchKeySize = evaluator.generateSearchKey();
+        EvalResult result = new EvalResult();
+        String outputFile = "";
+
+        // get the output formatter according to the settings
+        OutputFormatter formatter = getOutputFormatter();
+
+        if (errMeasure.equals(Settings.ErrorMeasure.ARP)) {
+            outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
+            double arp = evaluator.evaluateARP(outputFile, resultsSize);
+            if (isPrint)
+                System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
+            // update the max ARP value
+            if (result.getValue() < arp) {
+                result.setValue(arp);
+                result.setSetting(outputFile);
+            }
+            deleteOutputFile(outputFile);
+        } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
+            outputFile = search(inputFolder, resultOffset, totalDocuments, queryReduction, formatter);
+            double map = evaluator.evaluateMAP(outputFile, totalDocuments);
+            if (isPrint)
+                System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
+            // update the max MAP value
+            if (result.getValue() < map) {
+                result.setValue(map);
+                result.setSetting(outputFile);
+            }
+            deleteOutputFile(outputFile);
+        } else {
+            System.out.println("ERROR: Invalid evaluation method.");
+        }
+
+        return result;
     }
 
     public double[] findMedianLoc(ArrayList<JavaTerm> termList) {
@@ -835,68 +944,6 @@ public class ISiCS {
         }
 
         return selectedTermsArray;
-    }
-
-    /***
-     * Evaluate the search results by either r-precision or mean average precision (MAP)
-     * @param mode parameter settings
-     * @param workingDir location of the results
-     * @param errMeasure type of error measure
-     * @return A pair of the best performance (either ARP or MAP) and its value
-     */
-    private EvalResult evaluate(String mode,
-                                String workingDir,
-                                String errMeasure,
-                                boolean queryReduction,
-                                boolean isPrint) throws Exception {
-
-        // default is method-level evaluator
-        Evaluator evaluator = new MethodLevelEvaluator(
-                this.cloneClusterFile,
-                mode,
-                workingDir,
-                isPrint);
-
-        // if file-level is specified, switch to file-level evaluator
-        if (parseMode.equals(Settings.MethodParserType.FILE))
-            evaluator = new FileLevelEvaluator(
-                    this.cloneClusterFile,
-                    mode,
-                    workingDir,
-                    isPrint);
-
-        // generate a search key and retrieve result size (if MAP)
-        int searchKeySize = evaluator.generateSearchKey();
-        EvalResult result = new EvalResult();
-        String outputFile = "";
-
-        if (errMeasure.equals(Settings.ErrorMeasure.ARP)) {
-            outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction);
-            double arp = evaluator.evaluateARP(outputFile, resultsSize);
-            if (isPrint)
-                System.out.println(Settings.ErrorMeasure.ARP + ": " + arp);
-            // update the max ARP value
-            if (result.getValue() < arp) {
-                result.setValue(arp);
-                result.setSetting(outputFile);
-            }
-            deleteOutputFile(outputFile);
-        } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
-            outputFile = search(inputFolder, resultOffset, totalDocuments, queryReduction);
-            double map = evaluator.evaluateMAP(outputFile, totalDocuments);
-            if (isPrint)
-                System.out.println(Settings.ErrorMeasure.MAP + ": " + map);
-            // update the max MAP value
-            if (result.getValue() < map) {
-                result.setValue(map);
-                result.setSetting(outputFile);
-            }
-            deleteOutputFile(outputFile);
-        } else {
-            System.out.println("ERROR: Invalid evaluation method.");
-        }
-
-        return result;
     }
 
     private boolean deleteOutputFile(String outputFile) {

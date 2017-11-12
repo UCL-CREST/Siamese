@@ -31,6 +31,7 @@ public class Main {
         Date startDate = getCurrentTime();
 
         ISiCS isics = new ISiCS(configFile);
+        isics.startup();
 
         try {
 			isics.execute();
@@ -40,6 +41,7 @@ public class Main {
 					"./elasticsearch-2.2.0/bin/elasticsearch -d");
 		}
 
+		isics.shutdown();
         Date endDate = getCurrentTime();
         System.out.println("Elapse time (ms): " + (endDate.getTime() - startDate.getTime()));
     }
