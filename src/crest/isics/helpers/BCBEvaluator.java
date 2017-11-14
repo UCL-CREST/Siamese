@@ -123,10 +123,11 @@ public class BCBEvaluator extends Evaluator  {
                             "FROM clones\n" +
                             "  INNER JOIN functions AS A ON function_id_one = A.id\n" +
                             "  INNER JOIN functions AS B ON function_id_two = B.id\n" +
-                            "WHERE syntactic_type=1\n" +
+                            "WHERE syntactic_type <= 1\n" +
                             "  AND A.endline - A.startline + 1 >= " + minCloneSize + "\n" +
                             "  AND B.endline - B.startline + 1 >= " + minCloneSize + "\n" +
-                            "AND function_id_one=" + cloneId + ";");
+                            "  AND function_id_one=" + cloneId + "\n" +
+                            "ORDER BY clones.syntactic_type ASC, B.name ASC;");
             while (rs.next()) {
                 query.setId(String.valueOf(rs.getInt("id1")));
                 query.setFile(rs.getString("type1") + "/" + rs.getString("file1"));
