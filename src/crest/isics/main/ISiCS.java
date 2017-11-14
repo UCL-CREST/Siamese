@@ -24,6 +24,7 @@ import java.math.RoundingMode;
 import java.net.UnknownHostException;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -178,7 +179,6 @@ public class ISiCS {
     public void startup() {
         connect();
         try {
-            es.startup();
             isicsClient = es.startup();
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -262,7 +262,7 @@ public class ISiCS {
                         es.refresh(index);
                         System.out.println("Successfully creating index.");
                     } else {
-                        System.out.println("Indexed zero file: please check!");
+                        System.out.println("ERROR: Indexed zero file. Please check!");
                     }
 
                 } else if (command.toLowerCase().equals("search")) {
@@ -501,16 +501,24 @@ public class ISiCS {
 
 
                 fileCount++;
-                if (fileCount % printEvery == 0)
-                    System.out.println("Indexed " + fileCount + " documents (" + count + " methods).");
+                if (fileCount % printEvery == 0) {
+                    double percent = (double) fileCount / listOfFiles.size();
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    System.out.println("Indexed " + fileCount
+                            + " [" + df.format(percent) + "] documents (" + count + " methods).");
+                }
 
             } catch (Exception e) {
                 System.out.println("ERROR: error while indexing a file: " + file.getAbsolutePath() + ". Skip.");
             }
         }
 
-        if (fileCount % printEvery != 0)
-            System.out.println("Indexed " + fileCount + " documents (" + count + " methods).");
+        if (fileCount % printEvery != 0) {
+            double percent = (double) fileCount / listOfFiles.size();
+            DecimalFormat df = new DecimalFormat("#.00");
+            System.out.println("Indexed " + fileCount
+                    + " [" + df.format(percent) + "] documents (" + count + " methods).");
+        }
 
         // the last batch
         if (indexMode == Settings.IndexingMode.BULK && docArray.size() != 0) {
@@ -539,9 +547,9 @@ public class ISiCS {
 
         String qr = "no_qr";
         if (!queryReduction) {
-            System.out.println("No query reduction");
+//            System.out.println("No query reduction");
         } else {
-            System.out.println("Query reduction enabled");
+//            System.out.println("Query reduction enabled");
             qr = "qr";
         }
 
@@ -566,6 +574,7 @@ public class ISiCS {
             String[] extensions = new String[1];
             extensions[0] = extension;
 
+//            System.out.println(inputFolder);
             File folder = new File(inputFolder);
             List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
 
@@ -1005,5 +1014,13 @@ public class ISiCS {
 
     public void setNormMode(String normMode) {
         this.normMode = normMode;
+    }
+
+    public void setResultOffset(int resultOffset) {
+        this.resultOffset = resultOffset;
+    }
+
+    public void setResultsSize(int resultsSize) {
+        this.resultsSize = resultsSize;
     }
 }

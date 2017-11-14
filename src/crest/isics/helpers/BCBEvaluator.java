@@ -64,7 +64,7 @@ public class BCBEvaluator extends Evaluator  {
      * @param minClonePairs threshold of the minimum no. of clone pairs for each clone id
      * @return a list of ids having clones
      */
-    public ArrayList<Integer> getType1CloneIds(int limit, int minClonePairs) {
+    public ArrayList<Integer> getType1CloneIds(int limit, int minClonePairs, int minCloneSize) {
         if (connection == null) {
             connectDB();
         }
@@ -76,16 +76,23 @@ public class BCBEvaluator extends Evaluator  {
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(
                     "SELECT function_id_one, count(*) AS count\n" +
-                            "FROM clones\n" +
+                            "FROM clones INNER JOIN functions ON clones.function_id_one = functions.id\n" +
                             "WHERE syntactic_type=1\n" +
+                            "  AND functions.endline - functions.startline + 1 >= " + minCloneSize + "\n" +
                             "GROUP BY function_id_one\n" +
-                            "-- ORDER BY random()\n" +
                             "LIMIT " + limit + ";");
+//
+//            ResultSet rs = stmt.executeQuery(
+//                    "SELECT function_id_one, count(*) AS count\n" +
+//                            "FROM clones INNER JOIN functions ON clones.function_id_one = functions.id\n" +
+//                            "WHERE syntactic_type=1\n" +
+//                            "  AND functions.endline - functions.startline + 1 >= 10\n" +
+//                            "  AND functions.id = 574279\n" +
+//                            "GROUP BY function_id_one;"
+//            );
             while (rs.next()) {
                 int id1 = rs.getInt("function_id_one");
-//                int count = rs.getInt("count");
                 cloneList.add(id1);
-//                System.out.println(id1 + ", " + count);
             }
             rs.close();
             stmt.close();
@@ -111,8 +118,8 @@ public class BCBEvaluator extends Evaluator  {
         try {
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(
-                    "SELECT A.id as id1, A.name as file1, A.startline as start1, A.endline as end1,\n" +
-                            "B.id as id2, B.name as file2, B.startline as start2, B.endline as end2\n" +
+                    "SELECT A.id as id1, A.name as file1, A.type as type1, A.startline as start1, A.endline as end1,\n" +
+                            "  B.id as id2, B.name as file2, B.type as type2, B.startline as start2, B.endline as end2\n" +
                             "FROM clones\n" +
                             "  INNER JOIN functions AS A ON function_id_one = A.id\n" +
                             "  INNER JOIN functions AS B ON function_id_two = B.id\n" +
@@ -122,13 +129,13 @@ public class BCBEvaluator extends Evaluator  {
                             "AND function_id_one=" + cloneId + ";");
             while (rs.next()) {
                 query.setId(String.valueOf(rs.getInt("id1")));
-                query.setFile(rs.getString("file1"));
+                query.setFile(rs.getString("type1") + "/" + rs.getString("file1"));
                 query.setStartline(rs.getInt("start1"));
                 query.setEndline(rs.getInt("end1"));
 
                 Document d = new Document();
                 int id = rs.getInt("id2");
-                String file = rs.getString("file2");
+                String file = rs.getString("type2") + "/" + rs.getString("file2");
                 int start = rs.getInt("start2");
                 int end = rs.getInt("end2");
                 d.setId(String.valueOf(id));
@@ -156,7 +163,8 @@ public class BCBEvaluator extends Evaluator  {
         String[] resultSplit = result.split("#");
         for (int i=1; i<groundTruth.size(); i++) {
             Document d = groundTruth.get(i);
-            if (resultSplit[0].substring(resultSplit[0].indexOf("_")).equals(d.getFile()) &&
+//            System.out.println(resultSplit[0].substring(0, resultSplit[0].indexOf("_")));
+            if (resultSplit[0].substring(0, resultSplit[0].indexOf("_")).equals(d.getFile()) &&
                     Integer.valueOf(resultSplit[1]) == d.getStartLine() &&
                     Integer.valueOf(resultSplit[2]) == d.getEndLine()) {
                 return i;
@@ -165,58 +173,81 @@ public class BCBEvaluator extends Evaluator  {
         return -1;
     }
 
-    public double evaluateType1Clones(ArrayList<Document> groundTruth, String outputFile, String errMeasure) {
-        System.out.println("Evaluating MAP ...");
-        double map = 0.0;
+    public double evaluateType1Query(ArrayList<Document> groundTruth, String outputFile, String errMeasure) {
+//        System.out.println("Evaluating Average Precision ...");
+        double averagePrec = -1;
+        Document groundTruthQuery = groundTruth.get(0);
 
         try {
             /* copied from http://howtodoinjava.com/3rd-party/parse-read-write-csv-files-opencsv-tutorial/ */
             CSVReader reader = new CSVReader(new FileReader(outputFile), ',', '"', 0);
             String[] nextLine;
             double sumPrecision;
-            double sumAvgPrec = 0.0;
-            int noOfQueries = 0;
+            int queryInResult = 0;
+            int checkedResultCount = 0;
 
             while ((nextLine = reader.readNext()) != null) {
                 int tp = 0;
-                String query = nextLine[0];
-                sumPrecision = 0.0;
-                // increase query count
-                noOfQueries++;
+                String[] query = nextLine[0].split("#");
+                // only consider the one in the ground truth, discard other
+                if (getQueryFileName(query[0]).equals(groundTruthQuery.getFile())
+                        && Integer.valueOf(query[1]) == groundTruthQuery.getStartLine()
+                        && Integer.valueOf(query[2]) == groundTruthQuery.getEndLine()) {
 
-                // check the results with the key
-                for (int i = 1; i <= groundTruth.size() - 1; i++) {
-                    // check if we still have results to process
-                    // (some searches do not return all results.
-                    if (i < nextLine.length) {
-                        if (!nextLine[i].equals("")) {
-                            if (checkResults(nextLine[i], groundTruth) != -1) {
-                                tp++;
-                                // calculate precision every time a relevant result is obtained.
-                                float precision = (float) tp / (i - 1);
-                                sumPrecision += precision;
+                    sumPrecision = 0.0;
+                    // check the results with the key
+                    for (int i = 1; i <= groundTruth.size(); i++) {
+                        // check if we still have results to process
+                        // (some searches do not return all results.
+                        if (i < nextLine.length) {
+                            // skip blank result and skip the result of the query itself
+                            if (!nextLine[i].equals("")) {
+                                if (!isQuery(groundTruthQuery, nextLine[i])) {
+                                    checkedResultCount++;
+                                    if (checkResults(nextLine[i], groundTruth) != -1) {
+                                        tp++;
+                                        // calculate precision every time a relevant result is obtained.
+                                        float precision = (float) tp / checkedResultCount;
+//                                        System.out.println(tp + "/" + checkedResultCount);
+                                        sumPrecision += precision;
+                                    } else {
+                                        System.out.println("wrong output#" + i + ": " + nextLine[i]);
+                                    }
+                                }
                             }
                         }
+                        // found all relevant results, stop
+                        if (tp == groundTruth.size() - 1)
+                            break;
                     }
-
-                    // found all relevant results, stop
-                    if (tp == groundTruth.size() - 1)
-                        break;
+//                    System.out.println(checkedResultCount);
+                    averagePrec = sumPrecision / checkedResultCount;
                 }
-
-                double averagePrec = sumPrecision / (groundTruth.size() - 1);
-                sumAvgPrec += averagePrec;
             }
-
-            // calculate MAP
-            map = sumAvgPrec/noOfQueries;
-            System.out.println("No. of processed queries = " + noOfQueries);
-            System.out.println("MAP = " + map + "\n");
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return map;
+        return averagePrec;
+    }
+
+    private String getQueryFileName(String fileWithMethodName) {
+        return fileWithMethodName.split("_")[0].trim();
+    }
+
+    private boolean isQuery(Document query, String result) {
+        String[] resultSplit = result.split("#");
+        return getQueryFileName(query.getFile()).equals(getQueryFileName(resultSplit[0].trim())) &&
+                query.getStartLine() == Integer.valueOf(resultSplit[1]) &&
+                query.getEndLine() == Integer.valueOf(resultSplit[2]);
+    }
+
+    public void printGroundTruth(ArrayList<Document> groundTruth) {
+        Document d = groundTruth.get(0);
+        System.out.println("Q: " + d.getFile() + "(" + d.getStartLine() + "," + d.getEndLine() + ")");
+//        for (int i=1; i<groundTruth.size(); i++) {
+//            d = groundTruth.get(i);
+//            System.out.println(d.getFile() + "(" + d.getStartLine() + "," + d.getEndLine() + ")");
+//        }
     }
 }

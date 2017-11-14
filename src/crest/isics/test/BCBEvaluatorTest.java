@@ -16,7 +16,7 @@ public class BCBEvaluatorTest {
     @Test
     public void testGetType1Clones() {
         BCBEvaluator evaluator = new BCBEvaluator();
-        ArrayList<Integer> cloneList = evaluator.getType1CloneIds(1000, 10);
+        ArrayList<Integer> cloneList = evaluator.getType1CloneIds(1000, 10, 10);
         System.out.println(cloneList.size());
         evaluator.closeDBConnection();
     }
@@ -24,7 +24,7 @@ public class BCBEvaluatorTest {
     @Test
     public void testGetType1CloneGroup() {
         BCBEvaluator evaluator = new BCBEvaluator();
-        ArrayList<Integer> cloneList = evaluator.getType1CloneIds(1000, 10);
+        ArrayList<Integer> cloneList = evaluator.getType1CloneIds(1000, 10, 10);
         for (int clone: cloneList) {
             System.out.println("===============================");
             ArrayList<Document> results = evaluator.getCloneGroup(clone, 10);
