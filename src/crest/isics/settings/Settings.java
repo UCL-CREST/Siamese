@@ -49,7 +49,7 @@ public class Settings {
 	}
 	
 	public class IndexingMode {
-		public static final int BULK = 0;
-		public static final int SEQUENTIAL = 1;
+		public static final String BULK = "bulk";
+		public static final String SEQUENTIAL = "sequential";
 	}
 }

@@ -62,6 +62,8 @@ public class ISiCS {
     private String elasticsearchLoc;
     private String outputFormat;
     private Client isicsClient;
+    private String indexingMode;
+    private int bulkSize;
 
     public ISiCS(String configFile) {
         readFromConfigFile(configFile);
@@ -86,7 +88,12 @@ public class ISiCS {
             type = prop.getProperty("type");
             inputFolder = prop.getProperty("inputFolder");
             outputFolder = prop.getProperty("outputFolder");
+
             normMode = prop.getProperty("normMode");
+            // set the normalisation + tokenization mode
+            TokenizerMode tknzMode = new TokenizerMode();
+            modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
+
             isNgram = Boolean.parseBoolean(prop.getProperty("isNgram"));
             ngramSize = Integer.parseInt(prop.getProperty("ngramSize"));
             isPrint = Boolean.parseBoolean(prop.getProperty("isPrint"));
@@ -139,6 +146,8 @@ public class ISiCS {
 
             elasticsearchLoc = prop.getProperty("elasticsearchLoc");
             outputFormat = prop.getProperty("outputFormat");
+            indexingMode = prop.getProperty("indexingMode");
+            bulkSize = Integer.parseInt(prop.getProperty("bulkSize"));
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -168,6 +177,8 @@ public class ISiCS {
         System.out.println("minCloneSize   : " + minCloneLine);
         System.out.println("command        : " + command);
         System.out.println("queryReduction : " + queryReduction);
+        System.out.println("outputFormat   : " + outputFormat);
+        System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
         System.out.println("============================");
     }
 
@@ -255,7 +266,7 @@ public class ISiCS {
                         createIndex(indexSettings, mappingStr);
                     }
 
-                    int insertSize = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+                    int insertSize = insert();
 
                     if (insertSize != 0) {
                         // if ok, refresh the index, then search
@@ -357,7 +368,7 @@ public class ISiCS {
 
                     // initialise the ngram generator
                     ngen = new nGramGenerator(ngramSize);
-                    totalDocuments = insert(inputFolder, Settings.IndexingMode.SEQUENTIAL);
+                    totalDocuments = insert();
 
                     if (totalDocuments != 0) {
                         // if ok, refresh the index, then search
@@ -405,7 +416,7 @@ public class ISiCS {
     }
 
     @SuppressWarnings("unchecked")
-    private int insert(String inputFolder, int indexMode) throws Exception {
+    private int insert() throws Exception {
         boolean isIndexed = true;
         ArrayList<Document> docArray = new ArrayList<>();
         File folder = new File(inputFolder);
@@ -429,6 +440,8 @@ public class ISiCS {
 
                 if (isPrint)
                     System.out.println(count + ": " + filePath);
+
+                fileCount++;
 
                 // parse each file into method (if possible)
                 MethodParser methodParser = new MethodParser(
@@ -468,7 +481,7 @@ public class ISiCS {
                     e.printStackTrace();
                 }
 
-                if (indexMode == Settings.IndexingMode.SEQUENTIAL) {
+                if (this.indexingMode.equals(Settings.IndexingMode.SEQUENTIAL)) {
                     try {
                         isIndexed = es.sequentialInsert(index, type, docArray);
                     } catch (Exception e) {
@@ -483,15 +496,14 @@ public class ISiCS {
                         // reset the array list
                         docArray.clear();
                     }
-                }
-                // index every 100 docs
-                // doing indexing (can choose between bulk/sequential)
-                else if (indexMode == Settings.IndexingMode.BULK) {
-                    if (docArray.size() >= Settings.BULK_SIZE) {
+                } else if (this.indexingMode.equals(Settings.IndexingMode.BULK)) {
+                    // index every N docs (bulk insertion mode)
+                    if (docArray.size() >= this.bulkSize) {
+//                        System.out.println(docArray.size());
                         isIndexed = es.bulkInsert(index, type, docArray);
-
-                        if (!isIndexed)
+                        if (!isIndexed) {
                             throw new Exception("Cannot bulk insert documents");
+                        }
                         else {
                             // reset the array list
                             docArray.clear();
@@ -499,29 +511,19 @@ public class ISiCS {
                     }
                 }
 
-
-                fileCount++;
                 if (fileCount % printEvery == 0) {
-                    double percent = (double) fileCount / listOfFiles.size();
+                    double percent = (double) fileCount * 100 / listOfFiles.size();
                     DecimalFormat df = new DecimalFormat("#.00");
                     System.out.println("Indexed " + fileCount
-                            + " [" + df.format(percent) + "] documents (" + count + " methods).");
+                            + " [" + df.format(percent) + "%] documents (" + count + " methods).");
                 }
-
             } catch (Exception e) {
                 System.out.println("ERROR: error while indexing a file: " + file.getAbsolutePath() + ". Skip.");
             }
         }
 
-        if (fileCount % printEvery != 0) {
-            double percent = (double) fileCount / listOfFiles.size();
-            DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("Indexed " + fileCount
-                    + " [" + df.format(percent) + "] documents (" + count + " methods).");
-        }
-
         // the last batch
-        if (indexMode == Settings.IndexingMode.BULK && docArray.size() != 0) {
+        if (this.indexingMode.equals(Settings.IndexingMode.BULK) && docArray.size() != 0) {
             isIndexed = es.bulkInsert(index, type, docArray);
 
             if (!isIndexed)
@@ -530,6 +532,13 @@ public class ISiCS {
                 // reset the array list
                 docArray.clear();
             }
+        }
+
+        if (fileCount % printEvery != 0) {
+            double percent = (double) fileCount * 100 / listOfFiles.size();
+            DecimalFormat df = new DecimalFormat("#.00");
+            System.out.println("Indexed " + fileCount
+                    + " [" + df.format(percent) + "%] documents (" + count + " methods).");
         }
 
         // successfully indexed, return true
@@ -618,10 +627,6 @@ public class ISiCS {
                                 outToFile += formatter.format(queryList, prefixToRemove) + ",";
 
                                 query = tokenize(method.getSrc());
-//                                System.out.println(query.split(" ").length);
-//                                System.out.println("-----------------");
-//                                System.out.println(query);
-//                                System.out.println("-----------------");
 
                                 // query size limit is enforced
                                 if (queryReduction) {
@@ -644,9 +649,6 @@ public class ISiCS {
                                         if (sortedTerms.get(i).getFreq() <= limit)
                                             query += sortedTerms.get(i).getTerm() + " ";
                                     }
-
-//                                    System.out.println("limit: " + limit);
-//                                    System.out.println("query: " + query);
 
 //                                    // if no. of terms is smaller than the limit, use every term.
 //                                    if (sortedTerms.size() < limit)

@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import crest.isics.document.Document;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexResponse;
@@ -97,30 +99,40 @@ public class ESConnector {
 	 * @return status of bulk insert (true = no failure, false = failures)
 	 */
     public boolean bulkInsert(String index, String type, ArrayList<Document> documents) {
+
 		BulkRequestBuilder bulkRequest = client.prepareBulk();
+
 		// keep adding documents
 		for (Document d : documents) {
-		    // System.out.println(d.getId() + ", " + d.getFile());
 			try {
 				bulkRequest.add(client.prepareIndex(index, type, d.getId())
 						.setSource(jsonBuilder().startObject()
-                                .field("file", d.getFile())
-                                .field("src", d.getSource())
-                                .field("origsrc", d.getOriginalSource())
-                                .field("license", d.getLicense())
-                                .field("url", d.getUrl())
+								.field("file", d.getFile())
+								.field("startline", d.getStartLine())
+								.field("endline", d.getEndLine())
+								.field("src", d.getSource())
+								.field("origsrc", d.getOriginalSource())
+								.field("license", d.getLicense())
+								.field("url", d.getUrl())
                             .endObject()));
-
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
+				System.out.println(e.getMessage());
 				return false;
 			}
 		}
 
 		// bulk insert once
 		BulkResponse bulkResponse = bulkRequest.execute().actionGet();
+        if (bulkResponse.hasFailures()) {
+            for (BulkItemResponse brsp : bulkResponse) {
+                if (brsp.isFailed()) {
+                    System.out.println("Failed to index (message: " + brsp.getFailureMessage() + ")");
+                }
+            }
+        }
 
-        return bulkResponse.hasFailures();
+        return !bulkResponse.hasFailures();
 	}
 
     public ArrayList<Document> search(String index, String type, String query, boolean isPrint

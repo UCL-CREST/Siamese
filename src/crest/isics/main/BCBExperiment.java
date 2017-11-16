@@ -21,7 +21,7 @@ public class BCBExperiment {
     private static String outputFormat;
 
     public static void main(String[] args) {
-        String config = "config_bcb.properties";
+        String config = "config_eval_bcb.properties";
         String bcbLoc = "/Users/Chaiyong/Downloads/dataset";
         readFromConfigFile(config);
 
@@ -29,7 +29,7 @@ public class BCBExperiment {
         isics.startup();
 
         BCBEvaluator evaluator = new BCBEvaluator();
-        ArrayList<Integer> t1Clones = evaluator.getType1CloneIds(100, -1, minCloneSize);
+        ArrayList<Integer> t1Clones = evaluator.getType1CloneIds(10, -1, minCloneSize);
         System.out.println("Found " + t1Clones.size() + " type-1 clone groups.");
 
         double sumAvgPrec = 0.0;
@@ -45,7 +45,7 @@ public class BCBExperiment {
                 String outputFile = null;
                 try {
                     isics.setResultOffset(0);
-                    isics.setResultsSize(cloneGroup.size());
+                    isics.setResultsSize(cloneGroup.size() + 1);
                     outputFile = isics.execute();
                     evaluator.printGroundTruth(cloneGroup);
                     double avgPrec = evaluator.evaluateType1Query(cloneGroup, outputFile, Settings.ErrorMeasure.MAP);

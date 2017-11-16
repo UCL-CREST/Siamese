@@ -190,16 +190,19 @@ public class BCBEvaluator extends Evaluator  {
             while ((nextLine = reader.readNext()) != null) {
                 int tp = 0;
                 String[] query = nextLine[0].split("#");
+
                 // only consider the one in the ground truth, discard other
                 if (getQueryFileName(query[0]).equals(groundTruthQuery.getFile())
                         && Integer.valueOf(query[1]) == groundTruthQuery.getStartLine()
                         && Integer.valueOf(query[2]) == groundTruthQuery.getEndLine()) {
 
                     sumPrecision = 0.0;
+
                     // check the results with the key
                     for (int i = 1; i <= groundTruth.size(); i++) {
+
                         // check if we still have results to process
-                        // (some searches do not return all results.
+                        // (some searches do not return all results).
                         if (i < nextLine.length) {
                             // skip blank result and skip the result of the query itself
                             if (!nextLine[i].equals("")) {
@@ -209,19 +212,21 @@ public class BCBEvaluator extends Evaluator  {
                                         tp++;
                                         // calculate precision every time a relevant result is obtained.
                                         float precision = (float) tp / checkedResultCount;
-//                                        System.out.println(tp + "/" + checkedResultCount);
                                         sumPrecision += precision;
+                                        System.out.println("correct output#" + i + ": " + nextLine[i]);
                                     } else {
                                         System.out.println("wrong output#" + i + ": " + nextLine[i]);
                                     }
                                 }
+                            } else {
+                                System.out.println("found query, skip.");
                             }
                         }
                         // found all relevant results, stop
                         if (tp == groundTruth.size() - 1)
                             break;
                     }
-//                    System.out.println(checkedResultCount);
+                    System.out.println("Additional output#: " + nextLine[groundTruth.size() + 1]);
                     averagePrec = sumPrecision / checkedResultCount;
                 }
             }
