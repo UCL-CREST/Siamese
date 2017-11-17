@@ -50,6 +50,7 @@ public class ISiCS {
     private int resultsSize;
     private int totalDocuments;
     private boolean queryReduction;
+    private int qrPercentile;
     private boolean recreateIndexIfExists;
     private String parseMode;
     private String cloneClusterFile;
@@ -122,6 +123,7 @@ public class ISiCS {
             this.resultsSize = Integer.parseInt(prop.getProperty("resultsSize"));
             this.totalDocuments = Integer.parseInt(prop.getProperty("totalDocuments"));
             this.queryReduction = Boolean.parseBoolean(prop.getProperty("queryReduction"));
+            this.qrPercentile = Integer.parseInt(prop.getProperty("queryReductionPercentile"));
             this.recreateIndexIfExists = Boolean.parseBoolean(prop.getProperty("recreateIndexIfExists"));
 
             String parseModeConfig = prop.getProperty("parseMode");
@@ -419,6 +421,7 @@ public class ISiCS {
     private int insert() throws Exception {
         boolean isIndexed = true;
         ArrayList<Document> docArray = new ArrayList<>();
+        ArrayList<String> origDocArray = new ArrayList<>();
         File folder = new File(inputFolder);
 
         // create an array of string for extensions
@@ -458,8 +461,15 @@ public class ISiCS {
                         for (Method method : methodList) {
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
+
                                 // Create Document object and put in an array list
-                                String normSource = tokenize(method.getSrc());
+                                String normSource = tokenize(method.getSrc(), modes, isNgram);
+
+                                TokenizerMode tmode = new TokenizerMode();
+                                char[] xmode = {'x'};
+                                tmode.setTokenizerMode(xmode);
+                                String tokenizedSource = tokenize(method.getSrc(), tmode, false);
+
                                 // Use file name as id
                                 Document d = new Document(
                                         String.valueOf(count),
@@ -467,11 +477,13 @@ public class ISiCS {
                                         method.getStartLine(),
                                         method.getEndLine(),
                                         normSource,
+                                        tokenizedSource,
                                         method.getSrc(),
                                         license,
                                         "");
                                 // add document to array
                                 docArray.add(d);
+
                                 count++;
                             }
                         }
@@ -555,10 +567,7 @@ public class ISiCS {
             OutputFormatter formatter) throws Exception {
 
         String qr = "no_qr";
-        if (!queryReduction) {
-//            System.out.println("No query reduction");
-        } else {
-//            System.out.println("Query reduction enabled");
+        if (queryReduction) {
             qr = "qr";
         }
 
@@ -582,8 +591,6 @@ public class ISiCS {
             // create an array of string for extensions
             String[] extensions = new String[1];
             extensions[0] = extension;
-
-//            System.out.println(inputFolder);
             File folder = new File(inputFolder);
             List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
 
@@ -605,6 +612,7 @@ public class ISiCS {
                         isPrint);
                 ArrayList<Method> methodList;
                 String query = "";
+                String origQuery = "";
 
                 try {
                     methodList = methodParser.parseMethods();
@@ -613,7 +621,7 @@ public class ISiCS {
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
-//                            System.out.println(method.getFile());
+
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 /* TODO: fix this some time. It's weird to have a list with only a single object. */
@@ -626,47 +634,25 @@ public class ISiCS {
                                 queryList.add(d);
                                 outToFile += formatter.format(queryList, prefixToRemove) + ",";
 
-                                query = tokenize(method.getSrc());
+                                TokenizerMode tmode = new TokenizerMode();
+                                char[] noNormMode = {'x'};
+                                tmode.setTokenizerMode(noNormMode);
+                                origQuery = tokenize(method.getSrc(), tmode, false);
+                                query = tokenize(method.getSrc(), modes, isNgram);
 
                                 // query size limit is enforced
                                 if (queryReduction) {
-                                    // find the top-N rare terms in the query
-                                    String tmpQuery = query;
-                                    // clear the query
-                                    query = "";
-                                    ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, tmpQuery);
-
-//                                    double limit = queryReduction * sortedTerms.size();
-
-                                    // switched to use median as a cut-off
-                                    double[] stats = findMedianLoc(sortedTerms);
-                                    double limit = stats[0]; // q1
-//                                    double limit = stats[1]; // median
-//                                    double limit = stats[2]; // q3
-
-                                    for (int i=0; i<sortedTerms.size(); i++) {
-//                                        System.out.println(sortedTerms.get(i).getFreq() + ": " + limit);
-                                        if (sortedTerms.get(i).getFreq() <= limit)
-                                            query += sortedTerms.get(i).getTerm() + " ";
+                                    query = reduceQuery(query, "src", 25);
+                                    origQuery = reduceQuery(origQuery, "tokenizedsrc", 75);
+                                    if (isPrint) {
+                                        System.out.println("NQ" + methodCount + " : " + query);
+                                        System.out.println("OQ" + methodCount + " : " + origQuery);
                                     }
-
-//                                    // if no. of terms is smaller than the limit, use every term.
-//                                    if (sortedTerms.size() < limit)
-//                                        limit = sortedTerms.size();
-//
-//                                    for (int i = 0; i < limit; i++) {
-//                                        if (isPrint)
-//                                            System.out.println(sortedTerms.get(i).getFreq()
-//                                                    + ":"
-//                                                    + sortedTerms.get(i).getTerm());
-//                                        query += sortedTerms.get(i).getTerm() + " ";
-//                                    }
-                                    if (isPrint)
-                                        System.out.println("QUERY" + methodCount + " : " + query);
                                 }
 
                                 // search for results
-                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
+//                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
+                                results = es.search(index, type, origQuery, query, isPrint, isDFS, offset, size);
                                 outToFile += formatter.format(results, prefixToRemove);
                                 outToFile += "\n";
                                 methodCount++;
@@ -707,6 +693,26 @@ public class ISiCS {
         }
 
         return outfile.getAbsolutePath();
+    }
+
+    private String reduceQuery(String query, String field, int percentile) {
+        // find the top-N rare terms in the query
+        String tmpQuery = query;
+        // clear the query
+        query = "";
+        ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, field, tmpQuery);
+
+        // switched to use median as a cut-off
+        double limit = getValueAtPercentile(sortedTerms, percentile);
+
+//        System.out.println("LIMIT: " + limit);
+
+        for (int i=0; i<sortedTerms.size(); i++) {
+            if (sortedTerms.get(i).getFreq() <= limit)
+                query += sortedTerms.get(i).getTerm() + " ";
+        }
+
+        return query;
     }
 
 
@@ -775,18 +781,14 @@ public class ISiCS {
         return result;
     }
 
-    public double[] findMedianLoc(ArrayList<JavaTerm> termList) {
+    public double getValueAtPercentile(ArrayList<JavaTerm> termList, int percentile) {
         double[] data = new double[termList.size()];
         for (int i=0; i<termList.size(); i++) {
             data[i] = termList.get(i).getFreq();
         }
         /* copied from http://stackoverflow.com/questions/19700704/java-api-for-calculating-interquartile-range */
         DescriptiveStatistics da = new DescriptiveStatistics(data);
-        double[] results = new double[3];
-        results[0] = da.getPercentile(75);
-        results[1] = da.getPercentile(50);
-        results[2] = da.getPercentile(25);
-        return results;
+        return da.getPercentile(percentile);
     }
 
     private String tokenize(File file) throws Exception {
@@ -815,7 +817,7 @@ public class ISiCS {
         return src;
     }
 
-    private String tokenize(String sourcecode) throws Exception {
+    private String tokenize(String sourcecode, TokenizerMode modes, boolean isNgram) throws Exception {
         String src;
         JavaTokenizer tokenizer = new JavaTokenizer(modes);
 
@@ -928,7 +930,7 @@ public class ISiCS {
      * @param terms query containing search terms
      * @return selected top-selectionRatio terms
      */
-    private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String terms) {
+    private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String field, String terms) {
 
         String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
@@ -940,7 +942,7 @@ public class ISiCS {
             for (String term: termsArr) {
                 // TODO: get rid of the blank term (why it's blank?)
                 if (!term.equals("")) {
-                    Term t = new Term("src", term);
+                    Term t = new Term(field, term);
                     int freq = reader.docFreq(t);
                     JavaTerm newTerm = new JavaTerm(term, freq);
                     if (!selectedTermsArray.contains(newTerm))

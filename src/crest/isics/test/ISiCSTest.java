@@ -24,16 +24,20 @@ public class ISiCSTest {
         termList.add(jt3);
         termList.add(jt4);
 
-        double[] stats = isics.findMedianLoc(termList);
-        assertEquals(27.5, stats[0], 0.00001);
-        assertEquals(15.0, stats[1], 0.00001);
-        assertEquals(6.25, stats[2], 0.00001);
+        double stats = isics.getValueAtPercentile(termList, 25);
+        assertEquals(27.5, stats, 0.00001);
+        stats = isics.getValueAtPercentile(termList, 50);
+        assertEquals(15.0, stats, 0.00001);
+        stats = isics.getValueAtPercentile(termList, 75);
+        assertEquals(6.25, stats, 0.00001);
 
         JavaTerm jt5 = new JavaTerm("D", 1);
         termList.add(jt5);
-        stats = isics.findMedianLoc(termList);
-        assertEquals(25, stats[0], 0.00001);
-        assertEquals(10, stats[1], 0.00001);
-        assertEquals(3, stats[2], 0.00001);
+        stats = isics.getValueAtPercentile(termList,25);
+        assertEquals(25, stats, 0.00001);
+        stats = isics.getValueAtPercentile(termList, 50);
+        assertEquals(10, stats, 0.00001);
+        stats = isics.getValueAtPercentile(termList, 75);
+        assertEquals(3, stats, 0.00001);
     }
 }

@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 import crest.isics.document.Document;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
@@ -23,12 +24,15 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
+import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
 
 public class ESConnector {
 	private Client client;
@@ -71,6 +75,7 @@ public class ESConnector {
                         .field("startline", d.getStartLine())
                         .field("endline", d.getEndLine())
                         .field("src", d.getSource())
+                        .field("tokenizedsrc", d.getTokenizedSource())
                         .field("origsrc", d.getOriginalSource())
                         .field("license", d.getLicense())
                         .field("url", d.getUrl())
@@ -111,6 +116,7 @@ public class ESConnector {
 								.field("startline", d.getStartLine())
 								.field("endline", d.getEndLine())
 								.field("src", d.getSource())
+                                .field("tokenizedsrc", d.getTokenizedSource())
 								.field("origsrc", d.getOriginalSource())
 								.field("license", d.getLicense())
 								.field("url", d.getUrl())
@@ -138,7 +144,6 @@ public class ESConnector {
     public ArrayList<Document> search(String index, String type, String query, boolean isPrint
 			, boolean isDFS, int resultOffset, int resultSize) throws Exception {
 
-        ArrayList<Document> results = new ArrayList<Document>();
         SearchType searchType;
 
         if (isDFS)
@@ -153,13 +158,64 @@ public class ESConnector {
 				.actionGet();
 		SearchHit[] hits = response.getHits().getHits();
 
+        return prepareResults(hits, resultSize, isPrint);
+    }
+
+    public ArrayList<Document> search(
+            String index,
+            String type,
+            String origQuery,
+            String query,
+            boolean isPrint,
+            boolean isDFS,
+            int resultOffset,
+            int resultSize) throws Exception {
+
+        ArrayList<Document> results = new ArrayList<Document>();
+        SearchType searchType;
+
+        if (isDFS)
+            searchType = SearchType.DFS_QUERY_THEN_FETCH;
+        else
+            searchType = SearchType.QUERY_THEN_FETCH;
+
+        /* copied from
+        https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
+         */
+        QueryBuilder queryBuilder = QueryBuilders.boolQuery()
+//                .should(
+//                        QueryBuilders.matchQuery("src", query)
+//                );
+                .should(
+                        QueryBuilders.matchQuery("tokenizedsrc", origQuery)
+                                .boost(1)
+                )
+                .should(
+                        QueryBuilders.matchQuery("src", query)
+//                                .operator(MatchQueryBuilder.Operator.AND)
+                                .boost(30)
+                );
+
+        SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
+                .addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
+                .addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
+                .setQuery(queryBuilder)
+                .setFrom(resultOffset).setSize(resultSize).execute()
+                .actionGet();
+        SearchHit[] hits = response.getHits().getHits();
+
+        return prepareResults(hits, resultSize, isPrint);
+    }
+
+    private ArrayList<Document> prepareResults(SearchHit[] hits, int resultSize, boolean isPrint) throws Exception {
+        ArrayList<Document> results = new ArrayList<Document>();
         int count = 0;
         for (SearchHit hit : hits) {
 
             if (count >= resultSize)
                 break;
 
-			// prints out the id of the document
+            // prints out the id of the document
             if (isPrint)
                 System.out.println("ANS," + hit.getId() + "," + hit.getScore());
 
@@ -170,6 +226,7 @@ public class ESConnector {
                         Integer.parseInt(hit.getSource().get("startline").toString()),
                         Integer.parseInt(hit.getSource().get("endline").toString()),
                         hit.getSource().get("src").toString(),
+                        hit.getSource().get("tokenizedsrc").toString(),
                         hit.getSource().get("origsrc").toString(),
                         hit.getSource().get("license").toString(),
                         hit.getSource().get("url").toString());
@@ -180,8 +237,6 @@ public class ESConnector {
                 throw new Exception("ERROR: Query failed because of null value(s).");
             }
         }
-		if (isPrint)
-			System.out.println("------");
 
         return results;
     }

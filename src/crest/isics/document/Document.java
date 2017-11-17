@@ -6,6 +6,7 @@ public class Document {
 	private int startline;
 	private int endline;
 	private String source;
+	private String tokenizedSource;
 	private String originalSource;
 	private String license;
 	private String url;
@@ -20,6 +21,7 @@ public class Document {
             int startline,
             int endline,
             String source,
+            String tokenizedSource,
             String originalSource,
             String license,
             String url) {
@@ -28,6 +30,7 @@ public class Document {
         this.startline = startline;
         this.endline = endline;
 		this.source = source;
+		this.tokenizedSource = tokenizedSource;
 		this.originalSource = originalSource;
 		this.license = license;
 		this.url = url;
@@ -57,6 +60,22 @@ public class Document {
     public String getUrl() { return this.url; }
     public int getStartLine() { return this.startline; }
     public int getEndLine() { return this.endline; }
+
+	public int getStartline() {
+		return startline;
+	}
+
+	public int getEndline() {
+		return endline;
+	}
+
+	public String getTokenizedSource() {
+		return tokenizedSource;
+	}
+
+	public void setTokenizedSource(String tokenizedSource) {
+		this.tokenizedSource = tokenizedSource;
+	}
 
 	public void setStartline(int startline) {
 		this.startline = startline;

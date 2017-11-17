@@ -39,8 +39,7 @@ public class Experiment {
 
     public static void main(String[] args) {
 
-
-        configFile = "config.properties";
+        configFile = "config_cloplag.properties";
         readFromConfigFile(configFile);
         cloneClusterFilePrefix = cloneClusterFile + "_" + cloneClusterFilePrefix;
 
@@ -149,7 +148,7 @@ public class Experiment {
 
         try {
 
-            input = new FileInputStream("config.properties");
+            input = new FileInputStream(configFile);
             // load a properties file
             prop.load(input);
 
