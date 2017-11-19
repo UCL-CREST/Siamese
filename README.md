@@ -9,7 +9,7 @@ A clone search system using the search infrastructure of Elasticsearch
 3. Modify the sort_term.py script with the generated result frequency files and run the script. 
 4. Graphs will be genearated. They follow Zipf's law. Hooray!
 
-### Installation steps:
+## Setup:
 1. Download elasticsearch-2.2.0 
 ```
 wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz
@@ -52,12 +52,14 @@ whereis javac
 ls -l <the path>
 ... keep following the path
 ```
-8. Execute the experiment.
+8. Configure `config.properties` file with appropriate settings
+
+9. Execute the experiment.
 ```
-mvn compile exec:java -Dexec.mainClass=Experiment -Dexec.args="tfidf /home/cragkhit/cloplag/tests_andrea/ /home/cragkhit/elasticsearch/results/170320_full/"
+mvn compile exec:java -Dexec.mainClass=crest.isics.Main -Dexec.args="-cf config.properties"
 ```
 
-# Experimental Details
+# Early Experimental Results
 No. of combinations of IR scoring parameter I searched for:
 
 | Func. | n-gram | code norm. | params | Total |
