@@ -70,6 +70,7 @@ No. of combinations of IR scoring parameter I searched for:
 | LM Jelinek Mercer | 4 | 64 | 10 | 2560 |
 | Grand total |  |  |  | 49664 |
 
-Read Lucene index direclty: 
+## Misc.
+### Read Lucene index direclty: 
 * http://stackoverflow.com/questions/20575254/lucene-4-4-how-to-get-term-frequency-over-all-index
 * http://stackoverflow.com/questions/16847857/how-do-you-read-the-index-in-lucene-to-do-a-search
