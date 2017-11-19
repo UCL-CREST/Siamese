@@ -2,7 +2,10 @@
 A clone search system using the search infrastructure of Elasticsearch
 
 ## Analyse term frequency and document frequency of terms in the index
-1. Run ```TermFreqAnalyser```
+1. Modify the class ```TermFreqAnalyser``` with appropriate configurations
+2. The result frequency files will be generated (e.g. freq_df_src.csv, freq_df_toksrc.csv). The one without `tok` means the normalised source code tokens, whilst the one with `tok` means the original source code tokens.
+3. Modify the sort_term.py script with the generated result frequency files and run the script. 
+4. Graphs will be genearated. They follow Zipf's law. Hooray!
 
 ### Installation steps:
 1. Download elasticsearch-2.2.0 
