@@ -1,7 +1,15 @@
-# elasticsearch
-Similar code search using Elasticsearch
+# 🇹🇭 SIAM 🇹🇭 Clone Search
+SIAM stands for **S**calalbe, **I**nstant, **A**nd **M**ulti-Representation
 
-Setup steps:
+A clone search system using the search infrastructure of Elasticsearch
+
+## Analyse term frequency and document frequency of terms in the index
+1. Modify the class ```TermFreqAnalyser``` with appropriate configurations
+2. The result frequency files will be generated (e.g. freq_df_src.csv, freq_df_toksrc.csv). The one without `tok` means the normalised source code tokens, whilst the one with `tok` means the original source code tokens.
+3. Modify the sort_term.py script with the generated result frequency files and run the script. 
+4. Graphs will be genearated. They follow Zipf's law. Hooray!
+
+## Setup:
 1. Download elasticsearch-2.2.0 
 ```
 wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz
@@ -44,12 +52,14 @@ whereis javac
 ls -l <the path>
 ... keep following the path
 ```
-8. Execute the experiment.
+8. Configure `config.properties` file with appropriate settings
+
+9. Execute the experiment.
 ```
-mvn compile exec:java -Dexec.mainClass=Experiment -Dexec.args="tfidf /home/cragkhit/cloplag/tests_andrea/ /home/cragkhit/elasticsearch/results/170320_full/"
+mvn compile exec:java -Dexec.mainClass=crest.isics.Main -Dexec.args="-cf config.properties"
 ```
 
-# Experimental Details
+# Early Experimental Results
 No. of combinations of IR scoring parameter I searched for:
 
 | Func. | n-gram | code norm. | params | Total |
@@ -62,6 +72,7 @@ No. of combinations of IR scoring parameter I searched for:
 | LM Jelinek Mercer | 4 | 64 | 10 | 2560 |
 | Grand total |  |  |  | 49664 |
 
-Read Lucene index direclty: 
+## Misc.
+### Read Lucene index direclty: 
 * http://stackoverflow.com/questions/20575254/lucene-4-4-how-to-get-term-frequency-over-all-index
 * http://stackoverflow.com/questions/16847857/how-do-you-read-the-index-in-lucene-to-do-a-search
