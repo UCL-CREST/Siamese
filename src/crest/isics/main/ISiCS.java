@@ -67,6 +67,8 @@ public class ISiCS {
     private Client isicsClient;
     private String indexingMode;
     private int bulkSize;
+    private int normBoost;
+    private int origBoost;
 
     public ISiCS(String configFile) {
         readFromConfigFile(configFile);
@@ -127,6 +129,9 @@ public class ISiCS {
             this.queryReduction = Boolean.parseBoolean(prop.getProperty("queryReduction"));
             this.qrPercentileNorm = Integer.parseInt(prop.getProperty("QRPercentileNorm"));
             this.qrPercentileOrig = Integer.parseInt(prop.getProperty("QRPercentileOrig"));
+            this.normBoost = Integer.parseInt(prop.getProperty("normBoost"));
+            this.origBoost = Integer.parseInt(prop.getProperty("origBoost"));
+
             this.recreateIndexIfExists = Boolean.parseBoolean(prop.getProperty("recreateIndexIfExists"));
 
             String parseModeConfig = prop.getProperty("parseMode");
@@ -645,8 +650,8 @@ public class ISiCS {
 
                                 // query size limit is enforced
                                 if (queryReduction) {
-                                    query = reduceQuery(query, "src", 25);
-                                    origQuery = reduceQuery(origQuery, "tokenizedsrc", 75);
+                                    query = reduceQuery(query, "src", qrPercentileNorm);
+                                    origQuery = reduceQuery(origQuery, "tokenizedsrc", qrPercentileOrig);
                                     if (isPrint) {
                                         System.out.println("NQ" + methodCount + " : " + query);
                                         System.out.println("OQ" + methodCount + " : " + origQuery);
@@ -655,7 +660,7 @@ public class ISiCS {
 
                                 // search for results
 //                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
-                                results = es.search(index, type, origQuery, query, isPrint, isDFS, offset, size);
+                                results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
                                 outToFile += formatter.format(results, prefixToRemove);
                                 outToFile += "\n";
                                 methodCount++;
@@ -957,15 +962,15 @@ public class ISiCS {
                 size++;
             }
 
-//            String[] termArr = new String[size];
+            String[] termArr = new String[size];
             long[] freqArr = new long[size];
 
             // do the real work
             termsEnum = terms.iterator();
             while (termsEnum.next() != null) {
                 String term = termsEnum.term().utf8ToString();
-
                 long tfreq = 0;
+
                 if (freqType.equals("tf"))
                     tfreq = termsEnum.totalTermFreq();
                 else if (freqType.equals("df"))
@@ -974,9 +979,11 @@ public class ISiCS {
                     System.out.println("Wrong frequency. Quit!");
                     System.exit(0);
                 }
-//                termArr[count] = term;
+
+                termArr[count] = term;
                 freqArr[count] = tfreq;
                 count++;
+
                 if (count % 10000 == 0) {
                     System.out.println("Processed " + count + " terms");
                 }

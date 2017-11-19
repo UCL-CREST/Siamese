@@ -1,5 +1,7 @@
 import pandas as pd
 
+
+print('processing CSVs ...')
 file1='freq_src.csv'
 df_src = pd.read_csv(file1, sep=',', header=0)
 df_src_sorted = df_src.sort_values(['freq'], ascending=False)
@@ -20,14 +22,15 @@ df_toksrc_sorted = df_toksrc_sorted.reset_index()
 result = pd.concat([df_toksrc_sorted, df_src_sorted], axis=1, join_axes=[df_toksrc_sorted.index])
 # print(result)
 
+print('plotting ...')
 # normal scale
 ax = result.plot(x='index', y='freq')
 ax.legend(['original', 'normalised'])
 ax.set_xlabel("rank")
-ax.set_xlim(0, 50000)
+ax.set_xlim(0, 30000)
 ax.set_ylabel("frequency")
 fig = ax.get_figure()
-fig.savefig('figure.pdf')
+fig.savefig('figure.pdf', bbox_inches='tight')
 
 # log scale
 ax = result.plot(x='index', y='freq')

@@ -22,70 +22,57 @@ public class BCBExperiment {
         String config = "config_eval_bcb.properties";
         String bcbLoc = "/Users/Chaiyong/Downloads/dataset";
         readFromConfigFile(config);
-//
-//        ISiCS isics = new ISiCS(config);
-//        isics.startup();
-//
-//        BCBEvaluator evaluator = new BCBEvaluator();
-//        ArrayList<Integer> t1Clones = evaluator.getType1CloneIds(10, -1, minCloneSize);
-//        System.out.println("Found " + t1Clones.size() + " type-1 clone groups.");
-//
-//        double sumAvgPrec = 0.0;
-//
-//        for (int i = 0; i < t1Clones.size(); i++) {
-//            System.out.println("\n### Query no. " + i + " ID: " + t1Clones.get(i));
-//            ArrayList<Document> cloneGroup = evaluator.getCloneGroup(t1Clones.get(i), minCloneSize);
-//            System.out.println("Clone group size " + (cloneGroup.size() - 1));
-//            String queryFile = cloneGroup.get(0).getFile();
-////            System.out.println(queryFile);
-//            boolean successful = copyBCBFile(queryFile, bcbLoc, inputFolder);
-//            if (successful) {
-//                String outputFile = null;
-//                try {
-//                    isics.setResultOffset(0);
-//                    isics.setResultsSize(cloneGroup.size() + 1);
-//                    outputFile = isics.execute();
-//                    evaluator.printGroundTruth(cloneGroup);
-//                    double avgPrec = evaluator.evaluateType1Query(cloneGroup, outputFile, Settings.ErrorMeasure.MAP);
-//                    System.out.println("AvgPrec = " + avgPrec);
-//                    sumAvgPrec += avgPrec;
-//
-//                    // delete the output and the query file
-//                    File oFile = new File(outputFile);
-//                    File qFile = new File(inputFolder + "/" + queryFile);
-//                    boolean delSuccess = qFile.delete();
-//                    if (!delSuccess) {
-//                        System.out.println("ERROR: can't delete the query file: " + queryFile);
-//                    }
-////                    delSuccess = oFile.delete();
-////                    if (!delSuccess) {
-////                        System.out.println("ERROR: can't delete the output file: " + outputFile);
-////                    }
-//                    deleteBCBFile(queryFile);
-//                } catch (Exception e) {
-//                    System.out.println("ERROR: " + e.getMessage());
-//                }
-//            } else {
-//                System.out.println("ERROR: can't copy the query file to " + outputFolder);
-//            }
-//        }
-//
-//        double map = sumAvgPrec / t1Clones.size();
-//        System.out.println("MAP = " + map);
-//
-//        isics.shutdown();
 
-        analyseTerms(config);
-    }
-
-    public static void analyseTerms(String config) {
         ISiCS isics = new ISiCS(config);
         isics.startup();
-        isics.analyseTermFreq("bcb_sample", "tokenizedsrc", "df", "python_scripts/freq_toksrc.csv");
-        isics.analyseTermFreq("bcb_sample", "src", "df", "python_scripts/freq_src.csv");
-        isics.shutdown();
 
-        /* then call the sort_term.py python script to generate a Zipf plot */
+        BCBEvaluator evaluator = new BCBEvaluator();
+        ArrayList<Integer> t1Clones = evaluator.getType1CloneIds(10, -1, minCloneSize);
+        System.out.println("Found " + t1Clones.size() + " type-1 clone groups.");
+
+        double sumAvgPrec = 0.0;
+
+        for (int i = 0; i < t1Clones.size(); i++) {
+            System.out.println("\n### Query no. " + i + " ID: " + t1Clones.get(i));
+            ArrayList<Document> cloneGroup = evaluator.getCloneGroup(t1Clones.get(i), minCloneSize);
+            System.out.println("Clone group size " + (cloneGroup.size() - 1));
+            String queryFile = cloneGroup.get(0).getFile();
+//            System.out.println(queryFile);
+            boolean successful = copyBCBFile(queryFile, bcbLoc, inputFolder);
+            if (successful) {
+                String outputFile = null;
+                try {
+                    isics.setResultOffset(0);
+                    isics.setResultsSize(cloneGroup.size() + 1);
+                    outputFile = isics.execute();
+                    evaluator.printGroundTruth(cloneGroup);
+                    double avgPrec = evaluator.evaluateType1Query(cloneGroup, outputFile, Settings.ErrorMeasure.MAP);
+                    System.out.println("AvgPrec = " + avgPrec);
+                    sumAvgPrec += avgPrec;
+
+                    // delete the output and the query file
+                    File oFile = new File(outputFile);
+                    File qFile = new File(inputFolder + "/" + queryFile);
+                    boolean delSuccess = qFile.delete();
+                    if (!delSuccess) {
+                        System.out.println("ERROR: can't delete the query file: " + queryFile);
+                    }
+//                    delSuccess = oFile.delete();
+//                    if (!delSuccess) {
+//                        System.out.println("ERROR: can't delete the output file: " + outputFile);
+//                    }
+                    deleteBCBFile(queryFile);
+                } catch (Exception e) {
+                    System.out.println("ERROR: " + e.getMessage());
+                }
+            } else {
+                System.out.println("ERROR: can't copy the query file to " + outputFolder);
+            }
+        }
+
+        double map = sumAvgPrec / t1Clones.size();
+        System.out.println("MAP = " + map);
+        isics.shutdown();
     }
 
     public static boolean copyBCBFile(String fileName, String from, String to) {
@@ -93,9 +80,6 @@ public class BCBExperiment {
         File toFile = new File(to + "/" + fileName);
         // check the location of the file in the 3 subfolders
         fromFile = new File(from + "/" + fileName);
-
-//        System.out.println("from: " + fromFile.getAbsolutePath());
-//        System.out.println("to: " + toFile);
 
         try {
             FileUtils.copyFile(fromFile, toFile);

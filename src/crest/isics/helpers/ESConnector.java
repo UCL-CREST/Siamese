@@ -166,6 +166,8 @@ public class ESConnector {
             String type,
             String origQuery,
             String query,
+            int origBoost,
+            int normBoost,
             boolean isPrint,
             boolean isDFS,
             int resultOffset,
@@ -183,17 +185,14 @@ public class ESConnector {
         https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
          */
         QueryBuilder queryBuilder = QueryBuilders.boolQuery()
-//                .should(
-//                        QueryBuilders.matchQuery("src", query)
-//                );
                 .should(
                         QueryBuilders.matchQuery("tokenizedsrc", origQuery)
-                                .boost(1)
+                                .boost(origBoost)
                 )
                 .should(
                         QueryBuilders.matchQuery("src", query)
 //                                .operator(MatchQueryBuilder.Operator.AND)
-                                .boost(30)
+                                .boost(normBoost)
                 );
 
         SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
