@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static crest.isics.main.Experiment.writeToFile;
-
 public class FileLevelEvaluator extends Evaluator {
 
     public FileLevelEvaluator(String clonePairFile, String index, String outputDir, boolean isPrint) {
@@ -52,7 +50,7 @@ public class FileLevelEvaluator extends Evaluator {
             }
         }
 
-        writeToFile("resources", "searchkey.csv", textToPrint, false);
+        MyUtils.writeToFile("resources", "searchkey.csv", textToPrint, false);
         System.out.println("Done generating search key from " + this.clonePairFile + " ... ");
 
         return searchKey.size();

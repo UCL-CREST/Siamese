@@ -1,6 +1,7 @@
 package crest.isics.main;
 
 import crest.isics.document.JavaTerm;
+import crest.isics.document.JavaTermComparator;
 import crest.isics.helpers.*;
 import crest.isics.settings.CustomSettings;
 import crest.isics.settings.Settings;
@@ -8,13 +9,13 @@ import crest.isics.settings.TokenizerMode;
 import crest.isics.document.Document;
 import crest.isics.document.Method;
 import crest.isics.settings.IndexSettings;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.apache.lucene.index.*;
+import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.elasticsearch.client.Client;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.store.FSDirectory;
 import org.elasticsearch.client.transport.NoNodeAvailableException;
 
@@ -50,7 +51,8 @@ public class ISiCS {
     private int resultsSize;
     private int totalDocuments;
     private boolean queryReduction;
-    private int qrPercentile;
+    private int qrPercentileNorm;
+    private int qrPercentileOrig;
     private boolean recreateIndexIfExists;
     private String parseMode;
     private String cloneClusterFile;
@@ -123,7 +125,8 @@ public class ISiCS {
             this.resultsSize = Integer.parseInt(prop.getProperty("resultsSize"));
             this.totalDocuments = Integer.parseInt(prop.getProperty("totalDocuments"));
             this.queryReduction = Boolean.parseBoolean(prop.getProperty("queryReduction"));
-            this.qrPercentile = Integer.parseInt(prop.getProperty("queryReductionPercentile"));
+            this.qrPercentileNorm = Integer.parseInt(prop.getProperty("QRPercentileNorm"));
+            this.qrPercentileOrig = Integer.parseInt(prop.getProperty("QRPercentileOrig"));
             this.recreateIndexIfExists = Boolean.parseBoolean(prop.getProperty("recreateIndexIfExists"));
 
             String parseModeConfig = prop.getProperty("parseMode");
@@ -918,10 +921,83 @@ public class ISiCS {
 
         outToFile += "\n";
 
-        Experiment.writeToFile(outputFileLocation, fileName, outToFile, false);
+        MyUtils.writeToFile(outputFileLocation, fileName, outToFile, false);
         System.out.println("Searching done. See output at " + outputFileLocation + "/" + fileName);
 
         return outputFileLocation + "/" + fileName;
+    }
+
+    public void analyseTermFreq(String indexName, String field, String freqType, String outputFileName) {
+        String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
+                + indexName + "/0/index";
+        ArrayList<JavaTerm> tokFreq = new ArrayList<>();
+        ClassicSimilarity similarity = new ClassicSimilarity();
+
+        File outputFile = new File(outputFileName);
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+
+        /* adapted from
+        https://stackoverflow.com/questions/28244961/lucene-4-10-2-calculate-tf-idf-for-all-terms-in-index
+         */
+        int count = 0;
+        try {
+            IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
+            int docnum = reader.numDocs();
+            Fields fields = MultiFields.getFields(reader);
+            Terms terms = fields.terms(field);
+
+            TermsEnum termsEnum = terms.iterator();
+            int size = 0;
+
+            // TODO: is there a better solution?
+            // iterate to get the size
+            while (termsEnum.next() != null) {
+                size++;
+            }
+
+//            String[] termArr = new String[size];
+            long[] freqArr = new long[size];
+
+            // do the real work
+            termsEnum = terms.iterator();
+            while (termsEnum.next() != null) {
+                String term = termsEnum.term().utf8ToString();
+
+                long tfreq = 0;
+                if (freqType.equals("tf"))
+                    tfreq = termsEnum.totalTermFreq();
+                else if (freqType.equals("df"))
+                    tfreq = termsEnum.docFreq();
+                else {
+                    System.out.println("Wrong frequency. Quit!");
+                    System.exit(0);
+                }
+//                termArr[count] = term;
+                freqArr[count] = tfreq;
+                count++;
+                if (count % 10000 == 0) {
+                    System.out.println("Processed " + count + " terms");
+                }
+            }
+            System.out.println("Total: " + count);
+
+            String output = "freq\n";
+            for (int i = 0; i < freqArr.length; i++) {
+                output += freqArr[i] + "\n";
+                if (i > 0 && i % 10000 == 0) {
+                    System.out.println("Saving " + (i) + " terms.");
+                    MyUtils.writeToFile("./",outputFileName, output, true);
+                    output = "";
+                }
+            }
+            // write the rest to the file
+            MyUtils.writeToFile("./",outputFileName, output, true);
+
+        } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 
     /***

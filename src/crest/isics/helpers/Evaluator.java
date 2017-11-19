@@ -72,7 +72,7 @@ public class Evaluator {
             }
             textToPrint += "\n";
         }
-        Experiment.writeToFile("resources", "searchkey.csv", textToPrint, false);
+        MyUtils.writeToFile("resources", "searchkey.csv", textToPrint, false);
     }
 
     public double evaluateARP(String outputFile, int r) {

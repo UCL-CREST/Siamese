@@ -9,8 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static crest.isics.main.Experiment.writeToFile;
-
 public class MethodLevelEvaluator extends Evaluator {
 
     public MethodLevelEvaluator(String clonePairFile, String index, String outputDir, boolean isPrint) {
@@ -60,7 +58,7 @@ public class MethodLevelEvaluator extends Evaluator {
             }
         }
 
-        writeToFile("resources", "searchkey.csv", textToPrint, false);
+        MyUtils.writeToFile("resources", "searchkey.csv", textToPrint, false);
         System.out.println("Done generating search key from " + this.clonePairFile + " ... ");
 
         return searchKey.size();

@@ -48,7 +48,7 @@ public class ISICSIndexReader {
             String queries = queryTermSelection("/Users/Chaiyong/Documents/phd/2016/cloplag/tests_andrea/", "tfidf_sw_1");
             // testIdfRetrieval();
 
-            Experiment.writeToFile("/Users/Chaiyong/Desktop/", "query.csv", queries, false);
+            MyUtils.writeToFile("/Users/Chaiyong/Desktop/", "query.csv", queries, false);
         } catch (IOException e) {
             e.printStackTrace();
         }

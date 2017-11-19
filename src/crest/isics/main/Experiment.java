@@ -1,6 +1,7 @@
 package crest.isics.main;
 
 import crest.isics.helpers.EvalResult;
+import crest.isics.helpers.MyUtils;
 import crest.isics.settings.Settings;
 
 import java.io.*;
@@ -134,7 +135,7 @@ public class Experiment {
             qr = "qr";
         }
 
-        writeToFile(workingDir, "report_" + errMeasure.toLowerCase() + "_" + mode + "_" + qr + ".txt",
+        MyUtils.writeToFile(workingDir, "report_" + errMeasure.toLowerCase() + "_" + mode + "_" + qr + ".txt",
                 formatResults(bestResults),
                 false);
     }
@@ -535,43 +536,4 @@ public class Experiment {
 
     }
     */
-
-    public static void writeToFile(String location, String filename, String content, boolean isAppend) {
-        if (createDir(location)) {
-            /* copied from https://www.mkyong.com/java/how-to-write-to-file-in-java-bufferedwriter-example/ */
-            BufferedWriter bw = null;
-            FileWriter fw = null;
-
-            try {
-                fw = new FileWriter(location + "/" + filename, isAppend);
-                bw = new BufferedWriter(fw);
-                bw.write(content);
-                if (!isAppend)
-                    System.out.println("Saved as: " + filename);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (bw != null)
-                        bw.close();
-                    if (fw != null)
-                        fw.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-            }
-        } else {
-            System.out.println("ERROR: can't create a directory at: " + location);
-        }
-    }
-
-    private static boolean createDir(String location) {
-        try {
-            Files.createDirectories(Paths.get(location));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return true;
-    }
 }

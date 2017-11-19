@@ -7,14 +7,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 public class JavaTerm implements Comparable<JavaTerm> {
 
     private String term;
-    private int freq;
+    private long freq;
 
     public JavaTerm() {
         this.term = "";
         this.freq = 0;
     }
 
-    public JavaTerm(String term, int freq) {
+    public JavaTerm(String term, long freq) {
         this.term = term;
         this.freq = freq;
     }
@@ -47,7 +47,7 @@ public class JavaTerm implements Comparable<JavaTerm> {
         this.term = term;
     }
 
-    public int getFreq() {
+    public long getFreq() {
         return freq;
     }
 
