@@ -1,4 +1,5 @@
-# SIAM (Scalalbe, Instant, And Multi-Representation) Clone Search
+# SIAM Clone Search
+SIAM stands for *S*calalbe, *I*nstant, *A*nd *M*ulti-Representation
 A clone search system using the search infrastructure of Elasticsearch
 
 ## Analyse term frequency and document frequency of terms in the index
