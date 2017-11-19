@@ -1,7 +1,10 @@
-# elasticsearch
-Similar code search using Elasticsearch
+# SIAM (Scalalbe, Instant, And Multi-Representation) Clone Search
+A clone search system using the search infrastructure of Elasticsearch
 
-Setup steps:
+## Analyse term frequency and document frequency of terms in the index
+1. Run ```TermFreqAnalyser```
+
+### Installation steps:
 1. Download elasticsearch-2.2.0 
 ```
 wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz
