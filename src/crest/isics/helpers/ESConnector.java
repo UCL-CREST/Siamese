@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.google.gson.JsonParser;
 import crest.isics.document.Document;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import org.elasticsearch.action.admin.indices.stats.IndicesStatsResponse;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -23,7 +25,9 @@ import org.elasticsearch.client.transport.NoNodeAvailableException;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -204,6 +208,33 @@ public class ESConnector {
         SearchHit[] hits = response.getHits().getHits();
 
         return prepareResults(hits, resultSize, isPrint);
+    }
+
+    public long getIndicesStats(String indexName) {
+        IndicesStatsResponse indicesStatsResponse = client.admin().indices().prepareStats(indexName)
+                .all()
+                .execute().actionGet();
+
+        XContentBuilder builder = null;
+        try {
+            builder = XContentFactory.jsonBuilder();
+            builder.startObject();
+            indicesStatsResponse.toXContent(builder, ToXContent.EMPTY_PARAMS);
+            builder.endObject();
+            String jsonResponse = builder.prettyPrint().string();
+
+            JsonParser jsonParser = new JsonParser(); // from import com.google.gson.JsonParser;
+            Long docCount = jsonParser.parse(jsonResponse)
+                    .getAsJsonObject().get("_all")
+                    .getAsJsonObject().get("primaries")
+                    .getAsJsonObject().get("docs")
+                    .getAsJsonObject().get("count").getAsLong();
+//            System.out.println(docCount);
+            return docCount;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     private ArrayList<Document> prepareResults(SearchHit[] hits, int resultSize, boolean isPrint) throws Exception {

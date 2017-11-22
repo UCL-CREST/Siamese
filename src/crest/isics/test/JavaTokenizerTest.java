@@ -1,10 +1,14 @@
 package crest.isics.test;
 
 import crest.isics.helpers.JavaTokenizer;
+import crest.isics.helpers.nGramGenerator;
 import crest.isics.settings.Settings;
 import crest.isics.settings.TokenizerMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import static org.junit.Assert.*;
 /**
@@ -155,6 +159,63 @@ public class JavaTokenizerTest {
         for (int i=0; i<tokens.size(); i++) {
             System.out.print(tokens.get(i) + " ");
             assertEquals(tokens.get(i), expectedTokens[i]);
+        }
+    }
+
+    @org.junit.Test
+    public void Test2() throws Exception {
+        TokenizerMode mode = new TokenizerMode();
+//        mode.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
+//        mode.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
+//        mode.setKeyword(Settings.Normalize.KEYWORD_NORM_ON);
+//        mode.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_ON);
+//        mode.setString(Settings.Normalize.STRING_NORM_ON);
+//        mode.setWord(Settings.Normalize.WORD_NORM_ON);
+        JavaTokenizer tokenizer = new JavaTokenizer(mode);
+
+        ArrayList<String> tokens = tokenizer.getTokensFromString("private String conflict ( int location, int row ) {\n" +
+                "        int i;\n" +
+                "        for ( i = 0; i < location; i++ )\n" +
+                "            if ( Math.abs ( location - i ) == Math.abs ( perm[i] - row ) ) {\n" +
+                "                return \"Yes\";\n" +
+                "            }\n" +
+                "        return \"No\";\n" +
+                "    }");
+
+        HashSet<String> tokenSet = new HashSet<>(tokens);
+        tokens = new ArrayList<>(tokenSet);
+        Collections.sort(tokens);
+
+        for (int i=0; i<tokens.size(); i++) {
+            System.out.print(tokens.get(i) + " ");
+        }
+
+        mode.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
+        mode.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
+        mode.setKeyword(Settings.Normalize.KEYWORD_NORM_ON);
+        mode.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_ON);
+        mode.setString(Settings.Normalize.STRING_NORM_ON);
+        mode.setWord(Settings.Normalize.WORD_NORM_ON);
+        tokenizer = new JavaTokenizer(mode);
+
+        tokens = tokenizer.getTokensFromString("private String conflict ( int location, int row ) {\n" +
+                "        int i;\n" +
+                "        for ( i = 0; i < location; i++ )\n" +
+                "            if ( Math.abs ( location - i ) == Math.abs ( perm[i] - row ) ) {\n" +
+                "                return \"Yes\";\n" +
+                "            }\n" +
+                "        return \"No\";\n" +
+                "    }");
+
+        // initialise the n-gram generator
+        nGramGenerator ngen = new nGramGenerator(4);
+        ArrayList<String> ntokens = ngen.generateNGramsFromJavaTokens(tokens);
+        tokenSet = new HashSet<>(ntokens);
+        tokens = new ArrayList<>(tokenSet);
+        Collections.sort(tokens);
+
+        for (int i=0; i<tokens.size(); i++) {
+            System.out.print(tokens.get(i) + " ");
         }
     }
 }

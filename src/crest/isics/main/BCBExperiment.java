@@ -1,7 +1,9 @@
 package crest.isics.main;
 
+import crest.isics.document.BCBDocument;
 import crest.isics.document.Document;
 import crest.isics.helpers.BCBEvaluator;
+import crest.isics.helpers.MyUtils;
 import crest.isics.settings.Settings;
 import org.apache.commons.io.FileUtils;
 import java.io.File;
@@ -22,33 +24,63 @@ public class BCBExperiment {
         String config = "config_eval_bcb.properties";
         String bcbLoc = "/Users/Chaiyong/Downloads/dataset";
         readFromConfigFile(config);
+        int resultSize = 101;
+
+        // delete the previous result file
+        File resultFile = new File("results/search_results.txt");
+        if (resultFile.exists())
+            resultFile.delete();
 
         ISiCS isics = new ISiCS(config);
         isics.startup();
 
         BCBEvaluator evaluator = new BCBEvaluator();
-        ArrayList<Integer> t1Clones = evaluator.getType1CloneIds(10, -1, minCloneSize);
-        System.out.println("Found " + t1Clones.size() + " type-1 clone groups.");
+        ArrayList<Integer> clones = evaluator.getCloneIds(2, -1, minCloneSize);
+        System.out.println("Found initial " + clones.size() + " clone groups.");
 
-        double sumAvgPrec = 0.0;
+        for (int i = 0; i < clones.size(); i++) {
 
-        for (int i = 0; i < t1Clones.size(); i++) {
-            System.out.println("\n### Query no. " + i + " ID: " + t1Clones.get(i));
-            ArrayList<Document> cloneGroup = evaluator.getCloneGroup(t1Clones.get(i), minCloneSize);
-            System.out.println("Clone group size " + (cloneGroup.size() - 1));
-            String queryFile = cloneGroup.get(0).getFile();
-//            System.out.println(queryFile);
+            String outToFile = "";
+            System.out.println("\n### Query no. " + i + " ID: " + clones.get(i));
+//            outToFile += "Query no. " + i + " ID: " + clones.get(i) + "\n";
+
+            Document query = evaluator.getQuery(clones.get(i));
+            ArrayList<BCBDocument> cloneGroup = evaluator.getCloneGroup(clones.get(i), minCloneSize);
+
+            // too large, skip
+            if (cloneGroup.size() > resultSize) {
+                System.out.println(query.getLocationString() + " is too large. Skip...");
+                outToFile += query.getLocationString() + " is too large. Skip..." + "\n";
+                continue;
+            }
+
+            System.out.println("Clone group size: " + cloneGroup.size());
+//            outToFile += "Clone group size: " + cloneGroup.size() + "\n";
+            String queryFile = query.getFile();
+
             boolean successful = copyBCBFile(queryFile, bcbLoc, inputFolder);
             if (successful) {
                 String outputFile = null;
                 try {
                     isics.setResultOffset(0);
-                    isics.setResultsSize(cloneGroup.size() + 1);
+
+                    int multiply = 2; // start with double the size
+                    boolean foundAllTPs = false;
+                    // retrieve documents at double the size of the clone group.
+                    // so we can manually check for all missing pairs.
+//                    do {
+                    isics.setResultsSize(resultSize);
                     outputFile = isics.execute();
-                    evaluator.printGroundTruth(cloneGroup);
-                    double avgPrec = evaluator.evaluateType1Query(cloneGroup, outputFile, Settings.ErrorMeasure.MAP);
-                    System.out.println("AvgPrec = " + avgPrec);
-                    sumAvgPrec += avgPrec;
+
+                    System.out.println("Query size: " + resultSize);
+                    System.out.println("Query size: " + resultSize + "\n" + "Q: " + query.getLocationString());
+
+                    MyUtils.writeToFile("results", "search_results.txt", outToFile, true);
+
+                    foundAllTPs = evaluator.evaluateCloneQuery(query, cloneGroup, resultSize, outputFile);
+                        // if all TPs are not found yet, increase the result size
+//                        multiply += 1;
+//                    } while (!foundAllTPs && multiply <= 2);
 
                     // delete the output and the query file
                     File oFile = new File(outputFile);
@@ -57,10 +89,10 @@ public class BCBExperiment {
                     if (!delSuccess) {
                         System.out.println("ERROR: can't delete the query file: " + queryFile);
                     }
-//                    delSuccess = oFile.delete();
-//                    if (!delSuccess) {
-//                        System.out.println("ERROR: can't delete the output file: " + outputFile);
-//                    }
+                    delSuccess = oFile.delete();
+                    if (!delSuccess) {
+                        System.out.println("ERROR: can't delete the output file: " + outputFile);
+                    }
                     deleteBCBFile(queryFile);
                 } catch (Exception e) {
                     System.out.println("ERROR: " + e.getMessage());
@@ -70,8 +102,9 @@ public class BCBExperiment {
             }
         }
 
-        double map = sumAvgPrec / t1Clones.size();
-        System.out.println("MAP = " + map);
+//        double map = sumAvgPrec / clones.size();
+//        System.out.println("MAP = " + map);
+        System.out.println("=============================");
         isics.shutdown();
     }
 

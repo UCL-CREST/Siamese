@@ -650,8 +650,9 @@ public class ISiCS {
 
                                 // query size limit is enforced
                                 if (queryReduction) {
-                                    query = reduceQuery(query, "src", qrPercentileNorm);
-                                    origQuery = reduceQuery(origQuery, "tokenizedsrc", qrPercentileOrig);
+                                    long docCount = getIndicesStats();
+                                    query = reduceQuery(query, "src", this.qrPercentileNorm * docCount / 100);
+                                    origQuery = reduceQuery(origQuery, "tokenizedsrc", this.qrPercentileOrig * docCount / 100);
                                     if (isPrint) {
                                         System.out.println("NQ" + methodCount + " : " + query);
                                         System.out.println("OQ" + methodCount + " : " + origQuery);
@@ -703,7 +704,7 @@ public class ISiCS {
         return outfile.getAbsolutePath();
     }
 
-    private String reduceQuery(String query, String field, int percentile) {
+    private String reduceQuery(String query, String field, double limit) {
         // find the top-N rare terms in the query
         String tmpQuery = query;
         // clear the query
@@ -711,14 +712,15 @@ public class ISiCS {
         ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, field, tmpQuery);
 
         // switched to use median as a cut-off
-        double limit = getValueAtPercentile(sortedTerms, percentile);
-
+//        double limit = percentile;
 //        System.out.println("LIMIT: " + limit);
 
         for (int i=0; i<sortedTerms.size(); i++) {
             if (sortedTerms.get(i).getFreq() <= limit)
                 query += sortedTerms.get(i).getTerm() + " ";
         }
+
+//        System.out.println(query);
 
         return query;
     }
@@ -932,6 +934,10 @@ public class ISiCS {
         return outputFileLocation + "/" + fileName;
     }
 
+    public long getIndicesStats() {
+        return es.getIndicesStats(this.index);
+    }
+
     public void analyseTermFreq(String indexName, String field, String freqType, String outputFileName) {
         String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
@@ -985,26 +991,27 @@ public class ISiCS {
                 count++;
 
                 if (count % 10000 == 0) {
-                    System.out.println("Processed " + count + " terms");
+//                    System.out.println("Processed " + count + " terms");
                 }
             }
             System.out.println("Total: " + count);
 
+            double[] data = new double[size];
             String output = "freq\n";
             for (int i = 0; i < freqArr.length; i++) {
+                data[i] = freqArr[i];
                 output += freqArr[i] + "\n";
                 if (i > 0 && i % 10000 == 0) {
-                    System.out.println("Saving " + (i) + " terms.");
+//                    System.out.println("Saving " + (i) + " terms.");
                     MyUtils.writeToFile("./",outputFileName, output, true);
                     output = "";
                 }
             }
             // write the rest to the file
             MyUtils.writeToFile("./",outputFileName, output, true);
-
         } catch (IOException e) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
+        }
     }
 
     /***

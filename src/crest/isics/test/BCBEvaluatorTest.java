@@ -1,5 +1,6 @@
 package crest.isics.test;
 
+import crest.isics.document.BCBDocument;
 import crest.isics.document.Document;
 import crest.isics.helpers.BCBEvaluator;
 import org.junit.Test;
@@ -16,7 +17,7 @@ public class BCBEvaluatorTest {
     @Test
     public void testGetType1Clones() {
         BCBEvaluator evaluator = new BCBEvaluator();
-        ArrayList<Integer> cloneList = evaluator.getType1CloneIds(1000, 10, 10);
+        ArrayList<Integer> cloneList = evaluator.getCloneIds(1000, 10, 10);
         System.out.println(cloneList.size());
         evaluator.closeDBConnection();
     }
@@ -24,11 +25,11 @@ public class BCBEvaluatorTest {
     @Test
     public void testGetType1CloneGroup() {
         BCBEvaluator evaluator = new BCBEvaluator();
-        ArrayList<Integer> cloneList = evaluator.getType1CloneIds(1000, 10, 10);
+        ArrayList<Integer> cloneList = evaluator.getCloneIds(1000, 10, 10);
         for (int clone: cloneList) {
             System.out.println("===============================");
-            ArrayList<Document> results = evaluator.getCloneGroup(clone, 10);
-            for (Document d: results) {
+            ArrayList<BCBDocument> results = evaluator.getCloneGroup(clone, 10);
+            for (BCBDocument d: results) {
                 System.out.println(d.getLocationString());
             }
         }

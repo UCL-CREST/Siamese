@@ -25,8 +25,10 @@ public class Experiment {
             "djw", "djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws",
             "djkp", "djkps", "djkpw", "djkpws"};
     private static String[] normModesText = { "x" };
+    private static String[] normModesDefault = { "djkpws" };
     private static int[] ngramSizesAll = { 1, 2, 3, 4, 5 };
     private static int[] ngramSizesText = { 1 };
+    private static int[] ngramSizeDefault = { 4 };
 
     private static String inputDir;
     private static String workingDir;
@@ -56,6 +58,9 @@ public class Experiment {
         } else if (mode.endsWith("_both")) {
             normModes = normModesAll;
             ngramSizes = ngramSizesAll;
+        } else if (mode.endsWith("_def")) {
+            normModes = normModesDefault;
+            ngramSizes = ngramSizeDefault;
         } else {
             normModes = normModesAll;
             ngramSizes = ngramSizesAll;
@@ -67,6 +72,7 @@ public class Experiment {
             case "tfidf_text":
             case "tfidf_text_ngram":
             case "tfidf_text_codenorm":
+            case "tfidf_text_def":
             case "tfidf_text_both":
                 bestResults = tfidfTextExp();
                 break;
