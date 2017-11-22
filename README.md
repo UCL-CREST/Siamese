@@ -1,7 +1,7 @@
 # 🇹🇭 SIAM 🇹🇭 Clone Search
-SIAM stands for **S**calalbe, **I**nstant, **A**nd **M**ulti-Representation
+SIAM is a code clone search system powered by Elasticsearch with code clone detection approaches (e.g. code normalisation, ngram-based matching) built on top. It can search for clones (type-1, -2, -3) from a large corpora of Java source code within an instant time. 
 
-A clone search system using the search infrastructure of Elasticsearch
+*Note: **SIAM** stands for **S**calalbe, **I**usingnstant, **A**nd **M**ulti-Representation*
 
 ## Analyse term frequency and document frequency of terms in the index
 1. Modify the class ```TermFreqAnalyser``` with appropriate configurations
