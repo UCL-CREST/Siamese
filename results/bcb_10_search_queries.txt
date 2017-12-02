@@ -1,0 +1,10 @@
+0,Q,default/15247.java_elimina,57,80,38
+0,Q,default/77532.java_main,167,247,10
+0,Q,default/78884.java_copyFile,30,48,187
+0,Q,default/21155.java_displayDiffResults,367,414,18
+0,Q,default/121803.java_doVersionCheck,8,31,40
+0,Q,default/94629.java_convert,90,172,15
+0,Q,default/41035.java_readAndRewrite,27,46,20
+0,Q,selected/2082.java_copy,64,76,170
+0,Q,selected/759664.java_getRandomGUID,41,75,34
+0,Q,selected/2365821.java_encodeFileToFile,838,864,17

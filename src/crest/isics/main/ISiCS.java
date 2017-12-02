@@ -606,7 +606,7 @@ public class ISiCS {
             int methodCount = 0;
 
             for (File file : listOfFiles) {
-                if (isPrint)
+//                if (isPrint)
                     System.out.println("File: " + file.getAbsolutePath());
 
                 // reset the output buffer

@@ -35,7 +35,7 @@ public class BCBExperiment {
         isics.startup();
 
         BCBEvaluator evaluator = new BCBEvaluator();
-        ArrayList<Integer> clones = evaluator.getCloneIds(2, -1, minCloneSize);
+        ArrayList<Integer> clones = evaluator.getCloneIds(100, -1, minCloneSize);
         System.out.println("Found initial " + clones.size() + " clone groups.");
 
         for (int i = 0; i < clones.size(); i++) {
@@ -47,12 +47,12 @@ public class BCBExperiment {
             Document query = evaluator.getQuery(clones.get(i));
             ArrayList<BCBDocument> cloneGroup = evaluator.getCloneGroup(clones.get(i), minCloneSize);
 
-            // too large, skip
-            if (cloneGroup.size() > resultSize) {
-                System.out.println(query.getLocationString() + " is too large. Skip...");
-                outToFile += query.getLocationString() + " is too large. Skip..." + "\n";
-                continue;
-            }
+//            // too large, skip
+//            if (cloneGroup.size() > resultSize) {
+//                System.out.println(query.getLocationString() + " is too large. Skip...");
+//                outToFile += query.getLocationString() + " is too large. Skip..." + "\n";
+//                continue;
+//            }
 
             System.out.println("Clone group size: " + cloneGroup.size());
 //            outToFile += "Clone group size: " + cloneGroup.size() + "\n";
@@ -72,7 +72,7 @@ public class BCBExperiment {
                     isics.setResultsSize(resultSize);
                     outputFile = isics.execute();
 
-                    System.out.println("Query size: " + resultSize);
+//                    System.out.println("Query size: " + resultSize);
                     System.out.println("Query size: " + resultSize + "\n" + "Q: " + query.getLocationString());
 
                     MyUtils.writeToFile("results", "search_results.txt", outToFile, true);

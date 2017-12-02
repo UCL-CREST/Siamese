@@ -255,7 +255,7 @@ public class BCBEvaluator extends Evaluator  {
                                             System.out.println("ERROR: wrong clone type.");
 
                                         System.out.println(checkedResultCount + "[T]: " + nextLine[i]);
-                                        outToFile += checkedResultCount + ",R," + doc[0] + "," + doc[1] + "," + doc[2] + ",T\n";
+                                        outToFile += checkedResultCount + ",R," + doc[0] + "," + doc[1] + "," + doc[2] + ",T" + matchedCloneType + "\n";
 
                                     } else {
 
@@ -282,8 +282,9 @@ public class BCBEvaluator extends Evaluator  {
             e.printStackTrace();
         }
 
-        String o = printGroundTruth(groundTruth, tp, type1, type2, type3);
-        MyUtils.writeToFile("results", "search_results.txt", outToFile + o, true);
+//        String o = printGroundTruth(groundTruth, tp, type1, type2, type3);
+//        MyUtils.writeToFile("results", "search_results.txt", outToFile + o, true);
+        MyUtils.writeToFile("results", "search_results.txt", outToFile + "\n", true);
 
         return false;
     }
