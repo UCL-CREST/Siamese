@@ -173,22 +173,34 @@ public class JavaTokenizerTest {
 //        mode.setWord(Settings.Normalize.WORD_NORM_ON);
         JavaTokenizer tokenizer = new JavaTokenizer(mode);
 
-        ArrayList<String> tokens = tokenizer.getTokensFromString("private String conflict ( int location, int row ) {\n" +
-                "        int i;\n" +
-                "        for ( i = 0; i < location; i++ )\n" +
-                "            if ( Math.abs ( location - i ) == Math.abs ( perm[i] - row ) ) {\n" +
-                "                return \"Yes\";\n" +
+        ArrayList<String> tokens = tokenizer.getTokensFromString("    public static void BubbleSortInt1(int[] num) {\n" +
+                "        boolean flag = true; // set flag to true to begin first pass\n" +
+                "        int temp; // holding variable\n" +
+                "\n" +
+                "        while (flag) {\n" +
+                "            flag = false; // set flag to false awaiting a possible swap\n" +
+                "            for (int j = 0; j < num.length - 1; j++) {\n" +
+                "                if (num[j] > num[j + 1]) // change to > for ascending sort\n" +
+                "                {\n" +
+                "                    temp = num[j]; // swap elements\n" +
+                "                    num[j] = num[j + 1];\n" +
+                "                    num[j + 1] = temp;\n" +
+                "                    flag = true; // shows a swap occurred\n" +
+                "                }\n" +
                 "            }\n" +
-                "        return \"No\";\n" +
+                "        }\n" +
                 "    }");
 
-        HashSet<String> tokenSet = new HashSet<>(tokens);
-        tokens = new ArrayList<>(tokenSet);
-        Collections.sort(tokens);
+//        HashSet<String> tokenSet = new HashSet<>(tokens);
+//        tokens = new ArrayList<>(tokenSet);
+//        Collections.sort(tokens);
 
+        System.out.println(tokens.size());
         for (int i=0; i<tokens.size(); i++) {
             System.out.print(tokens.get(i) + " ");
         }
+
+        System.out.println("\n\n");
 
         mode.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
         mode.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
@@ -198,24 +210,34 @@ public class JavaTokenizerTest {
         mode.setWord(Settings.Normalize.WORD_NORM_ON);
         tokenizer = new JavaTokenizer(mode);
 
-        tokens = tokenizer.getTokensFromString("private String conflict ( int location, int row ) {\n" +
-                "        int i;\n" +
-                "        for ( i = 0; i < location; i++ )\n" +
-                "            if ( Math.abs ( location - i ) == Math.abs ( perm[i] - row ) ) {\n" +
-                "                return \"Yes\";\n" +
+        tokens = tokenizer.getTokensFromString("    public static void BubbleSortInt1(int[] num) {\n" +
+                "        boolean flag = true; // set flag to true to begin first pass\n" +
+                "        int temp; // holding variable\n" +
+                "\n" +
+                "        while (flag) {\n" +
+                "            flag = false; // set flag to false awaiting a possible swap\n" +
+                "            for (int j = 0; j < num.length - 1; j++) {\n" +
+                "                if (num[j] > num[j + 1]) // change to > for ascending sort\n" +
+                "                {\n" +
+                "                    temp = num[j]; // swap elements\n" +
+                "                    num[j] = num[j + 1];\n" +
+                "                    num[j + 1] = temp;\n" +
+                "                    flag = true; // shows a swap occurred\n" +
+                "                }\n" +
                 "            }\n" +
-                "        return \"No\";\n" +
+                "        }\n" +
                 "    }");
 
         // initialise the n-gram generator
         nGramGenerator ngen = new nGramGenerator(4);
         ArrayList<String> ntokens = ngen.generateNGramsFromJavaTokens(tokens);
-        tokenSet = new HashSet<>(ntokens);
-        tokens = new ArrayList<>(tokenSet);
-        Collections.sort(tokens);
+//        tokenSet = new HashSet<>(ntokens);
+//        tokens = new ArrayList<>(tokenSet);
+//        Collections.sort(tokens);
 
-        for (int i=0; i<tokens.size(); i++) {
-            System.out.print(tokens.get(i) + " ");
+        System.out.println(ntokens.size());
+        for (int i=0; i<ntokens.size(); i++) {
+            System.out.print(ntokens.get(i) + " ");
         }
     }
 }
