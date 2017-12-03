@@ -5,7 +5,7 @@ index_type=sys.argv[2]
 
 file = open(sys.argv[1], 'r')
 
-print "settings,precision,mrr,map"
+print("settings,precision,mrr,map")
 count=0
 query_name=""
 rank_found=0
@@ -15,9 +15,9 @@ avgp=[]
 avgp_all=[]
 
 for line in file:
-	print line
+	print(line)
 	if index_type in line:
-		print line.split(',',1)[1].strip() + ",",
+		print(line.split(',',1)[1].strip() + ",",)
 	if "QUERY," in line:
 		query_name=line.split(',',1)[1].split('$',1)[0]
 		#print "\n" + line.split(',',1)[1].strip()
@@ -59,14 +59,14 @@ for line in file:
 		# print answer_name,
 	if "PREC," in line:
 		split_prec=line.split(',', 1 )
-		print split_prec[1].strip() + ",",
-		print str(rank_found_sum/100) + ",",
+		print(split_prec[1].strip() + ",",)
+		print(str(rank_found_sum/100) + ",",)
 
 		sum_of_avgp = 0.0;
 		for a in avgp_all:
 			sum_of_avgp += a
 
-		print str(sum_of_avgp/100)
+		print(str(sum_of_avgp/100))
 		avgp_all=[]
 		rank_found_sum=0
 	#else:
