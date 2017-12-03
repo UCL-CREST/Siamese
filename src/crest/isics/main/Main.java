@@ -1,18 +1,10 @@
 package crest.isics.main;
 
-import crest.isics.helpers.nGramGenerator;
-import crest.isics.settings.Settings;
-import crest.isics.settings.TokenizerMode;
 import org.apache.commons.cli.*;
-import org.elasticsearch.client.transport.NoNodeAvailableException;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
 
 public class Main {
 

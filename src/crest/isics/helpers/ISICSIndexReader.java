@@ -1,9 +1,8 @@
 package crest.isics.helpers;
 
 import crest.isics.document.Method;
-import crest.isics.main.Experiment;
 import crest.isics.settings.Settings;
-import crest.isics.settings.TokenizerMode;
+import crest.isics.settings.NormalizerMode;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -26,7 +25,7 @@ import java.util.List;
  */
 public class ISICSIndexReader {
     private static String[] extensions = { "java" };
-    private static TokenizerMode modes = new TokenizerMode();
+    private static NormalizerMode modes = new NormalizerMode();
     private static IndexReader reader = null;
     private static nGramGenerator ngen;
 
@@ -193,13 +192,14 @@ public class ISICSIndexReader {
 
     private static String tokenize(File file) throws Exception {
         String src = "";
-        JavaTokenizer tokenizer = new JavaTokenizer(modes);
+        JavaTokenizer tokenizer = new JavaTokenizer();
+        JavaNormalizer normalizer = new JavaNormalizer(modes);
 
         if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
             try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
                 String line;
                 while ((line = br.readLine()) != null) {
-                    ArrayList<String> tokens = tokenizer.noNormalizeAToken(escapeString(line).trim());
+                    ArrayList<String> tokens = normalizer.noNormalizeAToken(escapeString(line).trim());
                     src += printArray(tokens, false);
                 }
             } catch (Exception e) {
@@ -227,8 +227,7 @@ public class ISICSIndexReader {
 
     private static String tokenize(String sourcecode) throws Exception {
         String src;
-        JavaTokenizer tokenizer = new JavaTokenizer(modes);
-
+        JavaTokenizer tokenizer = new JavaTokenizer();
         // generate tokens
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
         src = printArray(tokens, false);

@@ -1,6 +1,6 @@
 package crest.isics.settings;
 
-public class TokenizerMode {
+public class NormalizerMode {
 	private int word;
 	private int keyword;
 	private int datatype;
@@ -10,7 +10,7 @@ public class TokenizerMode {
 	private int value;
 	private int escape;
 
-	public TokenizerMode() {
+	public NormalizerMode() {
 		word = Settings.Normalize.WORD_NORM_OFF;
 		keyword = Settings.Normalize.KEYWORD_NORM_OFF;
 		javaClass = Settings.Normalize.JAVACLASS_NORM_OFF;
@@ -21,7 +21,7 @@ public class TokenizerMode {
 		datatype = Settings.Normalize.DATATYPE_NORM_OFF;
 	}
 
-	public TokenizerMode(
+	public NormalizerMode(
 	        int word,
             int keyword,
             int datatype,
@@ -51,9 +51,9 @@ public class TokenizerMode {
 		datatype = Settings.Normalize.DATATYPE_NORM_OFF;
 	}
 
-	public TokenizerMode setTokenizerMode(char[] normOptions) {
+	public NormalizerMode setTokenizerMode(char[] normOptions) {
 
-		TokenizerMode modes = new TokenizerMode();
+		NormalizerMode modes = new NormalizerMode();
 
 		for (char c : normOptions) {
 			// setting all normalisation options: w, d, j, p, k, v, s

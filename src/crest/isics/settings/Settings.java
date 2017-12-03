@@ -21,9 +21,7 @@ public class Settings {
         public static int LMJ = 6;
     }
 
-	public static int BULK_SIZE = 100;
-
-	public class Tokenizer {
+	public class Normalizer {
 		public static final String JAVA_CLASS_FILE = "references/JavaClass.isics";
 		public static final String JAVA_PACKAGES_FILE = "references/JavaPackages.isics";
 	}

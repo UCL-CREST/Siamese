@@ -1,15 +1,13 @@
 package crest.isics.main;
 
 import crest.isics.document.JavaTerm;
-import crest.isics.document.JavaTermComparator;
 import crest.isics.helpers.*;
 import crest.isics.settings.CustomSettings;
 import crest.isics.settings.Settings;
-import crest.isics.settings.TokenizerMode;
+import crest.isics.settings.NormalizerMode;
 import crest.isics.document.Document;
 import crest.isics.document.Method;
 import crest.isics.settings.IndexSettings;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
@@ -37,7 +35,7 @@ public class ISiCS {
     private String type;
     private String inputFolder;
     private String normMode;
-    private TokenizerMode modes = new TokenizerMode();
+    private NormalizerMode modes = new NormalizerMode();
     private int ngramSize;
     private boolean isNgram;
     private boolean isPrint;
@@ -96,7 +94,7 @@ public class ISiCS {
 
             normMode = prop.getProperty("normMode");
             // set the normalisation + tokenization mode
-            TokenizerMode tknzMode = new TokenizerMode();
+            NormalizerMode tknzMode = new NormalizerMode();
             modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
 
             isNgram = Boolean.parseBoolean(prop.getProperty("isNgram"));
@@ -350,45 +348,34 @@ public class ISiCS {
 
             es.startup();
             for (String normMode : normModes) {
-
                 // reset the modes before setting it again
                 modes.reset();
-
                 // set the normalisation + tokenization mode
-                TokenizerMode tknzMode = new TokenizerMode();
+                NormalizerMode tknzMode = new NormalizerMode();
                 modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
-
                 String indexPrefix = this.index;
 
                 for (int ngramSize : ngramSizes) {
-
                     index = this.index + "_" + normMode + "_" + ngramSize;
                     if (isPrint) System.out.println("INDEX," + index);
-
                     // delete the index if it exists
                     if (es.doesIndexExist(index)) {
                         es.deleteIndex(index);
                     }
-
                     // create index
                     if (!es.createIndex(index, type, indexSettings, mappingStr)) {
                         System.err.println("Cannot create index: " + index);
                         System.exit(-1);
                     }
-
                     // initialise the ngram generator
                     ngen = new nGramGenerator(ngramSize);
                     totalDocuments = insert();
-
                     if (totalDocuments != 0) {
                         // if ok, refresh the index, then search
                         es.refresh(index);
-
                         EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
-
                         if (resultSet.size() != 0) {
                             EvalResult bestResult = resultSet.get(0);
-
                             // check for best result
                             if (result.getValue() > bestResult.getValue()) {
                                 resultSet.set(0, result);
@@ -397,14 +384,11 @@ public class ISiCS {
                             // add the first result twice since it's also the best result.
                             resultSet.add(result);
                         }
-
                         // collect the result
                         resultSet.add(result);
-
                     } else {
                         System.out.println("Indexing error: please check!");
                     }
-
                     // delete index
                     if (deleteIndexAfterUse) {
                         if (!es.deleteIndex(index)) {
@@ -412,7 +396,6 @@ public class ISiCS {
                             System.exit(-1);
                         }
                     }
-
                     // restore index name
                     this.index = indexPrefix;
                 }
@@ -431,11 +414,9 @@ public class ISiCS {
         ArrayList<Document> docArray = new ArrayList<>();
         ArrayList<String> origDocArray = new ArrayList<>();
         File folder = new File(inputFolder);
-
         // create an array of string for extensions
         String[] extensions = new String[1];
         extensions[0] = extension;
-
         List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
         // counter for id
         int count = 0;
@@ -446,14 +427,10 @@ public class ISiCS {
                 // extract license (if any) using Ninka
                 // String license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
                 String license = "NONE";
-
                 String filePath = file.getAbsolutePath().replace(prefixToRemove, "");
-
                 if (isPrint)
                     System.out.println(count + ": " + filePath);
-
                 fileCount++;
-
                 // parse each file into method (if possible)
                 MethodParser methodParser = new MethodParser(
                         file.getAbsolutePath(),
@@ -461,7 +438,6 @@ public class ISiCS {
                         parseMode,
                         isPrint);
                 ArrayList<Method> methodList;
-
                 try {
                     methodList = methodParser.parseMethods();
                     // check if there's a method
@@ -469,15 +445,12 @@ public class ISiCS {
                         for (Method method : methodList) {
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
-
                                 // Create Document object and put in an array list
                                 String normSource = tokenize(method.getSrc(), modes, isNgram);
-
-                                TokenizerMode tmode = new TokenizerMode();
+                                NormalizerMode tmode = new NormalizerMode();
                                 char[] xmode = {'x'};
                                 tmode.setTokenizerMode(xmode);
                                 String tokenizedSource = tokenize(method.getSrc(), tmode, false);
-
                                 // Use file name as id
                                 Document d = new Document(
                                         String.valueOf(count),
@@ -491,7 +464,6 @@ public class ISiCS {
                                         "");
                                 // add document to array
                                 docArray.add(d);
-
                                 count++;
                             }
                         }
@@ -508,7 +480,6 @@ public class ISiCS {
                         System.out.print(e.getMessage());
                         System.exit(0);
                     }
-
                     // something wrong with indexing, return false
                     if (!isIndexed)
                         throw new Exception("Cannot insert docId " + count + " in sequential mode");
@@ -519,7 +490,6 @@ public class ISiCS {
                 } else if (this.indexingMode.equals(Settings.IndexingMode.BULK)) {
                     // index every N docs (bulk insertion mode)
                     if (docArray.size() >= this.bulkSize) {
-//                        System.out.println(docArray.size());
                         isIndexed = es.bulkInsert(index, type, docArray);
                         if (!isIndexed) {
                             throw new Exception("Cannot bulk insert documents");
@@ -545,7 +515,6 @@ public class ISiCS {
         // the last batch
         if (this.indexingMode.equals(Settings.IndexingMode.BULK) && docArray.size() != 0) {
             isIndexed = es.bulkInsert(index, type, docArray);
-
             if (!isIndexed)
                 throw new Exception("Cannot bulk insert documents");
             else {
@@ -553,14 +522,12 @@ public class ISiCS {
                 docArray.clear();
             }
         }
-
         if (fileCount % printEvery != 0) {
             double percent = (double) fileCount * 100 / listOfFiles.size();
             DecimalFormat df = new DecimalFormat("#.00");
             System.out.println("Indexed " + fileCount
                     + " [" + df.format(percent) + "%] documents (" + count + " methods).");
         }
-
         // successfully indexed, return true
         System.out.println("Successfully indexed documents.");
 
@@ -578,14 +545,11 @@ public class ISiCS {
         if (queryReduction) {
             qr = "qr";
         }
-
         String outToFile = "";
-
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-S");
         Date dateobj = new Date();
         File outfile = new File(outputFolder + "/" + index + "_" + qr + "_"
                 + df.format(dateobj) + ".csv");
-
         // if file doesn't exists, then create it
         boolean isCreated = false;
         if (!outfile.exists()) {
@@ -595,7 +559,6 @@ public class ISiCS {
         if (isCreated) {
             FileWriter fw = new FileWriter(outfile.getAbsoluteFile(), true);
             BufferedWriter bw = new BufferedWriter(fw);
-
             // create an array of string for extensions
             String[] extensions = new String[1];
             extensions[0] = extension;
@@ -606,12 +569,10 @@ public class ISiCS {
             int methodCount = 0;
 
             for (File file : listOfFiles) {
-//                if (isPrint)
+                if (isPrint)
                     System.out.println("File: " + file.getAbsolutePath());
-
                 // reset the output buffer
                 outToFile = "";
-
                 // parse each file into method (if possible)
                 MethodParser methodParser = new MethodParser(
                         file.getAbsolutePath(),
@@ -621,7 +582,6 @@ public class ISiCS {
                 ArrayList<Method> methodList;
                 String query = "";
                 String origQuery = "";
-
                 try {
                     methodList = methodParser.parseMethods();
                     ArrayList<Document> results = new ArrayList<>();
@@ -642,7 +602,7 @@ public class ISiCS {
                                 queryList.add(d);
                                 outToFile += formatter.format(queryList, prefixToRemove) + ",";
 
-                                TokenizerMode tmode = new TokenizerMode();
+                                NormalizerMode tmode = new NormalizerMode();
                                 char[] noNormMode = {'x'};
                                 tmode.setTokenizerMode(noNormMode);
                                 origQuery = tokenize(method.getSrc(), tmode, false);
@@ -688,19 +648,14 @@ public class ISiCS {
                     System.out.println(e.getMessage());
                     System.out.println("ERROR: file " + count +" generates query term size exceeds 4096 (too big).");
                 }
-
                 bw.write(outToFile);
             }
-
             bw.close();
-
             System.out.println("Searching done for " + count + " files (" + methodCount + " methods after clone size filtering).");
             System.out.println("See output at " + outfile.getAbsolutePath());
-
         } else {
             throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
         }
-
         return outfile.getAbsolutePath();
     }
 
@@ -710,18 +665,10 @@ public class ISiCS {
         // clear the query
         query = "";
         ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, field, tmpQuery);
-
-        // switched to use median as a cut-off
-//        double limit = percentile;
-//        System.out.println("LIMIT: " + limit);
-
         for (int i=0; i<sortedTerms.size(); i++) {
             if (sortedTerms.get(i).getFreq() <= limit)
                 query += sortedTerms.get(i).getTerm() + " ";
         }
-
-//        System.out.println(query);
-
         return query;
     }
 
@@ -803,13 +750,14 @@ public class ISiCS {
 
     private String tokenize(File file) throws Exception {
         String src = "";
-        JavaTokenizer tokenizer = new JavaTokenizer(modes);
+        JavaNormalizer normalizer = new JavaNormalizer(modes);
+        JavaTokenizer tokenizer = new JavaTokenizer(normalizer);
 
         if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
             try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
                 String line;
                 while ((line = br.readLine()) != null) {
-                    ArrayList<String> tokens = tokenizer.noNormalizeAToken(escapeString(line).trim());
+                    ArrayList<String> tokens = tokenizer.tokenize(escapeString(line).trim());
                     src += printArray(tokens, false);
                 }
             } catch (Exception e) {
@@ -827,9 +775,9 @@ public class ISiCS {
         return src;
     }
 
-    private String tokenize(String sourcecode, TokenizerMode modes, boolean isNgram) throws Exception {
+    private String tokenize(String sourcecode, NormalizerMode modes, boolean isNgram) throws Exception {
         String src;
-        JavaTokenizer tokenizer = new JavaTokenizer(modes);
+        JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(modes));
 
         // generate tokens
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
@@ -841,20 +789,6 @@ public class ISiCS {
         }
 
         return src;
-    }
-
-    public ArrayList<String> tokenizeStringToArray(String sourcecode) throws Exception {
-        String src;
-        JavaTokenizer tokenizer = new JavaTokenizer(modes);
-
-        // generate tokens
-        ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
-
-        // enter ngram mode
-        if (isNgram) {
-            tokens = ngen.generateNGramsFromJavaTokens(tokens);
-        }
-        return tokens;
     }
 
     /* copied from http://stackoverflow.com/questions/4640034/calculating-all-of-the-subsets-of-a-set-of-numbers */
