@@ -15,15 +15,21 @@ public class Experiment {
     private static int[] ngramSizes = {};
 
     private static String[] normModesAll = {
-            "x", "s", "w", "ws", "p", "ps", "pw", "pws", "k", "ks",
-            "kw", "kws", "kp", "kps", "kpw", "kpws", "j", "js", "jw", "jws",
-            "jp", "jps", "jpw", "jpws", "jk", "jks", "jkw", "jkws", "jkp", "jkps",
-            "jkpw", "jkpws", "d", "ds", "dw", "dws", "dp", "dps", "dpw", "dpws",
-            "dk", "dks", "dkw", "dkws", "dkp", "dkps", "dkpw", "dkpws", "dj", "djs",
-            "djw", "djws", "djp", "djps", "djpw", "djpws", "djk", "djks", "djkw", "djkws",
-            "djkp", "djkps", "djkpw", "djkpws"};
+            "x", "w", "v", "vw", "s", "sw", "sv", "svw", "p", "pw",
+            "pv", "pvw", "ps", "psw", "psv", "psvw", "k", "kw", "kv", "kvw",
+            "ks", "ksw", "ksv", "ksvw", "kp", "kpw", "kpv", "kpvw", "kps", "kpsw",
+            "kpsv", "kpsvw", "j", "jw", "jv", "jvw", "js", "jsw", "jsv", "jsvw",
+            "jp", "jpw", "jpv", "jpvw", "jps", "jpsw", "jpsv", "jpsvw", "jk", "jkw",
+            "jkv", "jkvw", "jks", "jksw", "jksv", "jksvw", "jkp", "jkpw", "jkpv", "jkpvw",
+            "jkps", "jkpsw", "jkpsv", "jkpsvw", "d", "dw", "dv", "dvw", "ds", "dsw",
+            "dsv", "dsvw", "dp", "dpw", "dpv", "dpvw", "dps", "dpsw", "dpsv", "dpsvw",
+            "dk", "dkw", "dkv", "dkvw", "dks", "dksw", "dksv", "dksvw", "dkp", "dkpw",
+            "dkpv", "dkpvw", "dkps", "dkpsw", "dkpsv", "dkpsvw", "dj", "djw", "djv", "djvw",
+            "djs", "djsw", "djsv", "djsvw", "djp", "djpw", "djpv", "djpvw", "djps", "djpsw",
+            "djpsv", "djpsvw", "djk", "djkw", "djkv", "djkvw", "djks", "djksw", "djksv", "djksvw",
+            "djkp", "djkpw", "djkpv", "djkpvw", "djkps", "djkpsw", "djkpsv", "djkpsvw"};
     private static String[] normModesText = { "x" };
-    private static String[] normModesDefault = { "djkpws" };
+    private static String[] normModesDefault = { "djkpsvw" };
     private static int[] ngramSizesAll = { 1, 2, 3, 4, 5 };
     private static int[] ngramSizesText = { 1 };
     private static int[] ngramSizeDefault = { 4 };
