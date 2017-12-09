@@ -5,17 +5,20 @@ import crest.siamese.helpers.MethodParser;
 import crest.siamese.document.Method;
 import crest.siamese.settings.Settings;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 /**
  * Created by Chaiyong on 7/27/16.
  */
-public class MethodParserTest {
+public class JavaMethodParserTest {
 
     @org.junit.Test
     public void checkMethodParser() throws Exception {
         String srcStr = "resources/tests/guessword/0_orig/GuessWord.java";
-        MethodParser mParser = new MethodParser(srcStr, "", Settings.MethodParserType.METHOD, false);
+        Class cl = Class.forName("crest.siamese.helpers.JavaMethodParser");
+        Constructor con = cl.getConstructor(String.class, String.class, String.class, boolean.class);
+        MethodParser mParser = (MethodParser) con.newInstance(srcStr, "", Settings.MethodParserType.METHOD, false);
         ArrayList<Method> methods = mParser.parseMethods();
 
         assertEquals(3, methods.size());
@@ -27,7 +30,9 @@ public class MethodParserTest {
     @org.junit.Test
     public void checkMethodParserFileLevel() throws Exception {
         String srcStr = "resources/tests/guessword/0_orig/GuessWord.java";
-        MethodParser mParser = new MethodParser(srcStr, "", Settings.MethodParserType.FILE, false);
+        Class cl = Class.forName("crest.siamese.helpers.JavaMethodParser");
+        Constructor con = cl.getConstructor(String.class, String.class, String.class, boolean.class);
+        MethodParser mParser = (MethodParser) con.newInstance(srcStr, "", Settings.MethodParserType.FILE, false);
         ArrayList<Method> methods = mParser.parseMethods();
 
         assertEquals(1, methods.size());
@@ -37,7 +42,9 @@ public class MethodParserTest {
     @org.junit.Test
     public void checkMethodParser2() throws Exception {
         String srcStr = "resources/tests/bubblesort/0_orig/BubbleSort.java";
-        MethodParser mParser = new MethodParser(srcStr, "", Settings.MethodParserType.METHOD, false);
+        Class cl = Class.forName("crest.siamese.helpers.JavaMethodParser");
+        Constructor con = cl.getConstructor(String.class, String.class, String.class, boolean.class);
+        MethodParser mParser = (MethodParser) con.newInstance(srcStr, "", Settings.MethodParserType.METHOD, false);
         ArrayList<Method> methods = mParser.parseMethods();
 
         assertEquals(1, methods.size());

@@ -13,7 +13,7 @@ import org.apache.commons.io.FileUtils;
 
 public class JavaTokenizer implements Tokenizer {
 	private ArrayList<String> tokens = new ArrayList<String>();
-	private Normalizer normalizer = new JavaNormalizer(new NormalizerMode());
+	private Normalizer normalizer;
 
 	public JavaTokenizer() {
 		super();
@@ -23,6 +23,11 @@ public class JavaTokenizer implements Tokenizer {
 	    super();
 		this.normalizer = normalizer;
 	}
+
+	@Override
+	public void configure(Normalizer normalizer) {
+        this.normalizer = normalizer;
+    }
 
     @Override
     public ArrayList<String> tokenize(String s) throws Exception {

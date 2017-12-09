@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * Created by Chaiyong on 3/28/17.
  */
+/* TODO: outdated (remove?) */
 public class SiameseIndexReader {
     private static String[] extensions = { "java" };
     private static NormalizerMode modes = new NormalizerMode();
@@ -61,7 +62,7 @@ public class SiameseIndexReader {
                     .replace("/" + file.getName(), "");
             // reset the output buffer
             // parse each file into method (if possible)
-            MethodParser methodParser = new MethodParser(
+            JavaMethodParser methodParser = new JavaMethodParser(
                     file.getAbsolutePath(),
                     crest.siamese.main.Experiment.prefixToRemove,
                     Settings.MethodParserType.METHOD,

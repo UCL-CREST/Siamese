@@ -18,6 +18,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.elasticsearch.client.transport.NoNodeAvailableException;
 
 import java.io.*;
+import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.UnknownHostException;
@@ -67,6 +68,9 @@ public class Siamese {
     private int bulkSize;
     private int normBoost;
     private int origBoost;
+    private String methodParserName;
+    private String tokenizerName;
+    private String normalizerName;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -129,6 +133,11 @@ public class Siamese {
             this.qrPercentileOrig = Integer.parseInt(prop.getProperty("QRPercentileOrig"));
             this.normBoost = Integer.parseInt(prop.getProperty("normBoost"));
             this.origBoost = Integer.parseInt(prop.getProperty("origBoost"));
+
+            // customization to support other languages
+            this.methodParserName = prop.getProperty("methodParser");
+            this.tokenizerName = prop.getProperty("tokenizer");
+            this.normalizerName = prop.getProperty("normalizer");
 
             this.recreateIndexIfExists = Boolean.parseBoolean(prop.getProperty("recreateIndexIfExists"));
 
@@ -432,7 +441,7 @@ public class Siamese {
                     System.out.println(count + ": " + filePath);
                 fileCount++;
                 // parse each file into method (if possible)
-                MethodParser methodParser = new MethodParser(
+                MethodParser methodParser = initialiseMethodParser(
                         file.getAbsolutePath(),
                         prefixToRemove,
                         parseMode,
@@ -573,8 +582,8 @@ public class Siamese {
                     System.out.println("File: " + file.getAbsolutePath());
                 // reset the output buffer
                 outToFile = "";
-                // parse each file into method (if possible)
-                MethodParser methodParser = new MethodParser(
+                // parse each file into methods (if possible)
+                MethodParser methodParser = initialiseMethodParser(
                         file.getAbsolutePath(),
                         prefixToRemove,
                         parseMode,
@@ -750,8 +759,8 @@ public class Siamese {
 
     private String tokenize(File file) throws Exception {
         String src = "";
-        JavaNormalizer normalizer = new JavaNormalizer(modes);
-        JavaTokenizer tokenizer = new JavaTokenizer(normalizer);
+        Normalizer normalizer = initialiseNormalizer(modes);
+        Tokenizer tokenizer = initialiseTokenizer(normalizer);
 
         if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
             try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
@@ -777,7 +786,8 @@ public class Siamese {
 
     private String tokenize(String sourcecode, NormalizerMode modes, boolean isNgram) throws Exception {
         String src;
-        JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(modes));
+        Normalizer normalizer = initialiseNormalizer(modes);
+        Tokenizer tokenizer = initialiseTokenizer(normalizer);
 
         // generate tokens
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
@@ -1030,6 +1040,45 @@ public class Siamese {
         output += input.replace("\\", "\\\\").replace("\"", "\\\"").replace("/", "\\/").replace("\b", "\\b")
                 .replace("\f", "\\f").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
         return output;
+    }
+
+    private MethodParser initialiseMethodParser(String filePath, String prefixToRemove, String mode, boolean isPrint) {
+        MethodParser parser = null;
+        try {
+            Class cl = Class.forName(this.methodParserName);
+            parser = (MethodParser) cl.newInstance();
+            parser.configure(filePath, prefixToRemove, mode, isPrint);
+        } catch (ClassNotFoundException|IllegalAccessException|InstantiationException e) {
+            System.out.println("ERROR: could not find the specified method parser: " +
+                    this.methodParserName + ". Please check if the class and package name is correct.");
+        }
+        return parser;
+    }
+
+    private Tokenizer initialiseTokenizer(Normalizer normalizer) {
+        Tokenizer tokenizer = null;
+        try {
+            Class cl = Class.forName(this.tokenizerName);
+            tokenizer = (Tokenizer) cl.newInstance();
+            tokenizer.configure(normalizer);
+        } catch (ClassNotFoundException|IllegalAccessException|InstantiationException e) {
+            System.out.println("ERROR: could not find the specified tokenizer: " +
+                    this.tokenizerName + ". Please check if the class and package name is correct.");
+        }
+        return tokenizer;
+    }
+
+    private Normalizer initialiseNormalizer(NormalizerMode modes) {
+        Normalizer normalizer = null;
+        try {
+            Class cl = Class.forName(this.normalizerName);
+            normalizer = (Normalizer) cl.newInstance();
+            normalizer.configure(modes);
+        } catch (ClassNotFoundException|IllegalAccessException|InstantiationException e) {
+            System.out.println("ERROR: could not find the specified normalizer: " +
+                    this.normalizerName + ". Please check if the class and package name is correct.");
+        }
+        return normalizer;
     }
 
     public void setIsPrint(boolean isPrint) {

@@ -38,6 +38,10 @@ public class JavaNormalizer implements Normalizer {
         readJavaPackages(Settings.Normalizer.JAVA_PACKAGES_FILE);
     }
 
+    public void configure(NormalizerMode modes) {
+        this.modes = modes;
+    }
+
     @Override
     public String normalizeAToken(String token, String type) throws Exception {
         if (datatypeMap.get(token) != null) {
