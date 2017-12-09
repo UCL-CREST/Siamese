@@ -56,7 +56,7 @@ ls -l <the path>
 
 9. Execute the experiment.
 ```
-mvn compile exec:java -Dexec.mainClass=crest.isics.Main -Dexec.args="-cf config.properties"
+mvn compile exec:java -Dexec.mainClass=crest.siamese.Main -Dexec.args="-cf config.properties"
 ```
 
 # Early Experimental Results
