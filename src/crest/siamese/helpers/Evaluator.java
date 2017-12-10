@@ -120,7 +120,7 @@ public class Evaluator {
                         System.out.println("  " + r + "-prec = " + rprec);
 
                     // for statistical tests
-                    System.out.println(rprec);
+//                    System.out.println(rprec);
 
                     // sum up r-precision
                     sumRPrec += rprec;
@@ -192,7 +192,7 @@ public class Evaluator {
                         System.out.println("avgprec = " + averagePrec);
 
                     // for statistical tests
-                    System.out.println(averagePrec);
+//                    System.out.println(averagePrec);
 
                     mapToPrint += averagePrec + "\n";
                     sumAvgPrec += averagePrec;
