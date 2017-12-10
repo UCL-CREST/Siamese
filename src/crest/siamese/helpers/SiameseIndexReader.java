@@ -1,6 +1,7 @@
 package crest.siamese.helpers;
 
 import crest.siamese.document.Method;
+import crest.siamese.experiment.Experiment;
 import crest.siamese.settings.Settings;
 import crest.siamese.settings.NormalizerMode;
 import org.apache.commons.io.FileUtils;
@@ -64,7 +65,7 @@ public class SiameseIndexReader {
             // parse each file into method (if possible)
             JavaMethodParser methodParser = new JavaMethodParser(
                     file.getAbsolutePath(),
-                    crest.siamese.main.Experiment.prefixToRemove,
+                    Experiment.prefixToRemove,
                     Settings.MethodParserType.METHOD,
                     false
                     );

@@ -71,6 +71,7 @@ public class Siamese {
     private String methodParserName;
     private String tokenizerName;
     private String normalizerName;
+    private boolean multiRep;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -133,6 +134,9 @@ public class Siamese {
             this.qrPercentileOrig = Integer.parseInt(prop.getProperty("QRPercentileOrig"));
             this.normBoost = Integer.parseInt(prop.getProperty("normBoost"));
             this.origBoost = Integer.parseInt(prop.getProperty("origBoost"));
+
+            // multi-representation
+            this.multiRep = Boolean.parseBoolean(prop.getProperty("multirep"));
 
             // customization to support other languages
             this.methodParserName = prop.getProperty("methodParser");
@@ -333,7 +337,7 @@ public class Siamese {
         }
     }
 
-    protected ArrayList<EvalResult> runExperiment(
+    public ArrayList<EvalResult> runExperiment(
             String indexSettings,
             String mappingStr,
             String[] normModes,
@@ -628,9 +632,12 @@ public class Siamese {
                                     }
                                 }
 
-                                // search for results
-//                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
-                                results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
+                                // search for results depending on the MR setting
+                                if (this.multiRep)
+                                    results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
+                                else
+                                    results = es.search(index, type, query, isPrint, isDFS, offset, size);
+//
                                 outToFile += formatter.format(results, prefixToRemove);
                                 outToFile += "\n";
                                 methodCount++;

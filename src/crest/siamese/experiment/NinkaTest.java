@@ -1,4 +1,4 @@
-package crest.siamese.main;
+package crest.siamese.experiment;
 
 import crest.siamese.helpers.LicenseExtractor;
 

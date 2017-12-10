@@ -1,4 +1,6 @@
-package crest.siamese.main;
+package crest.siamese.experiment;
+
+import crest.siamese.main.Siamese;
 
 public class TermFreqAnalyser {
 
@@ -9,7 +11,7 @@ public class TermFreqAnalyser {
         siamese = new Siamese(config);
         siamese.startup();
         analyseTerms(config);
-//        getIndicesStats();
+        getIndicesStats();
         siamese.shutdown();
     }
 

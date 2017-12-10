@@ -2,9 +2,14 @@ package crest.siamese.helpers;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.*;
+import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.visitor.GenericVisitor;
+import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.printer.PrettyPrinter;
 import com.github.javaparser.printer.PrettyPrinterConfiguration;
 import crest.siamese.document.Method;
 import crest.siamese.settings.Settings;
@@ -113,13 +118,13 @@ public class JavaMethodParser implements MethodParser {
             InputStream fStream = FileUtils.openInputStream(f);
             String content = org.apache.commons.io.IOUtils.toString(fStream, "UTF-8");
             int lines = content.split("\r\n|\r|\n").length;
+
             Method m = new Method(
                     FILE_PATH.replace(PREFIX_TO_REMOVE, ""),
                     "package",
                     "ClassName",
                     "method",
-                    content
-                    .replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)",""),
+                    content,
                     1,
                     lines,
                     new LinkedList<crest.siamese.document.Parameter>(),
@@ -165,7 +170,7 @@ public class JavaMethodParser implements MethodParser {
 
             // do not include comments in the indexed code
             PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
-            ppc.setPrintComments(false);
+            ppc.setPrintComments(true);
 
             Method m = new Method(
                     FILE_PATH.replace(PREFIX_TO_REMOVE, "")
@@ -200,7 +205,7 @@ public class JavaMethodParser implements MethodParser {
 
             // do not include comments in the indexed code
             PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
-            ppc.setPrintComments(false);
+            ppc.setPrintComments(true);
 
             Method m = new Method(
                     FILE_PATH.replace(PREFIX_TO_REMOVE, "")

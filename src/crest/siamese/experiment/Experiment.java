@@ -1,7 +1,8 @@
-package crest.siamese.main;
+package crest.siamese.experiment;
 
 import crest.siamese.helpers.EvalResult;
 import crest.siamese.helpers.MyUtils;
+import crest.siamese.main.Siamese;
 import crest.siamese.settings.Settings;
 
 import java.io.*;
