@@ -1,0 +1,4 @@
+Best result: /Users/Chaiyong/IdeasProjects/ISiCS/exp_results/cloplag_x_1_no_qr_10-12-17_01-56-768.csv,0.9637681162875632
+
+All results:
+/Users/Chaiyong/IdeasProjects/ISiCS/exp_results/cloplag_x_1_no_qr_10-12-17_01-56-768.csv,0.9637681162875632
