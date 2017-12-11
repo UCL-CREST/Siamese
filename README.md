@@ -1,6 +1,6 @@
 # Siamese: Code Clone Search Engine
 
-[logo](https://cragkhit.github.io/images/logo.png "Siamese logo")
+[logo](/images/logo.png?raw=true "Siamese logo")
 [alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
 
 Siamese is a code clone search system powered by Elasticsearch with code clone detection approaches, code normalisation and ngram-based matching, built on top. It can scalably search for clones of type-1 to type-3 from a large corpora of Java source code within seconds.
