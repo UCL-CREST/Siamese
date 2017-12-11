@@ -198,6 +198,7 @@ public class Siamese {
         System.out.println("minCloneSize   : " + minCloneLine);
         System.out.println("command        : " + command);
         System.out.println("queryReduction : " + queryReduction);
+        System.out.println("multiRep       : " + multiRep);
         System.out.println("outputFormat   : " + outputFormat);
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
         System.out.println("============================");

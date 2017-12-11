@@ -1,16 +1,16 @@
-# 🇹🇭 SIAM 🇹🇭 Clone Search
-SIAM is a code clone search system powered by Elasticsearch with code clone detection approaches (e.g. code normalisation, ngram-based matching) built on top. It can search for clones (type-1, -2, -3) from a large corpora of Java source code within an instant time. 
+# 🇹🇭 Siamese 🇹🇭 Code Clone Search Engine
+Siamese is a code clone search system powered by Elasticsearch with code clone detection approaches, code normalisation and ngram-based matching, built on top. It can scalably search for clones of type-1 to type-3 from a large corpora of Java source code within seconds.
 
-*Note: **SIAM** stands for **S**calalbe, **I**usingnstant, **A**nd **M**ulti-Representation*
+*Note: **Siamese** stands for **S**calalbe, **I**usingnstant, **A**nd **M**ulti-Repr**es**entation*
 
 ## Analyse term frequency and document frequency of terms in the index
 1. Modify the class ```TermFreqAnalyser``` with appropriate configurations
 2. The result frequency files will be generated (e.g. freq_df_src.csv, freq_df_toksrc.csv). The one without `tok` means the normalised source code tokens, whilst the one with `tok` means the original source code tokens.
-3. Modify the sort_term.py script with the generated result frequency files and run the script. 
+3. Modify the sort_term.py script with the generated result frequency files and run the script.
 4. Graphs will be genearated. They follow Zipf's law. Hooray!
 
 ## Setup:
-1. Download elasticsearch-2.2.0 
+1. Download elasticsearch-2.2.0
 ```
 wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz
 ```
@@ -73,6 +73,6 @@ No. of combinations of IR scoring parameter I searched for:
 | Grand total |  |  |  | 49664 |
 
 ## Misc.
-### Read Lucene index direclty: 
+### Read Lucene index direclty:
 * http://stackoverflow.com/questions/20575254/lucene-4-4-how-to-get-term-frequency-over-all-index
 * http://stackoverflow.com/questions/16847857/how-do-you-read-the-index-in-lucene-to-do-a-search
