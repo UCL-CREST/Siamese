@@ -50,8 +50,8 @@ public class Siamese {
     private int resultsSize;
     private int totalDocuments;
     private boolean queryReduction;
-    private int qrPercentileNorm;
-    private int qrPercentileOrig;
+    private double qrPercentileNorm;
+    private double qrPercentileOrig;
     private boolean recreateIndexIfExists;
     private String parseMode;
     private String cloneClusterFile;
@@ -130,8 +130,8 @@ public class Siamese {
             this.resultsSize = Integer.parseInt(prop.getProperty("resultsSize"));
             this.totalDocuments = Integer.parseInt(prop.getProperty("totalDocuments"));
             this.queryReduction = Boolean.parseBoolean(prop.getProperty("queryReduction"));
-            this.qrPercentileNorm = Integer.parseInt(prop.getProperty("QRPercentileNorm"));
-            this.qrPercentileOrig = Integer.parseInt(prop.getProperty("QRPercentileOrig"));
+            this.qrPercentileNorm = Double.parseDouble(prop.getProperty("QRPercentileNorm"));
+            this.qrPercentileOrig = Double.parseDouble(prop.getProperty("QRPercentileOrig"));
             this.normBoost = Integer.parseInt(prop.getProperty("normBoost"));
             this.origBoost = Integer.parseInt(prop.getProperty("origBoost"));
 
@@ -343,6 +343,8 @@ public class Siamese {
             String mappingStr,
             String[] normModes,
             int[] ngramSizes,
+            double[] dfCapNorms,
+            double[] dfCapOrigs,
             String cloneClusterFilePrefix) {
 
         this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.parseMode + ".csv";
@@ -370,48 +372,57 @@ public class Siamese {
                 String indexPrefix = this.index;
 
                 for (int ngramSize : ngramSizes) {
-                    index = this.index + "_" + normMode + "_" + ngramSize;
-                    if (isPrint) System.out.println("INDEX," + index);
-                    // delete the index if it exists
-                    if (es.doesIndexExist(index)) {
-                        es.deleteIndex(index);
-                    }
-                    // create index
-                    if (!es.createIndex(index, type, indexSettings, mappingStr)) {
-                        System.err.println("Cannot create index: " + index);
-                        System.exit(-1);
-                    }
-                    // initialise the ngram generator
-                    ngen = new nGramGenerator(ngramSize);
-                    totalDocuments = insert();
-                    if (totalDocuments != 0) {
-                        // if ok, refresh the index, then search
-                        es.refresh(index);
-                        EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
-                        if (resultSet.size() != 0) {
-                            EvalResult bestResult = resultSet.get(0);
-                            // check for best result
-                            if (result.getValue() > bestResult.getValue()) {
-                                resultSet.set(0, result);
+                    for (double dfCapNorm: dfCapNorms) {
+                        // replace the value read from the config file
+                        this.qrPercentileNorm = dfCapNorm;
+                        for (double dfCapOrig : dfCapOrigs) {
+                            // replace the value read from the config file
+                            this.qrPercentileOrig = dfCapOrig;
+                            index = this.index + "_" + normMode + "_" + ngramSize + "_" + dfCapNorm + "_" + dfCapOrig;
+                            if (isPrint) System.out.println("INDEX," + index);
+                            // delete the index if it exists
+                            if (es.doesIndexExist(index)) {
+                                es.deleteIndex(index);
                             }
-                        } else {
-                            // add the first result twice since it's also the best result.
-                            resultSet.add(result);
+                            // create index
+                            if (!es.createIndex(index, type, indexSettings, mappingStr)) {
+                                System.err.println("Cannot create index: " + index);
+                                System.exit(-1);
+                            }
+                            // initialise the ngram generator
+                            ngen = new nGramGenerator(ngramSize);
+                            totalDocuments = insert();
+                            if (totalDocuments != 0) {
+                                // if ok, refresh the index, then search
+                                es.refresh(index);
+                                EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
+                                if (resultSet.size() != 0) {
+                                    EvalResult bestResult = resultSet.get(0);
+                                    // check for best result
+                                    if (result.getValue() > bestResult.getValue()) {
+                                        resultSet.set(0, result);
+                                    }
+                                } else {
+                                    // add the first result twice since it's also the best result.
+                                    resultSet.add(result);
+                                }
+                                // collect the result
+                                resultSet.add(result);
+                            } else {
+                                System.out.println("Indexing error: please check!");
+                            }
+                            // delete index
+                            if (deleteIndexAfterUse) {
+                                if (!es.deleteIndex(index)) {
+                                    System.err.println("Cannot delete index: " + index);
+                                    System.exit(-1);
+                                }
+                            }
+                            // restore index name
+                            this.index = indexPrefix;
+
                         }
-                        // collect the result
-                        resultSet.add(result);
-                    } else {
-                        System.out.println("Indexing error: please check!");
                     }
-                    // delete index
-                    if (deleteIndexAfterUse) {
-                        if (!es.deleteIndex(index)) {
-                            System.err.println("Cannot delete index: " + index);
-                            System.exit(-1);
-                        }
-                    }
-                    // restore index name
-                    this.index = indexPrefix;
                 }
             }
             es.shutdown();
