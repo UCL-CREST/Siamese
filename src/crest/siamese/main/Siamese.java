@@ -8,6 +8,7 @@ import crest.siamese.settings.NormalizerMode;
 import crest.siamese.document.Document;
 import crest.siamese.document.Method;
 import crest.siamese.settings.IndexSettings;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
@@ -18,7 +19,6 @@ import org.apache.lucene.store.FSDirectory;
 import org.elasticsearch.client.transport.NoNodeAvailableException;
 
 import java.io.*;
-import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.UnknownHostException;
@@ -72,6 +72,9 @@ public class Siamese {
     private String tokenizerName;
     private String normalizerName;
     private boolean multiRep;
+    private boolean includeLicense;
+    private String licenseExtractor;
+    private String url = "none";
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -169,6 +172,9 @@ public class Siamese {
             outputFormat = prop.getProperty("outputFormat");
             indexingMode = prop.getProperty("indexingMode");
             bulkSize = Integer.parseInt(prop.getProperty("bulkSize"));
+
+            includeLicense = Boolean.parseBoolean(prop.getProperty("license"));
+            licenseExtractor = prop.getProperty("licenseExtractor");
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -288,7 +294,12 @@ public class Siamese {
                         createIndex(indexSettings, mappingStr);
                     }
 
-                    int insertSize = insert();
+                    long startingId = 0;
+                    if (!recreateIndexIfExists && doesIndexExist()) {
+                        startingId = getMaxId(index) + 1;
+                    }
+
+                    long insertSize = insert(startingId);
 
                     if (insertSize != 0) {
                         // if ok, refresh the index, then search
@@ -317,6 +328,14 @@ public class Siamese {
         }
 
         return outputFile;
+    }
+
+    private long getMaxId(String index) throws Exception {
+        return es.getMaxId(index, isDFS);
+    }
+
+    private boolean doesIndexExist() {
+        return es.doesIndexExist(index);
     }
 
     private boolean createIndex(String indexSettings, String mappingStr) throws NoNodeAvailableException {
@@ -391,7 +410,7 @@ public class Siamese {
                             }
                             // initialise the ngram generator
                             ngen = new nGramGenerator(ngramSize);
-                            totalDocuments = insert();
+                            totalDocuments = (int) insert(0);
                             if (totalDocuments != 0) {
                                 // if ok, refresh the index, then search
                                 es.refresh(index);
@@ -434,7 +453,7 @@ public class Siamese {
     }
 
     @SuppressWarnings("unchecked")
-    private int insert() throws Exception {
+    private long insert(long startingId) throws Exception {
         boolean isIndexed = true;
         ArrayList<Document> docArray = new ArrayList<>();
         ArrayList<String> origDocArray = new ArrayList<>();
@@ -443,15 +462,13 @@ public class Siamese {
         String[] extensions = new String[1];
         extensions[0] = extension;
         List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
-        // counter for id
-        int count = 0;
+        // method counter
+        long count = 0;
         int fileCount = 0;
         System.out.println("Found " + listOfFiles.size() + " files.");
         for (File file : listOfFiles) {
             try {
-                // extract license (if any) using Ninka
-                // String license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
-                String license = "NONE";
+                String license = "none";
                 String filePath = file.getAbsolutePath().replace(prefixToRemove, "");
                 if (isPrint)
                     System.out.println(count + ": " + filePath);
@@ -465,6 +482,19 @@ public class Siamese {
                 ArrayList<Method> methodList;
                 try {
                     methodList = methodParser.parseMethods();
+                    // extract license (if any)
+                    if (this.includeLicense) {
+                        switch (this.licenseExtractor.toLowerCase()) {
+                            case "ninka":
+                                license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
+                                break;
+                            case "regexp":
+                                license = methodParser.getLicense();
+                                break;
+                            default:
+                                license = "none";
+                        }
+                    }
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
@@ -476,9 +506,18 @@ public class Siamese {
                                 char[] xmode = {'x'};
                                 tmode.setTokenizerMode(xmode);
                                 String tokenizedSource = tokenize(method.getSrc(), tmode, false);
-                                // Use file name as id
+
+                                String finalUrl = this.url;
+
+                                if (!finalUrl.equals("none")) {
+                                    String prefix = inputFolder;
+                                    if (inputFolder.endsWith("/"))
+                                        prefix = StringUtils.chop(inputFolder);
+                                    finalUrl += filePath.replace(prefix, "");
+                                }
+
                                 Document d = new Document(
-                                        String.valueOf(count),
+                                        startingId + count,
                                         filePath + "_" + method.getName(),
                                         method.getStartLine(),
                                         method.getEndLine(),
@@ -486,7 +525,7 @@ public class Siamese {
                                         tokenizedSource,
                                         method.getSrc(),
                                         license,
-                                        "");
+                                        finalUrl);
                                 // add document to array
                                 docArray.add(d);
                                 count++;
@@ -1118,5 +1157,74 @@ public class Siamese {
 
     public void setResultsSize(int resultsSize) {
         this.resultsSize = resultsSize;
+    }
+
+    public void indexGitHub(String githubLoc) throws Exception {
+        if (githubLoc.endsWith("/"))
+            githubLoc = StringUtils.chop(githubLoc);
+
+        // check if the client is already started up
+        if (siameseClient == null) {
+            startup();
+        }
+
+        File file = new File(githubLoc);
+        String[] directories = file.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File current, String name) {
+                return new File(current, name).isDirectory();
+            }
+        });
+
+        for (String dir: directories) {
+            String subDir = githubLoc + "/" + dir;
+
+            File sd = new File(subDir);
+            String[] sdirs = sd.list(new FilenameFilter() {
+                @Override
+                public boolean accept(File current, String name) {
+                    return new File(current, name).isDirectory();
+                }
+            });
+
+            for (String d : sdirs) {
+                String projDir = githubLoc + "/" + dir + "/" + d;
+                System.out.println(projDir);
+
+                this.inputFolder = projDir;
+                this.url = "https://github.com/" + dir + "/" + d + "/blob/master";
+
+                // initialise the n-gram generator
+                ngen = new nGramGenerator(ngramSize);
+                // default similarity function is TFIDF
+                String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
+                String mappingStr = IndexSettings.TFIDF.mappingStr;
+
+                try {
+                    if (siameseClient != null) {
+                        if (command.toLowerCase().equals("index")) {
+                            if (recreateIndexIfExists) {
+                                createIndex(indexSettings, mappingStr);
+                            }
+                            long startingId = 0;
+                            if (!recreateIndexIfExists && doesIndexExist()) {
+                                startingId = getMaxId(index) + 1;
+                            }
+                            long insertSize = insert(startingId);
+                            if (insertSize != 0) {
+                                // if ok, refresh the index, then search
+                                es.refresh(index);
+                            } else {
+                                System.out.println("ERROR: Indexed zero file. Please check!");
+                            }
+                        }
+                    } else {
+                        System.out.println("ERROR: cannot create Elasticsearch client ... ");
+                    }
+                } catch (Exception e) {
+                    throw e;
+                }
+            }
+        }
     }
 }

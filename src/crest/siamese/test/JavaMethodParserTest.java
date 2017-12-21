@@ -50,4 +50,22 @@ public class JavaMethodParserTest {
         assertEquals(1, methods.size());
         assertEquals("main", methods.get(0).getName());
     }
+
+    @org.junit.Test
+    public void testExtractingComment() throws Exception {
+        String srcStr = "resources/tests/WritableComparable.java";
+        Class cl = Class.forName("crest.siamese.helpers.JavaMethodParser");
+        Constructor con = cl.getConstructor(String.class, String.class, String.class, boolean.class);
+        MethodParser mParser = (MethodParser) con.newInstance(srcStr, "", Settings.MethodParserType.METHOD, false);
+        ArrayList<Method> methods = mParser.parseMethods();
+    }
+
+    @org.junit.Test
+    public void testExtractingComment2() throws Exception {
+        String srcStr = "resources/tests/bubblesort/0_orig/BubbleSort.java";
+        Class cl = Class.forName("crest.siamese.helpers.JavaMethodParser");
+        Constructor con = cl.getConstructor(String.class, String.class, String.class, boolean.class);
+        MethodParser mParser = (MethodParser) con.newInstance(srcStr, "", Settings.MethodParserType.METHOD, false);
+        ArrayList<Method> methods = mParser.parseMethods();
+    }
 }

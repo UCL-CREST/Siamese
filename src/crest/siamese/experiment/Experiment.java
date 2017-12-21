@@ -36,8 +36,10 @@ public class Experiment {
     private static int[] ngramSizesText = { 1 };
     private static int[] ngramSizeDefault = { 4 };
 
-    private static double[] dfCapNorm = { 10, 20, 40 };
-    private static double[] dfCapOrig = { 20, 40, 60, 80 };
+//    private static double[] dfCapNorm = { 10, 20, 40 };
+//    private static double[] dfCapOrig = { 20, 40, 60, 80 };
+    private static double[] dfCapNorm = { 25 };
+    private static double[] dfCapOrig = { 75 };
 
     private static String inputDir;
     private static String workingDir;

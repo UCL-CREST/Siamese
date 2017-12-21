@@ -1,7 +1,7 @@
 package crest.siamese.document;
 
 public class Document {
-	private String id;
+	private long id;
 	private String file;
 	private int startline;
 	private int endline;
@@ -16,7 +16,7 @@ public class Document {
     }
 
 	public Document(
-	        String id,
+	        long id,
             String file,
             int startline,
             int endline,
@@ -36,10 +36,10 @@ public class Document {
 		this.url = url;
 	}
 	
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getSource() {
@@ -103,7 +103,7 @@ public class Document {
         }
         final Document other = (Document) obj;
 
-        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+        if (this.id != other.id) {
             return false;
         }
 

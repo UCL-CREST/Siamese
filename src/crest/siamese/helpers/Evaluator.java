@@ -138,7 +138,7 @@ public class Evaluator {
         return arp;
     }
 
-    public double evaluateMAP(String outputFile, int size) {
+    public double evaluateMAP(String outputFile, long size) {
         System.out.println("Evaluating MAP ...");
         String mapToPrint = "";
         double map = 0.0;

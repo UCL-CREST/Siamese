@@ -29,6 +29,7 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 
@@ -71,6 +72,7 @@ public class ESConnector {
 			try {
 			    XContentBuilder builder = jsonBuilder()
                         .startObject()
+						.field("id", d.getId())
                         .field("file", d.getFile())
                         .field("startline", d.getStartLine())
                         .field("endline", d.getEndLine())
@@ -82,7 +84,7 @@ public class ESConnector {
                         .endObject();
 
 				// insert document one by one
-				IndexResponse response = client.prepareIndex(index, type, d.getId()).setSource(builder).get();
+				IndexResponse response = client.prepareIndex(index, type).setSource(builder).get();
 
 				if (!response.isCreated()) {
 					throw new Exception("cannot insert " + d.getId() + ", " + d.getFile()
@@ -110,8 +112,9 @@ public class ESConnector {
 		// keep adding documents
 		for (Document d : documents) {
 			try {
-				bulkRequest.add(client.prepareIndex(index, type, d.getId())
+				bulkRequest.add(client.prepareIndex(index, type)
 						.setSource(jsonBuilder().startObject()
+								.field("id", d.getId())
 								.field("file", d.getFile())
 								.field("startline", d.getStartLine())
 								.field("endline", d.getEndLine())
@@ -139,6 +142,27 @@ public class ESConnector {
         }
 
         return !bulkResponse.hasFailures();
+	}
+
+	public long getMaxId(String index, boolean isDFS) throws Exception {
+		SearchType searchType;
+
+		if (isDFS)
+			searchType = SearchType.DFS_QUERY_THEN_FETCH;
+		else
+			searchType = SearchType.QUERY_THEN_FETCH;
+
+		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
+				.addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
+				.addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
+				.setQuery(QueryBuilders.matchAllQuery())
+				.addAggregation(AggregationBuilders.max("max_id").field("id"))
+				.execute()
+				.actionGet();
+
+		Double maxId = (Double) response.getAggregations().get("max_id").getProperty("value");
+
+		return maxId.longValue();
 	}
 
     public ArrayList<Document> search(String index, String type, String query, boolean isPrint
@@ -247,7 +271,7 @@ public class ESConnector {
 
             try {
                 Document d = new Document(
-                        hit.getId(),
+						Long.parseLong(hit.getSource().get("id").toString()),
                         hit.getSource().get("file").toString(),
                         Integer.parseInt(hit.getSource().get("startline").toString()),
                         Integer.parseInt(hit.getSource().get("endline").toString()),

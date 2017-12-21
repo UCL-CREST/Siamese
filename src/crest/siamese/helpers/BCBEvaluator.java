@@ -116,7 +116,7 @@ public class BCBEvaluator extends Evaluator  {
                     "WHERE id = " + cloneId + ";";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                query.setId(String.valueOf(rs.getInt("id")));
+                query.setId(rs.getInt("id"));
                 query.setFile(rs.getString("type") + "/" + rs.getString("name"));
                 query.setStartline(rs.getInt("startline"));
                 query.setEndline(rs.getInt("endline"));
@@ -161,7 +161,7 @@ public class BCBEvaluator extends Evaluator  {
                 String file = rs.getString("type2") + "/" + rs.getString("file2");
                 int start = rs.getInt("start2");
                 int end = rs.getInt("end2");
-                d.setId(String.valueOf(id));
+                d.setId(id);
                 d.setFile(file);
                 d.setStartline(start);
                 d.setEndline(end);

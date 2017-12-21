@@ -11,11 +11,11 @@ public class DocumentTest {
     public void TestDocumentCreation() {
         Document d = new Document();
         d.setFile("/my/test/file");
-        d.setId("0");
+        d.setId(0);
         d.setSource("import java.io.*; class BubbleSort { public static void main ( String[] args )");
 
         Document d2 = new Document(
-                "0",
+                0,
                 "/my/test/file",
                 1,
                 1,
@@ -33,11 +33,11 @@ public class DocumentTest {
     public void TestDifferentDocuments() {
         Document d = new Document();
         d.setFile("/my/test/file");
-        d.setId("0");
+        d.setId(0);
         d.setSource("import java.io.*; class BubbleSort { public static void main ( String[] args )");
 
         Document d3 = new Document(
-                "1",
+                1,
                 "/my/file",
                 1,
                 1,

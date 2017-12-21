@@ -1,6 +1,7 @@
 package crest.siamese.main;
 
 import org.apache.commons.cli.*;
+import org.elasticsearch.client.transport.NoNodeAvailableException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,10 +28,11 @@ public class Main {
 
         try {
 			siamese.execute();
+		} catch(NoNodeAvailableException nne) {
+			System.out.println("Elasticsearch is not running. Please execute the following command:\n" +
+					"./elasticsearch-2.2.0/bin/elasticsearch -d");
 		} catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Elasticsearch is not running. Please execute the following command:\n" +
-					"./elasticsearch-2.2.0/bin/elasticsearch -d");
 		}
 
 		siamese.shutdown();

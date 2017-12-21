@@ -23,9 +23,10 @@ public class JavaMethodParser implements MethodParser {
     private String FILE_PATH = "";
     private String PREFIX_TO_REMOVE = "";
     private String MODE = Settings.MethodParserType.METHOD;
-    public static String JAVA_PACKAGE = "";
-    public static String JAVA_CLASS = "";
+    private static String JAVA_PACKAGE = "";
+    private static String JAVA_CLASS = "";
     private boolean isPrint;
+    private String license = "none";
 
     public JavaMethodParser() {
         super();
@@ -63,6 +64,10 @@ public class JavaMethodParser implements MethodParser {
         isPrint = print;
     }
 
+    public String getLicense() {
+        return license;
+    }
+
     /***
      * Extract both methods and constructors
      * @return a list of methods & constructors
@@ -74,10 +79,17 @@ public class JavaMethodParser implements MethodParser {
             CompilationUnit cu;
 
             // method-level parser
-            if (MODE == Settings.MethodParserType.METHOD) {
+            if (MODE.equals(Settings.MethodParserType.METHOD)) {
                 try {
                     cu = JavaParser.parse(in);
+                    Optional comment = cu.getComment();
+                    if (comment.isPresent()) {
+                        String headerComment = comment.get().toString();
+                        license = LicenseExtractor.extractLicenseWithRegExp(headerComment);
+                    } else {
 
+                        license = "none";
+                    }
                     NodeList<TypeDeclaration<?>> types = cu.getTypes();
                     for (TypeDeclaration type : types) {
                         if (type instanceof ClassOrInterfaceDeclaration) {
@@ -168,7 +180,7 @@ public class JavaMethodParser implements MethodParser {
                                 p.getNameAsString()));
             }
 
-            // do not include comments in the indexed code
+            // include comments in the indexed code
             PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
             ppc.setPrintComments(true);
 
@@ -203,7 +215,7 @@ public class JavaMethodParser implements MethodParser {
                                 p.getNameAsString()));
             }
 
-            // do not include comments in the indexed code
+            // include comments in the indexed code
             PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
             ppc.setPrintComments(true);
 
