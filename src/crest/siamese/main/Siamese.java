@@ -8,6 +8,8 @@ import crest.siamese.settings.NormalizerMode;
 import crest.siamese.document.Document;
 import crest.siamese.document.Method;
 import crest.siamese.settings.IndexSettings;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.lucene.index.*;
@@ -75,6 +77,7 @@ public class Siamese {
     private boolean includeLicense;
     private String licenseExtractor;
     private String url = "none";
+    private String fileLicense = "unknown";
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -470,8 +473,8 @@ public class Siamese {
             try {
                 String license = "none";
                 String filePath = file.getAbsolutePath().replace(prefixToRemove, "");
-                if (isPrint)
-                    System.out.println(count + ": " + filePath);
+//                if (isPrint)
+                    System.out.println(fileCount + ": " + filePath);
                 fileCount++;
                 // parse each file into method (if possible)
                 MethodParser methodParser = initialiseMethodParser(
@@ -495,6 +498,13 @@ public class Siamese {
                                 license = "none";
                         }
                     }
+
+                    // level is in the file in the root, use it if cannot find localised license
+                    if ((license.equals("unknown") || license.equals("none"))
+                            && !this.fileLicense.equals("unknown")) {
+                        license = this.fileLicense;
+                    }
+
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
@@ -1193,6 +1203,24 @@ public class Siamese {
 
                 this.inputFolder = projDir;
                 this.url = "https://github.com/" + dir + "/" + d + "/blob/master";
+
+                File f = new File(projDir + "/LICENSE.txt");
+                if (!f.exists() || f.isDirectory()) {
+                    f = new File(projDir + "/LICENSE");
+                }
+
+                if (f.exists() && !f.isDirectory()) {
+//                    System.out.println("found: " + f.getAbsolutePath());
+                    String[] lines = FileUtils.readFileToString(f).split("\n");
+                    for (String line: lines) {
+                        String license = LicenseExtractor.extractLicenseWithRegExp(line);
+                        if (!license.equals("unknown")) {
+//                            System.out.println(license);
+                            this.fileLicense = license;
+                            break;
+                        }
+                    }
+                }
 
                 // initialise the n-gram generator
                 ngen = new nGramGenerator(ngramSize);

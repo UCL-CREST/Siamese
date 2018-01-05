@@ -12,10 +12,10 @@ public class GitHubIndexing {
 
     private static Options options = new Options();
     private static String configFile;
-    private static Siamese siamese;
+    private static String githubLoc;
 
     public static void main(String[] args) {
-
+        Siamese siamese;
         processCommandLine(args);
         String githubLocation = "/Users/Chaiyong/Downloads/github/";
 
@@ -25,7 +25,6 @@ public class GitHubIndexing {
         }
 
         Date startDate = getCurrentTime();
-
         siamese = new Siamese(configFile);
         siamese.startup();
 
@@ -47,6 +46,7 @@ public class GitHubIndexing {
         // create the command line parser
         CommandLineParser parser = new DefaultParser();
         options.addOption("cf", "configFile", true, "read from a configuration file");
+        options.addOption("l", "location", true, "location of GitHub projects");
         options.addOption("h", "help", false, "print help");
 
         // check if no parameter given, print help and quit
@@ -61,6 +61,9 @@ public class GitHubIndexing {
             if (line.hasOption("h")) { showHelp(); }
             if (line.hasOption("cf")) {
                 configFile = line.getOptionValue("cf");
+            }
+            if (line.hasOption("l")) {
+                githubLoc = line.getOptionValue("l");
             }
         } catch (ParseException exp) {
             System.out.println("Warning: " + exp.getMessage());

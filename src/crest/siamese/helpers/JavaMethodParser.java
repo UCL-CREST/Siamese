@@ -87,7 +87,6 @@ public class JavaMethodParser implements MethodParser {
                         String headerComment = comment.get().toString();
                         license = LicenseExtractor.extractLicenseWithRegExp(headerComment);
                     } else {
-
                         license = "none";
                     }
                     NodeList<TypeDeclaration<?>> types = cu.getTypes();

@@ -1,5 +1,7 @@
-for i in `ls -1 $1`
+for i in `ls -1 $1/*.java`
 do
     echo $i
-    iconv -f windows-1252 -t utf-8 $i > u$i
+    encoding=`uchardet $i`
+    echo $encoding
+    iconv -f $encoding -t utf-8 $i > $2/$i
 done
