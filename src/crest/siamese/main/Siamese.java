@@ -473,7 +473,7 @@ public class Siamese {
             try {
                 String license = "none";
                 String filePath = file.getAbsolutePath().replace(prefixToRemove, "");
-//                if (isPrint)
+                if (isPrint)
                     System.out.println(fileCount + ": " + filePath);
                 fileCount++;
                 // parse each file into method (if possible)

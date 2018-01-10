@@ -28,8 +28,11 @@ public class BCBExperiment {
 
         // delete the previous result file
         File resultFile = new File("results/search_results.txt");
+        File groundTruthFile = new File("results/groundtruth.txt");
         if (resultFile.exists())
             resultFile.delete();
+        if (groundTruthFile.exists())
+            groundTruthFile.delete();
 
         Siamese siamese = new Siamese(config);
         siamese.startup();
