@@ -72,6 +72,49 @@ def gen_config_template():
     config.append(["license", "true"])
     config.append(["licenseExtractor", "regexp"])
     return config
+    config.append(["origBoost", "1"])
+    config.append(["similarityMode", "tfidf_text_def"])
+    config.append(["cloneClusterFile", "soco"])
+    config.append(["errorMeasure", "map"])
+    config.append(["deleteIndexAfterUse", "true"])
+    config.append(["license", "true"])
+    config.append(["licenseExtractor", "regexp"])
+    return config
+
+
+def update_config(config, index, val):
+    config[index][1] = val
+    return config
+
+
+def write_config(config):
+    config_str = ""
+    for line in config:
+        config_str += line[0] + "=" + line[1] + "\n"
+    writefile("myconfig.properties", config_str, 'w', False)
+
+
+def writefile(filename, fcontent, mode, isprint):
+    """
+    Write the string content to a file
+    copied from
+    http://www.pythonforbeginners.com/files/reading-and-writing-files-in-python
+    :param filename: name of the file
+    :param fcontent: string content to put into the file
+    :param mode: writing mode, 'w' overwrite every time, 'a' append to an existing file
+    :return: N/A
+    """
+    # try:
+    file = open(filename, mode)
+    file.write(fcontent)
+    file.close()
+
+
+def execute_siamese():
+    command = "java -jar -Xss8g siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+    print(command)
+    # p = Popen([command], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    # output, err = p.communicate()
 
 
 def update_config(config, index, val):
