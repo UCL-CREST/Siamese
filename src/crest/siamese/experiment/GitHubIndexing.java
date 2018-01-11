@@ -15,13 +15,16 @@ public class GitHubIndexing {
     private static String githubLoc;
 
     public static void main(String[] args) {
+        indexGitHub(args);
+    }
+
+    public static void indexGitHub(String[] args) {
         Siamese siamese;
         processCommandLine(args);
-        String githubLocation = "/Users/Chaiyong/Downloads/github/";
 
         if (configFile == null) {
-            System.out.println("Couldn't find the config file. Use the default one at ./config.properties");
-            configFile = "config.properties";
+            System.out.println("Couldn't find the config file. Use the default one at ./myconfig.properties");
+            configFile = "myconfig.properties";
         }
 
         Date startDate = getCurrentTime();
@@ -29,7 +32,7 @@ public class GitHubIndexing {
         siamese.startup();
 
         try {
-            siamese.indexGitHub(githubLocation);
+            siamese.indexGitHub();
         } catch(NoNodeAvailableException nne) {
             System.out.println("Elasticsearch is not running. Please execute the following command:\n" +
                     "./elasticsearch-2.2.0/bin/elasticsearch -d");

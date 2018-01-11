@@ -1,5 +1,8 @@
 import sys
 from subprocess import Popen, PIPE
+import matplotlib.pyplot as plt
+import numpy as np
+import plotly.plotly as py
 
 
 def filter_proj_by_stars(file):
@@ -33,9 +36,10 @@ def gen_config_template():
     config = list()
     config.append(["elasticsearchLoc", "/Users/Chaiyong/IdeasProjects/Siamese/elasticsearch-2.2.0"])
     config.append(["server", "localhost"])
-    config.append(["index", "hadoop"])
+    config.append(["index", "github"])
     config.append(["type", "siamese"])
-    config.append(["inputFolder", "/Users/Chaiyong/Documents/phd/2016/cloplag/tests_andrea"])
+    config.append(["inputFolder", "/Users/Chaiyong/Downloads/github"])
+    config.append(["subInputFolder", ""])
     config.append(["outputFolder", "/Users/Chaiyong/Downloads/isics_results"])
     config.append(["normMode", "djkspvw"])
     config.append(["isNgram", "true"])
@@ -71,14 +75,7 @@ def gen_config_template():
     config.append(["deleteIndexAfterUse", "true"])
     config.append(["license", "true"])
     config.append(["licenseExtractor", "regexp"])
-    return config
-    config.append(["origBoost", "1"])
-    config.append(["similarityMode", "tfidf_text_def"])
-    config.append(["cloneClusterFile", "soco"])
-    config.append(["errorMeasure", "map"])
-    config.append(["deleteIndexAfterUse", "true"])
-    config.append(["license", "true"])
-    config.append(["licenseExtractor", "regexp"])
+    config.append(["github", "true"])
     return config
 
 
@@ -146,15 +143,45 @@ def writefile(filename, fcontent, mode, isprint):
 
 
 def execute_siamese():
-    command = "java -jar -Xss8g siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+    command = ["java", "-jar", "-Xss8g", "siamese-0.0.4-SNAPSHOT.jar", "-cf", "myconfig.properties"]
     print(command)
-    # p = Popen([command], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    # output, err = p.communicate()
+    p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    output, err = p.communicate()
+    print(output)
+    print(err)
+
+
+def plot_hist(list):
+    f = plt.figure()
+    plt.hist(list, bins=1000,log=True)
+    # plt.boxplot(list)
+    plt.title("Distribution of GitHub project stars: 29465 - 1")
+    plt.xlabel("Stars")
+    plt.ylabel("Frequency (log)")
+    # plt.show()
+    f.savefig("stars.pdf", bbox_inches='tight')
+
+
+def analyse_projects(projs, start, end):
+    ### for printing histogram
+    print('max: ' + str(projs[0][0]))
+    stars_list = list()
+    count = 0
+
+    for proj in projs:
+        if start >= proj[0] >= end:
+            stars_list.append(proj[0])
+            count += 1
+
+    print('amount:', count)
+    # plot_hist(stars_list)
 
 
 def main():
     projs = filter_proj_by_stars(sys.argv[1])
     print('total:', len(projs))
+    # analyse_projects(projs, 2, 1)
+
     start = 29465
     end = 200
 
@@ -162,10 +189,12 @@ def main():
         if start >= proj[0] >= end:
             print(proj[0], proj[1])
             config = gen_config_template()
-            config = update_config(config, 4, proj[1])
+            config = update_config(config, 4, sys.argv[2])
+            config = update_config(config, 5, proj[1])
             write_config(config)
             execute_siamese()
             input("Press Enter to continue...")
+        break
 
 
 main()
