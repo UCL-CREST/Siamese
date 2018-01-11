@@ -33,7 +33,7 @@ def gen_config_template():
     config = list()
     config.append(["elasticsearchLoc", "/Users/Chaiyong/IdeasProjects/Siamese/elasticsearch-2.2.0"])
     config.append(["server", "localhost"])
-    config.append(["index", "hadoop"])
+    config.append(["index", "github"])
     config.append(["type", "siamese"])
     config.append(["inputFolder", "/Users/Chaiyong/Documents/phd/2016/cloplag/tests_andrea"])
     config.append(["outputFolder", "/Users/Chaiyong/Downloads/isics_results"])
@@ -104,25 +104,30 @@ def writefile(filename, fcontent, mode, isprint):
 
 def execute_siamese():
     command = "java -jar -Xss8g siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
-    print(command)
-    # p = Popen([command], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    # output, err = p.communicate()
+    # print(command)
+    p = Popen(["java", "-jar" , "-Xss8g", "siamese-0.0.4-SNAPSHOT.jar", "-cf", "myconfig.properties"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    output, err = p.communicate()
+    print(output)
+    writefile('github.log', output + '\n', 'a', False)
+    print(err)
 
 
 def main():
     projs = filter_proj_by_stars(sys.argv[1])
     print('total:', len(projs))
-    start = 29465
-    end = 200
+    writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
+    start = 9
+    end = 3
 
-    for proj in projs:
+    for idx, proj in enumerate(projs):
         if start >= proj[0] >= end:
-            print(proj[0], proj[1])
+            print(idx, proj[0], proj[1])
+            writefile('github.log', 'No. ' + str(idx) + ', ' + str(proj[0]) + ', ' + proj[1] + '\n', 'a', False)
             config = gen_config_template()
-            config = update_config(config, 4, proj[1])
+            config = update_config(config, 4, '/home/cragkhit/data/github/' + proj[1])
             write_config(config)
             execute_siamese()
-            input("Press Enter to continue...")
+            #input("Press Enter to continue...")
 
 
 main()
