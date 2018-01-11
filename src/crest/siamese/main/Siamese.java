@@ -37,6 +37,7 @@ public class Siamese {
     private String index;
     private String type;
     private String inputFolder;
+    private String subInputFolder;
     private String normMode;
     private NormalizerMode modes = new NormalizerMode();
     private int ngramSize;
@@ -78,6 +79,7 @@ public class Siamese {
     private String licenseExtractor;
     private String url = "none";
     private String fileLicense = "unknown";
+    private boolean github = false;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -101,6 +103,7 @@ public class Siamese {
             index = prop.getProperty("index");
             type = prop.getProperty("type");
             inputFolder = prop.getProperty("inputFolder");
+            subInputFolder = prop.getProperty("subInputFolder");
             outputFolder = prop.getProperty("outputFolder");
 
             normMode = prop.getProperty("normMode");
@@ -178,6 +181,8 @@ public class Siamese {
 
             includeLicense = Boolean.parseBoolean(prop.getProperty("license"));
             licenseExtractor = prop.getProperty("licenseExtractor");
+
+            github = Boolean.parseBoolean(prop.getProperty("github"));
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -291,34 +296,38 @@ public class Siamese {
 
         try {
             if (siameseClient != null) {
-                if (command.toLowerCase().equals("index")) {
+                if (github) {
+                    indexGitHub();
+                } else {
+                    if (command.toLowerCase().equals("index")) {
 
-                    if (recreateIndexIfExists) {
-                        createIndex(indexSettings, mappingStr);
-                    }
+                        if (recreateIndexIfExists) {
+                            createIndex(indexSettings, mappingStr);
+                        }
 
-                    long startingId = 0;
-                    if (!recreateIndexIfExists && doesIndexExist()) {
-                        startingId = getMaxId(index) + 1;
-                    }
+                        long startingId = 0;
+                        if (!recreateIndexIfExists && doesIndexExist()) {
+                            startingId = getMaxId(index) + 1;
+                        }
 
-                    long insertSize = insert(startingId);
+                        long insertSize = insert(startingId);
 
-                    if (insertSize != 0) {
-                        // if ok, refresh the index, then search
-                        es.refresh(index);
-                        System.out.println("Successfully creating index.");
-                    } else {
-                        System.out.println("ERROR: Indexed zero file. Please check!");
-                    }
+                        if (insertSize != 0) {
+                            // if ok, refresh the index, then search
+                            es.refresh(index);
+                            System.out.println("Successfully creating index.");
+                        } else {
+                            System.out.println("ERROR: Indexed zero file. Please check!");
+                        }
 
-                } else if (command.toLowerCase().equals("search")) {
-                    if (es.doesIndexExist(this.index)) {
-                        OutputFormatter formatter = getOutputFormatter();
-                        outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
-                    } else {
-                        // index does not exist
-                        throw new Exception("index " + this.index + " does not exist.");
+                    } else if (command.toLowerCase().equals("search")) {
+                        if (es.doesIndexExist(this.index)) {
+                            OutputFormatter formatter = getOutputFormatter();
+                            outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
+                        } else {
+                            // index does not exist
+                            throw new Exception("index " + this.index + " does not exist.");
+                        }
                     }
                 }
             } else {
@@ -472,8 +481,12 @@ public class Siamese {
         for (File file : listOfFiles) {
             try {
                 String license = "none";
-                String filePath = file.getAbsolutePath().replace(prefixToRemove, "");
-                // if (isPrint)
+                // TODO: find a way to consolidate this:
+                // When doing CloPlag or SOCO evaluation, use this.
+                // String filePath = file.getAbsolutePath().replace(prefixToRemove, "");
+                // GitHub, use this.
+                String filePath = file.getAbsolutePath();
+                if (isPrint)
                     System.out.println(fileCount + ": " + filePath);
                 fileCount++;
                 // parse each file into method (if possible)
@@ -1169,44 +1182,50 @@ public class Siamese {
         this.resultsSize = resultsSize;
     }
 
-    public void indexGitHub(String githubLoc) throws Exception {
-        if (githubLoc.endsWith("/"))
-            githubLoc = StringUtils.chop(githubLoc);
+    public void indexGitHub() throws Exception {
+//        if (githubLoc.endsWith("/"))
+//            githubLoc = StringUtils.chop(githubLoc);
+//
+//        // check if the client is already started up
+//        if (siameseClient == null) {
+//            startup();
+//        }
+//
+//        File file = new File(githubLoc);
+//        String[] directories = file.list(new FilenameFilter() {
+//            @Override
+//            public boolean accept(File current, String name) {
+//                return new File(current, name).isDirectory();
+//            }
+//        });
+//
+//        for (String dir: directories) {
+//            String subDir = githubLoc + "/" + dir;
+//
+//            File sd = new File(subDir);
+//            String[] sdirs = sd.list(new FilenameFilter() {
+//                @Override
+//                public boolean accept(File current, String name) {
+//                    return new File(current, name).isDirectory();
+//                }
+//            });
+//
+//            for (String d : sdirs) {
+//                String projDir = githubLoc + "/" + dir + "/" + d;
+//                System.out.println(projDir);
 
-        // check if the client is already started up
-        if (siameseClient == null) {
-            startup();
-        }
+                if (this.inputFolder.endsWith("/"))
+                    this.inputFolder = StringUtils.chop(this.inputFolder);
+                if (this.subInputFolder.endsWith("/"))
+                    this.subInputFolder = StringUtils.chop(this.subInputFolder);
 
-        File file = new File(githubLoc);
-        String[] directories = file.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File current, String name) {
-                return new File(current, name).isDirectory();
-            }
-        });
+                this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
+                System.out.println("Indexing: " + this.inputFolder);
+                this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
 
-        for (String dir: directories) {
-            String subDir = githubLoc + "/" + dir;
-
-            File sd = new File(subDir);
-            String[] sdirs = sd.list(new FilenameFilter() {
-                @Override
-                public boolean accept(File current, String name) {
-                    return new File(current, name).isDirectory();
-                }
-            });
-
-            for (String d : sdirs) {
-                String projDir = githubLoc + "/" + dir + "/" + d;
-                System.out.println(projDir);
-
-                this.inputFolder = projDir;
-                this.url = "https://github.com/" + dir + "/" + d + "/blob/master";
-
-                File f = new File(projDir + "/LICENSE.txt");
+                File f = new File(this.inputFolder + "/LICENSE.txt");
                 if (!f.exists() || f.isDirectory()) {
-                    f = new File(projDir + "/LICENSE");
+                    f = new File(this.inputFolder + "/LICENSE");
                 }
 
                 if (f.exists() && !f.isDirectory()) {
@@ -1252,7 +1271,7 @@ public class Siamese {
                 } catch (Exception e) {
                     throw e;
                 }
-            }
-        }
+//            }
+//        }
     }
 }

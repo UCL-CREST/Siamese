@@ -9,15 +9,13 @@ SELECT * FROM
       INNER JOIN functions ON clones.function_id_one = functions.id)
     WHERE
       functions.endline - functions.startline + 1 >= 10
-      --   AND syntactic_type <= 1
-      --   AND syntactic_type <= 2
-      --   AND syntactic_type = 3
       AND (similarity_token >= 0.7 OR similarity_line >= 0.7)
     GROUP BY function_id_one
   ) AS c
 WHERE c.typesum < 3 * c.rowcount
   AND c.rowcount >= 10
   AND c.rowcount <= 100
+LIMIT 100
 ;
 
 -- FOLLOW-UP QUERY
@@ -27,14 +25,10 @@ FROM clones
   INNER JOIN functions AS A ON function_id_one = A.id
   INNER JOIN functions AS B ON function_id_two = B.id
 WHERE A.endline - A.startline + 1 >= 10
---   AND B.endline - B.startline + 1 >= 10
---       AND syntactic_type <= 2
--- WHERE syntactic_type=3
---   AND B.name='94284.java'
--- WHERE B.name='70655.java'
   AND (similarity_token >= 0.7 OR similarity_line >= 0.7)
   AND function_id_one = 9217
-ORDER BY clones.syntactic_type ASC, B.name ASC;
+ORDER BY clones.syntactic_type ASC, B.name ASC
+;
 
 
 -- OTHER QUERIES
