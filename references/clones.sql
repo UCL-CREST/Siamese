@@ -15,7 +15,7 @@ SELECT * FROM
 WHERE c.typesum < 3 * c.rowcount
   AND c.rowcount >= 10
   AND c.rowcount <= 100
-LIMIT 100
+-- LIMIT 100
 ;
 
 -- FOLLOW-UP QUERY
