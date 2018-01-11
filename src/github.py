@@ -38,7 +38,7 @@ def gen_config_template():
     config.append(["server", "localhost"])
     config.append(["index", "github"])
     config.append(["type", "siamese"])
-    config.append(["inputFolder", "/Users/Chaiyong/Downloads/github"])
+    config.append(["inputFolder", "/home/cragkhit/data/github"])
     config.append(["subInputFolder", ""])
     config.append(["outputFolder", "/Users/Chaiyong/Downloads/isics_results"])
     config.append(["normMode", "djkspvw"])
@@ -107,16 +107,6 @@ def writefile(filename, fcontent, mode, isprint):
     file.close()
 
 
-def execute_siamese():
-    command = "java -jar -Xss8g siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
-    # print(command)
-    p = Popen(["java", "-jar" , "-Xss8g", "siamese-0.0.4-SNAPSHOT.jar", "-cf", "myconfig.properties"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    output, err = p.communicate()
-    print(output)
-    writefile('github.log', output + '\n', 'a', False)
-    print(err)
-
-
 def update_config(config, index, val):
     config[index][1] = val
     return config
@@ -147,11 +137,13 @@ def writefile(filename, fcontent, mode, isprint):
 
 def execute_siamese():
     command = ["java", "-jar", "-Xss8g", "siamese-0.0.4-SNAPSHOT.jar", "-cf", "myconfig.properties"]
-    print(command)
+    # print(command)
     p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     output, err = p.communicate()
     print(output)
     print(err)
+    writefile('github.log', output + '\n', 'a', False)
+    writefile('github.log', err + '\n', 'a', False)
 
 
 def plot_hist(list):
@@ -184,8 +176,8 @@ def main():
     projs = filter_proj_by_stars(sys.argv[1])
     print('total:', len(projs))
     writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
-    start = 9
-    end = 3
+    start = 29465
+    end = 200
     # analyse_projects(projs, 2, 1)
 
     for idx, proj in enumerate(projs):
@@ -197,7 +189,7 @@ def main():
             config = update_config(config, 5, proj[1])
             write_config(config)
             execute_siamese()
-            #input("Press Enter to continue...")
+            # input("Press Enter to continue...")
 
 
 main()
