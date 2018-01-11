@@ -38,7 +38,7 @@ def gen_config_template():
     config.append(["server", "localhost"])
     config.append(["index", "github"])
     config.append(["type", "siamese"])
-    config.append(["inputFolder", "/Users/Chaiyong/Downloads/github"])
+    config.append(["inputFolder", "/home/cragkhit/data/github"])
     config.append(["subInputFolder", ""])
     config.append(["outputFolder", "/Users/Chaiyong/Downloads/isics_results"])
     config.append(["normMode", "djkspvw"])
@@ -142,6 +142,8 @@ def execute_siamese():
     output, err = p.communicate()
     print(output)
     print(err)
+    writefile('github.log', output + '\n', 'a', False)
+    writefile('github.log', err + '\n', 'a', False)
 
 
 def plot_hist(list):
@@ -175,21 +177,21 @@ def analyse_projects(projs, start, end):
 def main():
     projs = filter_proj_by_stars(sys.argv[1])
     print('total:', len(projs))
-    # analyse_projects(projs, 2, 1)
-
+    writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
     start = 29465
     end = 200
+    # analyse_projects(projs, 2, 1)
 
-    for proj in projs:
+    for idx, proj in enumerate(projs):
         if start >= proj[0] >= end:
-            print(proj[0], proj[1])
+            print(idx, proj[0], proj[1])
+            writefile('github.log', 'No. ' + str(idx) + ', ' + str(proj[0]) + ', ' + proj[1] + '\n', 'a', False)
             config = gen_config_template()
             config = update_config(config, 4, sys.argv[2])
             config = update_config(config, 5, proj[1])
             write_config(config)
             execute_siamese()
-            input("Press Enter to continue...")
-        # break
+            # input("Press Enter to continue...")
 
 
 main()
