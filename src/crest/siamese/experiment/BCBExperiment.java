@@ -38,7 +38,7 @@ public class BCBExperiment {
         siamese.startup();
 
         BCBEvaluator evaluator = new BCBEvaluator();
-        ArrayList<Integer> clones = evaluator.getCloneIds(100, -1, minCloneSize);
+        ArrayList<Integer> clones = evaluator.getCloneIds(700, -1, minCloneSize);
         System.out.println("Found initial " + clones.size() + " clone groups.");
 
         for (int i = 0; i < clones.size(); i++) {
