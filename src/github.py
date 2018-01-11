@@ -107,13 +107,6 @@ def writefile(filename, fcontent, mode, isprint):
     file.close()
 
 
-def execute_siamese():
-    command = "java -jar -Xss8g siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
-    print(command)
-    # p = Popen([command], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    # output, err = p.communicate()
-
-
 def update_config(config, index, val):
     config[index][1] = val
     return config
@@ -144,7 +137,7 @@ def writefile(filename, fcontent, mode, isprint):
 
 def execute_siamese():
     command = ["java", "-jar", "-Xss8g", "siamese-0.0.4-SNAPSHOT.jar", "-cf", "myconfig.properties"]
-    print(command)
+    # print(command)
     p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     output, err = p.communicate()
     print(output)
@@ -163,7 +156,9 @@ def plot_hist(list):
 
 
 def analyse_projects(projs, start, end):
-    ### for printing histogram
+    ###
+    # for printing histogram
+    ###
     print('max: ' + str(projs[0][0]))
     stars_list = list()
     count = 0
@@ -194,7 +189,7 @@ def main():
             write_config(config)
             execute_siamese()
             input("Press Enter to continue...")
-        break
+        # break
 
 
 main()
