@@ -8,6 +8,7 @@ import crest.siamese.settings.NormalizerMode;
 import crest.siamese.document.Document;
 import crest.siamese.document.Method;
 import crest.siamese.settings.IndexSettings;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.lang.StringUtils;
@@ -80,6 +81,7 @@ public class Siamese {
     private String url = "none";
     private String fileLicense = "unknown";
     private boolean github = false;
+    private boolean computeSimilarity = false;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -183,6 +185,8 @@ public class Siamese {
             licenseExtractor = prop.getProperty("licenseExtractor");
 
             github = Boolean.parseBoolean(prop.getProperty("github"));
+
+            computeSimilarity = Boolean.parseBoolean(prop.getProperty("computeSimilarity"));
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -711,8 +715,13 @@ public class Siamese {
                                     results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
                                 else
                                     results = es.search(index, type, query, isPrint, isDFS, offset, size);
-//
-                                outToFile += formatter.format(results, prefixToRemove);
+
+                                if (this.computeSimilarity) {
+                                    int[] sim = computeSimilarity(method, origQuery, results);
+                                    outToFile += formatter.format(results, sim, prefixToRemove);
+                                } else {
+                                    outToFile += formatter.format(results, prefixToRemove);
+                                }
                                 outToFile += "\n";
                                 methodCount++;
                             }
@@ -747,6 +756,16 @@ public class Siamese {
             throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
         }
         return outfile.getAbsolutePath();
+    }
+
+    private int[] computeSimilarity(Method method, String query, ArrayList<Document> results) {
+        int[] simResults = new int[results.size()];
+        for (int i=0; i<results.size(); i++) {
+            Document d = results.get(i);
+            int sim = FuzzySearch.tokenSetRatio(query, d.getOriginalSource());
+            simResults[i] = sim;
+        }
+        return simResults;
     }
 
     private String reduceQuery(String query, String field, double limit) {
@@ -1180,6 +1199,10 @@ public class Siamese {
 
     public void setResultsSize(int resultsSize) {
         this.resultsSize = resultsSize;
+    }
+
+    public boolean getComputeSimilarity() {
+        return this.computeSimilarity;
     }
 
     public void indexGitHub() throws Exception {

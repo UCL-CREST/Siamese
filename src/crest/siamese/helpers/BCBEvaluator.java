@@ -114,7 +114,7 @@ public class BCBEvaluator extends Evaluator  {
                     "  ) AS c\n" +
                     "WHERE c.typesum < 3 * c.rowcount\n" +
                     "  AND c.rowcount >= 10\n" +
-                    "  AND c.rowcount <= 100\n" +
+                    "  AND c.rowcount <= 20\n" +
                     "LIMIT " + limit + "\n" +
                     ";";
             ResultSet rs = stmt.executeQuery(sql);
@@ -249,7 +249,8 @@ public class BCBEvaluator extends Evaluator  {
             Document groundTruthQuery,
             ArrayList<BCBDocument> groundTruth,
             int resultSize,
-            String outputFile) {
+            String outputFile,
+            boolean computeSimilarity) {
 
         int checkedResultCount = 0;
         int tp = 0;
@@ -299,13 +300,18 @@ public class BCBEvaluator extends Evaluator  {
                                             System.out.println("ERROR: wrong clone type.");
 
                                         System.out.println(checkedResultCount + "[T]: " + nextLine[i]);
-                                        outToFile += checkedResultCount + ",R," + doc[0] + "," + doc[1] + "," + doc[2] + ",T" + matchedCloneType + "\n";
 
+                                        outToFile += checkedResultCount + ",R," + doc[0] + "," + doc[1] + "," + doc[2];
+                                        if (computeSimilarity)
+                                                outToFile += "," + doc[3];
+                                        outToFile += ",T" + matchedCloneType + "\n";
                                     } else {
-
                                         System.out.println(checkedResultCount + "[F]: " + nextLine[i]);
-                                        outToFile += checkedResultCount + ",R," + doc[0] + "," + doc[1] + "," + doc[2] + ",F\n";
 
+                                        outToFile += checkedResultCount + ",R," + doc[0] + "," + doc[1] + "," + doc[2];
+                                        if (computeSimilarity)
+                                            outToFile += "," + doc[3];
+                                        outToFile += ",F\n";
                                     }
                                 } else {
                                     System.out.println("found query, skip.");

@@ -14,7 +14,7 @@ SELECT * FROM
   ) AS c
 WHERE c.typesum < 3 * c.rowcount
   AND c.rowcount >= 10
-  AND c.rowcount <= 100
+  AND c.rowcount <= 20
 -- LIMIT 100
 ;
 

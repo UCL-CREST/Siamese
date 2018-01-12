@@ -57,4 +57,27 @@ public class OutputFormatter {
             return null;
         }
     }
+
+    public String format(ArrayList<Document> results, int[] sim, String prefixToRemove) {
+        if (this.format.equals("csv")) {
+            StringBuilder sb = new StringBuilder();
+            int resultCount = 0;
+            for (int i =0; i<results.size(); i++) {
+                Document d = results.get(i);
+                if (resultCount > 0)
+                    sb.append(","); // add comma in between
+
+                sb.append(d.getFile().replace(prefixToRemove, ""));
+
+                if (addStartEndLine) {
+                    sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i]);
+                }
+                resultCount++;
+            }
+            return sb.toString();
+        } else {
+            System.out.println("ERROR: unsupported format.");
+            return null;
+        }
+    }
 }
