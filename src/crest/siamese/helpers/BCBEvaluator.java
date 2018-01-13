@@ -121,8 +121,8 @@ public class BCBEvaluator extends Evaluator  {
             while (rs.next()) {
                 int id1 = rs.getInt("function_id_one");
                 System.out.println("Query ID: " + id1);
-                if (isInPreviousQueryIDs(id1))
-                    System.out.println("Already evaluated this ID ... skip");
+//                if (isInPreviousQueryIDs(id1))
+//                    System.out.println("Already evaluated this ID ... skip");
                 cloneList.add(id1);
             }
             rs.close();
@@ -271,7 +271,7 @@ public class BCBEvaluator extends Evaluator  {
                         && Integer.valueOf(query[2]) == groundTruthQuery.getEndLine()) {
 
                     outToFile = "0,Q," + query[0] + "," + query[1] + "," + query[2] + "\n";
-                    MyUtils.writeToFile("results", "groundtruth.txt", outToFile, true);
+                    MyUtils.writeToFile("results", "groundtruth.csv", query[0] + "," + query[1] + "," + query[2] + ",", true);
 
                     // check the results with the key
                     for (int i = 1; i <= resultSize; i++) {
@@ -333,8 +333,8 @@ public class BCBEvaluator extends Evaluator  {
         }
 
         String o = printGroundTruth(groundTruth, tp, type1, type2, type3);
-        MyUtils.writeToFile("results", "groundtruth.txt", o + "\n", true);
-        MyUtils.writeToFile("results", "search_results.txt", outToFile + "\n", true);
+        MyUtils.writeToFile("results", "groundtruth.csv", o + "\n", true);
+        MyUtils.writeToFile("results", "search_results.csv", outToFile + "\n", true);
 
         return false;
     }
@@ -355,31 +355,31 @@ public class BCBEvaluator extends Evaluator  {
         DecimalFormat df = new DecimalFormat(".##");
 
         System.out.println("TP     : " + tp + "/" + groundTruth.size() + "[" + df.format((double) (tp * 100)/groundTruth.size()) + "%]");
-        outToFile += "TP," + tp + "," + groundTruth.size() +  ",";
+        outToFile += tp + "," + groundTruth.size() +  ",";
         if (gtype1 == 0) {
             System.out.println("Type1  : " + type1 + "/" + gtype1 + " [N/A%]");
-            outToFile += "T1," + type1 + "," + gtype1 + ",";
+            outToFile += type1 + "," + gtype1 + ",";
         } else {
             System.out.println("Type1  : " + type1 + "/" + gtype1 + " [" + df.format((double) (type1 * 100) / gtype1) + "%]");
-            outToFile += "T1," + type1 + "," + gtype1 + ",";
+            outToFile += type1 + "," + gtype1 + ",";
         }
         if (gtype2 == 0) {
             System.out.println("Type2  : " + type2 + "/" + gtype2 + " [N/A%]");
-            outToFile += "T2," + type2 + "," + gtype2 + ",";
+            outToFile += type2 + "," + gtype2 + ",";
         } else {
             System.out.println("Type2  : " + type2 + "/" + gtype2 + " [" + df.format((double) (type2 * 100) / gtype2) + "%]");
-            outToFile += "T2," + type2 + "," + gtype2 + ",";
+            outToFile += type2 + "," + gtype2 + ",";
         }
         if (gtype3 == 0) {
             System.out.println("Type3  : " + type3 + "/" + gtype3 + " [N/A%]");
-            outToFile += "T3," + type3 + "," + gtype3 + ",";
+            outToFile += type3 + "," + gtype3 + ",";
         }
         else {
             System.out.println("Type3  : " + type3 + "/" + gtype3 + " [" + df.format((double) (type3 * 100) / gtype3) + "%]");
-            outToFile += "T3," + type3 + "," + gtype3 + "\n";
+            outToFile += type3 + "," + gtype3;
         }
 
-        return outToFile + "\n";
+        return outToFile;
     }
 
     private String getQueryFileName(String fileWithMethodName) {

@@ -26,8 +26,8 @@ public class BCBExperiment {
         int resultSize = 51;
 
         // delete the previous result file
-        File resultFile = new File("results/search_results.txt");
-        File groundTruthFile = new File("results/groundtruth.txt");
+        File resultFile = new File("results/search_results.csv");
+        File groundTruthFile = new File("results/groundtruth.csv");
         if (resultFile.exists())
             resultFile.delete();
         if (groundTruthFile.exists())
@@ -39,6 +39,8 @@ public class BCBExperiment {
         BCBEvaluator evaluator = new BCBEvaluator();
         ArrayList<Integer> clones = evaluator.getCloneIds(700, -1, minCloneSize);
         System.out.println("Found initial " + clones.size() + " clone groups.");
+        MyUtils.writeToFile("results", "groundtruth.csv",
+                "query,start,end,tp,total,t1,t1total,t2,t2total,t3,t3total\n", true);
 
         for (int i = 0; i < clones.size(); i++) {
 
@@ -55,15 +57,12 @@ public class BCBExperiment {
                 try {
                     siamese.setResultOffset(0);
 
-                    int multiply = 2; // start with double the size
-                    boolean foundAllTPs = false;
                     // retrieve documents at double the size of the clone group.
                     // so we can manually check for all missing pairs.
                     siamese.setResultsSize(resultSize);
                     outputFile = siamese.execute();
                     System.out.println("Query size: " + resultSize + "\n" + "Q: " + query.getLocationString());
-                    MyUtils.writeToFile("results", "search_results.txt", outToFile, true);
-                    foundAllTPs = evaluator.evaluateCloneQuery(query, cloneGroup, resultSize, outputFile, siamese.getComputeSimilarity());
+                    evaluator.evaluateCloneQuery(query, cloneGroup, resultSize, outputFile, siamese.getComputeSimilarity());
                     // delete the output and the query file
                     File oFile = new File(outputFile);
                     File qFile = new File(inputFolder + "/" + queryFile);
