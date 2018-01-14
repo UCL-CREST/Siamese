@@ -1,41 +1,90 @@
 import pandas as pd
+import os
 
-data = pd.read_csv('../results/bcb_10_search_results_manual.txt', sep=',', header=None)
-# print(data)
 
-for i in range(1, 11):
-    start = i + (i - 1) * 100
-    end = i * 100 + i - 1
-    # print(start, end)
-    q1dat = data.loc[start: end][5]
-    t1 = t2 = t3 = fp = 0
-    lastT = 0
-    sum10 = 0
+def writefile(filename, fcontent, mode, isprint):
+    """
+    Write the string content to a file
+    copied from
+    http://www.pythonforbeginners.com/files/reading-and-writing-files-in-python
+    :param filename: name of the file
+    :param fcontent: string content to put into the file
+    :param mode: writing mode, 'w' overwrite every time, 'a' append to an existing file
+    :return: N/A
+    """
+    # try:
+    file = open(filename, mode)
+    file.write(fcontent)
+    file.close()
 
-    for idx, d in enumerate(q1dat):
-        if d == 'T1' or d == 'T1*' or d == 'T1*J' or d == 'MT1' or d == 'MT1*' or d == 'MT1*J':
-            t1 += 1
-            if idx < 10:
-                sum10 += 1
-        elif d == 'T2' or d == 'T2*' or d == 'T2*J' or d == 'MT2' or d == 'MT2*' or d == 'MT2*J':
-            t2 += 1
-            if idx < 10:
-                sum10 += 1
-        elif d == 'T3' or d == 'T3*' or d == 'T3*J'  or d == 'MT3' or d == 'MT3*' or d == 'MT3*J':
-            t3 += 1
-            if idx < 10:
-                sum10 += 1
 
-        try:
-            if "T" in d:
-                lastT = idx
-        except TypeError as e:
-            print('idx=', idx)
-            print(e)
+def main():
 
-    for idx, d in enumerate(q1dat):
-        if (d == 'F' or d == 'MF' or d == 'MF*' or d == 'MF*J') and idx <= lastT:
-            fp += 1
+    groundtruth = pd.read_csv('../results/groundtruth.csv', sep=',', header=None)
+    gt = groundtruth[1:][5].tolist()
+    # print(gt)
+    # exit()
 
-    print(sum10/10, end=' ')
-    print((t1 + t2 + t3)/(lastT + 1), t1, t2, t3, lastT + 1, (t1 + t2 + t3), fp)
+    data = pd.read_csv('../results/search_results.csv', sep=',', header=None)
+    # print(data)
+    # exit()
+
+    QUERIES = 142
+    RESULTSIZE = 50
+    OUTFILE = '../bcb_precision.csv'
+
+    writefile(OUTFILE, 'r,10-prec,r-prec,tp,fp,t1,t2,t3\n', 'a', False)
+    precsum = [0, 0, 0, 0, 0, 0, 0]
+
+    for i in range(1, (QUERIES + 1)):
+        start = i + (i - 1) * RESULTSIZE
+        end = i * RESULTSIZE + i - 1
+        #print(start, end)
+        #continue
+        q1dat = data.loc[start: end][7]
+        # print(q1dat)
+        # exit()
+        t1 = t2 = t3 = fp = 0
+        lastT = 0
+        sum10 = 0
+
+        limit = int(gt[i - 1])
+        # print('limit: ', limit)
+
+        for idx, d in enumerate(q1dat):
+
+            if idx < limit:
+                if d == 'T1' or d == 'T1*' or d == 'T1*J' or d == 'MT1' or d == 'MT1*' or d == 'MT1*J':
+                    t1 += 1
+                    if idx < 10:
+                        sum10 += 1
+                elif d == 'T2' or d == 'T2*' or d == 'T2*J' or d == 'MT2' or d == 'MT2*' or d == 'MT2*J':
+                    t2 += 1
+                    if idx < 10:
+                        sum10 += 1
+                elif d == 'T3' or d == 'T3*' or d == 'T3*J'  or d == 'MT3' or d == 'MT3*' or d == 'MT3*J':
+                    t3 += 1
+                    if idx < 10:
+                        sum10 += 1
+                elif d == 'F' or d == 'MF' or d == 'MF*' or d == 'MF*J':
+                    fp += 1
+            else:
+                break
+
+        tenprec = sum10/10
+        rprec = (t1 + t2 + t3)/limit
+        precsum[0] += tenprec
+        precsum[1] += rprec
+
+        out = str(limit) + ','
+        out = out + str(tenprec) + ','
+        out = out + str(rprec) \
+              + ',' + str(t1 + t2 + t3) + ',' + str(fp) \
+              + ',' + str(t1) + ',' + str(t2) + ',' + str(t3) + '\n'
+
+        writefile(OUTFILE, out, 'a', True)
+
+    print(precsum[0]/QUERIES, precsum[1]/QUERIES)
+
+
+main()
