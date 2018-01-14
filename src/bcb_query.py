@@ -20,12 +20,12 @@ def writefile(filename, fcontent, mode, isprint):
 
 def main():
 
-    groundtruth = pd.read_csv('../results/groundtruth.csv', sep=',', header=None)
+    groundtruth = pd.read_csv('../results/bcb_groundtruth.csv', sep=',', header=None)
     gt = groundtruth[1:][5].tolist()
     # print(gt)
     # exit()
 
-    data = pd.read_csv('../results/search_results.csv', sep=',', header=None)
+    data = pd.read_csv('../results/bcb_search_results.csv', sep=',', header=None)
     # print(data)
     # exit()
 
@@ -39,17 +39,12 @@ def main():
     for i in range(1, (QUERIES + 1)):
         start = i + (i - 1) * RESULTSIZE
         end = i * RESULTSIZE + i - 1
-        #print(start, end)
-        #continue
         q1dat = data.loc[start: end][7]
-        # print(q1dat)
-        # exit()
         t1 = t2 = t3 = fp = 0
-        lastT = 0
         sum10 = 0
-
         limit = int(gt[i - 1])
-        # print('limit: ', limit)
+        # reciprocal rank
+        rr = limit
 
         for idx, d in enumerate(q1dat):
 
@@ -58,14 +53,20 @@ def main():
                     t1 += 1
                     if idx < 10:
                         sum10 += 1
+                    if rr == limit:
+                        rr = idx + 1
                 elif d == 'T2' or d == 'T2*' or d == 'T2*J' or d == 'MT2' or d == 'MT2*' or d == 'MT2*J':
                     t2 += 1
                     if idx < 10:
                         sum10 += 1
+                    if rr == limit:
+                        rr = idx + 1
                 elif d == 'T3' or d == 'T3*' or d == 'T3*J'  or d == 'MT3' or d == 'MT3*' or d == 'MT3*J':
                     t3 += 1
                     if idx < 10:
                         sum10 += 1
+                    if rr == limit:
+                        rr = idx + 1
                 elif d == 'F' or d == 'MF' or d == 'MF*' or d == 'MF*J':
                     fp += 1
             else:
@@ -73,10 +74,12 @@ def main():
 
         tenprec = sum10/10
         rprec = (t1 + t2 + t3)/limit
-        precsum[0] += tenprec
-        precsum[1] += rprec
+        precsum[0] += 1/rr
+        precsum[1] += tenprec
+        precsum[2] += rprec
 
         out = str(limit) + ','
+        out = out + str(rr) + ','
         out = out + str(tenprec) + ','
         out = out + str(rprec) \
               + ',' + str(t1 + t2 + t3) + ',' + str(fp) \
@@ -84,7 +87,7 @@ def main():
 
         writefile(OUTFILE, out, 'a', True)
 
-    print(precsum[0]/QUERIES, precsum[1]/QUERIES)
+    print(precsum[0]/QUERIES, precsum[1]/QUERIES, precsum[2]/QUERIES)
 
 
 main()

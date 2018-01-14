@@ -49,6 +49,8 @@ def gen_config_template():
     config.append(["extension", "java"])
     config.append(["minCloneSize", "10"])
     config.append(["command", "index"])
+    config.append(["computeSimilarity", "true"])
+    config.append(["simThreshold", "90"])
     config.append(["recreateIndexIfExists", "false"])
     config.append(["isPrint", "false"])
     config.append(["outputFormat", "csvfline"])
@@ -142,8 +144,8 @@ def execute_siamese():
     output, err = p.communicate()
     print(output)
     print(err)
-    writefile('github.log', output + '\n', 'a', False)
-    writefile('github.log', err + '\n', 'a', False)
+    writefile('github.log', str(output) + '\n', 'a', False)
+    writefile('github.log', str(err) + '\n', 'a', False)
 
 
 def plot_hist(list):

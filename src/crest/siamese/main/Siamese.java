@@ -82,6 +82,7 @@ public class Siamese {
     private String fileLicense = "unknown";
     private boolean github = false;
     private boolean computeSimilarity = false;
+    private int simThreshold = 0;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -187,6 +188,7 @@ public class Siamese {
             github = Boolean.parseBoolean(prop.getProperty("github"));
 
             computeSimilarity = Boolean.parseBoolean(prop.getProperty("computeSimilarity"));
+            simThreshold = Integer.parseInt(prop.getProperty("simThreshold"));
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -655,15 +657,16 @@ public class Siamese {
             extensions[0] = extension;
             File folder = new File(inputFolder);
             List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
+            System.out.println("Found: " + listOfFiles.size() + " files.");
 
             int count = 0;
             int methodCount = 0;
+            // reset the output buffer
+            outToFile = "";
 
             for (File file : listOfFiles) {
                 if (isPrint)
-                    System.out.println("File: " + file.getAbsolutePath());
-                // reset the output buffer
-                outToFile = "";
+                    System.out.println(count + ": " + file.getAbsolutePath());
                 // parse each file into methods (if possible)
                 MethodParser methodParser = initialiseMethodParser(
                         file.getAbsolutePath(),
@@ -675,6 +678,8 @@ public class Siamese {
                 String origQuery = "";
                 try {
                     methodList = methodParser.parseMethods();
+                    String license = methodParser.getLicense();
+
                     ArrayList<Document> results = new ArrayList<>();
 
                     // check if there's a method
@@ -686,12 +691,11 @@ public class Siamese {
                                 /* TODO: fix this some time. It's weird to have a list with only a single object. */
                                 // write output to file
                                 ArrayList<Document> queryList = new ArrayList<>();
-                                Document d = new Document();
-                                d.setFile(method.getFile() + "_" + method.getName());
-                                d.setStartline(method.getStartLine());
-                                d.setEndline(method.getEndLine());
-                                queryList.add(d);
-                                outToFile += formatter.format(queryList, prefixToRemove) + ",";
+                                Document q = new Document();
+                                q.setFile(method.getFile() + "_" + method.getName());
+                                q.setStartline(method.getStartLine());
+                                q.setEndline(method.getEndLine());
+                                outToFile += formatter.format(q, prefixToRemove, license) + ",";
 
                                 NormalizerMode tmode = new NormalizerMode();
                                 char[] noNormMode = {'x'};
@@ -717,8 +721,8 @@ public class Siamese {
                                     results = es.search(index, type, query, isPrint, isDFS, offset, size);
 
                                 if (this.computeSimilarity) {
-                                    int[] sim = computeSimilarity(method, origQuery, results);
-                                    outToFile += formatter.format(results, sim, prefixToRemove);
+                                    int[] sim = computeSimilarity(origQuery, results);
+                                    outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
                                 } else {
                                     outToFile += formatter.format(results, prefixToRemove);
                                 }
@@ -729,13 +733,27 @@ public class Siamese {
                     } else {
                         // check minimum size
                         if (MyUtils.countLines(file.getAbsolutePath()) >= minCloneLine) {
-                            query = tokenize(file);
-                            // search for results
-                            results = es.search(index, type, query, isPrint, isDFS, offset, size);
+                            NormalizerMode tmode = new NormalizerMode();
+                            char[] noNormMode = {'x'};
+                            tmode.setTokenizerMode(noNormMode);
+                            origQuery = tokenize(file, tmode, false);
+                            query = tokenize(file, modes, isNgram);
+
+                            // search for results depending on the MR setting
+                            if (this.multiRep)
+                                results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
+                            else
+                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
+
                             outToFile += file.getAbsolutePath().replace(prefixToRemove, "") +
-                                    "_noMethod" +
-                                    ",";
-                            outToFile += formatter.format(results, prefixToRemove);
+                                    "_noMethod#-1#-1#none,";
+
+                            if (this.computeSimilarity) {
+                                int[] sim = computeSimilarity(origQuery, results);
+                                outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
+                            } else {
+                                outToFile += formatter.format(results, prefixToRemove);
+                            }
                             outToFile += "\n";
                         }
                     }
@@ -745,9 +763,19 @@ public class Siamese {
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());
-                    System.out.println("ERROR: file " + count +" generates query term size exceeds 4096 (too big).");
+//                    System.out.println("ERROR: file " + count +" generates query term size exceeds 4096 (too big).");
                 }
-                bw.write(outToFile);
+
+                if (count % printEvery == 0) {
+                    double percent = (double) count * 100 / listOfFiles.size();
+                    DecimalFormat percentFormat = new DecimalFormat("#.00");
+                    System.out.println("Searched " + count
+                            + " [" + percentFormat.format(percent) + "%] documents (" + methodCount + " methods).");
+
+                    bw.write(outToFile);
+                    // reset the output to print
+                    outToFile = "";
+                }
             }
             bw.close();
             System.out.println("Searching done for " + count + " files (" + methodCount + " methods after clone size filtering).");
@@ -758,7 +786,7 @@ public class Siamese {
         return outfile.getAbsolutePath();
     }
 
-    private int[] computeSimilarity(Method method, String query, ArrayList<Document> results) {
+    private int[] computeSimilarity(String query, ArrayList<Document> results) {
         int[] simResults = new int[results.size()];
         for (int i=0; i<results.size(); i++) {
             Document d = results.get(i);
@@ -857,7 +885,7 @@ public class Siamese {
         return da.getPercentile(percentile);
     }
 
-    private String tokenize(File file) throws Exception {
+    private String tokenize(File file, NormalizerMode modes, boolean isNgram) throws Exception {
         String src = "";
         Normalizer normalizer = initialiseNormalizer(modes);
         Tokenizer tokenizer = initialiseTokenizer(normalizer);
@@ -899,83 +927,6 @@ public class Siamese {
         }
 
         return src;
-    }
-
-    /* copied from http://stackoverflow.com/questions/4640034/calculating-all-of-the-subsets-of-a-set-of-numbers */
-    public Set<Set<String>> powerSet(Set<String> originalSet) {
-        Set<Set<String>> sets = new HashSet<Set<String>>();
-        if (originalSet.isEmpty()) {
-            sets.add(new HashSet<String>());
-            return sets;
-        }
-        List<String> list = new ArrayList<String>(originalSet);
-        String head = list.get(0);
-
-        Set<String> rest = new HashSet<String>(list.subList(1, list.size()));
-        for (Set<String> set : powerSet(rest)) {
-            Set<String> newSet = new HashSet<String>();
-            newSet.add(head);
-            newSet.addAll(set);
-            // TODO: do we need to write to a file here?
-//			Experiment.writeToFile(outputFolder
-//					, "queries.txt"
-//					, newSet.toString().replace("[","").replace(",","").replace("]","\n")
-//					, true);
-            sets.add(newSet);
-            sets.add(set);
-        }
-
-        return sets;
-    }
-
-    public ArrayList<String> generate2NQuery(ArrayList<String> tokens) {
-        ArrayList<String> querySet = new ArrayList<String>();
-
-        // create a set to store query terms (removing duplicated terms)
-        Set<String> queryTerms = new HashSet<String>(tokens);
-
-        if (isPrint)
-            System.out.println("Size of term (set-based): " + queryTerms.size());
-
-        Set<Set<String>> possibleQueries = powerSet(queryTerms);
-
-        if (isPrint)
-            System.out.println("Size of sub queries: " + possibleQueries.size());
-
-        for (Set<String> query: possibleQueries) {
-            String queryStr = "";
-            for (String t: query) {
-                queryStr += t + " ";
-            }
-            querySet.add(queryStr.trim());
-        }
-
-        return querySet;
-    }
-
-    private String performSearch(String query, String outputFileLocation, String fileName, String output) throws Exception {
-
-        String outToFile = output;
-        outToFile += query + ",";
-
-        // search for results
-        ArrayList<Document> results = es.search(index, type, query, isPrint, isDFS, 0, 10);
-        int resultCount = 0;
-
-        for (Document d : results) {
-            if (resultCount>0)
-                outToFile += ","; // add comma in between
-
-            outToFile += d.getFile();
-            resultCount++;
-        }
-
-        outToFile += "\n";
-
-        MyUtils.writeToFile(outputFileLocation, fileName, outToFile, false);
-        System.out.println("Searching done. See output at " + outputFileLocation + "/" + fileName);
-
-        return outputFileLocation + "/" + fileName;
     }
 
     public long getIndicesStats() {

@@ -162,6 +162,38 @@ public class JavaNormalizerTest {
     }
 
     @org.junit.Test
+    public void checkDJKPSVWNormalisation2() throws Exception {
+        NormalizerMode mode = new NormalizerMode();
+        mode.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
+        mode.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
+        mode.setKeyword(Settings.Normalize.KEYWORD_NORM_ON);
+        mode.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_ON);
+        mode.setString(Settings.Normalize.STRING_NORM_ON);
+        mode.setWord(Settings.Normalize.WORD_NORM_ON);
+        mode.setValue(Settings.Normalize.VALUE_NORM_ON);
+        JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(mode));
+
+        ArrayList<String> tokens = tokenizer.getTokensFromString(
+                "public static long checksum(File file) throws IOException {\n" +
+                        "    CRC32 crc = new CRC32();\n" +
+                        "    FileReader fr = new FileReader(file);\n" +
+                        "    int data;\n" +
+                        "    while((data = fr.read()) != -1) {\n" +
+                        "        crc.update(data);\n" +
+                        "    }\n" +
+                        "    fr.close();\n" +
+                        "    return crc.getValue();\n" +
+                        "}");
+
+        nGramGenerator gen = new nGramGenerator(4);
+        ArrayList<String> grams = gen.generateNGramsFromJavaTokens(tokens);
+
+        for (int i=0; i<grams.size(); i++) {
+            System.out.print(grams.get(i) + " ");
+        }
+    }
+
+    @org.junit.Test
     public void TestDefaultNormalizeMode() throws Exception {
         NormalizerMode mode = new NormalizerMode();
 //        mode.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);

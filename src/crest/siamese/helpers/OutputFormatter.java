@@ -36,6 +36,20 @@ public class OutputFormatter {
         this.addStartEndLine = addStartEndLine;
     }
 
+    public String format(Document query, String prefixToRemove, String license) {
+        if (this.format.equals("csv")) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(query.getFile().replace(prefixToRemove, ""));
+            if (addStartEndLine) {
+                sb.append("#" + query.getStartLine() + "#" + query.getEndLine() + "#" + license);
+            }
+            return sb.toString();
+        } else {
+            System.out.println("ERROR: unsupported format.");
+            return null;
+        }
+    }
+
     public String format(ArrayList<Document> results, String prefixToRemove) {
         if (this.format.equals("csv")) {
             StringBuilder sb = new StringBuilder();
@@ -58,7 +72,7 @@ public class OutputFormatter {
         }
     }
 
-    public String format(ArrayList<Document> results, int[] sim, String prefixToRemove) {
+    public String format(ArrayList<Document> results, int[] sim, int threshod, String prefixToRemove) {
         if (this.format.equals("csv")) {
             StringBuilder sb = new StringBuilder();
             int resultCount = 0;
@@ -67,12 +81,14 @@ public class OutputFormatter {
                 if (resultCount > 0)
                     sb.append(","); // add comma in between
 
-                sb.append(d.getFile().replace(prefixToRemove, ""));
-
-                if (addStartEndLine) {
-                    sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i]);
+                // only add the results that has similarity higher than the threshold
+                if (sim[i] >= threshod) {
+                    sb.append(d.getFile().replace(prefixToRemove, ""));
+                    if (addStartEndLine) {
+                        sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i] + "#" + d.getLicense());
+                    }
+                    resultCount++;
                 }
-                resultCount++;
             }
             return sb.toString();
         } else {
