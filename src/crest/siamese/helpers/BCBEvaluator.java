@@ -225,13 +225,11 @@ public class BCBEvaluator extends Evaluator  {
         }
     }
 
-    private int checkResults(String result, ArrayList<BCBDocument> groundTruth, String prefixToRemove) {
+    private int checkResults(String result, ArrayList<BCBDocument> groundTruth) {
         String[] resultSplit = result.split("#");
         for (int i=0; i<groundTruth.size(); i++) {
             BCBDocument d = groundTruth.get(i);
-            if (resultSplit[0].substring(0, resultSplit[0].indexOf("_"))
-                    .replace(prefixToRemove + "/", "")
-                    .trim().equals(d.getFile().trim()) &&
+            if (resultSplit[0].substring(0, resultSplit[0].indexOf("_")).trim().equals(d.getFile().trim()) &&
                     Integer.valueOf(resultSplit[1]) == d.getStartLine() &&
                     Integer.valueOf(resultSplit[2]) == d.getEndLine()) {
                 return d.getSyntacticType();
@@ -246,7 +244,7 @@ public class BCBEvaluator extends Evaluator  {
             int resultSize,
             String outputFile,
             boolean computeSimilarity,
-            String inputFolder) {
+            String bcbLocation) {
 
         int checkedResultCount = 0;
         int tp = 0;
@@ -277,12 +275,18 @@ public class BCBEvaluator extends Evaluator  {
                         if (i < nextLine.length) {
                             // skip blank result and skip the result of the query itself
                             if (!nextLine[i].equals("")) {
+
+                                if (!bcbLocation.endsWith("/"))
+                                    bcbLocation += "/";
+                                // remove the prefix of BCB location
+                                nextLine[i] = nextLine[i].replace(bcbLocation, "");
+
                                 if (!isQuery(groundTruthQuery, nextLine[i])) {
 
                                     checkedResultCount++;
                                     String[] doc = nextLine[i].split("#");
 
-                                    int matchedCloneType = checkResults(nextLine[i], groundTruth, inputFolder);
+                                    int matchedCloneType = checkResults(nextLine[i], groundTruth);
                                     if (matchedCloneType != -1) {
                                         tp++;
 
