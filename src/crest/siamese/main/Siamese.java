@@ -532,12 +532,11 @@ public class Siamese {
                             default:
                                 license = "none";
                         }
-                    }
-
-                    // level is in the file in the root, use it if cannot find localised license
-                    if ((license.equals("unknown") || license.equals("none"))
-                            && !this.fileLicense.equals("unknown")) {
-                        license = this.fileLicense;
+                        // level is in the file in the root, use it if cannot find localised license
+                        if ((license.equals("unknown") || license.equals("none"))
+                                && !this.fileLicense.equals("unknown")) {
+                            license = this.fileLicense;
+                        }
                     }
 
                     // check if there's a method
