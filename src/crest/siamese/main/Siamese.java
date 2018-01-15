@@ -535,16 +535,13 @@ public class Siamese {
                                 char[] xmode = {'x'};
                                 tmode.setTokenizerMode(xmode);
                                 String tokenizedSource = tokenize(method.getSrc(), tmode, false);
-
                                 String finalUrl = this.url;
-
                                 if (!finalUrl.equals("none")) {
                                     String prefix = inputFolder;
                                     if (inputFolder.endsWith("/"))
                                         prefix = StringUtils.chop(inputFolder);
                                     finalUrl += filePath.replace(prefix, "");
                                 }
-
                                 Document d = new Document(
                                         startingId + count,
                                         filePath + "_" + method.getName(),
@@ -777,7 +774,6 @@ public class Siamese {
                     outToFile = "";
                 }
             }
-
             // flush the last part of output
             bw.write(outToFile);
             bw.close();
