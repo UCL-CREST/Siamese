@@ -4334,7 +4334,7 @@
 49,R,selected/2444998.java,genTestBench,24,45,35,F,,
 50,R,selected/2478570.java,downInHistoryTask,1341,1357,59,F,,
 0,Q,selected/2333963.java,reset,74,84,,,,
-1,R,selected/66085.java,reset,74,84,100,F,,
+1,R,selected/66085.java,reset,74,84,100,MT1,,
 2,R,selected/2326716.java,reset,74,84,100,T1,,
 3,R,selected/1563122.java,reset,74,84,100,T1,,
 4,R,selected/1414961.java,reset,74,84,100,T1,,
