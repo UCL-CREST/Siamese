@@ -62,7 +62,7 @@ public class BCBExperiment {
                     siamese.setResultsSize(resultSize);
                     outputFile = siamese.execute();
                     System.out.println("Query size: " + resultSize + "\n" + "Q: " + query.getLocationString());
-                    evaluator.evaluateCloneQuery(query, cloneGroup, resultSize, outputFile, siamese.getComputeSimilarity());
+                    evaluator.evaluateCloneQuery(query, cloneGroup, resultSize, outputFile, siamese.getComputeSimilarity(), bcbLoc);
                     // delete the output and the query file
                     File oFile = new File(outputFile);
                     File qFile = new File(inputFolder + "/" + queryFile);

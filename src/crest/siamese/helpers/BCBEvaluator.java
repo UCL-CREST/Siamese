@@ -225,18 +225,13 @@ public class BCBEvaluator extends Evaluator  {
         }
     }
 
-    private int checkResults(String result, ArrayList<BCBDocument> groundTruth) {
+    private int checkResults(String result, ArrayList<BCBDocument> groundTruth, String prefixToRemove) {
         String[] resultSplit = result.split("#");
-
         for (int i=0; i<groundTruth.size(); i++) {
             BCBDocument d = groundTruth.get(i);
-
-//            if (resultSplit[0].contains("default/103760.java")) {
-//                System.out.println("|" + resultSplit[0].substring(0, resultSplit[0].indexOf("_")) + "|" + ": |" + d.getFile().trim() + "|");
-//                System.out.println(resultSplit[1] + ": " + d.getStartLine());
-//                System.out.println(resultSplit[2] + ": " + d.getEndLine());
-//            }
-            if (resultSplit[0].substring(0, resultSplit[0].indexOf("_")).trim().equals(d.getFile().trim()) &&
+            if (resultSplit[0].substring(0, resultSplit[0].indexOf("_"))
+                    .replace(prefixToRemove + "/", "")
+                    .trim().equals(d.getFile().trim()) &&
                     Integer.valueOf(resultSplit[1]) == d.getStartLine() &&
                     Integer.valueOf(resultSplit[2]) == d.getEndLine()) {
                 return d.getSyntacticType();
@@ -250,7 +245,8 @@ public class BCBEvaluator extends Evaluator  {
             ArrayList<BCBDocument> groundTruth,
             int resultSize,
             String outputFile,
-            boolean computeSimilarity) {
+            boolean computeSimilarity,
+            String inputFolder) {
 
         int checkedResultCount = 0;
         int tp = 0;
@@ -286,7 +282,7 @@ public class BCBEvaluator extends Evaluator  {
                                     checkedResultCount++;
                                     String[] doc = nextLine[i].split("#");
 
-                                    int matchedCloneType = checkResults(nextLine[i], groundTruth);
+                                    int matchedCloneType = checkResults(nextLine[i], groundTruth, inputFolder);
                                     if (matchedCloneType != -1) {
                                         tp++;
 
