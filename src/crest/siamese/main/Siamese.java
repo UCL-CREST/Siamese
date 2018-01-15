@@ -777,6 +777,9 @@ public class Siamese {
                     outToFile = "";
                 }
             }
+
+            // flush the last part of output
+            bw.write(outToFile);
             bw.close();
             System.out.println("Searching done for " + count + " files (" + methodCount + " methods after clone size filtering).");
             System.out.println("See output at " + outfile.getAbsolutePath());
