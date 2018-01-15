@@ -31,6 +31,7 @@ public class JavaTokenizer implements Tokenizer {
 
     @Override
     public ArrayList<String> tokenize(String s) throws Exception {
+        tokens = new ArrayList<String>();
         InputStream stream = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
         JavaLexer lexer = new JavaLexer(CharStreams.fromStream(stream, StandardCharsets.UTF_8));
         List<? extends Token> tokenList;
@@ -39,11 +40,9 @@ public class JavaTokenizer implements Tokenizer {
         for(Token token : tokenList){
             // normalize the token except white space (skip)
             if (!symbols[token.getType()].equals("WS")) {
-//            System.out.println(token.getText().trim() + "," + symbols[token.getType()]);
                 tokens.add(normalizer.normalizeAToken(token.getText().trim(), symbols[token.getType()]));
             }
         }
-
         return tokens;
     }
 
@@ -55,6 +54,8 @@ public class JavaTokenizer implements Tokenizer {
         while((line =bufferedReader.readLine())!=null){
             stringBuffer.append(line).append("\n");
         }
+        reader.close();
+        bufferedReader.close();
         String code = stringBuffer.toString();
         return tokenize(code);
     }
