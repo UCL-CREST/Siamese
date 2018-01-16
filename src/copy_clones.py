@@ -19,75 +19,41 @@ def writefile(filename, fcontent, mode, isprint):
 
 
 def main():
-
-    groundtruth = pd.read_csv('../results/bcb_groundtruth.csv', sep=',', header=None)
-    gt = groundtruth[1:][5].tolist()
-    # print(gt)
-    # exit()
-
-    data = pd.read_csv('../results/bcb_search_results.csv', sep=',', header=None)
-    # print(data)
-    # exit()
+    data = pd.read_csv('../results/bcb_search_results_qr-25-75-10.csv', sep=',', header=None)
+    data2 = pd.read_csv('../results/bcb_search_results_qr-5-10-10.csv', sep=',', header=None)
 
     QUERIES = 142
     RESULTSIZE = 50
-    OUTFILE = '../bcb_precision.csv'
-
-    writefile(OUTFILE, 'r,10-prec,r-prec,tp,fp,t1,t2,t3\n', 'a', False)
-    precsum = [0, 0, 0, 0, 0, 0, 0]
 
     for i in range(1, (QUERIES + 1)):
-        start = i + (i - 1) * RESULTSIZE
+        start = i + (i - 1) * RESULTSIZE - 1
         end = i * RESULTSIZE + i - 1
-        q1dat = data.loc[start: end][7]
-        t1 = t2 = t3 = fp = 0
-        sum10 = 0
-        limit = int(gt[i - 1])
-        # reciprocal rank
-        rr = limit
+        print('processing:', start, '-', end)
+        file1 = data.loc[start: end]
+        file2 = data2.loc[start: end]
+        # print(file2)
 
-        for idx, d in enumerate(q1dat):
-
-            if idx < limit:
-                if d == 'T1' or d == 'T1*' or d == 'T1*J' or d == 'MT1' or d == 'MT1*' or d == 'MT1*J':
-                    t1 += 1
-                    if idx < 10:
-                        sum10 += 1
-                    if rr == limit:
-                        rr = idx + 1
-                elif d == 'T2' or d == 'T2*' or d == 'T2*J' or d == 'MT2' or d == 'MT2*' or d == 'MT2*J':
-                    t2 += 1
-                    if idx < 10:
-                        sum10 += 1
-                    if rr == limit:
-                        rr = idx + 1
-                elif d == 'T3' or d == 'T3*' or d == 'T3*J'  or d == 'MT3' or d == 'MT3*' or d == 'MT3*J':
-                    t3 += 1
-                    if idx < 10:
-                        sum10 += 1
-                    if rr == limit:
-                        rr = idx + 1
-                elif d == 'F' or d == 'MF' or d == 'MF*' or d == 'MF*J':
-                    fp += 1
+        for index, row in file1.iterrows():
+            if row[1].strip() == 'Q':
+                out = str(row[0]) + ',' + row[1] + ',' + row[2] + ',' + row[3] + ',' + \
+                      str(row[4]) + ',' + str(row[5]) + '\n'
+                writefile('../results/bcb_search_results_qr-25-75-10_copied.csv', out, 'a', True)
             else:
-                break
+                matched = False
+                for index2, row2 in file2.iterrows():
+                    if row[2].strip() == row2[2].strip() \
+                            and int(row[4]) == int(row2[4]) \
+                            and int(row[5]) == int(row2[5]):
+                        out = str(row[0]) + ',' + row[1] + ',' + row[2] + ',' + row[3] + ',' + \
+                                  str(row[4]) + ',' + str(row[5]) + ',' + str(row[6]) + ',' + row2[7] + ',M\n'
+                        writefile('../results/bcb_search_results_qr-25-75-10_copied.csv', out, 'a', True)
+                        matched = True
+                        break
+                if not matched:
+                    out = str(row[0]) + ',' + row[1] + ',' + row[2] + ',' + row[3] + ',' + \
+                          str(row[4]) + ',' + str(row[5]) + ',' + str(row[6]) + ',' + row[7] + ',N\n'
+                    writefile('../results/bcb_search_results_qr-25-75-10_copied.csv', out, 'a', True)
 
-        tenprec = sum10/10
-        rprec = (t1 + t2 + t3)/limit
-        precsum[0] += 1/rr
-        precsum[1] += tenprec
-        precsum[2] += rprec
-
-        out = str(limit) + ','
-        out = out + str(rr) + ','
-        out = out + str(tenprec) + ','
-        out = out + str(rprec) \
-              + ',' + str(t1 + t2 + t3) + ',' + str(fp) \
-              + ',' + str(t1) + ',' + str(t2) + ',' + str(t3) + '\n'
-
-        writefile(OUTFILE, out, 'a', True)
-
-    print(precsum[0]/QUERIES, precsum[1]/QUERIES, precsum[2]/QUERIES)
 
 
 main()
