@@ -83,15 +83,10 @@ public class Siamese {
     private boolean github = false;
     private boolean computeSimilarity = false;
     private int simThreshold = 0;
-    private Tokenizer tokenizer;
-    private Normalizer normalizer;
-    private Tokenizer origTokenizer;
-    private Normalizer origNormalizer;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
         printConfig();
-        prepareTokenizers();
     }
 
     private void readFromConfigFile(String configFile) {
@@ -245,17 +240,6 @@ public class Siamese {
 
     public void shutdown() {
         es.shutdown();
-    }
-
-    private void prepareTokenizers() {
-        NormalizerMode tmode = new NormalizerMode();
-        char[] noNormMode = {'x'};
-        tmode.setTokenizerMode(noNormMode);
-        origNormalizer = initialiseNormalizer(tmode);
-        origTokenizer = initialiseTokenizer(origNormalizer);
-
-        normalizer = initialiseNormalizer(modes);
-        tokenizer = initialiseTokenizer(normalizer);
     }
 
     private OutputFormatter getOutputFormatter() {
@@ -422,8 +406,8 @@ public class Siamese {
                 // set the normalisation + tokenization mode
                 NormalizerMode tknzMode = new NormalizerMode();
                 modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
-                prepareTokenizers();
                 String indexPrefix = this.index;
+
                 for (int ngramSize : ngramSizes) {
                     for (double dfCapNorm: dfCapNorms) {
                         // replace the value read from the config file
@@ -545,8 +529,11 @@ public class Siamese {
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // Create Document object and put in an array list
-                                String normSource = tokenize(method.getSrc(), tokenizer, isNgram);
-                                String tokenizedSource = tokenize(method.getSrc(), origTokenizer, false);
+                                String normSource = tokenize(method.getSrc(), modes, isNgram);
+                                NormalizerMode tmode = new NormalizerMode();
+                                char[] xmode = {'x'};
+                                tmode.setTokenizerMode(xmode);
+                                String tokenizedSource = tokenize(method.getSrc(), tmode, false);
                                 String finalUrl = this.url;
                                 if (!finalUrl.equals("none")) {
                                     String prefix = inputFolder;
@@ -709,8 +696,8 @@ public class Siamese {
                                 NormalizerMode tmode = new NormalizerMode();
                                 char[] noNormMode = {'x'};
                                 tmode.setTokenizerMode(noNormMode);
-                                origQuery = tokenize(method.getSrc(), origTokenizer, false);
-                                query = tokenize(method.getSrc(), tokenizer, isNgram);
+                                origQuery = tokenize(method.getSrc(), tmode, false);
+                                query = tokenize(method.getSrc(), modes, isNgram);
 
                                 // query size limit is enforced
                                 if (queryReduction) {
@@ -742,15 +729,21 @@ public class Siamese {
                     } else {
                         // check minimum size
                         if (MyUtils.countLines(file.getAbsolutePath()) >= minCloneLine) {
-                            origQuery = tokenize(file, origTokenizer, false);
-                            query = tokenize(file, tokenizer, isNgram);
+                            NormalizerMode tmode = new NormalizerMode();
+                            char[] noNormMode = {'x'};
+                            tmode.setTokenizerMode(noNormMode);
+                            origQuery = tokenize(file, tmode, false);
+                            query = tokenize(file, modes, isNgram);
+
                             // search for results depending on the MR setting
                             if (this.multiRep)
                                 results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
                             else
                                 results = es.search(index, type, query, isPrint, isDFS, offset, size);
+
                             outToFile += file.getAbsolutePath().replace(prefixToRemove, "") +
                                     "_noMethod#-1#-1#none,";
+
                             if (this.computeSimilarity) {
                                 int[] sim = computeSimilarity(origQuery, results);
                                 outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
@@ -890,11 +883,10 @@ public class Siamese {
         return da.getPercentile(percentile);
     }
 
-//    private String tokenize(File file, NormalizerMode modes, boolean isNgram) throws Exception {
-    private String tokenize(File file, Tokenizer tokenizer, boolean isNgram) throws Exception {
+    private String tokenize(File file, NormalizerMode modes, boolean isNgram) throws Exception {
         String src = "";
-//        Normalizer normalizer = initialiseNormalizer(modes);
-//        Tokenizer tokenizer = initialiseTokenizer(normalizer);
+        Normalizer normalizer = initialiseNormalizer(modes);
+        Tokenizer tokenizer = initialiseTokenizer(normalizer);
 
         if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
             try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
@@ -909,28 +901,29 @@ public class Siamese {
         } else {
             // generate tokens
             ArrayList<String> tokens = tokenizer.getTokensFromFile(file.getAbsolutePath());
+            src = printArray(tokens, false);
             // enter ngram mode
-            if (isNgram)
+            if (isNgram) {
                 src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
-            else
-                src = printArray(tokens, false);
+            }
         }
         return src;
     }
 
-//    private String tokenize(String sourcecode, NormalizerMode modes, boolean isNgram) throws Exception {
-    private String tokenize(String sourcecode, Tokenizer tokenizer, boolean isNgram) throws Exception {
+    private String tokenize(String sourcecode, NormalizerMode modes, boolean isNgram) throws Exception {
         String src;
-//        Normalizer normalizer = initialiseNormalizer(modes);
-//        Tokenizer tokenizer = initialiseTokenizer(normalizer);
+        Normalizer normalizer = initialiseNormalizer(modes);
+        Tokenizer tokenizer = initialiseTokenizer(normalizer);
 
         // generate tokens
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
+        src = printArray(tokens, false);
+
         // enter ngram mode
-        if (isNgram)
+        if (isNgram) {
             src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
-        else
-            src = printArray(tokens, false);
+        }
+
         return src;
     }
 
