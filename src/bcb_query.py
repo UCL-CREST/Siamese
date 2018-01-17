@@ -20,18 +20,18 @@ def writefile(filename, fcontent, mode, isprint):
 
 def main():
 
-    groundtruth = pd.read_csv('../results/bcb_groundtruth.csv', sep=',', header=None)
-    gt = groundtruth[1:][5].tolist()
-    # print(gt)
+    groundtruth = pd.read_csv('../results/bcb_groundtruth_qr-25-75-10.csv', sep=',', header=None)
+    gt = groundtruth[1:][4].tolist()
+    # print(len(gt), gt)
     # exit()
 
-    data = pd.read_csv('../results/bcb_search_results.csv', sep=',', header=None)
+    data = pd.read_csv('../results/bcb_search_results_qr-25-75-10_copied.csv', sep=',', header=None)
     # print(data)
     # exit()
 
     QUERIES = 142
     RESULTSIZE = 50
-    OUTFILE = '../bcb_precision.csv'
+    OUTFILE = '../results/bcb_precision_qr-25-75-10.csv'
 
     writefile(OUTFILE, 'r,10-prec,r-prec,tp,fp,t1,t2,t3\n', 'a', False)
     precsum = [0, 0, 0, 0, 0, 0, 0]
@@ -42,6 +42,7 @@ def main():
         q1dat = data.loc[start: end][7]
         t1 = t2 = t3 = fp = 0
         sum10 = 0
+        # print(i)
         limit = int(gt[i - 1])
         # reciprocal rank
         rr = limit
