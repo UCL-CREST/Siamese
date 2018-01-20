@@ -9,8 +9,6 @@ import crest.siamese.document.Document;
 import crest.siamese.document.Method;
 import crest.siamese.settings.IndexSettings;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
-import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.lucene.index.*;
@@ -30,10 +28,15 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Siamese {
 
-    private ESConnector es;
+    private ESConnector[] esConnectors;
+    private Client[] siameseClients = null;
     private String server;
     private String index;
     private String type;
@@ -67,7 +70,6 @@ public class Siamese {
     private String prefixToRemove;
     private String elasticsearchLoc;
     private String outputFormat;
-    private Client siameseClient;
     private String indexingMode;
     private int bulkSize;
     private int normBoost;
@@ -83,10 +85,11 @@ public class Siamese {
     private boolean github = false;
     private boolean computeSimilarity = false;
     private int simThreshold = 0;
-    private Tokenizer tokenizer;
-    private Normalizer normalizer;
-    private Tokenizer origTokenizer;
-    private Normalizer origNormalizer;
+    private Tokenizer[] tokenizer;
+    private Normalizer[] normalizer;
+    private Tokenizer[] origTokenizer;
+    private Normalizer[] origNormalizer;
+    private int nThreads = 10;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -229,33 +232,50 @@ public class Siamese {
         System.out.println("============================");
     }
 
-    private void connect() {
-        // create a connector
-        es = new ESConnector(server);
+    private void connect(int threads) {
+        esConnectors = new ESConnector[threads];
+        for (int i=0; i<esConnectors.length; i++) {
+            // create a connector
+            esConnectors[i] = new ESConnector(server);
+        }
     }
 
-    public void startup() {
-        connect();
+    public void startup(int threads) {
+        connect(threads);
+        siameseClients = new Client[esConnectors.length];
         try {
-            siameseClient = es.startup();
+            for (int i=0; i<esConnectors.length; i++) {
+                siameseClients[i] = esConnectors[i].startup();
+            }
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
     }
 
     public void shutdown() {
-        es.shutdown();
+        for (ESConnector es: esConnectors) {
+            es.shutdown();
+        }
     }
 
     private void prepareTokenizers() {
         NormalizerMode tmode = new NormalizerMode();
         char[] noNormMode = {'x'};
         tmode.setTokenizerMode(noNormMode);
-        origNormalizer = initialiseNormalizer(tmode);
-        origTokenizer = initialiseTokenizer(origNormalizer);
 
-        normalizer = initialiseNormalizer(modes);
-        tokenizer = initialiseTokenizer(normalizer);
+        origNormalizer = new Normalizer[nThreads];
+        origTokenizer = new Tokenizer[nThreads];
+        normalizer = new Normalizer[nThreads];
+        tokenizer = new Tokenizer[nThreads];
+
+        for (int i=0; i<origNormalizer.length; i++) {
+            origNormalizer[i] = initialiseNormalizer(tmode);
+            origTokenizer[i] = initialiseTokenizer(origNormalizer[i]);
+            normalizer[i] = initialiseNormalizer(modes);
+            tokenizer[i] = initialiseTokenizer(normalizer[i]);
+        }
+
+
     }
 
     private OutputFormatter getOutputFormatter() {
@@ -276,8 +296,8 @@ public class Siamese {
 
     public String execute() throws Exception {
         // check if the client is already started up
-        if (siameseClient == null) {
-            startup();
+        if (siameseClients == null) {
+            startup(nThreads);
         }
 
         // initialise the n-gram generator
@@ -317,7 +337,7 @@ public class Siamese {
         String outputFile = "";
 
         try {
-            if (siameseClient != null) {
+            if (siameseClients != null) {
                 if (github) {
                     indexGitHub();
                 } else {
@@ -336,14 +356,14 @@ public class Siamese {
 
                         if (insertSize != 0) {
                             // if ok, refresh the index, then search
-                            es.refresh(index);
+                            esConnectors[0].refresh(index);
                             System.out.println("Successfully creating index.");
                         } else {
                             System.out.println("ERROR: Indexed zero file. Please check!");
                         }
 
                     } else if (command.toLowerCase().equals("search")) {
-                        if (es.doesIndexExist(this.index)) {
+                        if (esConnectors[0].doesIndexExist(this.index)) {
                             OutputFormatter formatter = getOutputFormatter();
                             outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
                         } else {
@@ -365,11 +385,11 @@ public class Siamese {
     }
 
     private long getMaxId(String index) throws Exception {
-        return es.getMaxId(index, isDFS);
+        return esConnectors[0].getMaxId(index, isDFS);
     }
 
     private boolean doesIndexExist() {
-        return es.doesIndexExist(index);
+        return esConnectors[0].doesIndexExist(index);
     }
 
     private boolean createIndex(String indexSettings, String mappingStr) throws NoNodeAvailableException {
@@ -377,11 +397,11 @@ public class Siamese {
             if (isPrint) System.out.println("INDEX," + index);
 
             // delete the index if it exists
-            if (es.doesIndexExist(index)) {
-                es.deleteIndex(index);
+            if (esConnectors[0].doesIndexExist(index)) {
+                esConnectors[0].deleteIndex(index);
             }
             // create index
-            boolean isCreated = es.createIndex(index, type, indexSettings, mappingStr);
+            boolean isCreated = esConnectors[0].createIndex(index, type, indexSettings, mappingStr);
             if (!isCreated) {
                 System.err.println("Cannot create index: " + index);
             }
@@ -403,7 +423,7 @@ public class Siamese {
         this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.parseMode + ".csv";
 
         // create a connector
-        es = new ESConnector(server);
+        ESConnector esConnector = new ESConnector(server);
 
         ArrayList<EvalResult> resultSet = new ArrayList<>();
 
@@ -415,7 +435,7 @@ public class Siamese {
 
         try {
 
-            es.startup();
+            esConnector.startup();
             for (String normMode : normModes) {
                 // reset the modes before setting it again
                 modes.reset();
@@ -434,11 +454,11 @@ public class Siamese {
                             index = this.index + "_" + normMode + "_" + ngramSize + "_" + dfCapNorm + "_" + dfCapOrig;
                             if (isPrint) System.out.println("INDEX," + index);
                             // delete the index if it exists
-                            if (es.doesIndexExist(index)) {
-                                es.deleteIndex(index);
+                            if (esConnector.doesIndexExist(index)) {
+                                esConnector.deleteIndex(index);
                             }
                             // create index
-                            if (!es.createIndex(index, type, indexSettings, mappingStr)) {
+                            if (!esConnector.createIndex(index, type, indexSettings, mappingStr)) {
                                 System.err.println("Cannot create index: " + index);
                                 System.exit(-1);
                             }
@@ -447,7 +467,7 @@ public class Siamese {
                             totalDocuments = (int) insert(0);
                             if (totalDocuments != 0) {
                                 // if ok, refresh the index, then search
-                                es.refresh(index);
+                                esConnector.refresh(index);
                                 EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
                                 if (resultSet.size() != 0) {
                                     EvalResult bestResult = resultSet.get(0);
@@ -466,7 +486,7 @@ public class Siamese {
                             }
                             // delete index
                             if (deleteIndexAfterUse) {
-                                if (!es.deleteIndex(index)) {
+                                if (!esConnector.deleteIndex(index)) {
                                     System.err.println("Cannot delete index: " + index);
                                     System.exit(-1);
                                 }
@@ -478,7 +498,7 @@ public class Siamese {
                     }
                 }
             }
-            es.shutdown();
+            esConnector.shutdown();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -546,8 +566,8 @@ public class Siamese {
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // Create Document object and put in an array list
-                                String normSource = tokenize(method.getSrc(), tokenizer, isNgram);
-                                String tokenizedSource = tokenize(method.getSrc(), origTokenizer, false);
+                                String normSource = tokenize(method.getSrc(), tokenizer[0], isNgram);
+                                String tokenizedSource = tokenize(method.getSrc(), origTokenizer[0], false);
                                 String finalUrl = this.url;
                                 if (!finalUrl.equals("none")) {
                                     String prefix = inputFolder;
@@ -578,7 +598,7 @@ public class Siamese {
 
                 if (this.indexingMode.equals(Settings.IndexingMode.SEQUENTIAL)) {
                     try {
-                        isIndexed = es.sequentialInsert(index, type, docArray);
+                        isIndexed = esConnectors[0].sequentialInsert(index, type, docArray);
                     } catch (Exception e) {
                         System.out.print(e.getMessage());
                         System.exit(0);
@@ -593,7 +613,7 @@ public class Siamese {
                 } else if (this.indexingMode.equals(Settings.IndexingMode.BULK)) {
                     // index every N docs (bulk insertion mode)
                     if (docArray.size() >= this.bulkSize) {
-                        isIndexed = es.bulkInsert(index, type, docArray);
+                        isIndexed = esConnectors[0].bulkInsert(index, type, docArray);
                         if (!isIndexed) {
                             throw new Exception("Cannot bulk insert documents");
                         }
@@ -617,7 +637,7 @@ public class Siamese {
 
         // the last batch
         if (this.indexingMode.equals(Settings.IndexingMode.BULK) && docArray.size() != 0) {
-            isIndexed = es.bulkInsert(index, type, docArray);
+            isIndexed = esConnectors[0].bulkInsert(index, type, docArray);
             if (!isIndexed)
                 throw new Exception("Cannot bulk insert documents");
             else {
@@ -648,7 +668,6 @@ public class Siamese {
         if (queryReduction) {
             qr = "qr";
         }
-        String outToFile = "";
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-S");
         Date dateobj = new Date();
         File outfile = new File(outputFolder + "/" + index + "_" + qr + "_"
@@ -671,11 +690,10 @@ public class Siamese {
 
             int count = 0;
             int methodCount = 0;
-            // reset the output buffer
-            outToFile = "";
+            String outToFile = "";
 
             for (File file : listOfFiles) {
-                if (isPrint)
+//                if (isPrint)
                     System.out.println(count + ": " + file.getAbsolutePath());
                 // parse each file into methods (if possible)
                 MethodParser methodParser = initialiseMethodParser(
@@ -690,66 +708,54 @@ public class Siamese {
                     methodList = methodParser.parseMethods();
                     String license = methodParser.getLicense();
 
-                    ArrayList<Document> results = new ArrayList<>();
-
                     // check if there's a method
+//                    System.out.println("methods: " + methodList.size());
+//                    System.out.println("nThreads: " + nThreads);
                     if (methodList.size() > 0) {
-                        for (Method method : methodList) {
+                        for (int i = 0; i < methodList.size(); i += nThreads) {
+                            int limit = nThreads;
+                            if (methodList.size() - i < nThreads) limit = methodList.size() - i;
 
-                            // check minimum size
-                            if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
-                                /* TODO: fix this some time. It's weird to have a list with only a single object. */
-                                // write output to file
-                                ArrayList<Document> queryList = new ArrayList<>();
-                                Document q = new Document();
-                                q.setFile(method.getFile() + "_" + method.getName());
-                                q.setStartline(method.getStartLine());
-                                q.setEndline(method.getEndLine());
-                                outToFile += formatter.format(q, prefixToRemove, license) + ",";
+//                            setOutputFolder("methodList.size(): " + methodList.size());
+//                            System.out.println("i: " + i);
+//                            System.out.println("limit: " + limit);
+                            ExecutorService executor = Executors.newFixedThreadPool(nThreads);
+                            List<Future<String>> list = new ArrayList<>();
 
-                                NormalizerMode tmode = new NormalizerMode();
-                                char[] noNormMode = {'x'};
-                                tmode.setTokenizerMode(noNormMode);
-                                origQuery = tokenize(method.getSrc(), origTokenizer, false);
-                                query = tokenize(method.getSrc(), tokenizer, isNgram);
-
-                                // query size limit is enforced
-                                if (queryReduction) {
-                                    long docCount = getIndicesStats();
-                                    query = reduceQuery(query, "src", this.qrPercentileNorm * docCount / 100);
-                                    origQuery = reduceQuery(origQuery, "tokenizedsrc", this.qrPercentileOrig * docCount / 100);
-                                    if (isPrint) {
-                                        System.out.println("NQ" + methodCount + " : " + query);
-                                        System.out.println("OQ" + methodCount + " : " + origQuery);
-                                    }
+                            for (int k = 0; k < limit; k++) {
+                                SearchWorkerThread swt;
+                                Method method = methodList.get(k);
+                                // check minimum size
+                                if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
+//                                    System.out.println(method.getName());
+                                    // search for results depending on the MR setting
+                                    swt = new SearchWorkerThread(k, index, type, methodList.get(k),
+                                            origBoost, normBoost, isPrint, isDFS, offset, size,
+                                            formatter, license);
+                                    Future<String> future = executor.submit(swt);
+                                    list.add(future);
+                                    methodCount ++;
                                 }
+                            }
+                            executor.shutdown();
 
-                                // search for results depending on the MR setting
-                                if (this.multiRep)
-                                    results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
-                                else
-                                    results = es.search(index, type, query, isPrint, isDFS, offset, size);
-
-                                if (this.computeSimilarity) {
-                                    int[] sim = computeSimilarity(origQuery, results);
-                                    outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
-                                } else {
-                                    outToFile += formatter.format(results, prefixToRemove);
-                                }
-                                outToFile += "\n";
-                                methodCount++;
+                            for (int l = 0; l<list.size(); l++) {
+                                Future<String> r = list.get(l);
+//                                System.out.println(l + " output: " + r.get());
+                                outToFile += r.get() + "\n";
                             }
                         }
                     } else {
                         // check minimum size
                         if (MyUtils.countLines(file.getAbsolutePath()) >= minCloneLine) {
-                            origQuery = tokenize(file, origTokenizer, false);
-                            query = tokenize(file, tokenizer, isNgram);
+                            origQuery = tokenize(file, origTokenizer[0], false);
+                            query = tokenize(file, tokenizer[0], isNgram);
+                            ArrayList<Document> results = null;
                             // search for results depending on the MR setting
                             if (this.multiRep)
-                                results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
+                                results = esConnectors[0].search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
                             else
-                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
+                                results = esConnectors[0].search(index, type, query, isPrint, isDFS, offset, size);
                             outToFile += file.getAbsolutePath().replace(prefixToRemove, "") +
                                     "_noMethod#-1#-1#none,";
                             if (this.computeSimilarity) {
@@ -891,11 +897,8 @@ public class Siamese {
         return da.getPercentile(percentile);
     }
 
-//    private String tokenize(File file, NormalizerMode modes, boolean isNgram) throws Exception {
     private String tokenize(File file, Tokenizer tokenizer, boolean isNgram) throws Exception {
         String src = "";
-//        Normalizer normalizer = initialiseNormalizer(modes);
-//        Tokenizer tokenizer = initialiseTokenizer(normalizer);
 
         if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
             try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
@@ -919,12 +922,8 @@ public class Siamese {
         return src;
     }
 
-//    private String tokenize(String sourcecode, NormalizerMode modes, boolean isNgram) throws Exception {
     private String tokenize(String sourcecode, Tokenizer tokenizer, boolean isNgram) throws Exception {
         String src;
-//        Normalizer normalizer = initialiseNormalizer(modes);
-//        Tokenizer tokenizer = initialiseTokenizer(normalizer);
-
         // generate tokens
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
         // enter ngram mode
@@ -936,7 +935,7 @@ public class Siamese {
     }
 
     public long getIndicesStats() {
-        return es.getIndicesStats(this.index);
+        return esConnectors[0].getIndicesStats(this.index);
     }
 
     public void analyseTermFreq(String indexName, String field, String freqType, String outputFileName) {
@@ -1163,95 +1162,157 @@ public class Siamese {
     }
 
     public void indexGitHub() throws Exception {
-//        if (githubLoc.endsWith("/"))
-//            githubLoc = StringUtils.chop(githubLoc);
-//
-//        // check if the client is already started up
-//        if (siameseClient == null) {
-//            startup();
-//        }
-//
-//        File file = new File(githubLoc);
-//        String[] directories = file.list(new FilenameFilter() {
-//            @Override
-//            public boolean accept(File current, String name) {
-//                return new File(current, name).isDirectory();
-//            }
-//        });
-//
-//        for (String dir: directories) {
-//            String subDir = githubLoc + "/" + dir;
-//
-//            File sd = new File(subDir);
-//            String[] sdirs = sd.list(new FilenameFilter() {
-//                @Override
-//                public boolean accept(File current, String name) {
-//                    return new File(current, name).isDirectory();
-//                }
-//            });
-//
-//            for (String d : sdirs) {
-//                String projDir = githubLoc + "/" + dir + "/" + d;
-//                System.out.println(projDir);
+        if (this.inputFolder.endsWith("/"))
+            this.inputFolder = StringUtils.chop(this.inputFolder);
+        if (this.subInputFolder.endsWith("/"))
+            this.subInputFolder = StringUtils.chop(this.subInputFolder);
+        this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
+        System.out.println("Indexing: " + this.inputFolder);
+        this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
 
-                if (this.inputFolder.endsWith("/"))
-                    this.inputFolder = StringUtils.chop(this.inputFolder);
-                if (this.subInputFolder.endsWith("/"))
-                    this.subInputFolder = StringUtils.chop(this.subInputFolder);
+        File f = new File(this.inputFolder + "/LICENSE.txt");
+        if (!f.exists() || f.isDirectory()) {
+            f = new File(this.inputFolder + "/LICENSE");
+        }
 
-                this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
-                System.out.println("Indexing: " + this.inputFolder);
-                this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
-
-                File f = new File(this.inputFolder + "/LICENSE.txt");
-                if (!f.exists() || f.isDirectory()) {
-                    f = new File(this.inputFolder + "/LICENSE");
+        if (f.exists() && !f.isDirectory()) {
+            String[] lines = FileUtils.readFileToString(f).split("\n");
+            for (String line : lines) {
+                String license = LicenseExtractor.extractLicenseWithRegExp(line);
+                if (!license.equals("unknown")) {
+                    this.fileLicense = license;
+                    break;
                 }
+            }
+        }
 
-                if (f.exists() && !f.isDirectory()) {
-//                    System.out.println("found: " + f.getAbsolutePath());
-                    String[] lines = FileUtils.readFileToString(f).split("\n");
-                    for (String line: lines) {
-                        String license = LicenseExtractor.extractLicenseWithRegExp(line);
-                        if (!license.equals("unknown")) {
-//                            System.out.println(license);
-                            this.fileLicense = license;
-                            break;
-                        }
+        // initialise the n-gram generator
+        ngen = new nGramGenerator(ngramSize);
+        // default similarity function is TFIDF
+        String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
+        String mappingStr = IndexSettings.TFIDF.mappingStr;
+
+        try {
+            if (siameseClients != null) {
+                if (command.toLowerCase().equals("index")) {
+                    if (recreateIndexIfExists) {
+                        createIndex(indexSettings, mappingStr);
                     }
-                }
-
-                // initialise the n-gram generator
-                ngen = new nGramGenerator(ngramSize);
-                // default similarity function is TFIDF
-                String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
-                String mappingStr = IndexSettings.TFIDF.mappingStr;
-
-                try {
-                    if (siameseClient != null) {
-                        if (command.toLowerCase().equals("index")) {
-                            if (recreateIndexIfExists) {
-                                createIndex(indexSettings, mappingStr);
-                            }
-                            long startingId = 0;
-                            if (!recreateIndexIfExists && doesIndexExist()) {
-                                startingId = getMaxId(index) + 1;
-                            }
-                            long insertSize = insert(startingId);
-                            if (insertSize != 0) {
-                                // if ok, refresh the index, then search
-                                es.refresh(index);
-                            } else {
-                                System.out.println("ERROR: Indexed zero file. Please check!");
-                            }
-                        }
+                    long startingId = 0;
+                    if (!recreateIndexIfExists && doesIndexExist()) {
+                        startingId = getMaxId(index) + 1;
+                    }
+                    long insertSize = insert(startingId);
+                    if (insertSize != 0) {
+                        // if ok, refresh the index, then search
+                        esConnectors[0].refresh(index);
                     } else {
-                        System.out.println("ERROR: cannot create Elasticsearch client ... ");
+                        System.out.println("ERROR: Indexed zero file. Please check!");
                     }
-                } catch (Exception e) {
-                    throw e;
                 }
-//            }
-//        }
+            } else {
+                System.out.println("ERROR: cannot create Elasticsearch client ... ");
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /***
+     * A class to parallelise multiple queries
+     */
+    public class SearchWorkerThread implements Callable<String> {
+        private int id;
+        private String index;
+        private String type;
+        private Method method;
+        private int origBoost;
+        private int normBoost;
+        private boolean isPrint;
+        private boolean isDFS;
+        private int offset;
+        private int size;
+        private OutputFormatter formatter;
+        private String license;
+        ArrayList<Document> results = new ArrayList<>();
+
+        public SearchWorkerThread(int id,
+                                  String index,
+                                  String type,
+                                  Method method,
+                                  int origBoost,
+                                  int normBoost,
+                                  boolean isPrint,
+                                  boolean isDFS,
+                                  int offset,
+                                  int size,
+                                  OutputFormatter formatter,
+                                  String license) {
+            this.id = id;
+            this.index = index;
+            this.type = type;
+            this.method = method;
+            this.origBoost = origBoost;
+            this.normBoost = normBoost;
+            this.isPrint = isPrint;
+            this.isDFS = isDFS;
+            this.offset = offset;
+            this.size = size;
+            this.formatter = formatter;
+            this.license = license;
+        }
+
+        private String search() throws Exception {
+//            System.out.println("thread: " + this.id + " is working ...");
+            String outToFile = "";
+            /* TODO: fix this some time. It's weird to have a list with only a single object. */
+            // write output to file
+            ArrayList<Document> queryList = new ArrayList<>();
+            Document q = new Document();
+            q.setFile(method.getFile() + "_" + method.getName());
+            q.setStartline(method.getStartLine());
+            q.setEndline(method.getEndLine());
+            outToFile += formatter.format(q, prefixToRemove, license) + ",";
+
+            NormalizerMode tmode = new NormalizerMode();
+            char[] noNormMode = {'x'};
+            tmode.setTokenizerMode(noNormMode);
+            String origQuery = tokenize(method.getSrc(), origTokenizer[this.id], false);
+            String query = tokenize(method.getSrc(), tokenizer[this.id], isNgram);
+
+            // query size limit is enforced
+            if (queryReduction) {
+                long docCount = getIndicesStats();
+                query = reduceQuery(query, "src", qrPercentileNorm * docCount / 100);
+                origQuery = reduceQuery(origQuery, "tokenizedsrc", qrPercentileOrig * docCount / 100);
+            }
+
+            // search for results depending on the MR setting
+            if (multiRep)
+                results = esConnectors[id].search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
+            else
+                results = esConnectors[id].search(index, type, query, isPrint, isDFS, offset, size);
+
+            if (computeSimilarity) {
+                int[] sim = computeSimilarity(origQuery, results);
+                outToFile += formatter.format(results, sim, simThreshold, prefixToRemove);
+            } else {
+                outToFile += formatter.format(results, prefixToRemove);
+            }
+            return outToFile;
+        }
+
+        @Override
+        public String toString(){
+            return "Thread: " + this.id;
+        }
+
+        @Override
+        public String call() throws Exception {
+//            System.out.println(this.id + " is running.");
+            String output = search();
+//            System.out.println(this.id + " ended.");
+            return output;
+        }
     }
 }

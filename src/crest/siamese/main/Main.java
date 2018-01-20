@@ -24,7 +24,7 @@ public class Main {
         Date startDate = getCurrentTime();
 
         Siamese siamese = new Siamese(configFile);
-        siamese.startup();
+        siamese.startup(10);
 
         try {
 			siamese.execute();

@@ -29,7 +29,7 @@ public class GitHubIndexing {
 
         Date startDate = getCurrentTime();
         siamese = new Siamese(configFile);
-        siamese.startup();
+        siamese.startup(1);
 
         try {
             siamese.indexGitHub();

@@ -34,7 +34,7 @@ public class BCBExperiment {
             groundTruthFile.delete();
 
         Siamese siamese = new Siamese(config);
-        siamese.startup();
+        siamese.startup(1);
 
         BCBEvaluator evaluator = new BCBEvaluator();
         ArrayList<Integer> clones = evaluator.getCloneIds(700, -1, minCloneSize);

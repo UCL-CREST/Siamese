@@ -9,7 +9,7 @@ public class TermFreqAnalyser {
     public static void main(String[] args) {
         String config = "config_eval_bcb.properties";
         siamese = new Siamese(config);
-        siamese.startup();
+        siamese.startup(1);
         analyseTerms(config);
 //        getIndicesStats();
         siamese.shutdown();
