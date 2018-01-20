@@ -198,6 +198,8 @@ public class Siamese {
             computeSimilarity = Boolean.parseBoolean(prop.getProperty("computeSimilarity"));
             simThreshold = Integer.parseInt(prop.getProperty("simThreshold"));
 
+            nThreads = Integer.parseInt(prop.getProperty("nThreads"));
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -234,7 +236,7 @@ public class Siamese {
 
     private void connect(int threads) {
         esConnectors = new ESConnector[threads];
-        for (int i=0; i<esConnectors.length; i++) {
+        for (int i = 0; i < esConnectors.length; i++) {
             // create a connector
             esConnectors[i] = new ESConnector(server);
         }
@@ -381,6 +383,8 @@ public class Siamese {
             throw e;
         }
 
+        shutdown();
+
         return outputFile;
     }
 
@@ -422,8 +426,10 @@ public class Siamese {
 
         this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.parseMode + ".csv";
 
-        // create a connector
-        ESConnector esConnector = new ESConnector(server);
+        // check if the client is already started up
+        if (siameseClients == null) {
+            startup(nThreads);
+        }
 
         ArrayList<EvalResult> resultSet = new ArrayList<>();
 
@@ -434,8 +440,6 @@ public class Siamese {
             allErrorMeasureResults.delete();
 
         try {
-
-            esConnector.startup();
             for (String normMode : normModes) {
                 // reset the modes before setting it again
                 modes.reset();
@@ -454,11 +458,11 @@ public class Siamese {
                             index = this.index + "_" + normMode + "_" + ngramSize + "_" + dfCapNorm + "_" + dfCapOrig;
                             if (isPrint) System.out.println("INDEX," + index);
                             // delete the index if it exists
-                            if (esConnector.doesIndexExist(index)) {
-                                esConnector.deleteIndex(index);
+                            if (esConnectors[0].doesIndexExist(index)) {
+                                esConnectors[0].deleteIndex(index);
                             }
                             // create index
-                            if (!esConnector.createIndex(index, type, indexSettings, mappingStr)) {
+                            if (!esConnectors[0].createIndex(index, type, indexSettings, mappingStr)) {
                                 System.err.println("Cannot create index: " + index);
                                 System.exit(-1);
                             }
@@ -467,7 +471,7 @@ public class Siamese {
                             totalDocuments = (int) insert(0);
                             if (totalDocuments != 0) {
                                 // if ok, refresh the index, then search
-                                esConnector.refresh(index);
+                                esConnectors[0].refresh(index);
                                 EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
                                 if (resultSet.size() != 0) {
                                     EvalResult bestResult = resultSet.get(0);
@@ -486,7 +490,7 @@ public class Siamese {
                             }
                             // delete index
                             if (deleteIndexAfterUse) {
-                                if (!esConnector.deleteIndex(index)) {
+                                if (!esConnectors[0].deleteIndex(index)) {
                                     System.err.println("Cannot delete index: " + index);
                                     System.exit(-1);
                                 }
@@ -498,7 +502,7 @@ public class Siamese {
                     }
                 }
             }
-            esConnector.shutdown();
+            shutdown();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -552,12 +556,12 @@ public class Siamese {
                             default:
                                 license = "none";
                         }
-                    }
 
-                    // level is in the file in the root, use it if cannot find localised license
-                    if ((license.equals("unknown") || license.equals("none"))
-                            && !this.fileLicense.equals("unknown")) {
-                        license = this.fileLicense;
+                        // level is in the file in the root, use it if cannot find localised license
+                        if ((license.equals("unknown") || license.equals("none"))
+                                && !this.fileLicense.equals("unknown")) {
+                            license = this.fileLicense;
+                        }
                     }
 
                     // check if there's a method
@@ -631,6 +635,8 @@ public class Siamese {
                             + " [" + df.format(percent) + "%] documents (" + count + " methods).");
                 }
             } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
                 System.out.println("ERROR: error while indexing a file: " + file.getAbsolutePath() + ". Skip.");
             }
         }
@@ -693,7 +699,7 @@ public class Siamese {
             String outToFile = "";
 
             for (File file : listOfFiles) {
-//                if (isPrint)
+                if (isPrint)
                     System.out.println(count + ": " + file.getAbsolutePath());
                 // parse each file into methods (if possible)
                 MethodParser methodParser = initialiseMethodParser(
@@ -1309,9 +1315,7 @@ public class Siamese {
 
         @Override
         public String call() throws Exception {
-//            System.out.println(this.id + " is running.");
             String output = search();
-//            System.out.println(this.id + " ended.");
             return output;
         }
     }
