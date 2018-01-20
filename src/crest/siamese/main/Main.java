@@ -24,7 +24,7 @@ public class Main {
         Date startDate = getCurrentTime();
 
         Siamese siamese = new Siamese(configFile);
-        siamese.startup(10);
+//        siamese.startup(10);
 
         try {
 			siamese.execute();
@@ -35,7 +35,7 @@ public class Main {
             System.out.println(e.getMessage());
 		}
 
-		siamese.shutdown();
+//		siamese.shutdown();
         Date endDate = getCurrentTime();
         System.out.println("Elapse time (ms): " + (endDate.getTime() - startDate.getTime()));
     }
