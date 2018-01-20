@@ -222,12 +222,15 @@ public class Siamese {
         System.out.println("outputFolder   : " + outputFolder);
         System.out.println("normalization  : " + normMode);
         System.out.println("ngramSize      : " + ngramSize);
-        System.out.println("verbose        : " + isPrint);
+//        System.out.println("verbose        : " + isPrint);
         System.out.println("dfs            : " + isDFS);
         System.out.println("extension      : " + extension);
         System.out.println("minCloneSize   : " + minCloneLine);
         System.out.println("command        : " + command);
+        System.out.println("resultsSize    : " + resultsSize);
         System.out.println("queryReduction : " + queryReduction);
+        System.out.println("license        : " + includeLicense);
+        System.out.println("computeSim     : " + computeSimilarity + "(" + simThreshold + ")");
         System.out.println("multiRep       : " + multiRep);
         System.out.println("outputFormat   : " + outputFormat);
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
