@@ -225,14 +225,17 @@ def count_source_lines(sys):
 
     total_sloc = 0
 
+
     for idx, proj in enumerate(projs):
         if start >= proj[0] >= end:
             print(idx, proj[0], proj[1])
-            sloc = get_sloc(sys.argv[2], proj[1], sys.argv[3])
-            print(sloc.strip())
-            total_sloc += int(sloc)
-   #     if idx == 1:
-   #         exit()
+            try:
+                sloc = get_sloc(sys.argv[2], proj[1], sys.argv[3])
+                print(sloc.strip())
+                total_sloc += int(sloc)
+            except Exception as e:
+                print(e)
+                writefile('skipped_cloc.txt', str(idx) + ',' + proj[1] + '\n')
 
     print(total_sloc)
 
