@@ -176,14 +176,14 @@ def analyse_projects(projs, start, end):
     # plot_hist(stars_list)
 
 
-def get_sloc(inputDir, proj):
+def get_sloc(inputDir, proj, outputDir):
     outputfile = proj.replace('/', '---') + '.csv'
-    command = ["cloc", inputDir + '/' + proj, "--csv", "--out=" + outputfile]
+    command = ["cloc", inputDir + '/' + proj, "--csv", "--out=" + outputDir + '/' + outputfile]
     p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     output, err = p.communicate()
     # print(output)
     # print(err)
-    sloc = read_cloc_output(outputfile)
+    sloc = read_cloc_output(outputDir + '/' + outputfile)
     return sloc
 
 
@@ -228,11 +228,11 @@ def count_source_lines(sys):
     for idx, proj in enumerate(projs):
         if start >= proj[0] >= end:
             print(idx, proj[0], proj[1])
-            sloc = get_sloc(sys.argv[2], proj[1])
+            sloc = get_sloc(sys.argv[2], proj[1], sys.argv[3])
             print(sloc.strip())
             total_sloc += int(sloc)
-        if idx == 1:
-            exit()
+   #     if idx == 1:
+   #         exit()
 
     print(total_sloc)
 
