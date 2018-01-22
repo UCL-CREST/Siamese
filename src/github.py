@@ -176,12 +176,32 @@ def analyse_projects(projs, start, end):
     # plot_hist(stars_list)
 
 
-def main():
+def get_sloc(inputDir, proj):
+    outputfile = proj.replace('/', '---') + '.csv'
+    command = ["cloc", inputDir + '/' + proj, "--csv", "--out=" + outputfile]
+    p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    output, err = p.communicate()
+    # print(output)
+    # print(err)
+    sloc = read_cloc_output(outputfile)
+    return sloc
+
+
+def read_cloc_output(file):
+    file = open(file, 'r')
+    for line in file:
+        if ',Java,' in line:
+            data = line.split(',')
+            return data[4]
+    return -1
+
+
+def index(sys):
     projs = filter_proj_by_stars(sys.argv[1])
     print('total:', len(projs))
     writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
     start = 29465
-    end = 200
+    end = 10
     # analyse_projects(projs, 2, 1)
 
     for idx, proj in enumerate(projs):
@@ -194,6 +214,32 @@ def main():
             write_config(config)
             execute_siamese()
             # input("Press Enter to continue...")
+
+
+def count_source_lines(sys):
+    projs = filter_proj_by_stars(sys.argv[1])
+    print('total:', len(projs))
+    writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
+    start = 29465
+    end = 10
+
+    total_sloc = 0
+
+    for idx, proj in enumerate(projs):
+        if start >= proj[0] >= end:
+            print(idx, proj[0], proj[1])
+            sloc = get_sloc(sys.argv[2], proj[1])
+            print(sloc.strip())
+            total_sloc += int(sloc)
+        if idx == 1:
+            exit()
+
+    print(total_sloc)
+
+
+def main():
+    # index()
+    count_source_lines(sys)
 
 
 main()
