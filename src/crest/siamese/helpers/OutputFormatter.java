@@ -50,20 +50,22 @@ public class OutputFormatter {
         }
     }
 
-    public String format(ArrayList<Document> results, String prefixToRemove) {
+    public String format(ArrayList<ArrayList<Document>> results, String prefixToRemove) {
         if (this.format.equals("csv")) {
             StringBuilder sb = new StringBuilder();
-            int resultCount = 0;
-            for (Document d : results) {
-                if (resultCount > 0)
-                    sb.append(","); // add comma in between
-
-                sb.append(d.getFile().replace(prefixToRemove, ""));
-
-                if (addStartEndLine) {
-                    sb.append("#" + d.getStartLine() + "#" + d.getEndLine());
+            for (int i=0; i<results.size(); i++) {
+                int resultCount = 0;
+                ArrayList<Document> qResults = results.get(i);
+                for (Document d : qResults) {
+                    if (resultCount > 0)
+                        sb.append(","); // add comma in between
+                    sb.append(d.getFile().replace(prefixToRemove, ""));
+                    if (addStartEndLine) {
+                        sb.append("#" + d.getStartLine() + "#" + d.getEndLine());
+                    }
+                    resultCount++;
                 }
-                resultCount++;
+                sb.append("\n");
             }
             return sb.toString();
         } else {
@@ -72,23 +74,26 @@ public class OutputFormatter {
         }
     }
 
-    public String format(ArrayList<Document> results, int[] sim, int threshod, String prefixToRemove) {
+    public String format(ArrayList<ArrayList<Document>> results, int[][] sim, int threshod, String prefixToRemove) {
         if (this.format.equals("csv")) {
             StringBuilder sb = new StringBuilder();
-            int resultCount = 0;
             for (int i =0; i<results.size(); i++) {
-                Document d = results.get(i);
-                if (resultCount > 0)
-                    sb.append(","); // add comma in between
-
-                // only add the results that has similarity higher than the threshold
-                if (sim[i] >= threshod) {
-                    sb.append(d.getFile().replace(prefixToRemove, ""));
-                    if (addStartEndLine) {
-                        sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i] + "#" + d.getLicense());
+                int resultCount = 0;
+                ArrayList<Document> qResults = results.get(i);
+                for (int j=0; j<qResults.size(); j++) {
+                    Document d = qResults.get(i);
+                    if (resultCount > 0)
+                        sb.append(","); // add comma in between
+                    // only add the results that has similarity higher than the threshold
+                    if (sim[i][j] >= threshod) {
+                        sb.append(d.getFile().replace(prefixToRemove, ""));
+                        if (addStartEndLine) {
+                            sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i] + "#" + d.getLicense());
+                        }
+                        resultCount++;
                     }
-                    resultCount++;
                 }
+                sb.append("\n");
             }
             return sb.toString();
         } else {

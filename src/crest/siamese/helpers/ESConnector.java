@@ -16,8 +16,7 @@ import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.action.search.*;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.NoNodeAvailableException;
 import org.elasticsearch.client.transport.TransportClient;
@@ -185,6 +184,45 @@ public class ESConnector {
         return prepareResults(hits, resultSize, isPrint);
     }
 
+	public ArrayList<ArrayList<Document>> multiSearch(String index, String type, ArrayList<String> origQuery, boolean isPrint
+			, boolean isDFS, int resultOffset, int resultSize) throws Exception {
+
+		ArrayList<ArrayList<Document>> results = new ArrayList<>();
+		SearchType searchType;
+		MultiSearchRequestBuilder msrb = client.prepareMultiSearch();
+
+		if (isDFS)
+			searchType = SearchType.DFS_QUERY_THEN_FETCH;
+		else
+			searchType = SearchType.QUERY_THEN_FETCH;
+
+		for (int i=0; i < origQuery.size(); i++) {
+			/*
+			copied from
+			https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
+			*/
+			QueryBuilder queryBuilder = QueryBuilders.matchQuery("src", origQuery.get(i));
+			SearchRequestBuilder srBuilder = client.prepareSearch()
+					.setSearchType(searchType)
+					.addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
+					.addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
+					.setQuery(queryBuilder)
+					.setFrom(resultOffset)
+					.setSize(resultSize);
+			msrb.add(srBuilder);
+		}
+
+		MultiSearchResponse msResponses = msrb.execute().actionGet();
+		for (MultiSearchResponse.Item item : msResponses.getResponses()) {
+			SearchResponse response = item.getResponse();
+			SearchHit[] hits = response.getHits().getHits();
+			ArrayList<Document> docResults = prepareResults(hits, resultSize, isPrint);
+			results.add(docResults);
+		}
+
+		return results;
+	}
+
     public ArrayList<Document> search(
             String index,
             String type,
@@ -229,6 +267,65 @@ public class ESConnector {
 
         return prepareResults(hits, resultSize, isPrint);
     }
+
+	public ArrayList<ArrayList<Document>> multiSearch(
+			String index,
+			String type,
+			ArrayList<String> origQuery,
+			ArrayList<String> query,
+			int origBoost,
+			int normBoost,
+			boolean isPrint,
+			boolean isDFS,
+			int resultOffset,
+			int resultSize) throws Exception {
+
+
+		ArrayList<ArrayList<Document>> results = new ArrayList<>();
+		SearchType searchType;
+		MultiSearchRequestBuilder msrb = client.prepareMultiSearch();
+
+		if (isDFS)
+			searchType = SearchType.DFS_QUERY_THEN_FETCH;
+		else
+			searchType = SearchType.QUERY_THEN_FETCH;
+
+		for (int i=0; i < origQuery.size(); i++) {
+			/*
+			copied from
+			https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
+			*/
+			QueryBuilder queryBuilder = QueryBuilders.boolQuery()
+					.should(
+							QueryBuilders.matchQuery("tokenizedsrc", origQuery.get(i))
+									.boost(origBoost)
+					)
+					.should(
+							QueryBuilders.matchQuery("src", query.get(i))
+									.boost(normBoost)
+					);
+			SearchRequestBuilder srBuilder = client.prepareSearch()
+					.setSearchType(searchType)
+					.addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
+//					.addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
+					.setQuery(queryBuilder)
+					.setFrom(resultOffset)
+					.setSize(resultSize);
+			msrb.add(srBuilder);
+		}
+
+		MultiSearchResponse msResponses = msrb.execute().actionGet();
+
+		// You will get all individual responses from MultiSearchResponse#getResponses()
+		for (MultiSearchResponse.Item item : msResponses.getResponses()) {
+			SearchResponse response = item.getResponse();
+			SearchHit[] hits = response.getHits().getHits();
+			ArrayList<Document> docResults = prepareResults(hits, resultSize, isPrint);
+			results.add(docResults);
+		}
+
+		return results;
+	}
 
     public long getIndicesStats(String indexName) {
         IndicesStatsResponse indicesStatsResponse = client.admin().indices().prepareStats(indexName)

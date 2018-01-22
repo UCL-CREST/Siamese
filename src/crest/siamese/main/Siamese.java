@@ -87,6 +87,7 @@ public class Siamese {
     private Normalizer normalizer;
     private Tokenizer origTokenizer;
     private Normalizer origNormalizer;
+    private int multiQuerySize = 1;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -194,6 +195,7 @@ public class Siamese {
 
             computeSimilarity = Boolean.parseBoolean(prop.getProperty("computeSimilarity"));
             simThreshold = Integer.parseInt(prop.getProperty("simThreshold"));
+            multiQuerySize = Integer.parseInt(prop.getProperty("multiQuerySize"));
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -673,6 +675,8 @@ public class Siamese {
             int methodCount = 0;
             // reset the output buffer
             outToFile = "";
+            ArrayList<String> origQueryList = new ArrayList<>();
+            ArrayList<String> normQueryList = new ArrayList<>();
 
             for (File file : listOfFiles) {
                 if (isPrint)
@@ -689,9 +693,6 @@ public class Siamese {
                 try {
                     methodList = methodParser.parseMethods();
                     String license = methodParser.getLicense();
-
-                    ArrayList<Document> results = new ArrayList<>();
-
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
@@ -724,62 +725,77 @@ public class Siamese {
                                     }
                                 }
 
-                                // search for results depending on the MR setting
-                                if (this.multiRep)
-                                    results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
-                                else
-                                    results = es.search(index, type, query, isPrint, isDFS, offset, size);
-
-                                if (this.computeSimilarity) {
-                                    int[] sim = computeSimilarity(origQuery, results);
-                                    outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
-                                } else {
-                                    outToFile += formatter.format(results, prefixToRemove);
-                                }
-                                outToFile += "\n";
+                                // added the query siblings to a list
+                                origQueryList.add(origQuery);
+                                normQueryList.add(query);
                                 methodCount++;
                             }
                         }
-                    } else {
-                        // check minimum size
-                        if (MyUtils.countLines(file.getAbsolutePath()) >= minCloneLine) {
-                            origQuery = tokenize(file, origTokenizer, false);
-                            query = tokenize(file, tokenizer, isNgram);
-                            // search for results depending on the MR setting
-                            if (this.multiRep)
-                                results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
-                            else
-                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
-                            outToFile += file.getAbsolutePath().replace(prefixToRemove, "") +
-                                    "_noMethod#-1#-1#none,";
-                            if (this.computeSimilarity) {
-                                int[] sim = computeSimilarity(origQuery, results);
-                                outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
-                            } else {
-                                outToFile += formatter.format(results, prefixToRemove);
-                            }
-                            outToFile += "\n";
-                        }
                     }
-
+//                    else {
+//                        // check minimum size
+//                        if (MyUtils.countLines(file.getAbsolutePath()) >= minCloneLine) {
+//                            origQuery = tokenize(file, origTokenizer, false);
+//                            query = tokenize(file, tokenizer, isNgram);
+//                            // search for results depending on the MR setting
+//                            if (this.multiRep)
+//                                results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
+//                            else
+//                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
+//                            outToFile += file.getAbsolutePath().replace(prefixToRemove, "") +
+//                                    "_noMethod#-1#-1#none,";
+//                            if (this.computeSimilarity) {
+//                                int[] sim = computeSimilarity(origQuery, results);
+//                                outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
+//                            } else {
+//                                outToFile += formatter.format(results, prefixToRemove);
+//                            }
+//                            outToFile += "\n";
+//                        }
+//                    }
                     count++;
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());
-//                    System.out.println("ERROR: file " + count +" generates query term size exceeds 4096 (too big).");
+                }
+            }
+
+            System.out.println("Done extracting " + methodCount + " methods from " + count + " files.");
+
+            ArrayList<ArrayList<Document>> results = new ArrayList<>();
+            ArrayList<String> sOrigQueryList;
+            ArrayList<String> sNormQueryList;
+            // loop through the query list and perform multisearches
+            for (int i = 0; i < origQueryList.size(); i += multiQuerySize) {
+                if (i + multiQuerySize <= origQueryList.size()) {
+                    sOrigQueryList = new ArrayList<>(origQueryList.subList(i, i + multiQuerySize));
+                    sNormQueryList = new ArrayList<>(normQueryList.subList(i, i + multiQuerySize));
+                } else {
+                    sOrigQueryList = new ArrayList<>(origQueryList.subList(i, origQueryList.size()));
+                    sNormQueryList = new ArrayList<>(normQueryList.subList(i, origQueryList.size()));
                 }
 
-                if (count % printEvery == 0) {
-                    double percent = (double) count * 100 / listOfFiles.size();
-                    DecimalFormat percentFormat = new DecimalFormat("#.00");
-                    System.out.println("Searched " + count
-                            + " [" + percentFormat.format(percent) + "%] documents (" + methodCount + " methods).");
-
-                    bw.write(outToFile);
-                    // reset the output to print
-                    outToFile = "";
+                System.out.println("Searching for " + sOrigQueryList.size() + " queries.");
+                // search for results depending on the MR setting
+                if (this.multiRep)
+                    results = es.multiSearch(index, type, sOrigQueryList, sNormQueryList, origBoost, normBoost, isPrint, isDFS, offset, size);
+                else
+                    results = es.multiSearch(index, type, sNormQueryList, isPrint, isDFS, offset, size);
+                if (this.computeSimilarity) {
+                    int[][] sim = computeSimilarity(origQueryList, results);
+                    outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
+                } else {
+                    outToFile += formatter.format(results, prefixToRemove);
                 }
+                outToFile += "\n";
+
+                double percent = (double) (i + sOrigQueryList.size()) * 100 / methodCount;
+                DecimalFormat percentFormat = new DecimalFormat("#.00");
+                System.out.println("Searched " + (i + sOrigQueryList.size())
+                        + " [" + percentFormat.format(percent) + "%] methods");
+                bw.write(outToFile);
+                // reset the output to print
+                outToFile = "";
             }
             // flush the last part of output
             bw.write(outToFile);
@@ -792,12 +808,17 @@ public class Siamese {
         return outfile.getAbsolutePath();
     }
 
-    private int[] computeSimilarity(String query, ArrayList<Document> results) {
-        int[] simResults = new int[results.size()];
+    private int[][] computeSimilarity(ArrayList<String> queryList, ArrayList<ArrayList<Document>> results) {
+        int[][] simResults = new int[results.size()][results.get(0).size()];
+
         for (int i=0; i<results.size(); i++) {
-            Document d = results.get(i);
-            int sim = FuzzySearch.tokenSetRatio(query, d.getOriginalSource());
-            simResults[i] = sim;
+            String query = queryList.get(i);
+            ArrayList<Document> qResults = results.get(i);
+            for (int j=0; j<qResults.size(); j++) {
+                Document d = qResults.get(i);
+                int sim = FuzzySearch.tokenSetRatio(query, d.getOriginalSource());
+                simResults[i][j] = sim;
+            }
         }
         return simResults;
     }
