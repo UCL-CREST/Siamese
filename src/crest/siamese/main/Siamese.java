@@ -723,16 +723,11 @@ public class Siamese {
                     String license = methodParser.getLicense();
 
                     // check if there's a method
-//                    System.out.println("methods: " + methodList.size());
-//                    System.out.println("nThreads: " + nThreads);
                     if (methodList.size() > 0) {
                         for (int i = 0; i < methodList.size(); i += nThreads) {
                             int limit = nThreads;
                             if (methodList.size() - i < nThreads) limit = methodList.size() - i;
 
-//                            setOutputFolder("methodList.size(): " + methodList.size());
-//                            System.out.println("i: " + i);
-//                            System.out.println("limit: " + limit);
                             ExecutorService executor = Executors.newFixedThreadPool(nThreads);
                             List<Future<String>> list = new ArrayList<>();
 
@@ -741,7 +736,6 @@ public class Siamese {
                                 Method method = methodList.get(k);
                                 // check minimum size
                                 if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
-//                                    System.out.println(method.getName());
                                     // search for results depending on the MR setting
                                     swt = new SearchWorkerThread(k, index, type, methodList.get(k),
                                             origBoost, normBoost, isPrint, isDFS, offset, size,
@@ -755,7 +749,6 @@ public class Siamese {
 
                             for (int l = 0; l<list.size(); l++) {
                                 Future<String> r = list.get(l);
-//                                System.out.println(l + " output: " + r.get());
                                 outToFile += r.get() + "\n";
                             }
                         }
