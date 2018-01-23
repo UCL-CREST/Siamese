@@ -11,8 +11,17 @@ import crest.siamese.settings.IndexSettings;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.*;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.util.Version;
 import org.elasticsearch.client.Client;
 
 import org.apache.commons.io.FileUtils;
@@ -90,6 +99,7 @@ public class Siamese {
     private Tokenizer[] origTokenizer;
     private Normalizer[] origNormalizer;
     private int nThreads = 10;
+    private IndexReader ireader;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -678,6 +688,11 @@ public class Siamese {
             boolean queryReduction,
             OutputFormatter formatter) throws Exception {
 
+        // read the index, once
+        ireader = readIndex(
+                elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
+                        + this.index + "/0/index");
+
         String qr = "no_qr";
         if (queryReduction) {
             qr = "qr";
@@ -688,9 +703,7 @@ public class Siamese {
                 + df.format(dateobj) + ".csv");
         // if file doesn't exists, then create it
         boolean isCreated = false;
-        if (!outfile.exists()) {
-            isCreated = outfile.createNewFile();
-        }
+        if (!outfile.exists()) isCreated = outfile.createNewFile();
 
         if (isCreated) {
             FileWriter fw = new FileWriter(outfile.getAbsoluteFile(), true);
@@ -721,7 +734,7 @@ public class Siamese {
                 try {
                     methodList = methodParser.parseMethods();
                     String license = methodParser.getLicense();
-
+                    // TODO: when is this if false? Check.
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (int i = 0; i < methodList.size(); i += nThreads) {
@@ -815,12 +828,12 @@ public class Siamese {
         return simResults;
     }
 
-    private String reduceQuery(String query, String field, double limit) {
+    private String reduceQuery(IndexReader ireader, String query, String field, double limit) {
         // find the top-N rare terms in the query
         String tmpQuery = query;
         // clear the query
         query = "";
-        ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, field, tmpQuery);
+        ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(ireader, field, tmpQuery);
         for (int i=0; i<sortedTerms.size(); i++) {
             if (sortedTerms.get(i).getFreq() <= limit)
                 query += sortedTerms.get(i).getTerm() + " ";
@@ -1022,19 +1035,15 @@ public class Siamese {
     }
 
     /***
-     * Read idf of each term in the query directly from Lucene index
-     * @param indexName name of the index
+     * Read DF of each term in the query directly from Lucene index
+     * @param reader the index
+     * @param field field to read frequency
      * @param terms query containing search terms
-     * @return selected top-selectionRatio terms
+     * @return a sorted list of Java terms according to its frequency
      */
-    private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String field, String terms) {
-
-        String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
-                + indexName + "/0/index";
+    private ArrayList<JavaTerm> sortTermsByFreq(IndexReader reader, String field, String terms) {
         ArrayList<JavaTerm> selectedTermsArray = new ArrayList<>();
-
         try {
-            IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
             String[] termsArr = terms.split(" ");
             for (String term: termsArr) {
                 // TODO: get rid of the blank term (why it's blank?)
@@ -1046,7 +1055,6 @@ public class Siamese {
                         selectedTermsArray.add(newTerm);
                 }
             }
-
             /* copied from https://stackoverflow.com/questions/18441846/how-to-sort-an-arraylist-in-java */
             Collections.sort(selectedTermsArray);
         } catch (IOException e) {
@@ -1225,6 +1233,33 @@ public class Siamese {
         }
     }
 
+    public IndexReader readIndex(String location) {
+        String indexFile = location;
+        ArrayList<JavaTerm> selectedTermsArray = new ArrayList<>();
+
+        try {
+            IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
+            return reader;
+        } catch (IOException e) {
+            System.out.println("ERROR: cannot open the index at: " + location);
+            return null;
+        }
+    }
+
+    public void luceneSearch(IndexReader reader, String q) throws Exception {
+        IndexSearcher searcher = new IndexSearcher(reader);
+        QueryParser parser = new QueryParser("tokenizedsrc", new SimpleAnalyzer());
+        Query query = parser.parse(q);
+        TopDocs topDocs = searcher.search(query, 100);
+        ScoreDoc[] hits = topDocs.scoreDocs;
+        for (int i = 0; i < hits.length; i++) {
+            ScoreDoc scd = hits[i];
+            org.apache.lucene.document.Document doc = searcher.doc(hits[i].doc);
+            System.out.println(i+". doc=" + hits[i].doc + " score=" + hits[i].score + " doc=" + doc);
+        }
+        System.out.println("Found " + hits.length);
+    }
+
     /***
      * A class to parallelise multiple queries
      */
@@ -1270,7 +1305,6 @@ public class Siamese {
         }
 
         private String search() throws Exception {
-//            System.out.println("thread: " + this.id + " is working ...");
             String outToFile = "";
             /* TODO: fix this some time. It's weird to have a list with only a single object. */
             // write output to file
@@ -1290,8 +1324,8 @@ public class Siamese {
             // query size limit is enforced
             if (queryReduction) {
                 long docCount = getIndicesStats();
-                query = reduceQuery(query, "src", qrPercentileNorm * docCount / 100);
-                origQuery = reduceQuery(origQuery, "tokenizedsrc", qrPercentileOrig * docCount / 100);
+                query = reduceQuery(ireader, query, "src", qrPercentileNorm * docCount / 100);
+                origQuery = reduceQuery(ireader, origQuery, "tokenizedsrc", qrPercentileOrig * docCount / 100);
             }
 
             // search for results depending on the MR setting
