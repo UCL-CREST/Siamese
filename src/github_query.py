@@ -50,10 +50,11 @@ def main():
 
                         project_name = row[i].split("#")[0].replace(prefix, '').split('/')
                         # print(project_name[0], project_name[1])
-                        if project_name[1].strip() not in project_map:
-                            project_map[project_name[1].strip()] = 1
+                        pname = project_name[0].strip() + '/' + project_name[1].strip()
+                        if pname not in project_map:
+                            project_map[pname] = 1
                         else:
-                            project_map[project_name[1].strip()] += 1
+                            project_map[pname] += 1
 
                         count += 1
                         if query[3] == result[4]:
