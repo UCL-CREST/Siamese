@@ -19,7 +19,7 @@ def writefile(filename, fcontent, mode, isprint):
 
 
 def main():
-    sim_threshold = 80
+    sim_threshold = 100
     prefix = '/home/cragkhit/data/github/'
 
     clones = pd.read_csv('../results/github_qr_15-01-18_20-06-114_utf8.csv', sep=',', header=None)
@@ -32,6 +32,7 @@ def main():
     count_license_compatible = 0
     compat_license_map = dict()
     incompat_license_map = dict()
+    project_map = dict()
 
     for index, row in clones.iterrows():
         # print(row)
@@ -46,6 +47,14 @@ def main():
                         writefile('../results/results_github_clones_' + str(sim_threshold) + '.csv',
                                   str(row[0]).replace('#', ',') + ',' +
                                   str(row[i]).replace('#', ',') + '\n', 'a', False)
+
+                        project_name = row[i].split("#")[0].replace(prefix, '').split('/')
+                        # print(project_name[0], project_name[1])
+                        if project_name[1].strip() not in project_map:
+                            project_map[project_name[1].strip()] = 1
+                        else:
+                            project_map[project_name[1].strip()] += 1
+
                         count += 1
                         if query[3] == result[4]:
                             count_license_compatible += 1
@@ -77,12 +86,25 @@ def main():
                     writefile('../results/results_github_skipped' + str(sim_threshold) + '.csv',  out + '\n', 'a', False)
 
     print('total clones with ' + str(sim_threshold) + '% similarity: ' + str(count))
+    print('found clones in ' + str(len(project_map.keys())) + ' GitHub projects:')
+    sorted_project_map = [(k, project_map[k]) for k in sorted(project_map, key=project_map.get, reverse=True)]
+
+    count = 0
+    for k, v in sorted_project_map:
+        if count < 10:
+            print(k, v)
+            count += 1
+
     print('clones with compatible license: ' + str(count_license_compatible))
     print('clones with incompatible license: ' + str(count - count_license_compatible))
     print('compatible license:')
-    print(compat_license_map)
+    # print(compat_license_map)
+    for k, v in compat_license_map.items():
+        print(k, v)
     print('incompatible license:')
-    print(incompat_license_map)
+    # print(incompat_license_map)
+    for k, v in incompat_license_map.items():
+        print(k, v)
 
 
 main()
