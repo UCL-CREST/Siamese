@@ -1171,7 +1171,6 @@
 48,R,default/38807.java,convert,91,173,100,MT1,M
 49,R,default/37180.java,convert,90,172,100,T1,M
 50,R,default/36368.java,convert,90,172,100,MT1,M
-51,R,default/33993.java,convert,90,172,100,F,N
 0,Q,default/100508.java,convert,90,172,,,
 1,R,default/99223.java,convert,90,172,100,MT1,M
 2,R,default/98707.java,convert,90,172,100,T1,M
@@ -1223,7 +1222,6 @@
 48,R,default/38807.java,convert,91,173,100,MT1,M
 49,R,default/37180.java,convert,90,172,100,T1,M
 50,R,default/36368.java,convert,90,172,100,F,N
-51,R,default/33993.java,convert,90,172,100,F,N
 0,Q,default/103760.java,elimina,57,80,,,
 1,R,default/64845.java,elimina,18,49,96,MT3,M
 2,R,default/23311.java,elimina,18,49,96,MT3,M
@@ -1377,7 +1375,6 @@
 48,R,default/38807.java,convert,91,173,100,MT1,M
 49,R,default/37180.java,convert,90,172,100,T1,N
 50,R,default/36368.java,convert,90,172,100,F,N
-51,R,default/33993.java,convert,90,172,100,F,N
 0,Q,default/50984.java,doVersionCheck,14,37,,,
 1,R,default/93582.java,doVersionCheck,14,37,100,MT1,M
 2,R,default/88062.java,doVersionCheck,14,37,100,MT1,M
@@ -1480,7 +1477,6 @@
 48,R,default/38807.java,convert,91,173,100,F,N
 49,R,default/37180.java,convert,90,172,100,T1,N
 50,R,default/36368.java,convert,90,172,100,F,N
-51,R,default/33993.java,convert,90,172,100,F,N
 0,Q,default/74894.java,doVersionCheck,8,29,,,
 1,R,default/96757.java,doVersionCheck,8,29,100,T1,M
 2,R,default/94284.java,doVersionCheck,8,29,100,MT1,M
@@ -1787,7 +1783,6 @@
 48,R,default/37992.java,readAndRewrite,27,46,100,F,N
 49,R,default/3658.java,readAndRewrite,27,46,100,F,N
 50,R,default/36134.java,readAndRewrite,27,46,100,F,N
-51,R,default/34597.java,readAndRewrite,27,46,100,F,N
 0,Q,default/20415.java,doVersionCheck,14,37,,,
 1,R,default/93582.java,doVersionCheck,14,37,100,MT1,M
 2,R,default/88062.java,doVersionCheck,14,37,100,MT1,M
@@ -2043,7 +2038,6 @@
 48,R,default/37992.java,readAndRewrite,27,46,100,F,N
 49,R,default/3658.java,readAndRewrite,27,46,100,F,N
 50,R,default/36134.java,readAndRewrite,27,46,100,F,N
-51,R,default/34597.java,readAndRewrite,27,46,100,F,N
 0,Q,default/20880.java,doVersionCheck,8,29,,,
 1,R,default/96757.java,doVersionCheck,8,29,100,T1,M
 2,R,default/94284.java,doVersionCheck,8,29,100,MT1,M
@@ -2401,7 +2395,6 @@
 48,R,default/37992.java,readAndRewrite,27,46,100,F,N
 49,R,default/3658.java,readAndRewrite,27,46,100,F,N
 50,R,default/36134.java,readAndRewrite,27,46,100,F,N
-51,R,default/34597.java,readAndRewrite,27,46,100,F,N
 0,Q,default/46926.java,convert,90,172,,,
 1,R,default/99223.java,convert,90,172,100,MT1,M
 2,R,default/98707.java,convert,90,172,100,T1,M
@@ -2555,7 +2548,6 @@
 48,R,default/37992.java,readAndRewrite,27,46,100,MT1,M
 49,R,default/3658.java,readAndRewrite,27,46,100,MT1,M
 50,R,default/36134.java,readAndRewrite,27,46,100,MT1,M
-51,R,default/34597.java,readAndRewrite,27,46,100,MT1,M
 0,Q,default/89905.java,readAndRewrite,27,46,,,
 1,R,default/99202.java,readAndRewrite,27,46,100,MT1,M
 2,R,default/98925.java,readAndRewrite,27,46,100,MT1,M
@@ -2658,7 +2650,6 @@
 48,R,default/37992.java,readAndRewrite,27,46,100,MT1,M
 49,R,default/3658.java,readAndRewrite,27,46,100,MT1,M
 50,R,default/36134.java,readAndRewrite,27,46,100,MT1,M
-51,R,default/34597.java,readAndRewrite,27,46,100,F,N
 0,Q,default/111788.java,readAndRewrite,27,46,,,
 1,R,default/99202.java,readAndRewrite,27,46,100,MT1,M
 2,R,default/98925.java,readAndRewrite,27,46,100,MT1,M
@@ -2710,7 +2701,6 @@
 48,R,default/37992.java,readAndRewrite,27,46,100,F,N
 49,R,default/3658.java,readAndRewrite,27,46,100,F,N
 50,R,default/36134.java,readAndRewrite,27,46,100,F,N
-51,R,default/34597.java,readAndRewrite,27,46,100,F,N
 0,Q,selected/527236.java,writeTo,153,167,,,
 1,R,selected/1875065.java,writeTo,203,217,99,T2,M
 2,R,selected/1608219.java,writeTo,146,160,99,T2,M
@@ -7240,3 +7230,13 @@
 38,R,selected/218044.java,copy,15,28,81,F,M
 39,R,selected/1966294.java,copyWithRewrite,168,181,84,F,M
 40,R,selected/2530941.java,CopyInputToOutput,69,81,70,F,M
+41,R,selected/14835.java,readToByteBuffer,81,92,63,F
+42,R,selected/2580813.java,doUpload,113,182,57,F
+43,R,selected/195733.java,copy,70,79,67,F
+44,R,selected/1836533.java,copyAsset,59,80,67,F
+45,R,selected/440619.java,copy,130,147,77,F
+46,R,selected/190929.java,copy,518,529,71,F
+47,R,selected/1957696.java,copyFile,28,38,77,F
+48,R,selected/574710.java,copyFile,21,35,76,F
+49,R,selected/2371710.java,copyStream,154,165,68,F
+50,R,selected/362179.java,download,110,122,64,F
