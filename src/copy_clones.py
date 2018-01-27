@@ -19,8 +19,13 @@ def writefile(filename, fcontent, mode, isprint):
 
 
 def main():
-    data = pd.read_csv('../results/bcb_search_results_qr-25-75-10.csv', sep=',', header=None)
-    data2 = pd.read_csv('../results/bcb_search_results_qr-5-10-10.csv', sep=',', header=None)
+    # TODO:
+    # 1) open the files in excel once before running this to fill in the missing columns
+    # 2) move the method names into another column
+    file1_name = '../results/bcb_search_results_qr-25-75-10-new.csv'
+    file2_name = '../results/bcb_search_results_qr-25-75-10_copied.csv'
+    data = pd.read_csv(file1_name, sep=',', header=None)
+    data2 = pd.read_csv(file2_name, sep=',', header=None)
 
     QUERIES = 142
     RESULTSIZE = 50
@@ -31,13 +36,12 @@ def main():
         print('processing:', start, '-', end)
         file1 = data.loc[start: end]
         file2 = data2.loc[start: end]
-        # print(file2)
 
         for index, row in file1.iterrows():
             if row[1].strip() == 'Q':
                 out = str(row[0]) + ',' + row[1] + ',' + row[2] + ',' + row[3] + ',' + \
                       str(row[4]) + ',' + str(row[5]) + '\n'
-                writefile('../results/bcb_search_results_qr-25-75-10_copied.csv', out, 'a', True)
+                writefile(file1_name.replace('.csv', '_copied.csv'), out, 'a', True)
             else:
                 matched = False
                 for index2, row2 in file2.iterrows():
@@ -46,13 +50,13 @@ def main():
                             and int(row[5]) == int(row2[5]):
                         out = str(row[0]) + ',' + row[1] + ',' + row[2] + ',' + row[3] + ',' + \
                                   str(row[4]) + ',' + str(row[5]) + ',' + str(row[6]) + ',' + row2[7] + ',M\n'
-                        writefile('../results/bcb_search_results_qr-25-75-10_copied.csv', out, 'a', True)
+                        writefile(file1_name.replace('.csv', '_copied.csv'), out, 'a', True)
                         matched = True
                         break
                 if not matched:
                     out = str(row[0]) + ',' + row[1] + ',' + row[2] + ',' + row[3] + ',' + \
                           str(row[4]) + ',' + str(row[5]) + ',' + str(row[6]) + ',' + row[7] + ',N\n'
-                    writefile('../results/bcb_search_results_qr-25-75-10_copied.csv', out, 'a', True)
+                    writefile(file1_name.replace('.csv', '_copied.csv'), out, 'a', True)
 
 
 

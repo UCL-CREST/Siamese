@@ -20,18 +20,18 @@ def writefile(filename, fcontent, mode, isprint):
 
 def main():
 
-    groundtruth = pd.read_csv('../results/bcb_groundtruth_qr-25-75-10.csv', sep=',', header=None)
+    groundtruth = pd.read_csv('../results/bcb_groundtruth_qr-25-75-10-new.csv', sep=',', header=None)
     gt = groundtruth[1:][4].tolist()
     # print(len(gt), gt)
     # exit()
 
-    data = pd.read_csv('../results/bcb_search_results_qr-25-75-10_copied.csv', sep=',', header=None)
+    data = pd.read_csv('../results/bcb_search_results_qr-25-75-10-new_copied.csv', sep=',', header=None)
     # print(data)
     # exit()
 
     QUERIES = 142
     RESULTSIZE = 50
-    OUTFILE = '../results/bcb_precision_qr-25-75-10.csv'
+    OUTFILE = '../results/bcb_precision_qr-25-75-10-new.csv'
 
     writefile(OUTFILE, 'r,10-prec,r-prec,tp,fp,t1,t2,t3\n', 'a', False)
     precsum = [0, 0, 0, 0, 0, 0, 0]
@@ -39,6 +39,7 @@ def main():
     for i in range(1, (QUERIES + 1)):
         start = i + (i - 1) * RESULTSIZE
         end = i * RESULTSIZE + i - 1
+        print(start, end)
         q1dat = data.loc[start: end][7]
         t1 = t2 = t3 = fp = 0
         sum10 = 0
@@ -83,8 +84,11 @@ def main():
         out = out + str(rr) + ','
         out = out + str(tenprec) + ','
         out = out + str(rprec) \
-              + ',' + str(t1 + t2 + t3) + ',' + str(fp) \
-              + ',' + str(t1) + ',' + str(t2) + ',' + str(t3) + '\n'
+              + ',' + str(t1 + t2 + t3) \
+              + ',' + str(fp) \
+              + ',' + str(t1) \
+              + ',' + str(t2) \
+              + ',' + str(t3) + '\n'
 
         writefile(OUTFILE, out, 'a', True)
 
