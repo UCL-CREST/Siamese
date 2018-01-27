@@ -84,8 +84,11 @@ def main():
         out = out + str(rr) + ','
         out = out + str(tenprec) + ','
         out = out + str(rprec) \
-              + ',' + str(t1 + t2 + t3) + ',' + str(fp) \
-              + ',' + str(t1) + ',' + str(t2) + ',' + str(t3) + '\n'
+              + ',' + str(t1 + t2 + t3) \
+              + ',' + str(fp) \
+              + ',' + str(t1) \
+              + ',' + str(t2) \
+              + ',' + str(t3) + '\n'
 
         writefile(OUTFILE, out, 'a', True)
 
