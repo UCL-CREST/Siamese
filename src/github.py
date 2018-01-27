@@ -36,7 +36,7 @@ def gen_config_template():
     config = list()
     config.append(["elasticsearchLoc", "/Users/Chaiyong/IdeasProjects/Siamese/elasticsearch-2.2.0"])
     config.append(["server", "localhost"])
-    config.append(["index", "github"])
+    config.append(["index", "github1shard"])
     config.append(["type", "siamese"])
     config.append(["inputFolder", "/home/cragkhit/data/github"])
     config.append(["subInputFolder", ""])
@@ -181,7 +181,7 @@ def main():
     print('total:', len(projs))
     writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
     start = 29465
-    end = 200
+    end = 10
     # analyse_projects(projs, 2, 1)
 
     for idx, proj in enumerate(projs):
@@ -191,8 +191,12 @@ def main():
             config = gen_config_template()
             config = update_config(config, 4, sys.argv[2])
             config = update_config(config, 5, proj[1])
+	    # first project, recreate the index
+   	    if idx == 0:
+  		config = update_config(config, 17, "true")
             write_config(config)
             execute_siamese()
+	    exit(0)
             # input("Press Enter to continue...")
 
 
