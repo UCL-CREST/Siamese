@@ -13,7 +13,7 @@ OUTPUT=$3
 count=1
 ls -1 $LOCATION | sort -R | tail -$LIMIT | while read file; do
     # echo $count: $file
-    mkdir -p $OUTPUT
-    cp $LOCATION/$file $OUTPUT
+    mkdir -p $OUTPUT/$LIMIT
+    cp $LOCATION/$file $OUTPUT/$LIMIT
     count=$(($count+1))
 done

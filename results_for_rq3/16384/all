@@ -1,0 +1,4898 @@
+2018/01/27 12:31:43
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/100
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:43 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Shrunken Bones] loaded [], sites []
+Cannot create the output file: /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-128.csv
+2018/01/27 12:31:44
+Elapse time (ms): 819
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.48
+	System time (seconds): 0.15
+	Percent of CPU this job got: 169%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.96
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 100372
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 26895
+	Voluntary context switches: 2903
+	Involuntary context switches: 47
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:03
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/10
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:03 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Fabian Cortez] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-135.csv
+2018/01/27 12:29:05
+Elapse time (ms): 1846
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.25
+	System time (seconds): 0.29
+	Percent of CPU this job got: 222%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 246020
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 64615
+	Voluntary context switches: 5275
+	Involuntary context switches: 152
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:05
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/11
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:05 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Orator] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-174.csv
+2018/01/27 12:29:07
+Elapse time (ms): 1787
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.89
+	System time (seconds): 0.30
+	Percent of CPU this job got: 213%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.96
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 236456
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 61551
+	Voluntary context switches: 5072
+	Involuntary context switches: 136
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:07
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/12
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:07 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [May "Mayday" Parker] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (6 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-161.csv
+2018/01/27 12:29:09
+Elapse time (ms): 2197
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 5.35
+	System time (seconds): 0.38
+	Percent of CPU this job got: 240%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.38
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 272880
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 74262
+	Voluntary context switches: 5821
+	Involuntary context switches: 137
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:09
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/13
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:09 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Alexander Lexington] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-545.csv
+2018/01/27 12:29:11
+Elapse time (ms): 1602
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.19
+	System time (seconds): 0.26
+	Percent of CPU this job got: 195%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.77
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 185812
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 48669
+	Voluntary context switches: 4740
+	Involuntary context switches: 75
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:11
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/14
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:11 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Demogorge the God-Eater] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-330.csv
+2018/01/27 12:29:12
+Elapse time (ms): 994
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.71
+	System time (seconds): 0.16
+	Percent of CPU this job got: 164%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.14
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 112700
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 29988
+	Voluntary context switches: 3248
+	Involuntary context switches: 38
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:12
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/15
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:12 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Adversary] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (4 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-486.csv
+2018/01/27 12:29:14
+Elapse time (ms): 1887
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.44
+	System time (seconds): 0.32
+	Percent of CPU this job got: 216%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 251024
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 67425
+	Voluntary context switches: 5288
+	Involuntary context switches: 221
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:14
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/16
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:15 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Chondu the Mystic] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-691.csv
+2018/01/27 12:29:16
+Elapse time (ms): 1744
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.53
+	System time (seconds): 0.31
+	Percent of CPU this job got: 200%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.92
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 210856
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 55134
+	Voluntary context switches: 5234
+	Involuntary context switches: 156
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:16
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/17
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:16 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Matsu'o Tsurayaba] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-609.csv
+2018/01/27 12:29:18
+Elapse time (ms): 1697
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.56
+	System time (seconds): 0.27
+	Percent of CPU this job got: 205%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.87
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 198368
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 52032
+	Voluntary context switches: 5134
+	Involuntary context switches: 128
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:18
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/18
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:18 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Red Skull II] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-496.csv
+2018/01/27 12:29:20
+Elapse time (ms): 1944
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.68
+	System time (seconds): 0.34
+	Percent of CPU this job got: 222%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.25
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 259080
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 68489
+	Voluntary context switches: 5378
+	Involuntary context switches: 96
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:20
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/19
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:21 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Harold "Happy" Hogan] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-752.csv
+2018/01/27 12:29:21
+Elapse time (ms): 1013
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.75
+	System time (seconds): 0.15
+	Percent of CPU this job got: 164%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.16
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 113832
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30266
+	Voluntary context switches: 3215
+	Involuntary context switches: 58
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:28:49
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/1
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:28:50 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Reject] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-28-666.csv
+2018/01/27 12:28:51
+Elapse time (ms): 1660
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.42
+	System time (seconds): 0.24
+	Percent of CPU this job got: 199%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.84
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 195032
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 51198
+	Voluntary context switches: 4839
+	Involuntary context switches: 120
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:22
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/20
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:22 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Beetle] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-929.csv
+2018/01/27 12:29:23
+Elapse time (ms): 1037
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.79
+	System time (seconds): 0.17
+	Percent of CPU this job got: 164%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115348
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30646
+	Voluntary context switches: 3354
+	Involuntary context switches: 84
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:23
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/21
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:23 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Vivisector] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-126.csv
+2018/01/27 12:29:25
+Elapse time (ms): 1916
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.64
+	System time (seconds): 0.33
+	Percent of CPU this job got: 221%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.24
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 255088
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 68633
+	Voluntary context switches: 5314
+	Involuntary context switches: 286
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 96
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:25
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/22
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:25 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Fandral] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-382.csv
+2018/01/27 12:29:27
+Elapse time (ms): 1572
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.03
+	System time (seconds): 0.23
+	Percent of CPU this job got: 188%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.74
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 170516
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 44862
+	Voluntary context switches: 4837
+	Involuntary context switches: 101
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:27
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/23
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:27 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Titania] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-130.csv
+2018/01/27 12:29:28
+Elapse time (ms): 1025
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.78
+	System time (seconds): 0.16
+	Percent of CPU this job got: 165%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115080
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30581
+	Voluntary context switches: 3337
+	Involuntary context switches: 91
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:28
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/24
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:28 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Death Adder] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-318.csv
+2018/01/27 12:29:30
+Elapse time (ms): 1713
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.61
+	System time (seconds): 0.28
+	Percent of CPU this job got: 205%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.89
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 210384
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 55027
+	Voluntary context switches: 4963
+	Involuntary context switches: 138
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:30
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/25
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:30 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Ziggy Pig] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-223.csv
+2018/01/27 12:29:31
+Elapse time (ms): 1034
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.82
+	System time (seconds): 0.17
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115440
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30668
+	Voluntary context switches: 3401
+	Involuntary context switches: 25
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:31
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/26
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:31 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Reaper] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-417.csv
+2018/01/27 12:29:33
+Elapse time (ms): 1605
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.19
+	System time (seconds): 0.24
+	Percent of CPU this job got: 194%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.76
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 177764
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 46651
+	Voluntary context switches: 4815
+	Involuntary context switches: 71
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:33
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/27
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:33 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Scourge of the Underworld] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (5 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-325.csv
+2018/01/27 12:29:35
+Elapse time (ms): 2116
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 5.18
+	System time (seconds): 0.35
+	Percent of CPU this job got: 223%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.48
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 266088
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 71976
+	Voluntary context switches: 5671
+	Involuntary context switches: 128
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:35
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/28
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:36 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Persuader] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-688.csv
+2018/01/27 12:29:37
+Elapse time (ms): 1589
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.44
+	System time (seconds): 0.29
+	Percent of CPU this job got: 210%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.77
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 200068
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 52227
+	Voluntary context switches: 4663
+	Involuntary context switches: 107
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:37
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/29
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:37 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Mysterio] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (4 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-465.csv
+2018/01/27 12:29:39
+Elapse time (ms): 2098
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 5.16
+	System time (seconds): 0.32
+	Percent of CPU this job got: 239%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.29
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 275760
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 73662
+	Voluntary context switches: 5383
+	Involuntary context switches: 104
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:28:51
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/2
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:28:51 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Hepzibah] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-28-525.csv
+2018/01/27 12:28:52
+Elapse time (ms): 1124
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.93
+	System time (seconds): 0.17
+	Percent of CPU this job got: 164%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.28
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 123056
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 32582
+	Voluntary context switches: 3411
+	Involuntary context switches: 78
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:39
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/30
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:40 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Typhoid] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-764.csv
+2018/01/27 12:29:42
+Elapse time (ms): 2331
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 5.06
+	System time (seconds): 0.40
+	Percent of CPU this job got: 217%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.51
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 355028
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 92950
+	Voluntary context switches: 5850
+	Involuntary context switches: 159
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:42
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/31
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:42 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Bucky] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-298.csv
+2018/01/27 12:29:44
+Elapse time (ms): 1781
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.85
+	System time (seconds): 0.32
+	Percent of CPU this job got: 213%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.95
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 230760
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 60332
+	Voluntary context switches: 5200
+	Involuntary context switches: 138
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:44
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/32
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:44 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Jack Flag] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (25 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-262.csv
+2018/01/27 12:29:48
+Elapse time (ms): 3857
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 8.91
+	System time (seconds): 0.63
+	Percent of CPU this job got: 235%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:04.06
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 530632
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 154497
+	Voluntary context switches: 7424
+	Involuntary context switches: 449
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:48
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/33
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:48 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Air-Walker] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-347.csv
+2018/01/27 12:29:50
+Elapse time (ms): 1899
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.33
+	System time (seconds): 0.33
+	Percent of CPU this job got: 223%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.08
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 256180
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 66901
+	Voluntary context switches: 5408
+	Involuntary context switches: 338
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:50
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/34
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:50 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Brutacus] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-427.csv
+2018/01/27 12:29:51
+Elapse time (ms): 1046
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.83
+	System time (seconds): 0.17
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115848
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30775
+	Voluntary context switches: 3366
+	Involuntary context switches: 96
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:51
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/35
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:51 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Man-Killer] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (6 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-643.csv
+2018/01/27 12:29:54
+Elapse time (ms): 2977
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 6.96
+	System time (seconds): 0.49
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 443164
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 114488
+	Voluntary context switches: 6505
+	Involuntary context switches: 118
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:55
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/36
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:55 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Scarlet Spiders] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-830.csv
+2018/01/27 12:29:56
+Elapse time (ms): 1055
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.87
+	System time (seconds): 0.16
+	Percent of CPU this job got: 169%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 116080
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30833
+	Voluntary context switches: 3466
+	Involuntary context switches: 44
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:56
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/37
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:56 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Skein] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-96.csv
+2018/01/27 12:29:57
+Elapse time (ms): 1055
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.90
+	System time (seconds): 0.18
+	Percent of CPU this job got: 163%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.27
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 116944
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 31040
+	Voluntary context switches: 3467
+	Involuntary context switches: 51
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:57
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/38
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:57 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Amina Synge] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-322.csv
+2018/01/27 12:29:59
+Elapse time (ms): 1606
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.14
+	System time (seconds): 0.29
+	Percent of CPU this job got: 194%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.76
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 193644
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 50621
+	Voluntary context switches: 4575
+	Involuntary context switches: 84
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:59
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/39
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:59 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Chance] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (6 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-98.csv
+2018/01/27 12:30:01
+Elapse time (ms): 2123
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 5.16
+	System time (seconds): 0.38
+	Percent of CPU this job got: 239%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.31
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 270640
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 73514
+	Voluntary context switches: 6013
+	Involuntary context switches: 266
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:28:53
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/3
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:28:53 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Felicia Hardy] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-28-805.csv
+2018/01/27 12:28:54
+Elapse time (ms): 1035
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.84
+	System time (seconds): 0.15
+	Percent of CPU this job got: 167%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115368
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30658
+	Voluntary context switches: 3411
+	Involuntary context switches: 55
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:01
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/40
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:01 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [War] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-428.csv
+2018/01/27 12:30:03
+Elapse time (ms): 1830
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.01
+	System time (seconds): 0.32
+	Percent of CPU this job got: 214%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.02
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 238664
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 62319
+	Voluntary context switches: 5423
+	Involuntary context switches: 312
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:03
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/41
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:03 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Kro] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-448.csv
+2018/01/27 12:30:04
+Elapse time (ms): 1027
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.80
+	System time (seconds): 0.17
+	Percent of CPU this job got: 168%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114720
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30503
+	Voluntary context switches: 3262
+	Involuntary context switches: 41
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:04
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/42
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:04 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Android Man] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-640.csv
+2018/01/27 12:30:05
+Elapse time (ms): 1053
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.87
+	System time (seconds): 0.17
+	Percent of CPU this job got: 168%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.21
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 116128
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30861
+	Voluntary context switches: 3503
+	Involuntary context switches: 43
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:06
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/43
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:06 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Marvel Man] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-857.csv
+2018/01/27 12:30:07
+Elapse time (ms): 1698
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.54
+	System time (seconds): 0.29
+	Percent of CPU this job got: 204%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.87
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 206024
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 53956
+	Voluntary context switches: 4961
+	Involuntary context switches: 112
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:07
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/44
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:08 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Bishop] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-733.csv
+2018/01/27 12:30:09
+Elapse time (ms): 1924
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.51
+	System time (seconds): 0.33
+	Percent of CPU this job got: 219%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 266044
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 71258
+	Voluntary context switches: 5497
+	Involuntary context switches: 158
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:10
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/45
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:10 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Spiral] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-951.csv
+2018/01/27 12:30:11
+Elapse time (ms): 1013
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.74
+	System time (seconds): 0.17
+	Percent of CPU this job got: 163%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114216
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30362
+	Voluntary context switches: 3235
+	Involuntary context switches: 54
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:11
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/46
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:11 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Joseph] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-140.csv
+2018/01/27 12:30:12
+Elapse time (ms): 1580
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.14
+	System time (seconds): 0.24
+	Percent of CPU this job got: 192%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.76
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 182584
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 47851
+	Voluntary context switches: 4527
+	Involuntary context switches: 101
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:13
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/47
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:13 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Theresa Cassidy] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-905.csv
+2018/01/27 12:30:14
+Elapse time (ms): 1046
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.85
+	System time (seconds): 0.17
+	Percent of CPU this job got: 167%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115980
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30806
+	Voluntary context switches: 3392
+	Involuntary context switches: 51
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:14
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/48
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:14 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Captain Universe] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-126.csv
+2018/01/27 12:30:15
+Elapse time (ms): 1041
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.80
+	System time (seconds): 0.19
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114880
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30530
+	Voluntary context switches: 3355
+	Involuntary context switches: 61
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:15
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/49
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:15 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Interloper] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-330.csv
+2018/01/27 12:30:17
+Elapse time (ms): 1648
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.37
+	System time (seconds): 0.27
+	Percent of CPU this job got: 199%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.83
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 192820
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 50421
+	Voluntary context switches: 4807
+	Involuntary context switches: 97
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:28:54
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/4
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:28:54 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Zaladane] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-28-16.csv
+2018/01/27 12:28:55
+Elapse time (ms): 1033
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.78
+	System time (seconds): 0.16
+	Percent of CPU this job got: 164%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.18
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114676
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30485
+	Voluntary context switches: 3449
+	Involuntary context switches: 60
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:17
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/50
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:17 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Karl Lykos] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-167.csv
+2018/01/27 12:30:19
+Elapse time (ms): 1975
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.74
+	System time (seconds): 0.35
+	Percent of CPU this job got: 225%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.26
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 268732
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 71469
+	Voluntary context switches: 5431
+	Involuntary context switches: 225
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:19
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/51
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:19 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Isbisa] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-431.csv
+2018/01/27 12:30:20
+Elapse time (ms): 998
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.73
+	System time (seconds): 0.15
+	Percent of CPU this job got: 164%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.14
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 113596
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30204
+	Voluntary context switches: 3219
+	Involuntary context switches: 67
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:20
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/52
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:20 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Rattler] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-595.csv
+2018/01/27 12:30:21
+Elapse time (ms): 1020
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.75
+	System time (seconds): 0.17
+	Percent of CPU this job got: 165%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.16
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114556
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30450
+	Voluntary context switches: 3263
+	Involuntary context switches: 80
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:21
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/53
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:22 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Triathlon] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-763.csv
+2018/01/27 12:30:23
+Elapse time (ms): 1662
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.44
+	System time (seconds): 0.29
+	Percent of CPU this job got: 202%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.84
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 208808
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 54421
+	Voluntary context switches: 4872
+	Involuntary context switches: 72
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:23
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/54
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:23 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Prodigy] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-619.csv
+2018/01/27 12:30:25
+Elapse time (ms): 1562
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.18
+	System time (seconds): 0.25
+	Percent of CPU this job got: 197%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.74
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 185444
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 48566
+	Voluntary context switches: 4580
+	Involuntary context switches: 100
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:25
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/55
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:25 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Skullfire] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-374.csv
+2018/01/27 12:30:26
+Elapse time (ms): 1057
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.88
+	System time (seconds): 0.16
+	Percent of CPU this job got: 168%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.21
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 116340
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30894
+	Voluntary context switches: 3450
+	Involuntary context switches: 44
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:26
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/56
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:26 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Atom-Smasher] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-599.csv
+2018/01/27 12:30:28
+Elapse time (ms): 1596
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.16
+	System time (seconds): 0.26
+	Percent of CPU this job got: 193%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.76
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 183496
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 48081
+	Voluntary context switches: 4720
+	Involuntary context switches: 133
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:28
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/57
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:28 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [John Proudstar] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-368.csv
+2018/01/27 12:30:30
+Elapse time (ms): 1921
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.48
+	System time (seconds): 0.32
+	Percent of CPU this job got: 226%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.12
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 256556
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 66609
+	Voluntary context switches: 5057
+	Involuntary context switches: 137
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:30
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/58
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:30 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Phantom Blonde] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (32 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-501.csv
+2018/01/27 12:30:34
+Elapse time (ms): 3685
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 8.48
+	System time (seconds): 0.62
+	Percent of CPU this job got: 233%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.89
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 533180
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 155503
+	Voluntary context switches: 7655
+	Involuntary context switches: 219
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:34
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/59
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:34 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Mariko Yashida] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-409.csv
+2018/01/27 12:30:36
+Elapse time (ms): 1637
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.34
+	System time (seconds): 0.23
+	Percent of CPU this job got: 197%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.80
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 188924
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 49435
+	Voluntary context switches: 4692
+	Involuntary context switches: 105
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 96
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:28:55
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/5
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:28:55 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Warhawk] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-28-199.csv
+2018/01/27 12:28:56
+Elapse time (ms): 984
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.68
+	System time (seconds): 0.16
+	Percent of CPU this job got: 163%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.13
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 112316
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 29886
+	Voluntary context switches: 3114
+	Involuntary context switches: 55
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:36
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/60
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:36 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Piledriver] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-225.csv
+2018/01/27 12:30:38
+Elapse time (ms): 1738
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.67
+	System time (seconds): 0.32
+	Percent of CPU this job got: 208%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.91
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 218288
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 56991
+	Voluntary context switches: 5027
+	Involuntary context switches: 63
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:38
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/61
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:38 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Firebird] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-156.csv
+2018/01/27 12:30:39
+Elapse time (ms): 1075
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.92
+	System time (seconds): 0.13
+	Percent of CPU this job got: 167%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.23
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 117248
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 31117
+	Voluntary context switches: 3611
+	Involuntary context switches: 73
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:39
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/62
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:39 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Phantom Blonde] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-396.csv
+2018/01/27 12:30:41
+Elapse time (ms): 1844
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.93
+	System time (seconds): 0.30
+	Percent of CPU this job got: 210%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 237132
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 62443
+	Voluntary context switches: 5383
+	Involuntary context switches: 114
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:41
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/63
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:41 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Nekra Sinclar] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-415.csv
+2018/01/27 12:30:43
+Elapse time (ms): 1632
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.32
+	System time (seconds): 0.25
+	Percent of CPU this job got: 197%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.81
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 188260
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 49263
+	Voluntary context switches: 4703
+	Involuntary context switches: 145
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:43
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/64
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:43 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Genis-Vell] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-240.csv
+2018/01/27 12:30:44
+Elapse time (ms): 1027
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.78
+	System time (seconds): 0.16
+	Percent of CPU this job got: 164%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.18
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114516
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30455
+	Voluntary context switches: 3319
+	Involuntary context switches: 90
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:44
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/65
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:44 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Hensley Fargus] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-426.csv
+2018/01/27 12:30:46
+Elapse time (ms): 1531
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.07
+	System time (seconds): 0.29
+	Percent of CPU this job got: 197%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.70
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 182024
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 47696
+	Voluntary context switches: 4501
+	Involuntary context switches: 64
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:46
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/66
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:46 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Frank Castle] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-138.csv
+2018/01/27 12:30:48
+Elapse time (ms): 1864
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.21
+	System time (seconds): 0.35
+	Percent of CPU this job got: 223%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 250536
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 66035
+	Voluntary context switches: 5347
+	Involuntary context switches: 152
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:48
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/67
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:48 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Supreme Intelligence] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-200.csv
+2018/01/27 12:30:49
+Elapse time (ms): 1051
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.88
+	System time (seconds): 0.15
+	Percent of CPU this job got: 167%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.21
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 116036
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30814
+	Voluntary context switches: 3364
+	Involuntary context switches: 33
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:49
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/68
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:49 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Kubik] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (6 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-418.csv
+2018/01/27 12:30:51
+Elapse time (ms): 2111
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 5.21
+	System time (seconds): 0.37
+	Percent of CPU this job got: 240%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.32
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 271288
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 73531
+	Voluntary context switches: 5687
+	Involuntary context switches: 159
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:51
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/69
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:52 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Kkallakku] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-747.csv
+2018/01/27 12:30:52
+Elapse time (ms): 1037
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.83
+	System time (seconds): 0.14
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.18
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115436
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30669
+	Voluntary context switches: 3383
+	Involuntary context switches: 55
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:28:56
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/6
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:28:56 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Marsha Rosenberg] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-28-348.csv
+2018/01/27 12:28:58
+Elapse time (ms): 1661
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.39
+	System time (seconds): 0.27
+	Percent of CPU this job got: 199%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.84
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 196612
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 51348
+	Voluntary context switches: 4912
+	Involuntary context switches: 135
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:53
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/70
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:53 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Dormammu] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-943.csv
+2018/01/27 12:30:54
+Elapse time (ms): 1038
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.82
+	System time (seconds): 0.17
+	Percent of CPU this job got: 168%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.18
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115052
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30574
+	Voluntary context switches: 3310
+	Involuntary context switches: 53
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:54
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/71
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:54 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Greer Grant] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-136.csv
+2018/01/27 12:30:55
+Elapse time (ms): 1588
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.05
+	System time (seconds): 0.24
+	Percent of CPU this job got: 188%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.74
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 173076
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 45458
+	Voluntary context switches: 4723
+	Involuntary context switches: 135
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:56
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/72
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:56 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Hermod] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-893.csv
+2018/01/27 12:30:58
+Elapse time (ms): 2446
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 5.79
+	System time (seconds): 0.43
+	Percent of CPU this job got: 237%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.63
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 336588
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 89055
+	Voluntary context switches: 5866
+	Involuntary context switches: 138
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:30:58
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/73
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:30:58 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Skunge the Laxidazian Troll] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (5 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-30-534.csv
+2018/01/27 12:31:00
+Elapse time (ms): 2186
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 5.23
+	System time (seconds): 0.37
+	Percent of CPU this job got: 236%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.37
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 273588
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 73461
+	Voluntary context switches: 5750
+	Involuntary context switches: 179
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:01
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/74
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:01 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Nebulos] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-905.csv
+2018/01/27 12:31:02
+Elapse time (ms): 1579
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.17
+	System time (seconds): 0.26
+	Percent of CPU this job got: 194%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.76
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 183152
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 48008
+	Voluntary context switches: 4642
+	Involuntary context switches: 84
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:02
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/75
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:03 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Strong Guy] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-674.csv
+2018/01/27 12:31:04
+Elapse time (ms): 1803
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.93
+	System time (seconds): 0.27
+	Percent of CPU this job got: 212%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.98
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 249284
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 64576
+	Voluntary context switches: 5114
+	Involuntary context switches: 201
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:04
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/76
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:05 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Corsair] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-667.csv
+2018/01/27 12:31:05
+Elapse time (ms): 1024
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.80
+	System time (seconds): 0.16
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.18
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114820
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30521
+	Voluntary context switches: 3248
+	Involuntary context switches: 42
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:06
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/77
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:06 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Fer-de-Lance] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-856.csv
+2018/01/27 12:31:07
+Elapse time (ms): 1026
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.79
+	System time (seconds): 0.15
+	Percent of CPU this job got: 164%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.18
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114612
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30485
+	Voluntary context switches: 3336
+	Involuntary context switches: 54
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:07
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/78
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:07 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Omega the Unknown] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-55.csv
+2018/01/27 12:31:09
+Elapse time (ms): 1846
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.10
+	System time (seconds): 0.31
+	Percent of CPU this job got: 218%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.02
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 251912
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 65246
+	Voluntary context switches: 5179
+	Involuntary context switches: 106
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:09
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/79
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:09 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Hairbag] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-85.csv
+2018/01/27 12:31:10
+Elapse time (ms): 1038
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.81
+	System time (seconds): 0.18
+	Percent of CPU this job got: 168%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.18
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115408
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30659
+	Voluntary context switches: 3332
+	Involuntary context switches: 50
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:28:58
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/7
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:28:58 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Rama-Tut] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-28-195.csv
+2018/01/27 12:28:59
+Elapse time (ms): 1004
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.72
+	System time (seconds): 0.14
+	Percent of CPU this job got: 162%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.15
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 113532
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30202
+	Voluntary context switches: 3239
+	Involuntary context switches: 57
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:10
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/80
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:10 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Venom] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-283.csv
+2018/01/27 12:31:12
+Elapse time (ms): 1643
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.21
+	System time (seconds): 0.24
+	Percent of CPU this job got: 191%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.80
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 181832
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 47668
+	Voluntary context switches: 4919
+	Involuntary context switches: 60
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:12
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/81
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:12 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Toad] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-101.csv
+2018/01/27 12:31:13
+Elapse time (ms): 1632
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.31
+	System time (seconds): 0.25
+	Percent of CPU this job got: 197%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.81
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 186824
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 48930
+	Voluntary context switches: 4697
+	Involuntary context switches: 86
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:14
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/82
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:14 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Contrary] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-913.csv
+2018/01/27 12:31:15
+Elapse time (ms): 1033
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.82
+	System time (seconds): 0.15
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114928
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30540
+	Voluntary context switches: 3308
+	Involuntary context switches: 116
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:15
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/83
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:15 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Blue Shield] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-110.csv
+2018/01/27 12:31:17
+Elapse time (ms): 1796
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.99
+	System time (seconds): 0.30
+	Percent of CPU this job got: 216%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.98
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 249640
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 64628
+	Voluntary context switches: 5010
+	Involuntary context switches: 131
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:17
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/84
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:17 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Isis] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-104.csv
+2018/01/27 12:31:19
+Elapse time (ms): 1815
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.06
+	System time (seconds): 0.32
+	Percent of CPU this job got: 217%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 249968
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 64906
+	Voluntary context switches: 5130
+	Involuntary context switches: 92
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:19
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/85
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:19 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Psycho-Man] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-128.csv
+2018/01/27 12:31:21
+Elapse time (ms): 1917
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.51
+	System time (seconds): 0.32
+	Percent of CPU this job got: 219%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 265208
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 70538
+	Voluntary context switches: 5356
+	Involuntary context switches: 104
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:21
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/86
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:21 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Doctor Doom] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-339.csv
+2018/01/27 12:31:22
+Elapse time (ms): 1041
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.83
+	System time (seconds): 0.16
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115284
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30631
+	Voluntary context switches: 3337
+	Involuntary context switches: 49
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:22
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/87
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:22 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Angelo Unuscione] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-549.csv
+2018/01/27 12:31:23
+Elapse time (ms): 1031
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.80
+	System time (seconds): 0.15
+	Percent of CPU this job got: 165%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114748
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30500
+	Voluntary context switches: 3394
+	Involuntary context switches: 57
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:23
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/88
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:24 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Invisible Girl] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-739.csv
+2018/01/27 12:31:25
+Elapse time (ms): 1634
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.34
+	System time (seconds): 0.27
+	Percent of CPU this job got: 200%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.80
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 190608
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 49845
+	Voluntary context switches: 4762
+	Involuntary context switches: 104
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:25
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/89
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:25 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Oneg the Prober] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-561.csv
+2018/01/27 12:31:27
+Elapse time (ms): 1542
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 2.95
+	System time (seconds): 0.25
+	Percent of CPU this job got: 188%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.70
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 174384
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 45793
+	Voluntary context switches: 4450
+	Involuntary context switches: 104
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:28:59
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/8
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:28:59 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Caregiver] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-357.csv
+2018/01/27 12:29:01
+Elapse time (ms): 1805
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.83
+	System time (seconds): 0.30
+	Percent of CPU this job got: 208%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.98
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 227192
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 59466
+	Voluntary context switches: 5421
+	Involuntary context switches: 82
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:27
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/90
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:27 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Armand Martel] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-269.csv
+2018/01/27 12:31:28
+Elapse time (ms): 1062
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.88
+	System time (seconds): 0.16
+	Percent of CPU this job got: 167%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.22
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 116672
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30984
+	Voluntary context switches: 3473
+	Involuntary context switches: 65
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:28
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/91
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:28 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Black Dragon] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-499.csv
+2018/01/27 12:31:30
+Elapse time (ms): 1578
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.12
+	System time (seconds): 0.21
+	Percent of CPU this job got: 192%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.73
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 182684
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 47879
+	Voluntary context switches: 4836
+	Involuntary context switches: 95
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:30
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/92
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:30 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Archie Corrigan] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-247.csv
+2018/01/27 12:31:32
+Elapse time (ms): 1710
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.41
+	System time (seconds): 0.29
+	Percent of CPU this job got: 197%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.87
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 208832
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 54414
+	Voluntary context switches: 5120
+	Involuntary context switches: 71
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:32
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/93
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:32 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Micro] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-131.csv
+2018/01/27 12:31:33
+Elapse time (ms): 1054
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.86
+	System time (seconds): 0.15
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.21
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 115816
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30776
+	Voluntary context switches: 3412
+	Involuntary context switches: 49
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:33
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/94
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:33 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Baal] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-350.csv
+2018/01/27 12:31:34
+Elapse time (ms): 1054
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.85
+	System time (seconds): 0.17
+	Percent of CPU this job got: 168%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 116072
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30826
+	Voluntary context switches: 3470
+	Involuntary context switches: 64
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:34
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/95
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:34 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Bullseye] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-552.csv
+2018/01/27 12:31:36
+Elapse time (ms): 1604
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.22
+	System time (seconds): 0.25
+	Percent of CPU this job got: 194%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.78
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 186276
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 48769
+	Voluntary context switches: 4760
+	Involuntary context switches: 71
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:36
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/96
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:36 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Ganymede] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-365.csv
+2018/01/27 12:31:38
+Elapse time (ms): 1603
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.18
+	System time (seconds): 0.24
+	Percent of CPU this job got: 193%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.77
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 183180
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 47999
+	Voluntary context switches: 4759
+	Involuntary context switches: 182
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:38
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/97
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:38 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Super-Nova] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (3 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-130.csv
+2018/01/27 12:31:40
+Elapse time (ms): 1816
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.10
+	System time (seconds): 0.29
+	Percent of CPU this job got: 220%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.99
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 245648
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 64063
+	Voluntary context switches: 5134
+	Involuntary context switches: 106
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:40
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/98
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:40 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Ameridroid] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (0 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-140.csv
+2018/01/27 12:31:41
+Elapse time (ms): 1030
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 1.81
+	System time (seconds): 0.16
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 114792
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 30522
+	Voluntary context switches: 3261
+	Involuntary context switches: 33
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:31:41
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/99
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:31:41 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Sally Blevins] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-31-334.csv
+2018/01/27 12:31:43
+Elapse time (ms): 1616
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.26
+	System time (seconds): 0.25
+	Percent of CPU this job got: 196%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.78
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 184676
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 48394
+	Voluntary context switches: 4780
+	Involuntary context switches: 116
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+2018/01/27 12:29:01
+====== Configurations ======
+server         : localhost
+index          : 16384
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/9
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : search
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 27, 2018 12:29:01 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Alex Hayden] loaded [], sites []
+Found: 1 files.
+Searching done for 1 files (1 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/16384_qr_27-01-18_12-29-348.csv
+2018/01/27 12:29:03
+Elapse time (ms): 1593
+	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.28
+	System time (seconds): 0.23
+	Percent of CPU this job got: 198%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.77
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 184496
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 48327
+	Voluntary context switches: 4740
+	Involuntary context switches: 89
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

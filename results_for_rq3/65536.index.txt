@@ -1,0 +1,166 @@
+2018/01/26 22:51:21
+====== Configurations ======
+server         : localhost
+index          : 65536
+type           : siamese
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536
+outputFolder   : /Users/Chaiyong/Downloads/isics_results
+normalization  : djkpsvw
+ngramSize      : 4
+verbose        : false
+dfs            : true
+extension      : java
+minCloneSize   : 10
+command        : index
+queryReduction : true
+multiRep       : true
+outputFormat   : csvfline
+indexingMode   : bulk (4000)
+============================
+Jan 26, 2018 10:51:21 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Captain UK] loaded [], sites []
+Found 65536 files.
+Indexed 10000 [15.26%] documents (17453 methods).
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+Indexed 20000 [30.52%] documents (34610 methods).
+line 52:0 token recognition error at: '#'
+line 53:0 token recognition error at: '#'
+line 54:0 token recognition error at: '#'
+line 52:0 token recognition error at: '#'
+line 53:0 token recognition error at: '#'
+line 54:0 token recognition error at: '#'
+line 88:0 token recognition error at: '#'
+line 90:0 token recognition error at: '#'
+line 92:0 token recognition error at: '#'
+line 96:0 token recognition error at: '#'
+line 98:0 token recognition error at: '#'
+line 100:0 token recognition error at: '#'
+line 144:0 token recognition error at: '#'
+line 146:0 token recognition error at: '#'
+line 148:0 token recognition error at: '#'
+line 150:0 token recognition error at: '#'
+line 152:0 token recognition error at: '#'
+line 154:0 token recognition error at: '#'
+line 156:0 token recognition error at: '#'
+line 158:0 token recognition error at: '#'
+line 354:0 token recognition error at: '#'
+line 357:0 token recognition error at: '#'
+line 487:0 token recognition error at: '#'
+line 489:0 token recognition error at: '#'
+line 500:0 token recognition error at: '#'
+line 513:0 token recognition error at: '#'
+line 515:0 token recognition error at: '#'
+line 88:0 token recognition error at: '#'
+line 90:0 token recognition error at: '#'
+line 92:0 token recognition error at: '#'
+line 96:0 token recognition error at: '#'
+line 98:0 token recognition error at: '#'
+line 100:0 token recognition error at: '#'
+line 144:0 token recognition error at: '#'
+line 146:0 token recognition error at: '#'
+line 148:0 token recognition error at: '#'
+line 150:0 token recognition error at: '#'
+line 152:0 token recognition error at: '#'
+line 154:0 token recognition error at: '#'
+line 156:0 token recognition error at: '#'
+line 158:0 token recognition error at: '#'
+line 354:0 token recognition error at: '#'
+line 357:0 token recognition error at: '#'
+line 487:0 token recognition error at: '#'
+line 489:0 token recognition error at: '#'
+line 500:0 token recognition error at: '#'
+line 513:0 token recognition error at: '#'
+line 515:0 token recognition error at: '#'
+Indexed 30000 [45.78%] documents (51290 methods).
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+Indexed 40000 [61.04%] documents (68569 methods).
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+line 1:0 token recognition error at: '#'
+line 2:0 token recognition error at: '#'
+line 3:0 token recognition error at: '#'
+line 3:23 token recognition error at: ''\' '
+Indexed 50000 [76.29%] documents (84973 methods).
+line 2:1 token recognition error at: '#'
+line 3:1 token recognition error at: '#'
+line 307:2 token recognition error at: '#'
+line 2:1 token recognition error at: '#'
+line 3:1 token recognition error at: '#'
+line 307:2 token recognition error at: '#'
+Indexed 60000 [91.55%] documents (102327 methods).
+Indexed 65536 [100.00%] documents (111190 methods).
+Successfully indexed documents.
+Successfully creating index.
+2018/01/26 23:01:35
+Elapse time (ms): 614308
+	Command being timed: "java -jar siamese-1shard-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 583.38
+	System time (seconds): 12.05
+	Percent of CPU this job got: 96%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 10:14.90
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3086928
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1453528
+	Voluntary context switches: 143077
+	Involuntary context switches: 3674
+	Swaps: 0
+	File system inputs: 862056
+	File system outputs: 976
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
