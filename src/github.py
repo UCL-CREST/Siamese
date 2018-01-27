@@ -36,7 +36,7 @@ def gen_config_template():
     config = list()
     config.append(["elasticsearchLoc", "/Users/Chaiyong/IdeasProjects/Siamese/elasticsearch-2.2.0"])
     config.append(["server", "localhost"])
-    config.append(["index", "github"])
+    config.append(["index", "github_1shard"])
     config.append(["type", "siamese"])
     config.append(["inputFolder", "/home/cragkhit/data/github"])
     config.append(["subInputFolder", ""])
@@ -235,14 +235,14 @@ def count_source_lines(sys):
                 total_sloc += int(sloc)
             except Exception as e:
                 print(e)
-                writefile('skipped_cloc.txt', str(idx) + ',' + proj[1] + '\n')
+                writefile('skipped_cloc.txt', str(idx) + ',' + proj[1] + '\n', 'a', False)
 
     print(total_sloc)
 
 
 def main():
-    # index()
-    count_source_lines(sys)
+    index(sys)
+    # count_source_lines(sys)
 
 
 main()
