@@ -740,7 +740,7 @@ public class Siamese {
                                 methodCount++;
                             }
                         }
-                    } else {
+                    } /* else {
                         // check minimum size
                         if (MyUtils.countLines(file.getAbsolutePath()) >= minCloneLine) {
                             origQuery = tokenize(file, origTokenizer, false);
@@ -760,7 +760,7 @@ public class Siamese {
                             }
                             outToFile += "\n";
                         }
-                    }
+                    } */
 
                     count++;
 

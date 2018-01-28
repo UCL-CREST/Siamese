@@ -1,8 +1,9 @@
+from __future__ import print_function
 import sys
 
 
 QUERIES = 100
-file = open(sys.argv[1], 'r')
+file = open(sys.argv[1] + '/' + sys.argv[2] + '/all', 'r')
 
 minutes = 0
 seconds = 0.0
@@ -15,6 +16,8 @@ for line in file:
     #     split_line = line.replace('User time (seconds):', '')
     #     seconds += float(split_line.strip())
 
-print('m:', minutes, 's:', seconds)
-print('total seconds:', minutes * 60 + seconds)
-print('avg seconds:', (minutes * 60 + seconds)/QUERIES)
+#print('m:', minutes, 's:', seconds)
+#print('total seconds:', minutes * 60 + seconds)
+#print sys.argv[2] + ',' + str((minutes * 60 + seconds)/QUERIES)
+print(str((minutes * 60 + seconds)/QUERIES) + ',', end='')
+#print(str((minutes * 60 + seconds)/QUERIES))
