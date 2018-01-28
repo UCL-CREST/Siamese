@@ -204,23 +204,16 @@ public class JavaNormalizerTest {
 //        mode.setWord(Settings.Normalize.WORD_NORM_ON);
         JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(mode));
 
-        ArrayList<String> tokens = tokenizer.getTokensFromString("    public static void BubbleSortInt1(int[] num) {\n" +
-                "        boolean flag = true; // set flag to true to begin first pass\n" +
-                "        int temp; // holding variable\n" +
-                "\n" +
-                "        while (flag) {\n" +
-                "            flag = false; // set flag to false awaiting a possible swap\n" +
-                "            for (int j = 0; j < num.length - 1; j++) {\n" +
-                "                if (num[j] > num[j + 1]) // change to > for ascending sort\n" +
-                "                {\n" +
-                "                    temp = num[j]; // swap elements\n" +
-                "                    num[j] = num[j + 1];\n" +
-                "                    num[j + 1] = temp;\n" +
-                "                    flag = true; // shows a swap occurred\n" +
-                "                }\n" +
-                "            }\n" +
-                "        }\n" +
-                "    }");
+        ArrayList<String> tokens = tokenizer.getTokensFromString("public static long checksum(File file) throws IOException {\n" +
+                "    CRC32 crc = new CRC32();\n" +
+                "    FileReader fr = new FileReader(file);\n" +
+                "    int data;\n" +
+                "    while((data = fr.read()) != -1) {\n" +
+                "        crc.update(data);\n" +
+                "    }\n" +
+                "    fr.close();\n" +
+                "    return crc.getValue();\n" +
+                "}");
 
 //        HashSet<String> tokenSet = new HashSet<>(tokens);
 //        tokens = new ArrayList<>(tokenSet);
@@ -241,23 +234,16 @@ public class JavaNormalizerTest {
         mode.setWord(Settings.Normalize.WORD_NORM_ON);
         tokenizer = new JavaTokenizer(new JavaNormalizer(mode));
 
-        tokens = tokenizer.getTokensFromString("    public static void BubbleSortInt1(int[] num) {\n" +
-                "        boolean flag = true; // set flag to true to begin first pass\n" +
-                "        int temp; // holding variable\n" +
-                "\n" +
-                "        while (flag) {\n" +
-                "            flag = false; // set flag to false awaiting a possible swap\n" +
-                "            for (int j = 0; j < num.length - 1; j++) {\n" +
-                "                if (num[j] > num[j + 1]) // change to > for ascending sort\n" +
-                "                {\n" +
-                "                    temp = num[j]; // swap elements\n" +
-                "                    num[j] = num[j + 1];\n" +
-                "                    num[j + 1] = temp;\n" +
-                "                    flag = true; // shows a swap occurred\n" +
-                "                }\n" +
-                "            }\n" +
-                "        }\n" +
-                "    }");
+        tokens = tokenizer.getTokensFromString("public static long checksum(File file) throws IOException {\n" +
+                "    CRC32 crc = new CRC32();\n" +
+                "    FileReader fr = new FileReader(file);\n" +
+                "    int data;\n" +
+                "    while((data = fr.read()) != -1) {\n" +
+                "        crc.update(data);\n" +
+                "    }\n" +
+                "    fr.close();\n" +
+                "    return crc.getValue();\n" +
+                "}");
 
         // initialise the n-gram generator
         nGramGenerator ngen = new nGramGenerator(4);

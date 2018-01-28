@@ -16,7 +16,7 @@ public class TermFreqAnalyser {
     }
 
     public static void analyseTerms(String config) {
-        String index = "bigclonebench";
+        String index = "bigclonebench_utf8_1shard";
         String mode = "df";
         siamese.analyseTermFreq(index, "tokenizedsrc", mode, "freq_" + mode + "_toksrc.csv");
         siamese.analyseTermFreq(index, "src", mode, "freq_" + mode + "_src.csv");

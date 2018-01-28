@@ -1163,95 +1163,60 @@ public class Siamese {
     }
 
     public void indexGitHub() throws Exception {
-//        if (githubLoc.endsWith("/"))
-//            githubLoc = StringUtils.chop(githubLoc);
-//
-//        // check if the client is already started up
-//        if (siameseClient == null) {
-//            startup();
-//        }
-//
-//        File file = new File(githubLoc);
-//        String[] directories = file.list(new FilenameFilter() {
-//            @Override
-//            public boolean accept(File current, String name) {
-//                return new File(current, name).isDirectory();
-//            }
-//        });
-//
-//        for (String dir: directories) {
-//            String subDir = githubLoc + "/" + dir;
-//
-//            File sd = new File(subDir);
-//            String[] sdirs = sd.list(new FilenameFilter() {
-//                @Override
-//                public boolean accept(File current, String name) {
-//                    return new File(current, name).isDirectory();
-//                }
-//            });
-//
-//            for (String d : sdirs) {
-//                String projDir = githubLoc + "/" + dir + "/" + d;
-//                System.out.println(projDir);
+        if (this.inputFolder.endsWith("/"))
+            this.inputFolder = StringUtils.chop(this.inputFolder);
+        if (this.subInputFolder.endsWith("/"))
+            this.subInputFolder = StringUtils.chop(this.subInputFolder);
 
-                if (this.inputFolder.endsWith("/"))
-                    this.inputFolder = StringUtils.chop(this.inputFolder);
-                if (this.subInputFolder.endsWith("/"))
-                    this.subInputFolder = StringUtils.chop(this.subInputFolder);
+        this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
+        System.out.println("Indexing: " + this.inputFolder);
+        this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
 
-                this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
-                System.out.println("Indexing: " + this.inputFolder);
-                this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
+        File f = new File(this.inputFolder + "/LICENSE.txt");
+        if (!f.exists() || f.isDirectory()) {
+            f = new File(this.inputFolder + "/LICENSE");
+        }
 
-                File f = new File(this.inputFolder + "/LICENSE.txt");
-                if (!f.exists() || f.isDirectory()) {
-                    f = new File(this.inputFolder + "/LICENSE");
+        if (f.exists() && !f.isDirectory()) {
+            String[] lines = FileUtils.readFileToString(f).split("\n");
+            for (String line : lines) {
+                String license = LicenseExtractor.extractLicenseWithRegExp(line);
+                if (!license.equals("unknown")) {
+                    this.fileLicense = license;
+                    break;
                 }
+            }
+        }
 
-                if (f.exists() && !f.isDirectory()) {
-//                    System.out.println("found: " + f.getAbsolutePath());
-                    String[] lines = FileUtils.readFileToString(f).split("\n");
-                    for (String line: lines) {
-                        String license = LicenseExtractor.extractLicenseWithRegExp(line);
-                        if (!license.equals("unknown")) {
-//                            System.out.println(license);
-                            this.fileLicense = license;
-                            break;
-                        }
+        // initialise the n-gram generator
+        ngen = new nGramGenerator(ngramSize);
+        // default similarity function is TFIDF
+        String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
+        String mappingStr = IndexSettings.TFIDF.mappingStr;
+
+        try {
+            if (siameseClient != null) {
+                if (command.toLowerCase().equals("index")) {
+                    if (recreateIndexIfExists) {
+                        createIndex(indexSettings, mappingStr);
                     }
-                }
-
-                // initialise the n-gram generator
-                ngen = new nGramGenerator(ngramSize);
-                // default similarity function is TFIDF
-                String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
-                String mappingStr = IndexSettings.TFIDF.mappingStr;
-
-                try {
-                    if (siameseClient != null) {
-                        if (command.toLowerCase().equals("index")) {
-                            if (recreateIndexIfExists) {
-                                createIndex(indexSettings, mappingStr);
-                            }
-                            long startingId = 0;
-                            if (!recreateIndexIfExists && doesIndexExist()) {
-                                startingId = getMaxId(index) + 1;
-                            }
-                            long insertSize = insert(startingId);
-                            if (insertSize != 0) {
-                                // if ok, refresh the index, then search
-                                es.refresh(index);
-                            } else {
-                                System.out.println("ERROR: Indexed zero file. Please check!");
-                            }
-                        }
+                    long startingId = 0;
+                    if (!recreateIndexIfExists && doesIndexExist()) {
+                        startingId = getMaxId(index) + 1;
+                    }
+                    long insertSize = insert(startingId);
+                    if (insertSize != 0) {
+                        // if ok, refresh the index, then search
+                        es.refresh(index);
                     } else {
-                        System.out.println("ERROR: cannot create Elasticsearch client ... ");
+                        System.out.println("ERROR: Indexed zero file. Please check!");
                     }
-                } catch (Exception e) {
-                    throw e;
                 }
-//            }
-//        }
+            } else {
+                System.out.println("ERROR: cannot create Elasticsearch client ... ");
+            }
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

@@ -12,7 +12,7 @@ public class IndexSettings {
         }
 
         public static String getIndexSettings(String discO) {
-            return "{ \"number_of_shards\" :   1, " +
+            return "{ \"number_of_shards\": 1, " +
                     "\"similarity\": { \"tfidf_similarity\": { \"type\": \"default\", \"discount_overlaps\": \"" + discO + "\" } } , " +
                     "\"analysis\": { " +
                     "\"analyzer\": { " +
