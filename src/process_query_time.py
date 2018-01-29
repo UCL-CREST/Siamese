@@ -18,6 +18,6 @@ for line in file:
 
 #print('m:', minutes, 's:', seconds)
 #print('total seconds:', minutes * 60 + seconds)
-#print sys.argv[2] + ',' + str((minutes * 60 + seconds)/QUERIES)
-print(str((minutes * 60 + seconds)/QUERIES) + ',', end='')
+print(sys.argv[2] + ',' + str((minutes * 60 + seconds)/QUERIES))
+#print(str((minutes * 60 + seconds)/QUERIES) + ',', end='')
 #print(str((minutes * 60 + seconds)/QUERIES))
