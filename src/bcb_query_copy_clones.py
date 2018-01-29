@@ -23,8 +23,8 @@ def main():
     # 1) open the files in excel once before running this to fill in the missing columns
     # 2) move the method names into another column
     # 3) remove the extra 51st results (there are 10 of them).
-    file1_name = '../results/bcb_search_results_qr-25-75-10-new.csv'
-    file2_name = '../results/bcb_search_results_qr-25-75-10_copied.csv'
+    file1_name = '../results/bcb_search_results_qr-10-10-10.csv'
+    file2_name = '../results/bcb_search_results_qr-25-75-10-new_copied.csv'
     data = pd.read_csv(file1_name, sep=',', header=None)
     data2 = pd.read_csv(file2_name, sep=',', header=None)
 
