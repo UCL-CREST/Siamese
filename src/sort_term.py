@@ -15,7 +15,7 @@ df_src_sorted = df_src_sorted.reset_index(drop=True)
 # plt.xlim(0, 2000)
 # # plt.show()
 # f.savefig("hist.pdf", bbox_inches='tight')
-
+3
 # df_src_sorted.index += 1
 # df_src_sorted = df_src_sorted.reset_index()
 
@@ -46,10 +46,14 @@ print(result)
 print('plotting ...')
 # normal scale
 ax = result.plot(x='index', y='freq')
-ax.legend(['original', 'normalised'])
-ax.set_xlabel("rank")
-ax.set_xlim(0, 5000)
-ax.set_ylabel("frequency")
+ax.legend(['original', 'normalised'], prop={'size': 22})
+ax.set_xlabel("token rank")
+ax.set_xlim(0, 3000)
+ax.set_ylabel("document frequency (DF)")
+ax.yaxis.label.set_size(22)
+ax.xaxis.label.set_size(22)
+ax.yaxis.set_tick_params(labelsize=18)
+ax.xaxis.set_tick_params(labelsize=18)
 fig = ax.get_figure()
 fig.savefig('figure.pdf', bbox_inches='tight')
 
