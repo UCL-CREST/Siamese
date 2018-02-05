@@ -33,6 +33,8 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 
+import javax.management.Query;
+
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
 
 public class ESConnector {
@@ -208,12 +210,20 @@ public class ESConnector {
         /* copied from
         https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
          */
+        float cutoff = (float) 0.05;
+        float cutoff2 = (float) 0.05;
         QueryBuilder queryBuilder = QueryBuilders.boolQuery()
                 .should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
                         QueryBuilders.matchQuery("tokenizedsrc", origQuery)
                                 .boost(origBoost)
                 )
                 .should(
+//                		QueryBuilders.commonTermsQuery("src", query)
+//								.cutoffFrequency(cutoff)
+//								.boost(normBoost)
                         QueryBuilders.matchQuery("src", query)
 //                                .operator(MatchQueryBuilder.Operator.AND)
                                 .boost(normBoost)
