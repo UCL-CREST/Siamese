@@ -20,18 +20,19 @@ def writefile(filename, fcontent, mode, isprint):
 
 def main():
 
-    groundtruth = pd.read_csv('../results/bcb_groundtruth_qr-25-75-10-new.csv', sep=',', header=None)
+    mr_qr_boost = '10-10-10'
+    groundtruth = pd.read_csv('../results/bcb_groundtruth_qr-' + mr_qr_boost + '.csv', sep=',', header=None)
     gt = groundtruth[1:][4].tolist()
     # print(len(gt), gt)
     # exit()
 
-    data = pd.read_csv('../results/bcb_search_results_qr-25-75-10-new_copied.csv', sep=',', header=None)
+    data = pd.read_csv('../results/bcb_search_results_qr-' + mr_qr_boost + '_copied.csv', sep=',', header=None)
     # print(data)
     # exit()
 
     QUERIES = 142
     RESULTSIZE = 50
-    OUTFILE = '../results/bcb_precision_qr-25-75-10-new.csv'
+    OUTFILE = '../results/bcb_precision_qr-' + mr_qr_boost + '.csv'
 
     writefile(OUTFILE, 'r,10-prec,r-prec,tp,fp,t1,t2,t3\n', 'a', False)
     precsum = [0, 0, 0, 0, 0, 0, 0]
