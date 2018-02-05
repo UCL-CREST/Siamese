@@ -222,7 +222,7 @@ public class Siamese {
         System.out.println("extension      : " + extension);
         System.out.println("minCloneSize   : " + minCloneLine);
         System.out.println("command        : " + command);
-        System.out.println("queryReduction : " + queryReduction);
+        System.out.println("queryReduction : " + queryReduction + " (" + this.qrPercentileOrig + ", " + this.qrPercentileNorm + ")");
         System.out.println("multiRep       : " + multiRep);
         System.out.println("outputFormat   : " + outputFormat);
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
@@ -994,6 +994,9 @@ public class Siamese {
                 if (count % 10000 == 0) {
 //                    System.out.println("Processed " + count + " terms");
                 }
+
+//                System.out.println(term + "," + tfreq);
+//                MyUtils.writeToFile("./", "tok_freq.csv", term + "," + tfreq + "\n", true);
             }
             System.out.println("Total: " + count);
 
