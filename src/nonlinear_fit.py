@@ -1,33 +1,50 @@
 #!/usr/bin/env python
-#<examples/doc_basic.py>
 from lmfit import minimize, Minimizer, Parameters, Parameter, report_fit
+import pandas as pd
 import numpy as np
 
 # create data to be fitted
-x = np.linspace(0, 15, 301)
-data = (5. * np.sin(2 * x - 0.1) * np.exp(-x*x*0.025) +
-        np.random.normal(size=len(x), scale=0.2) )
+print('processing CSVs ...')
+file1='../freq_df_src.csv'
+df_src = pd.read_csv(file1, sep=',', header=0)
+df_src_sorted = df_src.sort_values(['freq'], ascending=False)
+df_src_sorted = df_src_sorted.reset_index(drop=True)
+df_src_sorted.index += 1
+df_src_sorted = df_src_sorted.reset_index()
+x = df_src_sorted.as_matrix(columns=['index'])
+data = df_src_sorted.as_matrix(columns=['freq'])
+# print(x)
+# print(y)
+# exit()
 
-# define objective function: returns the array to be minimized
-def fcn2min(params, x, data):
-    """ model decaying sine wave, subtract data"""
-    amp = params['amp']
-    shift = params['shift']
-    omega = params['omega']
-    decay = params['decay']
-    model = amp * np.sin(x * omega + shift) * np.exp(-x*x*decay)
+# # define objective function: returns the array to be minimized
+# def fcn2min(params, x, data):
+#     """ model decaying sine wave, subtract data"""
+#     amp = params['amp']
+#     shift = params['shift']
+#     omega = params['omega']
+#     decay = params['decay']
+#     model = amp * np.sin(x * omega + shift) * np.exp(-x*x*decay)
+#     return model - data
+
+
+def zipf2min(params, x, data):
+    """ model Zipf-Mandelbrot power law f = C/(r+b)^a """
+    c = params['c']
+    b = params['b']
+    a = params['a']
+    model = c/(x + b)**a
     return model - data
+
 
 # create a set of Parameters
 params = Parameters()
-params.add('amp',   value= 10,  min=0)
-params.add('decay', value= 0.1)
-params.add('shift', value= 0.0, min=-np.pi/2., max=np.pi/2)
-params.add('omega', value= 3.0)
-
+params.add('c',   value=2 * 10**5,  min=10**3, max=10**6, brute_step=100)
+params.add('b', value=1, min=1, max=3, brute_step=0.1)
+params.add('a', value=1, min=1., max=1.5, brute_step=0.01)
 
 # do fit, here with leastsq model
-minner = Minimizer(fcn2min, params, fcn_args=(x, data))
+minner = Minimizer(zipf2min, params, fcn_args=(x, data))
 result = minner.minimize()
 
 # calculate final result
@@ -44,5 +61,3 @@ try:
     pylab.show()
 except:
     pass
-
-#<end of examples/doc_basic.py>
