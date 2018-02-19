@@ -191,12 +191,12 @@ def main():
             config = gen_config_template()
             config = update_config(config, 4, sys.argv[2])
             config = update_config(config, 5, proj[1])
-	    # first project, recreate the index
-   	    if idx == 0:
-  		config = update_config(config, 17, "true")
+            # first project, recreate the index
+            if idx == 0:
+                config = update_config(config, 17, "true")
             write_config(config)
             execute_siamese()
-	    exit(0)
+            exit(0)
             # input("Press Enter to continue...")
 
 

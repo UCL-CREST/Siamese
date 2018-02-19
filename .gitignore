@@ -27,3 +27,4 @@ hist_tok.pdf
 results/search_results.txt
 *-SNAPSHOT.jar
 github-crawler.log
+src/__pycache__
