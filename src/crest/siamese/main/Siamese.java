@@ -266,6 +266,8 @@ public class Siamese {
         } else if (outputFormat.equals("csvfline")) {
             formatter.setFormat("csv");
             formatter.setAddStartEndLine(true);
+        } else if (outputFormat.equals("gcf")) {
+            formatter.setFormat("gcf");
         } else {
             System.out.println("ERROR: wrong output format");
             return null;
@@ -649,10 +651,16 @@ public class Siamese {
             qr = "qr";
         }
         String outToFile = "";
+
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-S");
         Date dateobj = new Date();
-        File outfile = new File(outputFolder + "/" + index + "_" + qr + "_"
-                + df.format(dateobj) + ".csv");
+        String outfilePath = outputFolder + "/" + index + "_" + qr + "_" + df.format(dateobj);
+        if (formatter.getFormat().equals("csv"))
+            outfilePath += ".csv";
+        else
+            outfilePath += ".xml";
+        File outfile = new File(outfilePath);
+
         // if file doesn't exists, then create it
         boolean isCreated = false;
         if (!outfile.exists()) {
@@ -671,8 +679,12 @@ public class Siamese {
 
             int count = 0;
             int methodCount = 0;
+
             // reset the output buffer
             outToFile = "";
+            if (formatter.getFormat().equals("gcf")) {
+                outToFile += "<CloneClasses>\n";
+            }
 
             for (File file : listOfFiles) {
                 if (isPrint)
@@ -705,7 +717,7 @@ public class Siamese {
                                 q.setFile(method.getFile() + "_" + method.getName());
                                 q.setStartline(method.getStartLine());
                                 q.setEndline(method.getEndLine());
-                                outToFile += formatter.format(q, prefixToRemove, license) + ",";
+                                outToFile += formatter.format(q, prefixToRemove, license);
 
                                 NormalizerMode tmode = new NormalizerMode();
                                 char[] noNormMode = {'x'};
@@ -736,7 +748,6 @@ public class Siamese {
                                 } else {
                                     outToFile += formatter.format(results, prefixToRemove);
                                 }
-                                outToFile += "\n";
                                 methodCount++;
                             }
                         }
@@ -781,8 +792,13 @@ public class Siamese {
                     outToFile = "";
                 }
             }
+
+            if (formatter.getFormat().equals("gcf")) {
+                outToFile += "</CloneClasses>\n";
+            }
             // flush the last part of output
             bw.write(outToFile);
+
             bw.close();
             System.out.println("Searching done for " + count + " files (" + methodCount + " methods after clone size filtering).");
             System.out.println("See output at " + outfile.getAbsolutePath());
