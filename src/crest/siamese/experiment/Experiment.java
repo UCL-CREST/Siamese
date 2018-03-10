@@ -34,12 +34,12 @@ public class Experiment {
     private static String[] normModesDefault = { "djkpsvw" };
     private static int[] ngramSizesAll = { 1, 2, 3, 4, 5 };
     private static int[] ngramSizesText = { 1 };
-    private static int[] ngramSizeDefault = { 4 };
+    private static int[] ngramSizeDefault = { 15 };
 
 //    private static double[] dfCapNorm = { 10, 20, 40 };
 //    private static double[] dfCapOrig = { 20, 40, 60, 80 };
-    private static double[] dfCapNorm = { 25 };
-    private static double[] dfCapOrig = { 75 };
+    private static double[] dfCapNorm = { 10 };
+    private static double[] dfCapOrig = { 20 };
 
     private static String inputDir;
     private static String workingDir;
