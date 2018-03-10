@@ -731,10 +731,15 @@ public class Siamese {
                                     query = reduceQuery(query, "src", this.qrPercentileNorm * docCount / 100);
                                     origQuery = reduceQuery(origQuery, "tokenizedsrc", this.qrPercentileOrig * docCount / 100);
                                     if (isPrint) {
-                                        System.out.println("NQ" + methodCount + " : " + query);
-                                        System.out.println("OQ" + methodCount + " : " + origQuery);
+                                        System.out.println("NQ," + this.qrPercentileNorm * docCount / 100 + "," + methodCount + " : " + query);
+                                        System.out.println("OQ," + this.qrPercentileOrig * docCount / 100 + "," + methodCount + " : " + origQuery);
                                     }
                                 }
+
+//                                // TODO: only for experiment. Remove after finished.
+//                                origQuery = "";
+//                                System.out.println(query);
+//                                System.out.println(origQuery);
 
                                 // search for results depending on the MR setting
                                 if (this.multiRep)
@@ -825,8 +830,9 @@ public class Siamese {
         query = "";
         ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, field, tmpQuery);
         for (int i=0; i<sortedTerms.size(); i++) {
-            if (sortedTerms.get(i).getFreq() <= limit)
+            if (sortedTerms.get(i).getFreq() <= limit) {
                 query += sortedTerms.get(i).getTerm() + " ";
+            }
         }
         return query;
     }
