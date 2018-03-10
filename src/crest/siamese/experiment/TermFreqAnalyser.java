@@ -16,10 +16,10 @@ public class TermFreqAnalyser {
     }
 
     public static void analyseTerms(String config) {
-        String index = "bigclonebench_utf8_1shard";
+        String index = "qualitas";
         String mode = "df";
-        siamese.analyseTermFreq(index, "tokenizedsrc", mode, "freq_" + mode + "_toksrc.csv");
-        siamese.analyseTermFreq(index, "src", mode, "freq_" + mode + "_src.csv");
+        siamese.analyseTermFreq(index, "tokenizedsrc", mode, "freq_" + mode + "_toksrc_" + index + ".csv");
+        siamese.analyseTermFreq(index, "src", mode, "freq_" + mode + "_src_" + index + ".csv");
         /* then call the sort_term.py python script to generate a Zipf plot */
     }
 
