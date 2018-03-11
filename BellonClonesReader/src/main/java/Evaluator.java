@@ -9,13 +9,13 @@ import java.io.Reader;
 
 public class Evaluator {
     public static void main(String[] args) {
-        for (int n=1; n<=20; n++) {
-//        for (int n=1; n<=1; n++) {
+        String mrrPlot = "";
+        for (int n=1; n<=50; n++) {
+//        for (int n=70; n<=70; n++) {
             System.out.print(n + ",");
             String resultFile = n + "-gram.csv";
             Iterable<CSVRecord> groundtruthRecords = readCSV("bellon_clones.csv");
             int size = Iterables.size(groundtruthRecords);
-//            System.out.println("Groundtruth size: " + size);
             String[][] groundtruth = new String[size][];
             groundtruthRecords = readCSV("bellon_clones.csv");
             int count = 0;
@@ -30,7 +30,6 @@ public class Evaluator {
 
             Iterable<CSVRecord> resultRecords = readCSV(resultFile);
             int total = Iterables.size(resultRecords);
-//            System.out.println("Result size: " + total + "\n");
             double mrrSum = 0;
             int type1Count = 0;
             int type2Count = 0;
@@ -53,8 +52,14 @@ public class Evaluator {
             }
 //        System.out.println("Found: " + found);
 //        System.out.println("MRR: " + mrrSum/total);
-            System.out.println(mrrSum / total + "," + type1Count + "," + type2Count + "," + type3Count);
+            mrrPlot += mrrSum / total + ",";
+            System.out.println(mrrSum / total + "," + "," +
+                    (type1Count + type2Count + type3Count) + "," +
+                    type1Count + "," + type2Count + "," + type3Count);
+
         }
+
+        System.out.println(mrrPlot);
     }
 
     private static int[] checkResult(String[][] groundtruth, CSVRecord result) {
