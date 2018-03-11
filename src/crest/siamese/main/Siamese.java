@@ -210,22 +210,28 @@ public class Siamese {
 
     private void printConfig() {
         System.out.println("====== Configurations ======");
+        System.out.println("------ ELASTICSEARCH -------");
         System.out.println("server         : " + server);
         System.out.println("index          : " + index);
         System.out.println("type           : " + type);
+        System.out.println("----------- DATA -----------");
         System.out.println("inputFolder    : " + inputFolder);
         System.out.println("outputFolder   : " + outputFolder);
-        System.out.println("normalization  : " + normMode);
-        System.out.println("ngramSize      : " + ngramSize);
-        System.out.println("verbose        : " + isPrint);
         System.out.println("dfs            : " + isDFS);
         System.out.println("extension      : " + extension);
         System.out.println("minCloneSize   : " + minCloneLine);
+        System.out.println("--------- EXECUTION --------");
         System.out.println("command        : " + command);
-        System.out.println("queryReduction : " + queryReduction + " (" + this.qrPercentileOrig + ", " + this.qrPercentileNorm + ")");
-        System.out.println("multiRep       : " + multiRep);
-        System.out.println("outputFormat   : " + outputFormat);
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
+        System.out.println("outputFormat   : " + outputFormat);
+        System.out.println("--- MULTI-REPRESENTATION ---");
+        System.out.println("multiRep       : " + multiRep);
+        System.out.println("normalization  : " + normMode);
+        System.out.println("ngramSize      : " + ngramSize);
+        System.out.println("------ QUERY REDUCTION -----");
+        System.out.println("queryReduction : " + queryReduction);
+        System.out.println("qrThresholds   : orig=" + this.qrPercentileOrig + " / norm=" + this.qrPercentileNorm);
+        System.out.println("queryBoosts    : orig=" + origBoost + " / norm=" + normBoost);
         System.out.println("============================");
     }
 
