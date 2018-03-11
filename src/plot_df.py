@@ -37,7 +37,7 @@ def plot(df1, df2, index=''):
     # normal scale
     ax = result.plot(x='index', y='freq')
     ax.legend(['original', 'normalised'], prop={'size': 18})
-    ax.set_xlabel("token rank")
+    ax.set_xlabel("token rank (" + index + ")")
     ax.set_xlim(0, 1000)
     ax.set_ylabel("document frequency (DF)")
     ax.yaxis.label.set_size(18)
@@ -62,6 +62,35 @@ def plot(df1, df2, index=''):
     # ax.set_yscale("log", nonposy='clip')
     # fig = ax.get_figure()
     # fig.savefig('figure_log.pdf', bbox_inches='tight')
+
+
+def plot_no_label(df1, df2, index=''):
+    result = pd.concat([df2, df1], axis=1, join_axes=[df2.index])
+    result.index += 1
+    result = result.reset_index()
+    # print(result)
+    result.columns = ['index', 'freq', 'freq']
+    # print(result)
+    print('plotting ...')
+    # normal scale
+    ax = result.plot(x='index', y='freq')
+    # ax.legend(['original', 'normalised'], prop={'size': 18})
+    ax.legend_.remove()
+    ax.set_xlabel("token rank (" + index + ")")
+    ax.set_xlim(0, 1000)
+    # ax.set_ylabel("document frequency (DF)")
+    ax.yaxis.label.set_size(24)
+    ax.xaxis.label.set_size(24)
+    ax.yaxis.set_tick_params(labelsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    # set 'K', and 'M', on y-axis tick marks.
+    ax = matplotlib.pyplot.gca()
+    mkfunc = lambda x, pos: '%1.0fM' % (x * 1e-6) if x >= 1e6 else '%1.0fK' % (x * 1e-3) if x >= 1e3 else '%1.0f' % x
+    mkformatter = matplotlib.ticker.FuncFormatter(mkfunc)
+    ax.yaxis.set_major_formatter(mkformatter)
+
+    fig = ax.get_figure()
+    fig.savefig('../figure_df_' + index + '.pdf', bbox_inches='tight')
 
 
 def compute_slopes(df_list):
@@ -135,10 +164,14 @@ def plot_slopes(filename):
 
 def main():
     # print('processing CSVs ...')
-    index = 'bellon'
+    index = 'qualitas'
     df_src_sorted = read_csv('../freq_df_src_' + index + '.csv')
     df_toksrc_sorted = read_csv('../freq_df_toksrc_' + index + '.csv')
-    plot(df_src_sorted, df_toksrc_sorted, index)
+
+    if index == 'qualitas' or index == 'bcb':
+        plot_no_label(df_src_sorted, df_toksrc_sorted, index)
+    else:
+        plot(df_src_sorted, df_toksrc_sorted, index)
     # print('computing slopes ...')
     # compute_slopes(df_toksrc_sorted)
     # plot_slopes('../slopes.csv')
