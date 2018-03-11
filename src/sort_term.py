@@ -135,8 +135,8 @@ def plot_slopes(filename):
 
 def main():
     # print('processing CSVs ...')
-    df_src_sorted = read_csv('../freq_df_src_qualitas.csv')
-    df_toksrc_sorted = read_csv('../freq_df_toksrc_qualitas.csv')
+    df_src_sorted = read_csv('../freq_df_src_bellon.csv')
+    df_toksrc_sorted = read_csv('../freq_df_toksrc_bellon.csv')
     plot(df_src_sorted, df_toksrc_sorted)
     # print('computing slopes ...')
     # compute_slopes(df_toksrc_sorted)
