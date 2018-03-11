@@ -26,7 +26,7 @@ def read_csv(filename):
     return df_sorted
 
 
-def plot(df1, df2):
+def plot(df1, df2, index=''):
     result = pd.concat([df2, df1], axis=1, join_axes=[df2.index])
     result.index += 1
     result = result.reset_index()
@@ -51,7 +51,7 @@ def plot(df1, df2):
     ax.yaxis.set_major_formatter(mkformatter)
 
     fig = ax.get_figure()
-    fig.savefig('figure_df.pdf', bbox_inches='tight')
+    fig.savefig('../figure_df_' + index + '.pdf', bbox_inches='tight')
     # # Not needed anymore
     # # log scale
     # ax = result.plot(x='index', y='freq')
@@ -135,9 +135,10 @@ def plot_slopes(filename):
 
 def main():
     # print('processing CSVs ...')
-    df_src_sorted = read_csv('../freq_df_src_bellon.csv')
-    df_toksrc_sorted = read_csv('../freq_df_toksrc_bellon.csv')
-    plot(df_src_sorted, df_toksrc_sorted)
+    index = 'bellon'
+    df_src_sorted = read_csv('../freq_df_src_' + index + '.csv')
+    df_toksrc_sorted = read_csv('../freq_df_toksrc_' + index + '.csv')
+    plot(df_src_sorted, df_toksrc_sorted, index)
     # print('computing slopes ...')
     # compute_slopes(df_toksrc_sorted)
     # plot_slopes('../slopes.csv')
