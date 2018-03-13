@@ -87,6 +87,9 @@ public class Siamese {
     private Normalizer normalizer;
     private Tokenizer origTokenizer;
     private Normalizer origNormalizer;
+    private String deleteField;
+    private String deleteWildcard;
+    private int deleteAmount;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -195,6 +198,12 @@ public class Siamese {
             computeSimilarity = Boolean.parseBoolean(prop.getProperty("computeSimilarity"));
             simThreshold = Integer.parseInt(prop.getProperty("simThreshold"));
 
+            if (command.equals("delete")) {
+                deleteField = prop.getProperty("deleteField");
+                deleteWildcard = prop.getProperty("deleteWildcard");
+                deleteAmount = Integer.parseInt(prop.getProperty("deleteAmount"));
+            }
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -282,6 +291,10 @@ public class Siamese {
         return formatter;
     }
 
+    public void delete(String field, String query, int amount) throws Exception {
+        System.out.println(es.delete(index, type, field, query, isDFS, amount));
+    }
+
     public String execute() throws Exception {
         // check if the client is already started up
         if (siameseClient == null) {
@@ -354,6 +367,15 @@ public class Siamese {
                         if (es.doesIndexExist(this.index)) {
                             OutputFormatter formatter = getOutputFormatter();
                             outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
+                        } else {
+                            // index does not exist
+                            throw new Exception("index " + this.index + " does not exist.");
+                        }
+                    } else if (command.toLowerCase().equals("delete")) {
+                        if (es.doesIndexExist(this.index)) {
+                            delete(deleteField,
+                                    deleteWildcard,
+                                    deleteAmount);
                         } else {
                             // index does not exist
                             throw new Exception("index " + this.index + " does not exist.");
