@@ -6,7 +6,9 @@ import matplotlib
 
 methods = [22, 50, 178, 423, 1723, 6601, 28030, 111190, 442403, 1771183, 4870113]
 nicad_methods = [22, 50, 178, 423, 1723, 6601, 28030, 111190]
-iclones_methods = [22, 50, 178, 423]
+iclones_methods = [22, 50, 178, 1723, 6601, 28030]
+jplag_methods = [22, 50, 178, 423, 1723, 6601, 28030]
+simian_methods = [22, 50, 178, 423, 1723, 6601, 28030]
 
 siamese = [4.13, 2.95, 4.62, 8.4, 11.94,
            36.22, 172.90, 614.90, 2077.04, 9089,
@@ -16,7 +18,10 @@ scc = [(0.58 + 2.03), (0.88 + 0.68), (2.68 + 0.98), (3.81 + 1.37), (9.18 + 2.15)
        (18606 + 2348.9)]
 nicad = [0.34, 0.66, 2.21, 7.89, 26.50,
          84.25, 574.91, 6992]
-iclones = [0.42, 0.49, 3.07, 157.77]
+iclones = [0.59, 0.67, 3.06, 4.82, 14.97, 166.95]
+jpag = [0.37, 0.91, 0.89, 1.02, 3.83, 57.92, 890.08]
+simian = [0.25, 0.30, 0.47, 2.14, 25.90, 401.93, 6506]
+
 # # seconds
 # fig = plt.figure()
 # ax = fig.add_subplot(111)
@@ -38,12 +43,18 @@ iclones = [0.42, 0.49, 3.07, 157.77]
 siamese_m = [x / 60 for x in siamese]
 scc_m = [x / 60 for x in scc]
 nicad_m = [x / 60 for x in nicad]
+iclones_m = [x / 60 for x in iclones]
+jplag_m = [x / 60 for x in jpag]
+simian_m = [x / 60 for x in simian]
 
 fig = plt.figure()
 # ax = fig.add_subplot(111)
 plt.plot(methods, siamese_m, c="b", marker="s", label="Siamese")
 plt.plot(methods, scc_m, c="r", marker="x", label="SourcererCC")
 plt.plot(nicad_methods, nicad_m, c="g", marker="o", label="NiCad")
+plt.plot(iclones_methods, iclones_m, c="c", marker="v", label="iClones")
+plt.plot(jplag_methods, jplag_m, c="m", marker="^", label="JPlag")
+plt.plot(simian_methods, simian_m, c="y", marker="<", label="Simian")
 plt.yscale('log', basey=10)
 plt.xscale('log', basex=10)
 plt.xlabel("No. of methods")
@@ -52,7 +63,7 @@ plt.ylim(ymax=1000)
 plt.legend(loc=2)
 # plt.show()
 # fig = ax.get_figure()
-plt.savefig('index_m.pdf', bbox_inches='tight')
+plt.savefig('../index_m.pdf', bbox_inches='tight')
 
 
 # # Query time plot

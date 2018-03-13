@@ -38,7 +38,7 @@ public class Experiment {
 
 //    private static double[] dfCapNorm = { 10, 20, 40 };
 //    private static double[] dfCapOrig = { 20, 40, 60, 80 };
-    private static double[] dfCapNorm = { 10 };
+    private static double[] dfCapNorm = { 5 };
     private static double[] dfCapOrig = { 20 };
 
     private static String inputDir;
