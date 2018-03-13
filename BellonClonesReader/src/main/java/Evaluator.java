@@ -10,10 +10,10 @@ import java.io.Reader;
 public class Evaluator {
     public static void main(String[] args) {
         String mrrPlot = "";
-        for (int n=1; n<=50; n++) {
+        for (int n=1; n<=20; n++) {
 //        for (int n=70; n<=70; n++) {
             System.out.print(n + ",");
-            String resultFile = n + "-gram.csv";
+            String resultFile = n + ".csv";
             Iterable<CSVRecord> groundtruthRecords = readCSV("bellon_clones.csv");
             int size = Iterables.size(groundtruthRecords);
             String[][] groundtruth = new String[size][];
