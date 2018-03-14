@@ -27,3 +27,8 @@ hist_tok.pdf
 results/search_results.txt
 *-SNAPSHOT.jar
 github-crawler.log
+src/__pycache__
+BellonClonesReader/bellon_benchmark
+BellonClonesReader/queries
+exp_results
+queries

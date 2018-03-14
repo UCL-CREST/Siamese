@@ -48,6 +48,22 @@ public class JavaNormalizerTest {
     }
 
     @org.junit.Test
+    public void checkOperators() throws Exception {
+        NormalizerMode mode = new NormalizerMode();
+        mode.setOperator(Settings.Normalize.OPERATOR_NORM_ON);
+        JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(mode));
+        ArrayList<String> tokens = tokenizer.getTokensFromString(
+                "!= += ++ -- *= /= <= >= == () {}");
+
+        String[] expectedTokens = {"O", "O", "O", "O", "O", "O", "O", "O", "O", "(", ")", "{", "}"};
+
+        for (int i=0; i<tokens.size(); i++) {
+            System.out.print(tokens.get(i) + "|");
+            assertEquals(expectedTokens[i], tokens.get(i));
+        }
+    }
+
+    @org.junit.Test
     public void checkDatatypeNormalisation() throws Exception {
         NormalizerMode mode = new NormalizerMode();
         mode.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
@@ -151,7 +167,8 @@ public class JavaNormalizerTest {
         mode.setValue(Settings.Normalize.VALUE_NORM_ON);
         JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(mode));
 
-        ArrayList<String> tokens = tokenizer.getTokensFromString("while (true) { int y = 0; String x = \"Hello world!\"; }");
+        ArrayList<String> tokens =
+                tokenizer.getTokensFromString("while (true) { int y = 0; String x = \"Hello world!\"; }");
         String[] expectedTokens = {"K", "(", "V", ")", "{", "D", "W", "=", "V", ";"
                 , "J", "W", "=", "S", ";", "}"};
 
@@ -190,6 +207,50 @@ public class JavaNormalizerTest {
 
         for (int i=0; i<grams.size(); i++) {
             System.out.print(grams.get(i) + " ");
+        }
+    }
+
+    @org.junit.Test
+    public void checkDJKOPSVWNormalisation() throws Exception {
+        NormalizerMode mode = new NormalizerMode();
+        mode.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
+        mode.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
+        mode.setKeyword(Settings.Normalize.KEYWORD_NORM_ON);
+        mode.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_ON);
+        mode.setString(Settings.Normalize.STRING_NORM_ON);
+        mode.setWord(Settings.Normalize.WORD_NORM_ON);
+        mode.setValue(Settings.Normalize.VALUE_NORM_ON);
+        mode.setOperator(Settings.Normalize.OPERATOR_NORM_ON);
+        JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(mode));
+
+        ArrayList<String> tokens = tokenizer.getTokensFromString(
+                "public static long checksum(File file) throws IOException {\n" +
+                        "    CRC32 crc = new CRC32();\n" +
+                        "    FileReader fr = new FileReader(file);\n" +
+                        "    int data;\n" +
+                        "    while((data = fr.read()) != -1) {\n" +
+                        "        crc.update(data);\n" +
+                        "    }\n" +
+                        "    fr.close();\n" +
+                        "    return crc.getValue();\n" +
+                        "}");
+
+        nGramGenerator gen = new nGramGenerator(4);
+        ArrayList<String> grams = gen.generateNGramsFromJavaTokens(tokens);
+
+        String[] expected = {"KKDW", "KDW(", "DW(J", "W(JP", "(JP)", "JP)K",
+                "P)KJ", ")KJ{", "KJ{J", "J{JW", "{JWO", "JWOK", "WOKJ",
+                "OKJ(", "KJ()", "J();", "();J", ");JW", ";JWO", "JWOK",
+                "WOKJ", "OKJ(", "KJ(P", "J(P)", "(P);", "P);D", ");DW",
+                ";DW;", "DW;K", "W;K(", ";K((", "K((W", "((WO", "(WOW",
+                "WOW.", "OW.W", "W.W(", ".W()", "W())", "())O", "))OO",
+                ")OOV", "OOV)", "OV){", "V){W", "){W.", "{W.W", "W.W(",
+                ".W(W", "W(W)", "(W);", "W);}", ");}W", ";}W.", "}W.W",
+                "W.W(", ".W()", "W();", "();K", ");KW", ";KW.", "KW.W",
+                "W.W(", ".W()", "W();", "();}"};
+        for (int i=0; i<expected.length; i++) {
+            System.out.print(grams.get(i) + "|");
+            assertEquals(expected[i], grams.get(i));
         }
     }
 

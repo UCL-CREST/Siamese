@@ -28,8 +28,8 @@ def original():
     # data = df_src_sorted.as_matrix(columns=['freq'])[:100000, :1][:, 0]
     x = df_src_sorted.as_matrix(columns=['index'])[:, 0]
     data = df_src_sorted.as_matrix(columns=['freq'])[:, 0]
-    # print(x)
-    # print(data)
+    print(x)
+    print(data)
     # exit()
     # create a set of Parameters
     params = Parameters()
@@ -37,9 +37,9 @@ def original():
     # params.add('b', value=2, min=0, max=5)
     # params.add('a', value=1, min=0, max=3)
 
-    params.add('c', value=3*(10**6), vary=False)
-    params.add('b', value=5, vary=False)
-    params.add('a', value=1.07, vary=False)
+    params.add('c', value=3*(10**6))
+    params.add('b', value=5)
+    params.add('a', value=1.07)
 
     print('fitting the model ...')
     # do fit, here with leastsq model
@@ -52,15 +52,14 @@ def original():
     print('r^2 = ', 1 - result.residual.var() / np.var(data))
 
     # # try to plot results
-    try:
-        plt.plot(x, data, 'k+')
-        # plt.ylim(0, 50)
-        plt.plot(x, final, 'r')
-        plt.xscale("log", nonposx='clip')
-        plt.yscale("log", nonposy='clip')
-        plt.show()
-    except:
-        pass
+    plt.plot(x, data, 'k+')
+    plt.plot(x, final, 'r')
+    plt.xlim(0, 100)
+    plt.legend(['original', 'regression'])
+    plt.xlabel("token rank")
+    plt.ylabel("document frequency (DF)")
+    plt.show()
+    # plt.savefig('../plot_fitting.pdf', bbox_inches='tight')
 
 
 def normalised():

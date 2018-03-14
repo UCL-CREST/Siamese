@@ -227,5 +227,28 @@ def main():
             #execute_siamese()
             ## input("Press Enter to continue...")
 
+#    # changes from MacBook
+#    projs = filter_proj_by_stars(sys.argv[1])
+#    print('total:', len(projs))
+#    writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
+#    start = 29465
+#    end = 10
+#    # analyse_projects(projs, 2, 1)
+#
+#    for idx, proj in enumerate(projs):
+#        if start >= proj[0] >= end:
+#            print(idx, proj[0], proj[1])
+#            writefile('github.log', 'No. ' + str(idx) + ', ' + str(proj[0]) + ', ' + proj[1] + '\n', 'a', False)
+#            config = gen_config_template()
+#            config = update_config(config, 4, sys.argv[2])
+#            config = update_config(config, 5, proj[1])
+#            # first project, recreate the index
+#            if idx == 0:
+#                config = update_config(config, 17, "true")
+#            write_config(config)
+#            execute_siamese()
+#            exit(0)
+#            # input("Press Enter to continue...")
+
 
 main()

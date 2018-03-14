@@ -87,6 +87,9 @@ public class Siamese {
     private Normalizer normalizer;
     private Tokenizer origTokenizer;
     private Normalizer origNormalizer;
+    private String deleteField;
+    private String deleteWildcard;
+    private int deleteAmount;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -195,6 +198,12 @@ public class Siamese {
             computeSimilarity = Boolean.parseBoolean(prop.getProperty("computeSimilarity"));
             simThreshold = Integer.parseInt(prop.getProperty("simThreshold"));
 
+            if (command.equals("delete")) {
+                deleteField = prop.getProperty("deleteField");
+                deleteWildcard = prop.getProperty("deleteWildcard");
+                deleteAmount = Integer.parseInt(prop.getProperty("deleteAmount"));
+            }
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -210,22 +219,28 @@ public class Siamese {
 
     private void printConfig() {
         System.out.println("====== Configurations ======");
+        System.out.println("------ ELASTICSEARCH -------");
         System.out.println("server         : " + server);
         System.out.println("index          : " + index);
         System.out.println("type           : " + type);
+        System.out.println("----------- DATA -----------");
         System.out.println("inputFolder    : " + inputFolder);
         System.out.println("outputFolder   : " + outputFolder);
-        System.out.println("normalization  : " + normMode);
-        System.out.println("ngramSize      : " + ngramSize);
-        System.out.println("verbose        : " + isPrint);
         System.out.println("dfs            : " + isDFS);
         System.out.println("extension      : " + extension);
         System.out.println("minCloneSize   : " + minCloneLine);
+        System.out.println("--------- EXECUTION --------");
         System.out.println("command        : " + command);
-        System.out.println("queryReduction : " + queryReduction + " (" + this.qrPercentileOrig + ", " + this.qrPercentileNorm + ")");
-        System.out.println("multiRep       : " + multiRep);
-        System.out.println("outputFormat   : " + outputFormat);
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
+        System.out.println("outputFormat   : " + outputFormat);
+        System.out.println("--- MULTI-REPRESENTATION ---");
+        System.out.println("multiRep       : " + multiRep);
+        System.out.println("normalization  : " + normMode);
+        System.out.println("ngramSize      : " + ngramSize);
+        System.out.println("------ QUERY REDUCTION -----");
+        System.out.println("queryReduction : " + queryReduction);
+        System.out.println("qrThresholds   : orig=" + this.qrPercentileOrig + " / norm=" + this.qrPercentileNorm);
+        System.out.println("queryBoosts    : orig=" + origBoost + " / norm=" + normBoost);
         System.out.println("============================");
     }
 
@@ -266,12 +281,18 @@ public class Siamese {
         } else if (outputFormat.equals("csvfline")) {
             formatter.setFormat("csv");
             formatter.setAddStartEndLine(true);
+        } else if (outputFormat.equals("gcf")) {
+            formatter.setFormat("gcf");
         } else {
             System.out.println("ERROR: wrong output format");
             return null;
         }
 
         return formatter;
+    }
+
+    public void delete(String field, String query, int amount) throws Exception {
+        System.out.println(es.delete(index, type, field, query, isDFS, amount));
     }
 
     public String execute() throws Exception {
@@ -346,6 +367,15 @@ public class Siamese {
                         if (es.doesIndexExist(this.index)) {
                             OutputFormatter formatter = getOutputFormatter();
                             outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
+                        } else {
+                            // index does not exist
+                            throw new Exception("index " + this.index + " does not exist.");
+                        }
+                    } else if (command.toLowerCase().equals("delete")) {
+                        if (es.doesIndexExist(this.index)) {
+                            delete(deleteField,
+                                    deleteWildcard,
+                                    deleteAmount);
                         } else {
                             // index does not exist
                             throw new Exception("index " + this.index + " does not exist.");
@@ -649,10 +679,16 @@ public class Siamese {
             qr = "qr";
         }
         String outToFile = "";
+
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-S");
         Date dateobj = new Date();
-        File outfile = new File(outputFolder + "/" + index + "_" + qr + "_"
-                + df.format(dateobj) + ".csv");
+        String outfilePath = outputFolder + "/" + index + "_" + qr + "_" + df.format(dateobj);
+        if (formatter.getFormat().equals("csv"))
+            outfilePath += ".csv";
+        else
+            outfilePath += ".xml";
+        File outfile = new File(outfilePath);
+
         // if file doesn't exists, then create it
         boolean isCreated = false;
         if (!outfile.exists()) {
@@ -671,8 +707,12 @@ public class Siamese {
 
             int count = 0;
             int methodCount = 0;
+
             // reset the output buffer
             outToFile = "";
+            if (formatter.getFormat().equals("gcf")) {
+                outToFile += "<CloneClasses>\n";
+            }
 
             for (File file : listOfFiles) {
                 if (isPrint)
@@ -705,7 +745,7 @@ public class Siamese {
                                 q.setFile(method.getFile() + "_" + method.getName());
                                 q.setStartline(method.getStartLine());
                                 q.setEndline(method.getEndLine());
-                                outToFile += formatter.format(q, prefixToRemove, license) + ",";
+                                outToFile += formatter.format(q, prefixToRemove, license);
 
                                 NormalizerMode tmode = new NormalizerMode();
                                 char[] noNormMode = {'x'};
@@ -719,10 +759,15 @@ public class Siamese {
                                     query = reduceQuery(query, "src", this.qrPercentileNorm * docCount / 100);
                                     origQuery = reduceQuery(origQuery, "tokenizedsrc", this.qrPercentileOrig * docCount / 100);
                                     if (isPrint) {
-                                        System.out.println("NQ" + methodCount + " : " + query);
-                                        System.out.println("OQ" + methodCount + " : " + origQuery);
+                                        System.out.println("NQ," + this.qrPercentileNorm * docCount / 100 + "," + methodCount + " : " + query);
+                                        System.out.println("OQ," + this.qrPercentileOrig * docCount / 100 + "," + methodCount + " : " + origQuery);
                                     }
                                 }
+
+//                                // TODO: only for experiment. Remove after finished.
+//                                origQuery = "";
+//                                System.out.println(query);
+//                                System.out.println(origQuery);
 
                                 // search for results depending on the MR setting
                                 if (this.multiRep)
@@ -736,7 +781,6 @@ public class Siamese {
                                 } else {
                                     outToFile += formatter.format(results, prefixToRemove);
                                 }
-                                outToFile += "\n";
                                 methodCount++;
                             }
                         }
@@ -781,8 +825,13 @@ public class Siamese {
                     outToFile = "";
                 }
             }
+
+            if (formatter.getFormat().equals("gcf")) {
+                outToFile += "</CloneClasses>\n";
+            }
             // flush the last part of output
             bw.write(outToFile);
+
             bw.close();
             System.out.println("Searching done for " + count + " files (" + methodCount + " methods after clone size filtering).");
             System.out.println("See output at " + outfile.getAbsolutePath());
@@ -809,8 +858,9 @@ public class Siamese {
         query = "";
         ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, field, tmpQuery);
         for (int i=0; i<sortedTerms.size(); i++) {
-            if (sortedTerms.get(i).getFreq() <= limit)
+            if (sortedTerms.get(i).getFreq() <= limit) {
                 query += sortedTerms.get(i).getTerm() + " ";
+            }
         }
         return query;
     }
