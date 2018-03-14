@@ -1,4 +1,6 @@
 import sys
+import shutil
+import distutils.dir_util
 from subprocess import Popen, PIPE
 import matplotlib.pyplot as plt
 import numpy as np
@@ -176,28 +178,54 @@ def analyse_projects(projs, start, end):
     # plot_hist(stars_list)
 
 
-def main():
-    projs = filter_proj_by_stars(sys.argv[1])
-    print('total:', len(projs))
-    writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
-    start = 29465
-    end = 10
-    # analyse_projects(projs, 2, 1)
+def copy_projs(projs, start, end, filename):
+	count = 0
+	for idx, proj in enumerate(projs):
+		if start >= proj[0] >= end:
+			writefile(filename + '-' + str(start) + '-' + str(end) + '.txt', proj[1] + '\n', 'a', False)
+			#print(idx, proj[0], proj[1])
+			#copyDirectory('/home/cragkhit/data/github/' + proj[1], '/home/cragkhit/data/github_max_to_10/' + proj[1])
+			count += 1
+	print('stars', start, 'to', end, ':', count)
 
-    for idx, proj in enumerate(projs):
-        if start >= proj[0] >= end:
-            print(idx, proj[0], proj[1])
-            writefile('github.log', 'No. ' + str(idx) + ', ' + str(proj[0]) + ', ' + proj[1] + '\n', 'a', False)
-            config = gen_config_template()
-            config = update_config(config, 4, sys.argv[2])
-            config = update_config(config, 5, proj[1])
-	    # first project, recreate the index
-   	    if idx == 0:
-  		config = update_config(config, 17, "true")
-            write_config(config)
-            execute_siamese()
-	    exit(0)
-            # input("Press Enter to continue...")
+ 
+def copyDirectory(src, dest):
+    try:
+        shutil.copytree(src, dest)
+    # Directories are the same
+    except shutil.Error as e:
+        print('Directory not copied. Error: %s' % e)
+    # Any error saying that the directory doesn't exist
+    except OSError as e:
+        print('Directory not copied. Error: %s' % e)
+
+
+def main():
+	if len(sys.argv) == 1:
+		print('Usage: python github.py <GitHub crawler log> <max star> <min star>')
+
+	projs = filter_proj_by_stars(sys.argv[1])
+	print('total:', len(projs))
+	writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
+	#start = 29465
+	#end = 10
+	start = int(sys.argv[2])
+	end = int(sys.argv[3])
+	# analyse_projects(projs, 2, 1)
+	copy_projs(projs, start, end, 'github')
+    #for idx, proj in enumerate(projs):
+    #    if start >= proj[0] >= end:
+    #        print(idx, proj[0], proj[1])
+            #writefile('github.log', 'No. ' + str(idx) + ', ' + str(proj[0]) + ', ' + proj[1] + '\n', 'a', False)
+            #config = gen_config_template()
+            #config = update_config(config, 4, sys.argv[2])
+            #config = update_config(config, 5, proj[1])
+	    	## first project, recreate the index
+   	    	#if idx == 0:
+	    	#	config = update_config(config, 17, "true")
+            #write_config(config)
+            #execute_siamese()
+            ## input("Press Enter to continue...")
 
 
 main()
