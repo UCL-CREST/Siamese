@@ -82,6 +82,7 @@ public class ESConnector {
                         .field("startline", d.getStartLine())
                         .field("endline", d.getEndLine())
                         .field("src", d.getSource())
+						.field("t2src", d.getT2Source())
                         .field("tokenizedsrc", d.getTokenizedSource())
                         .field("origsrc", d.getOriginalSource())
                         .field("license", d.getLicense())
@@ -124,6 +125,7 @@ public class ESConnector {
 								.field("startline", d.getStartLine())
 								.field("endline", d.getEndLine())
 								.field("src", d.getSource())
+								.field("t2src", d.getT2Source())
                                 .field("tokenizedsrc", d.getTokenizedSource())
 								.field("origsrc", d.getOriginalSource())
 								.field("license", d.getLicense())
@@ -336,6 +338,7 @@ public class ESConnector {
                         Integer.parseInt(hit.getSource().get("startline").toString()),
                         Integer.parseInt(hit.getSource().get("endline").toString()),
                         hit.getSource().get("src").toString(),
+						hit.getSource().get("t2src").toString(),
                         hit.getSource().get("tokenizedsrc").toString(),
                         hit.getSource().get("origsrc").toString(),
                         hit.getSource().get("license").toString(),

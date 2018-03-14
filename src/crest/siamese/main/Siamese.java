@@ -42,9 +42,11 @@ public class Siamese {
     private String normMode;
     private NormalizerMode modes = new NormalizerMode();
     private int ngramSize;
+    private int t2ngramSize;
     private boolean isNgram;
     private boolean isPrint;
     private nGramGenerator ngen;
+    private nGramGenerator t2Ngen;
     private boolean isDFS;
     private String outputFolder;
     private boolean writeToFile;
@@ -87,6 +89,8 @@ public class Siamese {
     private Normalizer normalizer;
     private Tokenizer origTokenizer;
     private Normalizer origNormalizer;
+    private Tokenizer t2Tokenizer;
+    private Normalizer t2Normalizer;
     private String deleteField;
     private String deleteWildcard;
     private int deleteAmount;
@@ -123,7 +127,8 @@ public class Siamese {
             modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
 
             isNgram = Boolean.parseBoolean(prop.getProperty("isNgram"));
-            ngramSize = Integer.parseInt(prop.getProperty("ngramSize"));
+            ngramSize = Integer.parseInt(prop.getProperty("t3ngramSize"));
+            t2ngramSize = Integer.parseInt(prop.getProperty("t2ngramSize"));
             isPrint = Boolean.parseBoolean(prop.getProperty("isPrint"));
             isDFS = Boolean.parseBoolean(prop.getProperty("dfs"));
             writeToFile = Boolean.parseBoolean(prop.getProperty("writeToFile"));
@@ -266,8 +271,16 @@ public class Siamese {
         NormalizerMode tmode = new NormalizerMode();
         char[] noNormMode = {'x'};
         tmode.setTokenizerMode(noNormMode);
+
         origNormalizer = initialiseNormalizer(tmode);
         origTokenizer = initialiseTokenizer(origNormalizer);
+
+        NormalizerMode t2mode = new NormalizerMode();
+        char[] t2NormMode = {'s', 'v', 'w'};
+        t2mode.setTokenizerMode(t2NormMode);
+
+        t2Normalizer = initialiseNormalizer(t2mode);
+        t2Tokenizer = initialiseTokenizer(t2Normalizer);
 
         normalizer = initialiseNormalizer(modes);
         tokenizer = initialiseTokenizer(normalizer);
@@ -303,6 +316,7 @@ public class Siamese {
 
         // initialise the n-gram generator
         ngen = new nGramGenerator(ngramSize);
+        t2Ngen = new nGramGenerator(t2ngramSize);
 
         // default similarity function is TFIDF
         String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
@@ -339,54 +353,43 @@ public class Siamese {
 
         try {
             if (siameseClient != null) {
-                if (github) {
-                    indexGitHub();
-                } else {
-                    if (command.toLowerCase().equals("index")) {
-
-                        if (recreateIndexIfExists) {
-                            createIndex(indexSettings, mappingStr);
-                        }
-
-                        long startingId = 0;
-                        if (!recreateIndexIfExists && doesIndexExist()) {
-                            startingId = getMaxId(index) + 1;
-                        }
-
-                        long insertSize = insert(startingId);
-
-                        if (insertSize != 0) {
-                            // if ok, refresh the index, then search
-                            es.refresh(index);
-                            System.out.println("Successfully creating index.");
-                        } else {
-                            System.out.println("ERROR: Indexed zero file. Please check!");
-                        }
-
-                    } else if (command.toLowerCase().equals("search")) {
-                        if (es.doesIndexExist(this.index)) {
-                            OutputFormatter formatter = getOutputFormatter();
-                            outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
-                        } else {
-                            // index does not exist
-                            throw new Exception("index " + this.index + " does not exist.");
-                        }
-                    } else if (command.toLowerCase().equals("delete")) {
-                        if (es.doesIndexExist(this.index)) {
-                            delete(deleteField,
-                                    deleteWildcard,
-                                    deleteAmount);
-                        } else {
-                            // index does not exist
-                            throw new Exception("index " + this.index + " does not exist.");
-                        }
+                if (command.toLowerCase().equals("index")) {
+                    if (recreateIndexIfExists) {
+                        createIndex(indexSettings, mappingStr);
+                    }
+                    long startingId = 0;
+                    if (!recreateIndexIfExists && doesIndexExist()) {
+                        startingId = getMaxId(index) + 1;
+                    }
+                    long insertSize = insert(startingId);
+                    if (insertSize != 0) {
+                        // if ok, refresh the index, then search
+                        es.refresh(index);
+                        System.out.println("Successfully creating index.");
+                    } else {
+                        System.out.println("ERROR: Indexed zero file. Please check!");
+                    }
+                } else if (command.toLowerCase().equals("search")) {
+                    if (es.doesIndexExist(this.index)) {
+                        OutputFormatter formatter = getOutputFormatter();
+                        outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
+                    } else {
+                        // index does not exist
+                        throw new Exception("index " + this.index + " does not exist.");
+                    }
+                } else if (command.toLowerCase().equals("delete")) {
+                    if (es.doesIndexExist(this.index)) {
+                        delete(deleteField,
+                                deleteWildcard,
+                                deleteAmount);
+                    } else {
+                        // index does not exist
+                        throw new Exception("index " + this.index + " does not exist.");
                     }
                 }
             } else {
                 System.out.println("ERROR: cannot create Elasticsearch client ... ");
             }
-//        } catch (NoNodeAvailableException noNodeException) {
-//            throw noNodeException;
         }  catch (Exception e) {
             throw e;
         }
@@ -576,8 +579,9 @@ public class Siamese {
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // Create Document object and put in an array list
-                                String normSource = tokenize(method.getSrc(), tokenizer, isNgram);
-                                String tokenizedSource = tokenize(method.getSrc(), origTokenizer, false);
+                                String normSource = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
+                                String t2Source = tokenize(method.getSrc(), tokenizer, isNgram, t2Ngen);
+                                String tokenizedSource = tokenize(method.getSrc(), origTokenizer, false, ngen);
                                 String finalUrl = this.url;
                                 if (!finalUrl.equals("none")) {
                                     String prefix = inputFolder;
@@ -591,6 +595,7 @@ public class Siamese {
                                         method.getStartLine(),
                                         method.getEndLine(),
                                         normSource,
+                                        t2Source,
                                         tokenizedSource,
                                         method.getSrc(),
                                         license,
@@ -726,6 +731,7 @@ public class Siamese {
                 ArrayList<Method> methodList;
                 String query = "";
                 String origQuery = "";
+                String t2Query = "";
                 try {
                     methodList = methodParser.parseMethods();
                     String license = methodParser.getLicense();
@@ -750,8 +756,9 @@ public class Siamese {
                                 NormalizerMode tmode = new NormalizerMode();
                                 char[] noNormMode = {'x'};
                                 tmode.setTokenizerMode(noNormMode);
-                                origQuery = tokenize(method.getSrc(), origTokenizer, false);
-                                query = tokenize(method.getSrc(), tokenizer, isNgram);
+                                origQuery = tokenize(method.getSrc(), origTokenizer, false, ngen);
+                                t2Query = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
+                                query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
 
                                 // query size limit is enforced
                                 if (queryReduction) {
@@ -969,12 +976,8 @@ public class Siamese {
         return src;
     }
 
-//    private String tokenize(String sourcecode, NormalizerMode modes, boolean isNgram) throws Exception {
-    private String tokenize(String sourcecode, Tokenizer tokenizer, boolean isNgram) throws Exception {
+    private String tokenize(String sourcecode, Tokenizer tokenizer, boolean isNgram, nGramGenerator ngen) throws Exception {
         String src;
-//        Normalizer normalizer = initialiseNormalizer(modes);
-//        Tokenizer tokenizer = initialiseTokenizer(normalizer);
-
         // generate tokens
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
         // enter ngram mode
@@ -1213,63 +1216,5 @@ public class Siamese {
 
     public boolean getComputeSimilarity() {
         return this.computeSimilarity;
-    }
-
-    public void indexGitHub() throws Exception {
-        if (this.inputFolder.endsWith("/"))
-            this.inputFolder = StringUtils.chop(this.inputFolder);
-        if (this.subInputFolder.endsWith("/"))
-            this.subInputFolder = StringUtils.chop(this.subInputFolder);
-
-        this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
-        System.out.println("Indexing: " + this.inputFolder);
-        this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
-
-        File f = new File(this.inputFolder + "/LICENSE.txt");
-        if (!f.exists() || f.isDirectory()) {
-            f = new File(this.inputFolder + "/LICENSE");
-        }
-
-        if (f.exists() && !f.isDirectory()) {
-            String[] lines = FileUtils.readFileToString(f).split("\n");
-            for (String line : lines) {
-                String license = LicenseExtractor.extractLicenseWithRegExp(line);
-                if (!license.equals("unknown")) {
-                    this.fileLicense = license;
-                    break;
-                }
-            }
-        }
-
-        // initialise the n-gram generator
-        ngen = new nGramGenerator(ngramSize);
-        // default similarity function is TFIDF
-        String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
-        String mappingStr = IndexSettings.TFIDF.mappingStr;
-
-        try {
-            if (siameseClient != null) {
-                if (command.toLowerCase().equals("index")) {
-                    if (recreateIndexIfExists) {
-                        createIndex(indexSettings, mappingStr);
-                    }
-                    long startingId = 0;
-                    if (!recreateIndexIfExists && doesIndexExist()) {
-                        startingId = getMaxId(index) + 1;
-                    }
-                    long insertSize = insert(startingId);
-                    if (insertSize != 0) {
-                        // if ok, refresh the index, then search
-                        es.refresh(index);
-                    } else {
-                        System.out.println("ERROR: Indexed zero file. Please check!");
-                    }
-                }
-            } else {
-                System.out.println("ERROR: cannot create Elasticsearch client ... ");
-            }
-        } catch (Exception e) {
-            throw e;
-        }
     }
 }
