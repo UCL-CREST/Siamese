@@ -17,29 +17,36 @@ public class Experiment {
 
     // TODO: I removed the "x", can put it back in if needed.
     private static String[] normModesAll = {
-            "w", "v", "vw", "s", "sw", "sv", "svw", "p", "pw",
-            "pv", "pvw", "ps", "psw", "psv", "psvw", "k", "kw", "kv", "kvw",
-            "ks", "ksw", "ksv", "ksvw", "kp", "kpw", "kpv", "kpvw", "kps", "kpsw",
-            "kpsv", "kpsvw", "j", "jw", "jv", "jvw", "js", "jsw", "jsv", "jsvw",
-            "jp", "jpw", "jpv", "jpvw", "jps", "jpsw", "jpsv", "jpsvw", "jk", "jkw",
-            "jkv", "jkvw", "jks", "jksw", "jksv", "jksvw", "jkp", "jkpw", "jkpv", "jkpvw",
-            "jkps", "jkpsw", "jkpsv", "jkpsvw", "d", "dw", "dv", "dvw", "ds", "dsw",
-            "dsv", "dsvw", "dp", "dpw", "dpv", "dpvw", "dps", "dpsw", "dpsv", "dpsvw",
-            "dk", "dkw", "dkv", "dkvw", "dks", "dksw", "dksv", "dksvw", "dkp", "dkpw",
-            "dkpv", "dkpvw", "dkps", "dkpsw", "dkpsv", "dkpsvw", "dj", "djw", "djv", "djvw",
-            "djs", "djsw", "djsv", "djsvw", "djp", "djpw", "djpv", "djpvw", "djps", "djpsw",
-            "djpsv", "djpsvw", "djk", "djkw", "djkv", "djkvw", "djks", "djksw", "djksv", "djksvw",
-            "djkp", "djkpw", "djkpv", "djkpvw", "djkps", "djkpsw", "djkpsv", "djkpsvw"};
+            "d", "j", "jd", "jk", "jkd", "jko", "jkod", "jo", "jod", "jp", "jpd", "jpk", "jpkd", "jpko", "jpkod",
+            "jpo", "jpod", "jps", "jpsd", "jpsk", "jpskd", "jpsko", "jpskod", "jpso", "jpsod", "jpv", "jpvd", "jpvk",
+            "jpvkd", "jpvko", "jpvkod", "jpvo", "jpvod", "jpvs", "jpvsd", "jpvsk", "jpvskd", "jpvsko", "jpvskod",
+            "jpvso", "jpvsod", "jpw", "jpwd", "jpwk", "jpwkd", "jpwko", "jpwkod", "jpwo", "jpwod", "jpws", "jpwsd",
+            "jpwsk", "jpwskd", "jpwsko", "jpwskod", "jpwso", "jpwsod", "jpwv", "jpwvd", "jpwvk", "jpwvkd", "jpwvko",
+            "jpwvkod", "jpwvo", "jpwvod", "jpwvs", "jpwvsd", "jpwvsk", "jpwvskd", "jpwvsko", "jpwvskod", "jpwvso",
+            "jpwvsod", "js", "jsd", "jsk", "jskd", "jsko", "jskod", "jso", "jsod", "jv", "jvd", "jvk", "jvkd", "jvko",
+            "jvkod", "jvo", "jvod", "jvs", "jvsd", "jvsk", "jvskd", "jvsko", "jvskod", "jvso", "jvsod", "jw", "jwd",
+            "jwk", "jwkd", "jwko", "jwkod", "jwo", "jwod", "jws", "jwsd", "jwsk", "jwskd", "jwsko", "jwskod", "jwso",
+            "jwsod", "jwv", "jwvd", "jwvk", "jwvkd", "jwvko", "jwvkod", "jwvo", "jwvod", "jwvs", "jwvsd", "jwvsk",
+            "jwvskd", "jwvsko", "jwvskod", "jwvso", "jwvsod", "k", "kd", "ko", "kod", "o", "od", "p", "pd", "pk",
+            "pkd", "pko", "pkod", "po", "pod", "ps", "psd", "psk", "pskd", "psko", "pskod", "pso", "psod", "pv",
+            "pvd", "pvk", "pvkd", "pvko", "pvkod", "pvo", "pvod", "pvs", "pvsd", "pvsk", "pvskd", "pvsko", "pvskod",
+            "pvso", "pvsod", "pw", "pwd", "pwk", "pwkd", "pwko", "pwkod", "pwo", "pwod", "pws", "pwsd", "pwsk",
+            "pwskd", "pwsko", "pwskod", "pwso", "pwsod", "pwv", "pwvd", "pwvk", "pwvkd", "pwvko", "pwvkod", "pwvo",
+            "pwvod", "pwvs", "pwvsd", "pwvsk", "pwvskd", "pwvsko", "pwvskod", "pwvso", "pwvsod", "s", "sd", "sk",
+            "skd", "sko", "skod", "so", "sod", "v", "vd", "vk", "vkd", "vko", "vkod", "vo", "vod", "vs", "vsd",
+            "vsk", "vskd", "vsko", "vskod", "vso", "vsod", "w", "wd", "wk", "wkd", "wko", "wkod", "wo", "wod",
+            "ws", "wsd", "wsk", "wskd", "wsko", "wskod", "wso", "wsod", "wv", "wvd", "wvk", "wvkd", "wvko", "wvkod",
+            "wvo", "wvod", "wvs", "wvsd", "wvsk", "wvskd", "wvsko", "wvskod", "wvso", "wvsod"};
     private static String[] normModesText = { "x" };
-    private static String[] normModesDefault = { "djkpsvw" };
-    private static int[] ngramSizesAll = { 1, 2, 3, 4, 5 };
+    private static String[] normModesDefault = { "djkopsvw" };
+    private static int[] ngramSizesAll = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
     private static int[] ngramSizesText = { 1 };
     private static int[] ngramSizeDefault = { 15 };
 
-//    private static double[] dfCapNorm = { 10, 20, 40 };
-//    private static double[] dfCapOrig = { 20, 40, 60, 80 };
-    private static double[] dfCapNorm = { 5 };
-    private static double[] dfCapOrig = { 20 };
+    private static double[] dfCapNorm = { 5, 10, 20 };
+    private static double[] dfCapOrig = { 10, 20, 40, 60 };
+//    private static double[] dfCapNorm = { 5 };
+//    private static double[] dfCapOrig = { 20 };
 
     private static String inputDir;
     private static String workingDir;
