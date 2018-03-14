@@ -43,10 +43,10 @@ public class Experiment {
     private static int[] ngramSizesText = { 1 };
     private static int[] ngramSizeDefault = { 15 };
 
-    private static double[] dfCapNorm = { 5, 10, 20 };
-    private static double[] dfCapOrig = { 10, 20, 40, 60 };
-//    private static double[] dfCapNorm = { 5 };
-//    private static double[] dfCapOrig = { 20 };
+//    private static double[] dfCapNorm = { 5, 10, 20 };
+//    private static double[] dfCapOrig = { 10, 20, 40, 60 };
+    private static double[] dfCapNorm = { 5 };
+    private static double[] dfCapOrig = { 20 };
 
     private static String inputDir;
     private static String workingDir;
@@ -152,10 +152,7 @@ public class Experiment {
                 + " = " + bestResults.get(0).getSetting() + "," + bestResults.get(0).getValue());
 
         String qr = "no_qr";
-        if (!queryReduction) {
-            System.out.println("No query reduction");
-        } else {
-            System.out.println("Query reduction enabled");
+        if (queryReduction) {
             qr = "qr";
         }
 

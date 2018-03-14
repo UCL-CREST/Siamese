@@ -41,6 +41,7 @@ public class Siamese {
     private String subInputFolder;
     private String normMode;
     private NormalizerMode modes = new NormalizerMode();
+    private NormalizerMode t2modes = new NormalizerMode();
     private int ngramSize;
     private int t2ngramSize;
     private boolean isNgram;
@@ -122,9 +123,6 @@ public class Siamese {
             outputFolder = prop.getProperty("outputFolder");
 
             normMode = prop.getProperty("normMode");
-            // set the normalisation + tokenization mode
-            NormalizerMode tknzMode = new NormalizerMode();
-            modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
 
             isNgram = Boolean.parseBoolean(prop.getProperty("isNgram"));
             ngramSize = Integer.parseInt(prop.getProperty("t3ngramSize"));
@@ -271,17 +269,16 @@ public class Siamese {
         NormalizerMode tmode = new NormalizerMode();
         char[] noNormMode = {'x'};
         tmode.setTokenizerMode(noNormMode);
-
         origNormalizer = initialiseNormalizer(tmode);
         origTokenizer = initialiseTokenizer(origNormalizer);
 
-        NormalizerMode t2mode = new NormalizerMode();
         char[] t2NormMode = {'s', 'v', 'w'};
-        t2mode.setTokenizerMode(t2NormMode);
-
-        t2Normalizer = initialiseNormalizer(t2mode);
+        t2modes = NormalizerMode.setTokenizerMode(t2NormMode);
+        t2Normalizer = initialiseNormalizer(t2modes);
         t2Tokenizer = initialiseTokenizer(t2Normalizer);
 
+        // set the normalisation + tokenization mode
+        modes = NormalizerMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
         normalizer = initialiseNormalizer(modes);
         tokenizer = initialiseTokenizer(normalizer);
     }
@@ -452,10 +449,14 @@ public class Siamese {
             for (String normMode : normModes) {
                 // reset the modes before setting it again
                 modes.reset();
-                // set the normalisation + tokenization mode
-                NormalizerMode tknzMode = new NormalizerMode();
-                modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
+                t2modes = NormalizerMode.setTokenizerMode("svw".toLowerCase().toCharArray());
                 prepareTokenizers();
+                // set the normalisation + tokenization mode
+                // override the normalizers for the experiment
+                modes = NormalizerMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
+                normalizer = initialiseNormalizer(modes);
+                tokenizer = initialiseTokenizer(normalizer);
+
                 String indexPrefix = this.index;
                 for (int ngramSize : ngramSizes) {
                     for (double dfCapNorm: dfCapNorms) {
@@ -475,8 +476,11 @@ public class Siamese {
                                 System.err.println("Cannot create index: " + index);
                                 System.exit(-1);
                             }
+
                             // initialise the ngram generator
                             ngen = new nGramGenerator(ngramSize);
+                            t2Ngen = new nGramGenerator(this.t2ngramSize);
+
                             totalDocuments = (int) insert(0);
                             if (totalDocuments != 0) {
                                 // if ok, refresh the index, then search
@@ -580,7 +584,7 @@ public class Siamese {
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // Create Document object and put in an array list
                                 String normSource = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
-                                String t2Source = tokenize(method.getSrc(), tokenizer, isNgram, t2Ngen);
+                                String t2Source = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
                                 String tokenizedSource = tokenize(method.getSrc(), origTokenizer, false, ngen);
                                 String finalUrl = this.url;
                                 if (!finalUrl.equals("none")) {
@@ -753,9 +757,6 @@ public class Siamese {
                                 q.setEndline(method.getEndLine());
                                 outToFile += formatter.format(q, prefixToRemove, license);
 
-                                NormalizerMode tmode = new NormalizerMode();
-                                char[] noNormMode = {'x'};
-                                tmode.setTokenizerMode(noNormMode);
                                 origQuery = tokenize(method.getSrc(), origTokenizer, false, ngen);
                                 t2Query = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
                                 query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
@@ -1216,5 +1217,63 @@ public class Siamese {
 
     public boolean getComputeSimilarity() {
         return this.computeSimilarity;
+    }
+
+    public void indexGitHub() throws Exception {
+        if (this.inputFolder.endsWith("/"))
+            this.inputFolder = StringUtils.chop(this.inputFolder);
+        if (this.subInputFolder.endsWith("/"))
+            this.subInputFolder = StringUtils.chop(this.subInputFolder);
+
+        this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
+        System.out.println("Indexing: " + this.inputFolder);
+        this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
+
+        File f = new File(this.inputFolder + "/LICENSE.txt");
+        if (!f.exists() || f.isDirectory()) {
+            f = new File(this.inputFolder + "/LICENSE");
+        }
+
+        if (f.exists() && !f.isDirectory()) {
+            String[] lines = FileUtils.readFileToString(f).split("\n");
+            for (String line : lines) {
+                String license = LicenseExtractor.extractLicenseWithRegExp(line);
+                if (!license.equals("unknown")) {
+                    this.fileLicense = license;
+                    break;
+                }
+            }
+        }
+
+        // initialise the n-gram generator
+        ngen = new nGramGenerator(ngramSize);
+        // default similarity function is TFIDF
+        String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
+        String mappingStr = IndexSettings.TFIDF.mappingStr;
+
+        try {
+            if (siameseClient != null) {
+                if (command.toLowerCase().equals("index")) {
+                    if (recreateIndexIfExists) {
+                        createIndex(indexSettings, mappingStr);
+                    }
+                    long startingId = 0;
+                    if (!recreateIndexIfExists && doesIndexExist()) {
+                        startingId = getMaxId(index) + 1;
+                    }
+                    long insertSize = insert(startingId);
+                    if (insertSize != 0) {
+                        // if ok, refresh the index, then search
+                        es.refresh(index);
+                    } else {
+                        System.out.println("ERROR: Indexed zero file. Please check!");
+                    }
+                }
+            } else {
+                System.out.println("ERROR: cannot create Elasticsearch client ... ");
+            }
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }
