@@ -61,6 +61,21 @@ public class JavaTokenizer implements Tokenizer {
     }
 
     @Override
+    public ArrayList<String> tokenizeLine(Reader reader) throws Exception {
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        ArrayList<String> tLines = new ArrayList<>();
+        String line;
+        while((line =bufferedReader.readLine())!=null){
+            ArrayList<String> l = tokenize(line);
+            String[] tline = l.toArray(new String[l.size()]);
+            String str = String.join("", tline);
+            tLines.add(str);
+        }
+
+        return tLines;
+    }
+
+    @Override
     public ArrayList<String> tokenize(File f) throws Exception {
         String code = FileUtils.readFileToString(f);
         return tokenize(code);
@@ -77,5 +92,8 @@ public class JavaTokenizer implements Tokenizer {
 		return tokenize(new StringReader(input));
 	}
 
-
+    @Override
+    public ArrayList<String> getTokenLinesFromString(String input) throws Exception {
+        return tokenizeLine(new StringReader(input));
+    }
 }

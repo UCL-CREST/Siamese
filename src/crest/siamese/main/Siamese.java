@@ -59,6 +59,7 @@ public class Siamese {
     private boolean queryReduction;
     private double qrPercentileNorm;
     private double qrPercentileOrig;
+    private double qrPercentileT2;
     private boolean recreateIndexIfExists;
     private String parseMode;
     private String cloneClusterFile;
@@ -75,6 +76,7 @@ public class Siamese {
     private int bulkSize;
     private int normBoost;
     private int origBoost;
+    private int t2Boost;
     private String methodParserName;
     private String tokenizerName;
     private String normalizerName;
@@ -155,8 +157,10 @@ public class Siamese {
             this.queryReduction = Boolean.parseBoolean(prop.getProperty("queryReduction"));
             this.qrPercentileNorm = Double.parseDouble(prop.getProperty("QRPercentileNorm"));
             this.qrPercentileOrig = Double.parseDouble(prop.getProperty("QRPercentileOrig"));
+            this.qrPercentileT2 = Double.parseDouble(prop.getProperty("QRPercentileT2"));
             this.normBoost = Integer.parseInt(prop.getProperty("normBoost"));
             this.origBoost = Integer.parseInt(prop.getProperty("origBoost"));
+            this.t2Boost = Integer.parseInt(prop.getProperty("t2Boost"));
 
             // multi-representation
             this.multiRep = Boolean.parseBoolean(prop.getProperty("multirep"));
@@ -584,8 +588,9 @@ public class Siamese {
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // Create Document object and put in an array list
                                 String normSource = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
-                                String t2Source = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
+                                String t2Source = tokenizeLine(method.getSrc(), t2Tokenizer);
                                 String tokenizedSource = tokenize(method.getSrc(), origTokenizer, false, ngen);
+
                                 String finalUrl = this.url;
                                 if (!finalUrl.equals("none")) {
                                     String prefix = inputFolder;
@@ -601,7 +606,8 @@ public class Siamese {
                                         normSource,
                                         t2Source,
                                         tokenizedSource,
-                                        method.getSrc(),
+//                                        method.getSrc(),
+                                        "", // TODO: insert empty original code for performance now.
                                         license,
                                         finalUrl);
                                 // add document to array
@@ -745,7 +751,7 @@ public class Siamese {
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
-
+                            methodCount++;
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 /* TODO: fix this some time. It's weird to have a list with only a single object. */
@@ -758,16 +764,22 @@ public class Siamese {
                                 outToFile += formatter.format(q, prefixToRemove, license);
 
                                 origQuery = tokenize(method.getSrc(), origTokenizer, false, ngen);
-                                t2Query = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
+                                t2Query = tokenizeLine(method.getSrc(), t2Tokenizer);
                                 query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
+
+//                                System.out.println(origQuery);
+//                                System.out.println(t2Query);
+//                                System.out.println(query);
 
                                 // query size limit is enforced
                                 if (queryReduction) {
                                     long docCount = getIndicesStats();
                                     query = reduceQuery(query, "src", this.qrPercentileNorm * docCount / 100);
+                                    t2Query = reduceQuery(t2Query, "t2src", this.qrPercentileT2 * docCount / 100);
                                     origQuery = reduceQuery(origQuery, "tokenizedsrc", this.qrPercentileOrig * docCount / 100);
                                     if (isPrint) {
                                         System.out.println("NQ," + this.qrPercentileNorm * docCount / 100 + "," + methodCount + " : " + query);
+                                        System.out.println("T2Q," + this.qrPercentileT2 * docCount / 100 + "," + methodCount + " : " + t2Query);
                                         System.out.println("OQ," + this.qrPercentileOrig * docCount / 100 + "," + methodCount + " : " + origQuery);
                                     }
                                 }
@@ -779,7 +791,7 @@ public class Siamese {
 
                                 // search for results depending on the MR setting
                                 if (this.multiRep)
-                                    results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
+                                    results = es.search(index, type, origQuery, query, t2Query, origBoost, normBoost, t2Boost, isPrint, isDFS, offset, size);
                                 else
                                     results = es.search(index, type, query, isPrint, isDFS, offset, size);
 
@@ -789,7 +801,6 @@ public class Siamese {
                                 } else {
                                     outToFile += formatter.format(results, prefixToRemove);
                                 }
-                                methodCount++;
                             }
                         }
                     } /* else {
@@ -986,6 +997,14 @@ public class Siamese {
             src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
         else
             src = printArray(tokens, false);
+        return src;
+    }
+
+    private String tokenizeLine(String sourcecode, Tokenizer tokenizer) throws Exception {
+        String src;
+        // generate tokens
+        ArrayList<String> tokens = tokenizer.getTokenLinesFromString(sourcecode);
+        src = printArray(tokens, false);
         return src;
     }
 

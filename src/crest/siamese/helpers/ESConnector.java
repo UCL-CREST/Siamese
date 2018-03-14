@@ -244,8 +244,10 @@ public class ESConnector {
             String type,
             String origQuery,
             String query,
+            String t2Query,
             int origBoost,
             int normBoost,
+            int t2Boost,
             boolean isPrint,
             boolean isDFS,
             int resultOffset,
@@ -272,6 +274,13 @@ public class ESConnector {
                         QueryBuilders.matchQuery("tokenizedsrc", origQuery)
                                 .boost(origBoost)
                 )
+				.should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
+						QueryBuilders.matchQuery("t2src", t2Query)
+								.boost(t2Boost)
+				)
                 .should(
 //                		QueryBuilders.commonTermsQuery("src", query)
 //								.cutoffFrequency(cutoff)
