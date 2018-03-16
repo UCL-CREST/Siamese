@@ -89,6 +89,7 @@ public class NormalizerMode {
                     break;
 				case 'o':
 					modes.setOperator(Settings.Normalize.OPERATOR_NORM_ON);
+					break;
                 case 'x':
                     modes.setWord(Settings.Normalize.WORD_NORM_OFF);
                     modes.setDatatype(Settings.Normalize.DATATYPE_NORM_OFF);
