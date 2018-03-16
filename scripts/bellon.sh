@@ -8,8 +8,8 @@ do
     sconfig="stemp.preperties"
 
     # create the config according the gram size
-    cat $origIndexConfig | sed -e s/ngramSize=1/ngramSize=$i/g > $iconfig
-    cat $origSearchConfig | sed -e s/ngramSize=1/ngramSize=$i/g > $sconfig
+    cat $origIndexConfig | sed -e s/t3ngramSize=1/t3ngramSize=$i/g > $iconfig
+    cat $origSearchConfig | sed -e s/t3ngramSize=1/t3ngramSize=$i/g > $sconfig
 
     # index and search
     mvn exec:java -Dexec.mainClass=crest.siamese.main.Main -Dexec.args="-cf $iconfig"
