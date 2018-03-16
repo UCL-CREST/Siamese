@@ -75,7 +75,7 @@ public class Evaluator {
     }
 
     public double evaluateARP(String outputFile, int r) {
-        System.out.println("Evaluating r-precision ...");
+//        System.out.println("Evaluating r-precision ...");
         double arp = 0.0;
 
         try {
@@ -130,7 +130,7 @@ public class Evaluator {
             // calculate average r-precision
             arp = sumRPrec/noOfQueries;
             System.out.println("No. of processed queries = " + noOfQueries);
-            System.out.println("ARP = " + arp + "\n");
+            System.out.println("ARP = " + arp);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -139,7 +139,7 @@ public class Evaluator {
     }
 
     public double evaluateMAP(String outputFile, long size) {
-        System.out.println("Evaluating MAP ...");
+//        System.out.println("Evaluating MAP ...");
         String mapToPrint = "";
         double map = 0.0;
 
@@ -202,7 +202,7 @@ public class Evaluator {
             // calculate MAP
             map = sumAvgPrec/noOfQueries;
             System.out.println("No. of processed queries = " + noOfQueries);
-            System.out.println("MAP = " + map + "\n");
+            System.out.println("MAP = " + map);
 
         } catch (IOException e) {
             e.printStackTrace();

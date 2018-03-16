@@ -36,8 +36,8 @@ public class MyUtils {
                 fw = new FileWriter(location + "/" + filename, isAppend);
                 bw = new BufferedWriter(fw);
                 bw.write(content);
-                if (!isAppend)
-                    System.out.println("Saved as: " + filename);
+//                if (!isAppend)
+//                    System.out.println("Saved as: " + filename);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

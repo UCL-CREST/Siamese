@@ -43,11 +43,9 @@ public class Siamese {
     private NormalizerMode modes = new NormalizerMode();
     private NormalizerMode t2modes = new NormalizerMode();
     private int ngramSize;
-    private int t2ngramSize;
     private boolean isNgram;
     private boolean isPrint;
     private nGramGenerator ngen;
-    private nGramGenerator t2Ngen;
     private boolean isDFS;
     private String outputFolder;
     private boolean writeToFile;
@@ -127,8 +125,7 @@ public class Siamese {
             normMode = prop.getProperty("normMode");
 
             isNgram = Boolean.parseBoolean(prop.getProperty("isNgram"));
-            ngramSize = Integer.parseInt(prop.getProperty("t3ngramSize"));
-            t2ngramSize = Integer.parseInt(prop.getProperty("t2ngramSize"));
+            ngramSize = Integer.parseInt(prop.getProperty("ngramSize"));
             isPrint = Boolean.parseBoolean(prop.getProperty("isPrint"));
             isDFS = Boolean.parseBoolean(prop.getProperty("dfs"));
             writeToFile = Boolean.parseBoolean(prop.getProperty("writeToFile"));
@@ -317,7 +314,6 @@ public class Siamese {
 
         // initialise the n-gram generator
         ngen = new nGramGenerator(ngramSize);
-        t2Ngen = new nGramGenerator(t2ngramSize);
 
         // default similarity function is TFIDF
         String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
@@ -433,22 +429,16 @@ public class Siamese {
             double[] dfCapNorms,
             double[] dfCapOrigs,
             String cloneClusterFilePrefix) {
-
         this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.parseMode + ".csv";
-
         // create a connector
         es = new ESConnector(server);
-
         ArrayList<EvalResult> resultSet = new ArrayList<>();
-
         // tries to delete the combination results of all settings if the file exist.
         // we're gonna generate this from the experiment.
         File allErrorMeasureResults = new File("all_" + this.errMeasure + ".csv");
         if (allErrorMeasureResults.exists())
             allErrorMeasureResults.delete();
-
         try {
-
             es.startup();
             for (String normMode : normModes) {
                 // reset the modes before setting it again
@@ -460,7 +450,6 @@ public class Siamese {
                 modes = NormalizerMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
                 normalizer = initialiseNormalizer(modes);
                 tokenizer = initialiseTokenizer(normalizer);
-
                 String indexPrefix = this.index;
                 for (int ngramSize : ngramSizes) {
                     for (double dfCapNorm: dfCapNorms) {
@@ -480,11 +469,8 @@ public class Siamese {
                                 System.err.println("Cannot create index: " + index);
                                 System.exit(-1);
                             }
-
                             // initialise the ngram generator
                             ngen = new nGramGenerator(ngramSize);
-                            t2Ngen = new nGramGenerator(this.t2ngramSize);
-
                             totalDocuments = (int) insert(0);
                             if (totalDocuments != 0) {
                                 // if ok, refresh the index, then search
@@ -514,7 +500,6 @@ public class Siamese {
                             }
                             // restore index name
                             this.index = indexPrefix;
-
                         }
                     }
                 }
@@ -523,7 +508,6 @@ public class Siamese {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return resultSet;
     }
 
@@ -540,7 +524,7 @@ public class Siamese {
         // method counter
         long count = 0;
         int fileCount = 0;
-        System.out.println("Found " + listOfFiles.size() + " files.");
+        System.out.println("Indexing Phase: found " + listOfFiles.size() + " files.");
         for (File file : listOfFiles) {
             try {
                 String license = "none";
@@ -576,7 +560,6 @@ public class Siamese {
                             license = this.fileLicense;
                         }
                     }
-
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
@@ -587,7 +570,6 @@ public class Siamese {
                                 String t2Source = tokenizeLine(method.getSrc(), t2Tokenizer);
                                 String tokenizedSource = tokenize(method.getComment() + " " +
                                         method.getSrc(), origTokenizer, false, ngen);
-
                                 String finalUrl = this.url;
                                 if (!finalUrl.equals("none")) {
                                     String prefix = inputFolder;
@@ -617,7 +599,6 @@ public class Siamese {
                     System.out.println("ERROR: error while extracting methods.");
                     e.printStackTrace();
                 }
-
                 if (this.indexingMode.equals(Settings.IndexingMode.SEQUENTIAL)) {
                     try {
                         isIndexed = es.sequentialInsert(index, type, docArray);
@@ -626,11 +607,10 @@ public class Siamese {
                         System.exit(0);
                     }
                     // something wrong with indexing, return false
-                    if (!isIndexed)
+                    if (!isIndexed) {
                         throw new Exception("Cannot insert docId " + count + " in sequential mode");
-                    else {
-                        // reset the array list
-                        docArray.clear();
+                    } else {
+                        docArray.clear(); // reset the array list
                     }
                 } else if (this.indexingMode.equals(Settings.IndexingMode.BULK)) {
                     // index every N docs (bulk insertion mode)
@@ -645,7 +625,6 @@ public class Siamese {
                         }
                     }
                 }
-
                 if (fileCount % printEvery == 0) {
                     double percent = (double) fileCount * 100 / listOfFiles.size();
                     DecimalFormat df = new DecimalFormat("#.00");
@@ -656,7 +635,6 @@ public class Siamese {
                 System.out.println("ERROR: error while indexing a file: " + file.getAbsolutePath() + ". Skip.");
             }
         }
-
         // the last batch
         if (this.indexingMode.equals(Settings.IndexingMode.BULK) && docArray.size() != 0) {
             isIndexed = es.bulkInsert(index, type, docArray);
@@ -674,8 +652,7 @@ public class Siamese {
                     + " [" + df.format(percent) + "%] documents (" + count + " methods).");
         }
         // successfully indexed, return true
-        System.out.println("Successfully indexed documents.");
-
+//        System.out.println("Successfully indexed documents.");
         return count;
     }
 
@@ -685,13 +662,9 @@ public class Siamese {
             int size,
             boolean queryReduction,
             OutputFormatter formatter) throws Exception {
-
         String qr = "no_qr";
-        if (queryReduction) {
-            qr = "qr";
-        }
+        if (queryReduction) qr = "qr";
         String outToFile = "";
-
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-S");
         Date dateobj = new Date();
         String outfilePath = outputFolder + "/" + index + "_" + qr + "_" + df.format(dateobj);
@@ -700,13 +673,11 @@ public class Siamese {
         else
             outfilePath += ".xml";
         File outfile = new File(outfilePath);
-
         // if file doesn't exists, then create it
         boolean isCreated = false;
         if (!outfile.exists()) {
             isCreated = outfile.createNewFile();
         }
-
         if (isCreated) {
             FileWriter fw = new FileWriter(outfile.getAbsoluteFile(), true);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -715,17 +686,14 @@ public class Siamese {
             extensions[0] = extension;
             File folder = new File(inputFolder);
             List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
-            System.out.println("Found: " + listOfFiles.size() + " files.");
-
+            System.out.println("Querying Phase: found " + listOfFiles.size() + " files.");
             int count = 0;
             int methodCount = 0;
-
             // reset the output buffer
             outToFile = "";
             if (formatter.getFormat().equals("gcf")) {
                 outToFile += "<CloneClasses>\n";
             }
-
             for (File file : listOfFiles) {
                 if (isPrint)
                     System.out.println(count + ": " + file.getAbsolutePath());
@@ -739,9 +707,7 @@ public class Siamese {
                 try {
                     methodList = methodParser.parseMethods();
                     String license = methodParser.getLicense();
-
                     ArrayList<Document> results = new ArrayList<>();
-
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
@@ -757,30 +723,34 @@ public class Siamese {
                                 q.setEndline(method.getEndLine());
                                 outToFile += formatter.format(q, prefixToRemove, license);
 
-                                origQuery = tokenize(method.getSrc(), origTokenizer, false, ngen);
-                                t2Query = tokenizeLine(method.getSrc(), t2Tokenizer);
-                                query = tokenize(method.getComment() + " " + method.getSrc(), tokenizer, isNgram, ngen);
-
-//                                System.out.println(origQuery);
-//                                System.out.println(t2Query);
-//                                System.out.println(query);
-
                                 // query size limit is enforced
                                 if (queryReduction) {
                                     long docCount = getIndicesStats();
-                                    query = reduceQuery(query, "src", this.qrPercentileNorm * docCount / 100);
-                                    t2Query = reduceQuery(t2Query, "t2src", this.qrPercentileT2 * docCount / 100);
-                                    origQuery = reduceQuery(origQuery, "tokenizedsrc", this.qrPercentileOrig * docCount / 100);
+                                    query = reduceQuery(tokenizeAsArray(method.getSrc(), tokenizer, isNgram, ngen),
+                                            "src", this.qrPercentileNorm * docCount / 100);
+                                    t2Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t2Tokenizer),
+                                            "t2src", this.qrPercentileT2 * docCount / 100);
+                                    origQuery = reduceQuery(tokenizeAsArray(method.getComment() + " " +
+                                                    method.getSrc(), origTokenizer, false, ngen),
+                                            "tokenizedsrc",
+                                            this.qrPercentileOrig * docCount / 100);
                                     if (isPrint) {
-                                        System.out.println("NQ," + this.qrPercentileNorm * docCount / 100 + "," + methodCount + " : " + query);
-                                        System.out.println("T2Q," + this.qrPercentileT2 * docCount / 100 + "," + methodCount + " : " + t2Query);
-                                        System.out.println("OQ," + this.qrPercentileOrig * docCount / 100 + "," + methodCount + " : " + origQuery);
+                                        System.out.println("NQ," + this.qrPercentileNorm * docCount / 100 + "," +
+                                                methodCount + " : " + query);
+                                        System.out.println("T2Q," + this.qrPercentileT2 * docCount / 100 + "," +
+                                                methodCount + " : " + t2Query);
+                                        System.out.println("OQ," + this.qrPercentileOrig * docCount / 100 + "," +
+                                                methodCount + " : " + origQuery);
                                     }
+                                } else {
+                                    query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
+                                    t2Query = tokenizeLine(method.getSrc(), t2Tokenizer);
+                                    origQuery = tokenize(method.getComment() + " " + method.getSrc(),
+                                            origTokenizer, false, ngen);
                                 }
-
-//                                // TODO: only for experiment. Remove after finished.
-                                origQuery = "";
-                                t2Query = "";
+//                                // TODO: only for n-gram size experiment. Remove after finished.
+//                                origQuery = "";
+//                                t2Query = "";
 //                                System.out.println(query);
 //                                System.out.println(t2Query);
 //                                System.out.println(origQuery);
@@ -799,54 +769,27 @@ public class Siamese {
                                 }
                             }
                         }
-                    } /* else {
-                        // check minimum size
-                        if (MyUtils.countLines(file.getAbsolutePath()) >= minCloneLine) {
-                            origQuery = tokenize(file, origTokenizer, false);
-                            query = tokenize(file, tokenizer, isNgram);
-                            // search for results depending on the MR setting
-                            if (this.multiRep)
-                                results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
-                            else
-                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
-                            outToFile += file.getAbsolutePath().replace(prefixToRemove, "") +
-                                    "_noMethod#-1#-1#none,";
-                            if (this.computeSimilarity) {
-                                int[] sim = computeSimilarity(origQuery, results);
-                                outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
-                            } else {
-                                outToFile += formatter.format(results, prefixToRemove);
-                            }
-                            outToFile += "\n";
-                        }
-                    } */
-
+                    }
                     count++;
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());
-//                    System.out.println("ERROR: file " + count +" generates query term size exceeds 4096 (too big).");
                 }
-
                 if (count % printEvery == 0) {
                     double percent = (double) count * 100 / listOfFiles.size();
                     DecimalFormat percentFormat = new DecimalFormat("#.00");
                     System.out.println("Searched " + count
                             + " [" + percentFormat.format(percent) + "%] documents (" + methodCount + " methods).");
-
                     bw.write(outToFile);
                     // reset the output to print
                     outToFile = "";
                 }
             }
-
             if (formatter.getFormat().equals("gcf")) {
                 outToFile += "</CloneClasses>\n";
             }
             // flush the last part of output
             bw.write(outToFile);
-
             bw.close();
             System.out.println("Searching done for " + count + " files (" + methodCount + " methods after clone size filtering).");
             System.out.println("See output at " + outfile.getAbsolutePath());
@@ -866,18 +809,18 @@ public class Siamese {
         return simResults;
     }
 
-    private String reduceQuery(String query, String field, double limit) {
+    private String reduceQuery(ArrayList<String> query, String field, double limit) {
         // find the top-N rare terms in the query
-        String tmpQuery = query;
+        ArrayList<String> tmpQuery = query;
         // clear the query
-        query = "";
+        String queryStr = "";
         ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, field, tmpQuery);
         for (int i=0; i<sortedTerms.size(); i++) {
             if (sortedTerms.get(i).getFreq() <= limit) {
-                query += sortedTerms.get(i).getTerm() + " ";
+                queryStr += sortedTerms.get(i).getTerm() + " ";
             }
         }
-        return query;
+        return queryStr;
     }
 
 
@@ -984,16 +927,25 @@ public class Siamese {
         return src;
     }
 
-    private String tokenize(String sourcecode, Tokenizer tokenizer, boolean isNgram, nGramGenerator ngen) throws Exception {
-        String src;
+    private String tokenize(String sourcecode, Tokenizer tokenizer,
+                            boolean isNgram, nGramGenerator ngen) throws Exception {
         // generate tokens
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
         // enter ngram mode
         if (isNgram)
-            src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
+            return printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
         else
-            src = printArray(tokens, false);
-        return src;
+            return printArray(tokens, false);
+    }
+
+    private ArrayList<String> tokenizeAsArray(String sourcecode, Tokenizer tokenizer,
+                                              boolean isNgram, nGramGenerator ngen) throws Exception {
+        // generate tokens
+        ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
+        if (isNgram)
+            return ngen.generateNGramsFromJavaTokens(tokens);
+        else
+            return tokens;
     }
 
     private String tokenizeLine(String sourcecode, Tokenizer tokenizer) throws Exception {
@@ -1002,6 +954,13 @@ public class Siamese {
         ArrayList<String> tokens = tokenizer.getTokenLinesFromString(sourcecode);
         src = printArray(tokens, false);
         return src;
+    }
+
+    private ArrayList<String> tokenizeLineAsArray(String sourcecode, Tokenizer tokenizer) throws Exception {
+        String src;
+        // generate tokens
+        ArrayList<String> tokens = tokenizer.getTokenLinesFromString(sourcecode);
+        return tokens;
     }
 
     public long getIndicesStats() {
@@ -1076,12 +1035,12 @@ public class Siamese {
                 output += freqArr[i] + "\n";
                 if (i > 0 && i % 10000 == 0) {
 //                    System.out.println("Saving " + (i) + " terms.");
-                    MyUtils.writeToFile("./",outputFileName, output, true);
+                    MyUtils.writeToFile("./",outputFileName, output, false);
                     output = "";
                 }
             }
             // write the rest to the file
-            MyUtils.writeToFile("./",outputFileName, output, true);
+            MyUtils.writeToFile("./",outputFileName, output, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1093,16 +1052,13 @@ public class Siamese {
      * @param terms query containing search terms
      * @return selected top-selectionRatio terms
      */
-    private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String field, String terms) {
-
+    private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String field, ArrayList<String> terms) {
         String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
         ArrayList<JavaTerm> selectedTermsArray = new ArrayList<>();
-
         try {
             IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
-            String[] termsArr = terms.split(" ");
-            for (String term: termsArr) {
+            for (String term: terms) {
                 // TODO: get rid of the blank term (why it's blank?)
                 if (!term.equals("")) {
                     Term t = new Term(field, term);
@@ -1112,13 +1068,11 @@ public class Siamese {
                         selectedTermsArray.add(newTerm);
                 }
             }
-
             /* copied from https://stackoverflow.com/questions/18441846/how-to-sort-an-arraylist-in-java */
             Collections.sort(selectedTermsArray);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return selectedTermsArray;
     }
 
