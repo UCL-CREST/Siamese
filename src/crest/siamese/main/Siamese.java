@@ -553,11 +553,8 @@ public class Siamese {
                     System.out.println(fileCount + ": " + filePath);
                 fileCount++;
                 // parse each file into method (if possible)
-                MethodParser methodParser = initialiseMethodParser(
-                        file.getAbsolutePath(),
-                        prefixToRemove,
-                        parseMode,
-                        isPrint);
+                MethodParser methodParser = initialiseMethodParser(file.getAbsolutePath(),
+                        prefixToRemove, parseMode, isPrint);
                 ArrayList<Method> methodList;
                 try {
                     methodList = methodParser.parseMethods();
@@ -573,12 +570,11 @@ public class Siamese {
                             default:
                                 license = "none";
                         }
-                    }
-
-                    // level is in the file in the root, use it if cannot find localised license
-                    if ((license.equals("unknown") || license.equals("none"))
-                            && !this.fileLicense.equals("unknown")) {
-                        license = this.fileLicense;
+                        // level is in the file in the root, use it if cannot find localised license
+                        if ((license.equals("unknown") || license.equals("none"))
+                                && !this.fileLicense.equals("unknown")) {
+                            license = this.fileLicense;
+                        }
                     }
 
                     // check if there's a method
@@ -589,7 +585,8 @@ public class Siamese {
                                 // Create Document object and put in an array list
                                 String normSource = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
                                 String t2Source = tokenizeLine(method.getSrc(), t2Tokenizer);
-                                String tokenizedSource = tokenize(method.getSrc(), origTokenizer, false, ngen);
+                                String tokenizedSource = tokenize(method.getComment() + " " +
+                                        method.getSrc(), origTokenizer, false, ngen);
 
                                 String finalUrl = this.url;
                                 if (!finalUrl.equals("none")) {
@@ -733,11 +730,8 @@ public class Siamese {
                 if (isPrint)
                     System.out.println(count + ": " + file.getAbsolutePath());
                 // parse each file into methods (if possible)
-                MethodParser methodParser = initialiseMethodParser(
-                        file.getAbsolutePath(),
-                        prefixToRemove,
-                        parseMode,
-                        isPrint);
+                MethodParser methodParser = initialiseMethodParser(file.getAbsolutePath(),
+                        prefixToRemove, parseMode, isPrint);
                 ArrayList<Method> methodList;
                 String query = "";
                 String origQuery = "";
@@ -765,7 +759,7 @@ public class Siamese {
 
                                 origQuery = tokenize(method.getSrc(), origTokenizer, false, ngen);
                                 t2Query = tokenizeLine(method.getSrc(), t2Tokenizer);
-                                query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
+                                query = tokenize(method.getComment() + " " + method.getSrc(), tokenizer, isNgram, ngen);
 
 //                                System.out.println(origQuery);
 //                                System.out.println(t2Query);
@@ -785,8 +779,10 @@ public class Siamese {
                                 }
 
 //                                // TODO: only for experiment. Remove after finished.
-//                                origQuery = "";
+                                origQuery = "";
+                                t2Query = "";
 //                                System.out.println(query);
+//                                System.out.println(t2Query);
 //                                System.out.println(origQuery);
 
                                 // search for results depending on the MR setting
