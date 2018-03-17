@@ -43,14 +43,16 @@ import static org.elasticsearch.common.xcontent.XContentFactory.*;
 public class ESConnector {
 	private Client client;
 	private String host;
+	private String cluster;
 
-	public ESConnector(String host) {
+	public ESConnector(String host, String cluster) {
 		this.host = host;
+		this.cluster = cluster;
 	}
 
     public Client startup() throws UnknownHostException {
 		org.elasticsearch.common.settings.Settings settings = org.elasticsearch.common.settings.Settings
-				.settingsBuilder().put("cluster.name", "stackoverflow").build();
+				.settingsBuilder().put("cluster.name", cluster).build();
 		// on startup
 		client = TransportClient.builder().settings(settings).build()
 				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), 9300));

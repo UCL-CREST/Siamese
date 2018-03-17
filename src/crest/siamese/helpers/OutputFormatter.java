@@ -70,6 +70,11 @@ public class OutputFormatter {
             }
             sb.append(",");
             return sb.toString();
+        } else if (this.format.equals("csvfline")) {
+            sb.append(query.getFile().replace(".java_", ".java,"));
+            sb.append("," + query.getStartLine() + "," + query.getEndLine());
+            sb.append(",");
+            return sb.toString();
         } else if (this.format.equals("gcf")) {
             sb.append("<Clone>\n");
             sb.append(gcf(query, prefixToRemove));
@@ -90,6 +95,18 @@ public class OutputFormatter {
                 sb.append(d.getFile().replace(prefixToRemove, ""));
                 if (addStartEndLine) {
                     sb.append("#" + d.getStartLine() + "#" + d.getEndLine());
+                }
+                resultCount++;
+            }
+            sb.append("\n");
+            return sb.toString();
+        } else if (this.format.equals("csvfline")) {
+            for (Document d : results) {
+                if (resultCount > 0)
+                    sb.append(","); // add comma in between
+                sb.append(d.getFile().replace(".java_", ".java,"));
+                if (addStartEndLine) {
+                    sb.append("," + d.getStartLine() + "," + d.getEndLine());
                 }
                 resultCount++;
             }
@@ -124,7 +141,23 @@ public class OutputFormatter {
             }
             sb.append("\n");
             return sb.toString();
-        } else if (this.format.equals("gcf")) {
+        } else if (this.format.equals("csvfline")) {
+            for (int i =0; i<results.size(); i++) {
+                Document d = results.get(i);
+                if (resultCount > 0)
+                    sb.append(","); // add comma in between
+                // only add the results that has similarity higher than the threshold
+                if (sim[i] >= threshod) {
+                    sb.append(d.getFile().replace(".java_", ".java,"));
+                    if (addStartEndLine) {
+                        sb.append("," + d.getStartLine() + "," + d.getEndLine() + "," + sim[i]);
+                    }
+                    resultCount++;
+                }
+            }
+            sb.append("\n");
+            return sb.toString();
+        }else if (this.format.equals("gcf")) {
             sb.append(gcf(results, prefixToRemove));
             return sb.toString();
         } else {

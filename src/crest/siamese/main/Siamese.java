@@ -35,6 +35,7 @@ public class Siamese {
 
     private ESConnector es;
     private String server;
+    private String cluster;
     private String index;
     private String type;
     private String inputFolder;
@@ -116,6 +117,7 @@ public class Siamese {
 
             // get the property value and print it out
             server = prop.getProperty("server");
+            cluster = prop.getProperty("cluster");
             index = prop.getProperty("index");
             type = prop.getProperty("type");
             inputFolder = prop.getProperty("inputFolder");
@@ -250,7 +252,7 @@ public class Siamese {
 
     private void connect() {
         // create a connector
-        es = new ESConnector(server);
+        es = new ESConnector(server, cluster);
     }
 
     public void startup() {
@@ -290,7 +292,7 @@ public class Siamese {
             formatter.setFormat("csv");
             formatter.setAddStartEndLine(false);
         } else if (outputFormat.equals("csvfline")) {
-            formatter.setFormat("csv");
+            formatter.setFormat("csvfline");
             formatter.setAddStartEndLine(true);
         } else if (outputFormat.equals("gcf")) {
             formatter.setFormat("gcf");
@@ -369,6 +371,8 @@ public class Siamese {
                 } else if (command.toLowerCase().equals("search")) {
                     if (es.doesIndexExist(this.index)) {
                         OutputFormatter formatter = getOutputFormatter();
+                        // create the output folder if it doesn't exist.
+                        MyUtils.createDir(outputFolder);
                         outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
                     } else {
                         // index does not exist
@@ -430,8 +434,10 @@ public class Siamese {
             double[] dfCapOrigs,
             String cloneClusterFilePrefix) {
         this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.parseMode + ".csv";
+        // create the output folder
+        MyUtils.createDir(outputFolder);
         // create a connector
-        es = new ESConnector(server);
+        es = new ESConnector(server, cluster);
         ArrayList<EvalResult> resultSet = new ArrayList<>();
         // tries to delete the combination results of all settings if the file exist.
         // we're gonna generate this from the experiment.
@@ -668,7 +674,7 @@ public class Siamese {
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-S");
         Date dateobj = new Date();
         String outfilePath = outputFolder + "/" + index + "_" + qr + "_" + df.format(dateobj);
-        if (formatter.getFormat().equals("csv"))
+        if (formatter.getFormat().contains("csv"))
             outfilePath += ".csv";
         else
             outfilePath += ".xml";
@@ -870,7 +876,7 @@ public class Siamese {
                 result.setValue(arp);
                 result.setSetting(outputFile);
             }
-            deleteOutputFile(outputFile);
+//            deleteOutputFile(outputFile);
         } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
             outputFile = search(inputFolder, resultOffset, totalDocuments, queryReduction, formatter);
             double map = evaluator.evaluateMAP(outputFile, totalDocuments);
@@ -881,7 +887,7 @@ public class Siamese {
                 result.setValue(map);
                 result.setSetting(outputFile);
             }
-            deleteOutputFile(outputFile);
+//            deleteOutputFile(outputFile);
         } else {
             System.out.println("ERROR: Invalid evaluation method.");
         }
