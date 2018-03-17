@@ -31,11 +31,10 @@ public class JavaTokenizer implements Tokenizer {
 
     @Override
     public ArrayList<String> tokenize(String s) throws Exception {
-        tokens = new ArrayList<String>();
+        tokens = new ArrayList<>();
         InputStream stream = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
         JavaLexer lexer = new JavaLexer(CharStreams.fromStream(stream, StandardCharsets.UTF_8));
-        List<? extends Token> tokenList;
-        tokenList = lexer.getAllTokens();
+        List<? extends Token> tokenList = lexer.getAllTokens();
         String[] symbols = JavaLexer._SYMBOLIC_NAMES;
         for(Token token : tokenList){
             // normalize the token except white space (skip)
@@ -43,6 +42,7 @@ public class JavaTokenizer implements Tokenizer {
                 tokens.add(normalizer.normalizeAToken(token.getText().trim(), symbols[token.getType()]));
             }
         }
+
         return tokens;
     }
 
@@ -61,6 +61,21 @@ public class JavaTokenizer implements Tokenizer {
     }
 
     @Override
+    public ArrayList<String> tokenizeLine(Reader reader) throws Exception {
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        ArrayList<String> tLines = new ArrayList<>();
+        String line;
+        while((line = bufferedReader.readLine())!=null){
+            ArrayList<String> l = tokenize(line);
+            String[] tline = l.toArray(new String[l.size()]);
+            String str = String.join("", tline);
+            tLines.add(str);
+        }
+
+        return tLines;
+    }
+
+    @Override
     public ArrayList<String> tokenize(File f) throws Exception {
         String code = FileUtils.readFileToString(f);
         return tokenize(code);
@@ -68,8 +83,8 @@ public class JavaTokenizer implements Tokenizer {
 
     @Override
 	public ArrayList<String> getTokensFromFile(String file) throws Exception {
-		FileReader fileReader = new FileReader(file);
-		return tokenize(fileReader);
+        File f = new File(file);
+		return tokenize(f);
 	}
 
     @Override
@@ -77,5 +92,8 @@ public class JavaTokenizer implements Tokenizer {
 		return tokenize(new StringReader(input));
 	}
 
-
+    @Override
+    public ArrayList<String> getTokenLinesFromString(String input) throws Exception {
+        return tokenizeLine(new StringReader(input));
+    }
 }

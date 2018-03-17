@@ -5,6 +5,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.*;
+import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
@@ -135,6 +136,7 @@ public class JavaMethodParser implements MethodParser {
                     "package",
                     "ClassName",
                     "method",
+                    "",
                     content,
                     1,
                     lines,
@@ -169,31 +171,28 @@ public class JavaMethodParser implements MethodParser {
     private class MethodVisitor extends VoidVisitorAdapter {
         @Override
         public void visit(MethodDeclaration n, Object arg) {
-
-            List<Parameter> parameterArrayList = n.getParameters();
+            // TODO: Do we need this?
+//            List<Parameter> parameterArrayList = n.getParameters();
             ArrayList<crest.siamese.document.Parameter> paramsList = new ArrayList<>();
-            for (Parameter p: parameterArrayList) {
-                paramsList.add(
-                        new crest.siamese.document.Parameter(
-                                p.getType().toString(),
-                                p.getNameAsString()));
-            }
+//            for (Parameter p: parameterArrayList) {
+//                paramsList.add(
+//                        new crest.siamese.document.Parameter(
+//                                p.getType().toString(),
+//                                p.getNameAsString()));
+//            }
 
-            // include comments in the indexed code
+            // do not include comments in the indexed code
             PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
-            ppc.setPrintComments(true);
-
-            Method m = new Method(
-                    FILE_PATH.replace(PREFIX_TO_REMOVE, "")
-                    , JAVA_PACKAGE
-                    , JAVA_CLASS
-                    , n.getName().asString()
-                    , n.toString(ppc)
-                    , n.getBegin().get().line
-                    , n.getEnd().get().line
-                    , paramsList
-                    , n.getDeclarationAsString());
-            methodList.add(m);
+            ppc.setPrintComments(false);
+            ppc.setPrintJavaDoc(false);
+            // retrieve the comments separately
+            String comment = retrieveComments(n);
+            int begin = -1;
+            int end = -1;
+            if (n.getBegin().isPresent()) begin = n.getBegin().get().line;
+            if (n.getEnd().isPresent()) end = n.getEnd().get().line;
+            methodList.add(createNewMethod(n.getName().asString(), comment, n.toString(ppc), begin,
+                    end, paramsList, n.getDeclarationAsString()));
             super.visit(n, arg);
         }
     }
@@ -205,32 +204,56 @@ public class JavaMethodParser implements MethodParser {
         @Override
         public void visit(ConstructorDeclaration c, Object arg) {
 
-            List<Parameter> parameterArrayList = c.getParameters();
+//            List<Parameter> parameterArrayList = c.getParameters();
             ArrayList<crest.siamese.document.Parameter> paramsList = new ArrayList<>();
-            for (Parameter p: parameterArrayList) {
-                paramsList.add(
-                        new crest.siamese.document.Parameter(
-                                p.getType().toString(),
-                                p.getNameAsString()));
-            }
+//            for (Parameter p: parameterArrayList) {
+//                paramsList.add(
+//                        new crest.siamese.document.Parameter(
+//                                p.getType().toString(),
+//                                p.getNameAsString()));
+//            }
 
-            // include comments in the indexed code
+            // do not include comments in the indexed code
             PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
-            ppc.setPrintComments(true);
-
-            Method m = new Method(
-                    FILE_PATH.replace(PREFIX_TO_REMOVE, "")
-                    , JAVA_PACKAGE
-                    , JAVA_CLASS
-                    , c.getName().asString()
-                    , c.toString(ppc)
-                    , c.getBegin().get().line
-                    , c.getEnd().get().line
-                    , paramsList
-                    , c.getDeclarationAsString());
-            methodList.add(m);
+            ppc.setPrintComments(false);
+            ppc.setPrintJavaDoc(false);
+            String comment = retrieveComments(c);
+            int begin = -1;
+            int end = -1;
+            if (c.getBegin().isPresent()) begin = c.getBegin().get().line;
+            if (c.getEnd().isPresent()) end = c.getEnd().get().line;
+            methodList.add(createNewMethod(c.getName().asString(), comment, c.toString(ppc), begin,
+                    end, paramsList, c.getDeclarationAsString()));
             super.visit(c, arg);
         }
+    }
+
+    private String concatComments(List<Comment> comments) {
+        String com = "";
+        for (Comment c: comments) {
+            com += "/*" + c.getContent() + "*/";
+        }
+        return com;
+    }
+
+    private String retrieveComments(Node n) {
+        // retrieve the comments separately
+        String commentStr;
+        List<Comment> comments = n.getAllContainedComments();
+        commentStr = concatComments(comments);
+        commentStr += concatComments(n.getOrphanComments());
+        if (n.getComment().isPresent()) {
+            commentStr += "/**" + n.getComment().get().getContent() + "*/";
+        }
+        return commentStr;
+    }
+
+    private Method createNewMethod(String name, String comment, String src, int begin, int end,
+                                   ArrayList<crest.siamese.document.Parameter> paramsList, String declaration) {
+        Method m = new Method(
+                FILE_PATH.replace(PREFIX_TO_REMOVE, "")
+                , JAVA_PACKAGE, JAVA_CLASS, name, comment, src, begin, end, paramsList, declaration);
+        return m;
     }
 
     public void printMethods(String javaFile) throws IOException {
