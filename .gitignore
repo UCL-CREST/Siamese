@@ -32,3 +32,5 @@ BellonClonesReader/bellon_benchmark
 BellonClonesReader/queries
 exp_results
 queries
+results/bcb_query_time
+results/TermFreq
