@@ -28,14 +28,12 @@ public class Evaluator {
         this.index = index;
         this.outputDir = outputDir;
         this.isPrint = isPrint;
-
         ArrayList<MethodClone> clones = readCSV(clonePairFile);
 
         if (isPrint) {
             System.out.println("Reading clone cluster files ... " + clonePairFile);
             System.out.println("--> No. of clones = " + clones.size());
         }
-
         // setup a hash map to store clone cluster
         cloneCluster = new HashMap<String, ArrayList<MethodClone>>();
         for (MethodClone mc: clones) {
@@ -50,7 +48,6 @@ public class Evaluator {
                 cloneCluster.put(mc.getCluster(), cluster);
             }
         }
-
         if (isPrint)
             System.out.println("--> No. of clusters = " + cloneCluster.size());
     }
@@ -75,36 +72,25 @@ public class Evaluator {
     }
 
     public double evaluateARP(String outputFile, int r) {
-//        System.out.println("Evaluating r-precision ...");
         double arp = 0.0;
-
         try {
-
             /* copied from http://howtodoinjava.com/3rd-party/parse-read-write-csv-files-opencsv-tutorial/ */
             CSVReader reader = new CSVReader(new FileReader(outputFile), ',', '"', 0);
-
             // Read CSV line by line and use the string array as you want
             String[] nextLine;
             double sumRPrec = 0.0;
             int noOfQueries = 0;
-
             while ((nextLine = reader.readNext()) != null) {
                 int tp = 0;
                 String query = nextLine[0];
-
                 // get the answer key of this query
                 ArrayList<String> relevantResults = searchKey.get(query);
-//                System.out.println(query);
-//                System.out.println(relevantResults);
-
                 // skip the one that's not in the search key
                 if (relevantResults != null) {
                     // set r equals to the number of relevant results
                     r = relevantResults.size();
-
                     // increase query count
                     noOfQueries++;
-
                     // check the results with the key
                     for (int i = 1; i <= relevantResults.size(); i++) {
                         // limit the check to the number of relevant results obtained (nextLine.length)
@@ -112,21 +98,17 @@ public class Evaluator {
                             if (relevantResults.contains(nextLine[i])) { tp++; }
                         }
                     }
-
                     // calculate r-precision up to the number of relevant results obtained (if <= r)
                     float rprec = (float) tp / r;
 
                     if (isPrint)
                         System.out.println("  " + r + "-prec = " + rprec);
-
-                    // for statistical tests
+                    // TODO: uncomment when needed, for statistical tests
 //                    System.out.println(rprec);
-
                     // sum up r-precision
                     sumRPrec += rprec;
                 }
             }
-
             // calculate average r-precision
             arp = sumRPrec/noOfQueries;
             System.out.println("No. of processed queries = " + noOfQueries);
@@ -134,15 +116,12 @@ public class Evaluator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return arp;
     }
 
     public double evaluateMAP(String outputFile, long size) {
-//        System.out.println("Evaluating MAP ...");
         String mapToPrint = "";
         double map = 0.0;
-
         try {
             /* copied from http://howtodoinjava.com/3rd-party/parse-read-write-csv-files-opencsv-tutorial/ */
             CSVReader reader = new CSVReader(new FileReader(outputFile), ',', '"', 0);
@@ -150,26 +129,18 @@ public class Evaluator {
             double sumPrecision;
             double sumAvgPrec = 0.0;
             int noOfQueries = 0;
-
             while ((nextLine = reader.readNext()) != null) {
-
                 int tp = 0;
                 String query = nextLine[0];
                 sumPrecision = 0.0;
-
                 // get the answer key of this query
                 ArrayList<String> relevantResults = searchKey.get(query);
-//                System.out.println(query);
-//                System.out.println(relevantResults);
-
                 // skip the one that's not in the search key
                 if (relevantResults != null) {
                     // increase query count
                     noOfQueries++;
-
                     // check the results with the key
                     for (int i = 1; i <= size; i++) {
-
                         // check if we still have results to process
                         // (some searches do not return all results.
                         if (i < nextLine.length) {
@@ -180,56 +151,43 @@ public class Evaluator {
                                 sumPrecision += precision;
                             }
                         }
-
                         // found all relevant results, stop
                         if (tp == relevantResults.size())
                             break;
                     }
-
                     double averagePrec = sumPrecision / relevantResults.size();
 
                     if (isPrint)
                         System.out.println("avgprec = " + averagePrec);
-
-                    // for statistical tests
+                    // TODO: uncomment if needed, for statistical tests
 //                    System.out.println(averagePrec);
-
                     mapToPrint += averagePrec + "\n";
                     sumAvgPrec += averagePrec;
                 }
             }
-
             // calculate MAP
             map = sumAvgPrec/noOfQueries;
             System.out.println("No. of processed queries = " + noOfQueries);
             System.out.println("MAP = " + map);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return map;
     }
 
     protected ArrayList<MethodClone> readCSV(String csvFile) {
         ArrayList<MethodClone> clones = new ArrayList<MethodClone>();
         try {
-
             /* copied from http://howtodoinjava.com/3rd-party/parse-read-write-csv-files-opencsv-tutorial/ */
             CSVReader reader = new CSVReader(new FileReader(csvFile), ',', '"', 1);
-
             //Read CSV line by line and use the string array as you want
             String[] nextLine;
-
             while ((nextLine = reader.readNext()) != null) {
-
                 //Verifying the read data here
                 if (nextLine.length == 3) {
-
                     // create a clone method
                     // fix the path name
                     MethodClone mc = new MethodClone(nextLine[0], nextLine[1], nextLine[2]);
-
                     // add to the list
                     clones.add(mc);
                 }
@@ -237,16 +195,6 @@ public class Evaluator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return clones;
-    }
-
-    public boolean createDir(String location) {
-        try {
-            Files.createDirectories(Paths.get(location));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return true;
     }
 }
