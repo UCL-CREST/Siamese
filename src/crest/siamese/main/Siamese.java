@@ -876,7 +876,7 @@ public class Siamese {
                 result.setValue(arp);
                 result.setSetting(outputFile);
             }
-//            deleteOutputFile(outputFile);
+            deleteOutputFile(outputFile);
         } else if (errMeasure.equals(Settings.ErrorMeasure.MAP)) {
             outputFile = search(inputFolder, resultOffset, totalDocuments, queryReduction, formatter);
             double map = evaluator.evaluateMAP(outputFile, totalDocuments);
@@ -887,7 +887,7 @@ public class Siamese {
                 result.setValue(map);
                 result.setSetting(outputFile);
             }
-//            deleteOutputFile(outputFile);
+            deleteOutputFile(outputFile);
         } else {
             System.out.println("ERROR: Invalid evaluation method.");
         }
