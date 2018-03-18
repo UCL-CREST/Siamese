@@ -307,7 +307,7 @@ public class JavaNormalizerTest {
                 "}");
 
         // initialise the n-gram generator
-        nGramGenerator ngen = new nGramGenerator(4);
+        nGramGenerator ngen = new nGramGenerator(15);
         ArrayList<String> ntokens = ngen.generateNGramsFromJavaTokens(tokens);
 //        tokenSet = new HashSet<>(ntokens);
 //        tokens = new ArrayList<>(tokenSet);
