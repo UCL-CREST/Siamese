@@ -762,8 +762,8 @@ public class Siamese {
                                             origTokenizer, false, ngen);
                                 }
 //                                // TODO: only for n-gram size experiment. Remove after finished.
-                                origQuery = "";
-                                t2Query = "";
+//                                origQuery = "";
+//                                t2Query = "";
 //                                System.out.println(query);
 //                                System.out.println(t2Query);
 //                                System.out.println(origQuery);
