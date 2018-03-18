@@ -46,6 +46,7 @@ public class Experiment {
 //    private static double[] dfCapNorm = { 5, 10, 20 };
 //    private static double[] dfCapOrig = { 10, 20, 40, 60 };
     private static double[] dfCapNorm = { 5 };
+    private static double[] dfCapT2 = { 10 };
     private static double[] dfCapOrig = { 20 };
 
     private static String inputDir;
@@ -181,6 +182,8 @@ public class Experiment {
             mode = prop.getProperty("similarityMode");
             cloneClusterFile = prop.getProperty("cloneClusterFile");
 
+            ngramSizeDefault[0] = Integer.parseInt(prop.getProperty("ngramSize"));
+
             String errMeasureConfig = prop.getProperty("errorMeasure");
             if (errMeasureConfig.equals("arp"))
                 errMeasure = Settings.ErrorMeasure.ARP;
@@ -240,6 +243,7 @@ public class Experiment {
                 normModes,
                 ngramSizes,
                 dfCapNorm,
+                dfCapT2,
                 dfCapOrig,
                 cloneClusterFilePrefix);
     }
