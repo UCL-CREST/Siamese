@@ -223,7 +223,6 @@ public class ESConnector {
 
     public ArrayList<Document> search(String index, String type, String query, boolean isPrint
 			, boolean isDFS, int resultOffset, int resultSize) throws Exception {
-
         SearchType searchType;
 
         if (isDFS)
@@ -234,7 +233,7 @@ public class ESConnector {
 		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
 				.addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
 				.addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
-				.setQuery(QueryBuilders.matchQuery("src", query)).setFrom(resultOffset).setSize(resultSize).execute()
+				.setQuery(QueryBuilders.matchQuery("tokenizedsrc", query)).setFrom(resultOffset).setSize(resultSize).execute()
 				.actionGet();
 		SearchHit[] hits = response.getHits().getHits();
 
