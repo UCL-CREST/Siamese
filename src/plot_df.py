@@ -151,15 +151,15 @@ def plot_slopes(filename):
 
 def main():
     # print('processing CSVs ...')
-    index = 'bellon'
+    index = 'bcb'
     df_src_sorted = read_csv('../freq_df_src_' + index + '.csv')
     df_t2src_sorted = read_csv('../freq_df_t2src_' + index + '.csv')
     df_toksrc_sorted = read_csv('../freq_df_toksrc_' + index + '.csv')
 
-    if index == 'qualitas' or index == 'bcb':
-        plot_no_label(df_src_sorted, df_toksrc_sorted, df_t2src_sorted, index)
-    else:
-        plot(df_src_sorted, df_toksrc_sorted, df_t2src_sorted, index)
+    # if index == 'qualitas' or index == 'bcb':
+    #     plot_no_label(df_src_sorted, df_toksrc_sorted, df_t2src_sorted, index)
+    # else:
+    plot(df_src_sorted, df_toksrc_sorted, df_t2src_sorted, index)
     # print('computing slopes ...')
     # compute_slopes(df_toksrc_sorted)
     # plot_slopes('../slopes.csv')
