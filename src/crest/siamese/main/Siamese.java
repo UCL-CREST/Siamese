@@ -293,7 +293,7 @@ public class Siamese {
             formatter.setFormat("csv");
             formatter.setAddStartEndLine(false);
         } else if (outputFormat.equals("csvfline")) {
-            formatter.setFormat("csvfline");
+            formatter.setFormat("csv");
             formatter.setAddStartEndLine(true);
         } else if (outputFormat.equals("gcf")) {
             formatter.setFormat("gcf");
