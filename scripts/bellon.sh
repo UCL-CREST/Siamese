@@ -3,7 +3,7 @@ type=2
 origIndexConfig="config_bellon_index_" + $type + ".properties"
 origSearchConfig="config_bellon_search_" + $type + ".properties"
 
-for i in `seq 6 40`
+for i in `seq 1 40`
 do
     clear
     echo "n-gram size: "$i
