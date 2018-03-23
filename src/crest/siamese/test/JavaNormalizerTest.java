@@ -276,13 +276,45 @@ public class JavaNormalizerTest {
                 "    return crc.getValue();\n" +
                 "}");
 
-//        HashSet<String> tokenSet = new HashSet<>(tokens);
-//        tokens = new ArrayList<>(tokenSet);
-//        Collections.sort(tokens);
+        // initialise the n-gram generator
+        nGramGenerator ngen = new nGramGenerator(5);
+        ArrayList<String> ntokens = ngen.generateNGramsFromJavaTokens(tokens);
 
-        System.out.println(tokens.size());
-        for (int i=0; i<tokens.size(); i++) {
-            System.out.print(tokens.get(i) + " ");
+        System.out.println(ntokens.size());
+        for (int i=0; i<ntokens.size(); i++) {
+            System.out.print(ntokens.get(i) + " ");
+        }
+
+        System.out.println("\n\n");
+
+        mode = new NormalizerMode();
+        mode.setDatatype(Settings.Normalize.DATATYPE_NORM_ON);
+//        mode.setJavaClass(Settings.Normalize.JAVACLASS_NORM_ON);
+//        mode.setKeyword(Settings.Normalize.KEYWORD_NORM_ON);
+//        mode.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_ON);
+        mode.setString(Settings.Normalize.STRING_NORM_ON);
+        mode.setValue(Settings.Normalize.VALUE_NORM_ON);
+        mode.setWord(Settings.Normalize.WORD_NORM_ON);
+        tokenizer = new JavaTokenizer(new JavaNormalizer(mode));
+
+        tokens = tokenizer.getTokensFromString("public static long checksum(File file) throws IOException {\n" +
+                "    CRC32 crc = new CRC32();\n" +
+                "    FileReader fr = new FileReader(file);\n" +
+                "    int data;\n" +
+                "    while((data = fr.read()) != -1) {\n" +
+                "        crc.update(data);\n" +
+                "    }\n" +
+                "    fr.close();\n" +
+                "    return crc.getValue();\n" +
+                "}");
+
+        // initialise the n-gram generator
+        ngen = new nGramGenerator(5);
+        ntokens = ngen.generateNGramsFromJavaTokens(tokens);
+
+        System.out.println(ntokens.size());
+        for (int i=0; i<ntokens.size(); i++) {
+            System.out.print(ntokens.get(i) + " ");
         }
 
         System.out.println("\n\n");
@@ -307,11 +339,8 @@ public class JavaNormalizerTest {
                 "}");
 
         // initialise the n-gram generator
-        nGramGenerator ngen = new nGramGenerator(15);
-        ArrayList<String> ntokens = ngen.generateNGramsFromJavaTokens(tokens);
-//        tokenSet = new HashSet<>(ntokens);
-//        tokens = new ArrayList<>(tokenSet);
-//        Collections.sort(tokens);
+        ngen = new nGramGenerator(5);
+        ntokens = ngen.generateNGramsFromJavaTokens(tokens);
 
         System.out.println(ntokens.size());
         for (int i=0; i<ntokens.size(); i++) {

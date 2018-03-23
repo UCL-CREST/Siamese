@@ -19,7 +19,7 @@ public class TermFreqAnalyser {
     }
 
     public static void analyseTerms(String config) {
-        String index = "bcb";
+        String index = "bellon";
         String mode = "df";
         String toksrc = "freq_" + mode + "_toksrc_" + index + ".csv";
         String t2src = "freq_" + mode + "_t2src_" + index + ".csv";
