@@ -62,8 +62,7 @@ public class Experiment {
     private static String cloneClusterFilePrefix = "clone_clusters";
 
     public static void main(String[] args) {
-
-        configFile = "config_cloplag.properties";
+        configFile = args[0];
         readFromConfigFile(configFile);
         cloneClusterFilePrefix = cloneClusterFile + "_" + cloneClusterFilePrefix;
 

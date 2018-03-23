@@ -503,6 +503,9 @@ public class Siamese {
                                 }
                                 // initialise the ngram generator
                                 ngen = new nGramGenerator(ngramSize);
+                                t2Ngen = new nGramGenerator(t2NgramSize);
+                                t1Ngen = new nGramGenerator(t1NgramSize);
+
                                 totalDocuments = (int) insert(0);
                                 if (totalDocuments != 0) {
                                     // if ok, refresh the index, then search
