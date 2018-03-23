@@ -20,7 +20,8 @@ outputFolder=exp_results
 # It can be a combination of x (none), w (words), d (datatypes),
 # j (Java classes), p (Java packages), k (keywords), v (values),
 # s (strings), o (operators), e (escape). For example: wkvs
-normMode=djkopsvw
+#normMode=djkopsvw
+normMode=dsvw
 # turn on ngram
 isNgram=true
 # use DFS mode [default=no]
@@ -84,6 +85,8 @@ queryReduction=false
 # size of n in ngram [default = 15]
 ngramSize=15
 normBoost=15
+t2NgramSize=16
+t1NgramSize=4
 
 QRPercentileOrig=20
 QRPercentileT2=10

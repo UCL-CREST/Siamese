@@ -7,6 +7,7 @@ public class Document {
 	private int endline;
 	private String source;
 	private String t2Source;
+	private String t1Source;
 	private String tokenizedSource;
 	private String originalSource;
 	private String license;
@@ -23,6 +24,7 @@ public class Document {
             int endline,
             String source,
             String t2Source,
+            String t1Source,
             String tokenizedSource,
             String originalSource,
             String license,
@@ -33,6 +35,7 @@ public class Document {
         this.endline = endline;
 		this.source = source;
 		this.t2Source = t2Source;
+		this.t1Source = t1Source;
 		this.tokenizedSource = tokenizedSource;
 		this.originalSource = originalSource;
 		this.license = license;
@@ -58,6 +61,14 @@ public class Document {
 
 	public void setT2Source(String t2Source) {
 		this.t2Source = t2Source;
+	}
+
+	public String getT1Source() {
+		return t1Source;
+	}
+
+	public void setT1Source(String t1Source) {
+		this.t1Source = t1Source;
 	}
 
 	public void setFile(String file) {

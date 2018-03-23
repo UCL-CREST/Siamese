@@ -43,10 +43,15 @@ public class Siamese {
     private String normMode;
     private NormalizerMode modes = new NormalizerMode();
     private NormalizerMode t2modes = new NormalizerMode();
+    private NormalizerMode t1modes = new NormalizerMode();
     private int ngramSize;
+    private int t2NgramSize;
+    private int t1NgramSize;
     private boolean isNgram;
     private boolean isPrint;
     private nGramGenerator ngen;
+    private nGramGenerator t2Ngen;
+    private nGramGenerator t1Ngen;
     private boolean isDFS;
     private String outputFolder;
     private boolean writeToFile;
@@ -59,6 +64,7 @@ public class Siamese {
     private double qrPercentileNorm;
     private double qrPercentileOrig;
     private double qrPercentileT2;
+    private double qrPercentileT1;
     private boolean recreateIndexIfExists;
     private String parseMode;
     private String cloneClusterFile;
@@ -76,6 +82,7 @@ public class Siamese {
     private int normBoost;
     private int origBoost;
     private int t2Boost;
+    private int t1Boost;
     private String methodParserName;
     private String tokenizerName;
     private String normalizerName;
@@ -92,7 +99,9 @@ public class Siamese {
     private Tokenizer origTokenizer;
     private Normalizer origNormalizer;
     private Tokenizer t2Tokenizer;
+    private Tokenizer t1Tokenizer;
     private Normalizer t2Normalizer;
+    private Normalizer t1Normalizer;
     private String deleteField;
     private String deleteWildcard;
     private int deleteAmount;
@@ -129,6 +138,8 @@ public class Siamese {
 
             isNgram = Boolean.parseBoolean(prop.getProperty("isNgram"));
             ngramSize = Integer.parseInt(prop.getProperty("ngramSize"));
+            t2NgramSize = Integer.parseInt(prop.getProperty("t2NgramSize"));
+            t1NgramSize = Integer.parseInt(prop.getProperty("t1NgramSize"));
             isPrint = Boolean.parseBoolean(prop.getProperty("isPrint"));
             isDFS = Boolean.parseBoolean(prop.getProperty("dfs"));
             writeToFile = Boolean.parseBoolean(prop.getProperty("writeToFile"));
@@ -158,9 +169,11 @@ public class Siamese {
             this.qrPercentileNorm = Double.parseDouble(prop.getProperty("QRPercentileNorm"));
             this.qrPercentileOrig = Double.parseDouble(prop.getProperty("QRPercentileOrig"));
             this.qrPercentileT2 = Double.parseDouble(prop.getProperty("QRPercentileT2"));
+            this.qrPercentileT1 = Double.parseDouble(prop.getProperty("QRPercentileT1"));
             this.normBoost = Integer.parseInt(prop.getProperty("normBoost"));
             this.origBoost = Integer.parseInt(prop.getProperty("origBoost"));
             this.t2Boost = Integer.parseInt(prop.getProperty("t2Boost"));
+            this.t1Boost = Integer.parseInt(prop.getProperty("t1Boost"));
 
             // multi-representation
             this.multiRep = Boolean.parseBoolean(prop.getProperty("multirep"));
@@ -246,8 +259,8 @@ public class Siamese {
         System.out.println("ngramSize      : " + ngramSize);
         System.out.println("---------- QUERY REDUCTION ---------");
         System.out.println("queryReduction : " + queryReduction);
-        System.out.println("qrThresholds   : t1=" + this.qrPercentileOrig + " t2=" + this.qrPercentileT2 + " t3=" + this.qrPercentileNorm);
-        System.out.println("queryBoosts    : t1=" + origBoost + " t2=" + t2Boost + " t3=" + normBoost);
+        System.out.println("qrThresholds   : t0=" + this.qrPercentileOrig + " t1=" + this.qrPercentileT1 + " t2=" + this.qrPercentileT2 + " t3=" + this.qrPercentileNorm);
+        System.out.println("queryBoosts    : t0=" + origBoost + " t1=" + t1Boost + " t2=" + t2Boost + " t3=" + normBoost);
         System.out.println("====================================");
     }
 
@@ -276,10 +289,15 @@ public class Siamese {
         origNormalizer = initialiseNormalizer(tmode);
         origTokenizer = initialiseTokenizer(origNormalizer);
 
-        char[] t2NormMode = {'s', 'v', 'w'};
+        char[] t2NormMode = {'d', 's', 'v', 'w'};
         t2modes = NormalizerMode.setTokenizerMode(t2NormMode);
         t2Normalizer = initialiseNormalizer(t2modes);
         t2Tokenizer = initialiseTokenizer(t2Normalizer);
+
+        char[] t1NormMode = {'x'};
+        t1modes = NormalizerMode.setTokenizerMode(t1NormMode);
+        t1Normalizer = initialiseNormalizer(t1modes);
+        t1Tokenizer = initialiseTokenizer(t1Normalizer);
 
         // set the normalisation + tokenization mode
         modes = NormalizerMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
@@ -317,6 +335,8 @@ public class Siamese {
 
         // initialise the n-gram generator
         ngen = new nGramGenerator(ngramSize);
+        t2Ngen = new nGramGenerator(t2NgramSize);
+        t1Ngen = new nGramGenerator(t1NgramSize);
 
         // default similarity function is TFIDF
         String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
@@ -580,7 +600,8 @@ public class Siamese {
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // Create Document object and put in an array list
                                 String normSource = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
-                                String t2Source = tokenizeLine(method.getSrc(), t2Tokenizer);
+                                String t2Source = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
+                                String t1Source = tokenize(method.getSrc(), t1Tokenizer, isNgram, t1Ngen);
                                 String tokenizedSource = tokenize(method.getComment() + " " +
                                         method.getSrc(), origTokenizer, false, ngen);
                                 String finalUrl = this.url;
@@ -597,6 +618,7 @@ public class Siamese {
                                         method.getEndLine(),
                                         normSource,
                                         t2Source,
+                                        t1Source,
                                         tokenizedSource,
 //                                        method.getSrc(),
                                         "", // TODO: insert empty original code for performance now.
@@ -714,9 +736,10 @@ public class Siamese {
                 MethodParser methodParser = initialiseMethodParser(file.getAbsolutePath(),
                         prefixToRemove, parseMode, isPrint);
                 ArrayList<Method> methodList;
-                String query = "";
-                String origQuery = "";
+                String t3Query = "";
                 String t2Query = "";
+                String t1Query = "";
+                String origQuery = "";
                 try {
                     methodList = methodParser.parseMethods();
                     String license = methodParser.getLicense();
@@ -736,41 +759,47 @@ public class Siamese {
                                 q.setEndline(method.getEndLine());
                                 outToFile += formatter.format(q, prefixToRemove, license);
 
-                                // query size limit is enforced
+                                // t3Query size limit is enforced
                                 if (queryReduction) {
                                     long docCount = getIndicesStats();
-                                    query = reduceQuery(tokenizeAsArray(method.getSrc(), tokenizer, isNgram, ngen),
+                                    t3Query = reduceQuery(tokenizeAsArray(method.getSrc(), tokenizer, isNgram, ngen),
                                             "src", this.qrPercentileNorm * docCount / 100);
                                     t2Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t2Tokenizer),
                                             "t2src", this.qrPercentileT2 * docCount / 100);
+                                    t1Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t1Tokenizer),
+                                            "t1src", this.qrPercentileT1 * docCount / 100);
                                     origQuery = reduceQuery(tokenizeAsArray(method.getComment() + " " +
                                                     method.getSrc(), origTokenizer, false, ngen),
                                             "tokenizedsrc",
                                             this.qrPercentileOrig * docCount / 100);
                                     if (isPrint) {
-                                        System.out.println("NQ," + this.qrPercentileNorm * docCount / 100 + "," +
-                                                methodCount + " : " + query);
+                                        System.out.println("T3Q," + this.qrPercentileNorm * docCount / 100 + "," +
+                                                methodCount + " : " + t3Query);
                                         System.out.println("T2Q," + this.qrPercentileT2 * docCount / 100 + "," +
                                                 methodCount + " : " + t2Query);
-                                        System.out.println("OQ," + this.qrPercentileOrig * docCount / 100 + "," +
+                                        System.out.println("T1Q," + this.qrPercentileT1 * docCount / 100 + "," +
+                                                methodCount + " : " + t1Query);
+                                        System.out.println("T0Q," + this.qrPercentileOrig * docCount / 100 + "," +
                                                 methodCount + " : " + origQuery);
                                     }
                                 } else {
-                                    query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
-                                    t2Query = tokenizeLine(method.getSrc(), t2Tokenizer);
+                                    t3Query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
+                                    t2Query = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
+                                    t1Query = tokenize(method.getSrc(), t1Tokenizer, isNgram, t1Ngen);
                                     origQuery = tokenize(method.getComment() + " " + method.getSrc(),
                                             origTokenizer, false, ngen);
                                 }
 //                                // TODO: only for n-gram size experiment. Remove after finished.
 //                                origQuery = "";
 //                                t2Query = "";
-//                                System.out.println(query);
+//                                System.out.println(t3Query);
 //                                System.out.println(t2Query);
 //                                System.out.println(origQuery);
 
                                 // search for results depending on the MR setting
                                 if (this.multiRep)
-                                    results = es.search(index, type, origQuery, query, t2Query, origBoost, normBoost, t2Boost, isPrint, isDFS, offset, size);
+                                    results = es.search(index, type, origQuery, t3Query, t2Query, t1Query,
+                                            origBoost, normBoost, t2Boost, t1Boost, isPrint, isDFS, offset, size);
                                 else
                                     results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
 

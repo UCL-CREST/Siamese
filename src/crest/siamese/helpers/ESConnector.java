@@ -85,6 +85,7 @@ public class ESConnector {
                         .field("endline", d.getEndLine())
                         .field("src", d.getSource())
 						.field("t2src", d.getT2Source())
+						.field("t1src", d.getT1Source())
                         .field("tokenizedsrc", d.getTokenizedSource())
                         .field("origsrc", d.getOriginalSource())
                         .field("license", d.getLicense())
@@ -128,6 +129,7 @@ public class ESConnector {
 								.field("endline", d.getEndLine())
 								.field("src", d.getSource())
 								.field("t2src", d.getT2Source())
+								.field("t1src", d.getT1Source())
                                 .field("tokenizedsrc", d.getTokenizedSource())
 								.field("origsrc", d.getOriginalSource())
 								.field("license", d.getLicense())
@@ -246,9 +248,11 @@ public class ESConnector {
             String origQuery,
             String query,
             String t2Query,
+			String t1Query,
             int origBoost,
             int normBoost,
             int t2Boost,
+			int t1Boost,
             boolean isPrint,
             boolean isDFS,
             int resultOffset,
@@ -281,6 +285,13 @@ public class ESConnector {
 //								.boost(origBoost)
 						QueryBuilders.matchQuery("t2src", t2Query)
 								.boost(t2Boost)
+				)
+				.should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
+						QueryBuilders.matchQuery("t1src", t1Query)
+								.boost(t1Boost)
 				)
                 .should(
 //                		QueryBuilders.commonTermsQuery("src", query)
@@ -349,6 +360,7 @@ public class ESConnector {
                         Integer.parseInt(hit.getSource().get("endline").toString()),
                         hit.getSource().get("src").toString(),
 						hit.getSource().get("t2src").toString(),
+						hit.getSource().get("t1src").toString(),
                         hit.getSource().get("tokenizedsrc").toString(),
                         hit.getSource().get("origsrc").toString(),
                         hit.getSource().get("license").toString(),
