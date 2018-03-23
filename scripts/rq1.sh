@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 origConfig="config_cloplag.properties.orig"
 i=$1 # n-gram
 j=$2 # input folder

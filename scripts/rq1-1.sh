@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 origConfig="config_cloplag.properties.orig"
 i=$1 # n-gram
 j=$2 # input folder
@@ -9,7 +10,6 @@ iconfig="config_cloplag.properties"
 
 ### ARP ###
 # create a temp config (MR)
-echo "MR"
 cat $origConfig | sed -e s/ngramSize=15/ngramSize=$i/g | sed -e s/normBoost=15/normBoost=$i/g > $iconfig
 printf "inputFolder="$j"\n" >> $iconfig
 printf "parseMode=$k\n" >> $iconfig
@@ -18,7 +18,6 @@ mvn compile exec:java -Dexec.mainClass=crest.siamese.experiment.Experiment 2> /d
 
 ### MAP ###
 # create a temp config (MR)
-echo "MR"
 cat $origConfig | sed -e s/ngramSize=15/ngramSize=$i/g | sed -e s/normBoost=15/normBoost=$i/g | sed -e s/errorMeasure=arp/errorMeasure=map/g > $iconfig
 printf "inputFolder="$j"\n" >> $iconfig
 printf "parseMode=$k\n" >> $iconfig
