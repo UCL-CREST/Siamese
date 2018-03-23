@@ -105,6 +105,7 @@ public class Siamese {
     private String deleteField;
     private String deleteWildcard;
     private int deleteAmount;
+    private boolean[] enableRep = {true, true, true, true};
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -223,6 +224,12 @@ public class Siamese {
                 deleteWildcard = prop.getProperty("deleteWildcard");
                 deleteAmount = Integer.parseInt(prop.getProperty("deleteAmount"));
             }
+
+            String[] enableRepStr = prop.getProperty("enableRep").split(",");
+            for (int i=0; i<enableRepStr.length; i++) {
+                enableRep[i] = Boolean.valueOf(enableRepStr[i]);
+            }
+            System.out.println(Arrays.toString(enableRep));
 
         } catch (IOException ex) {
             ex.printStackTrace();
