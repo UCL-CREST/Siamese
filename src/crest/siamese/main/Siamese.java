@@ -97,9 +97,9 @@ public class Siamese {
     private Tokenizer tokenizer;
     private Normalizer normalizer;
     private Tokenizer origTokenizer;
-    private Normalizer origNormalizer;
     private Tokenizer t2Tokenizer;
     private Tokenizer t1Tokenizer;
+    private Normalizer origNormalizer;
     private Normalizer t2Normalizer;
     private Normalizer t1Normalizer;
     private String deleteField;
@@ -772,13 +772,17 @@ public class Siamese {
                                 // t3Query size limit is enforced
                                 if (queryReduction) {
                                     long docCount = getIndicesStats();
-                                    t3Query = reduceQuery(tokenizeAsArray(method.getSrc(), tokenizer, isNgram, ngen),
+                                    if (enableRep[3])
+                                        t3Query = reduceQuery(tokenizeAsArray(method.getSrc(), tokenizer, isNgram, ngen),
                                             "src", this.qrPercentileNorm * docCount / 100);
-                                    t2Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t2Tokenizer),
+                                    if (enableRep[2])
+                                        t2Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t2Tokenizer),
                                             "t2src", this.qrPercentileT2 * docCount / 100);
-                                    t1Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t1Tokenizer),
+                                    if (enableRep[1])
+                                        t1Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t1Tokenizer),
                                             "t1src", this.qrPercentileT1 * docCount / 100);
-                                    origQuery = reduceQuery(tokenizeAsArray(method.getComment() + " " +
+                                    if (enableRep[0])
+                                        origQuery = reduceQuery(tokenizeAsArray(method.getComment() + " " +
                                                     method.getSrc(), origTokenizer, false, ngen),
                                             "tokenizedsrc",
                                             this.qrPercentileOrig * docCount / 100);
@@ -793,18 +797,21 @@ public class Siamese {
                                                 methodCount + " : " + origQuery);
                                     }
                                 } else {
-                                    t3Query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
-                                    t2Query = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
-                                    t1Query = tokenize(method.getSrc(), t1Tokenizer, isNgram, t1Ngen);
-                                    origQuery = tokenize(method.getComment() + " " + method.getSrc(),
+                                    if (enableRep[3])
+                                        t3Query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
+                                    if (enableRep[2])
+                                        t2Query = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
+                                    if (enableRep[1])
+                                        t1Query = tokenize(method.getSrc(), t1Tokenizer, isNgram, t1Ngen);
+                                    if (enableRep[0])
+                                        origQuery = tokenize(method.getComment() + " " + method.getSrc(),
                                             origTokenizer, false, ngen);
                                 }
-//                                // TODO: only for n-gram size experiment. Remove after finished.
-//                                origQuery = "";
-//                                t2Query = "";
-//                                System.out.println(t3Query);
-//                                System.out.println(t2Query);
-//                                System.out.println(origQuery);
+
+//                                System.out.println("T3: " + t3Query);
+//                                System.out.println("T2: " + t2Query);
+//                                System.out.println("T1: " + t1Query);
+//                                System.out.println("T0: " + origQuery);
 
                                 // search for results depending on the MR setting
                                 if (this.multiRep)
