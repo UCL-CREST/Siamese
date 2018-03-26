@@ -13,13 +13,13 @@ public class TermFreqAnalyser {
         String config = "config_bcb_search.properties";
         siamese = new Siamese(config);
         siamese.startup();
-        analyseTerms(config);
+        analyseTerms();
 //        getIndicesStats();
         siamese.shutdown();
     }
 
-    public static void analyseTerms(String config) {
-        String index = "qualitas";
+    public static void analyseTerms() {
+        String index = "bcb";
         String mode = "df";
         String toksrc = "freq_" + mode + "_t0src_" + index + ".csv";
         String t1src = "freq_" + mode + "_t1src_" + index + ".csv";

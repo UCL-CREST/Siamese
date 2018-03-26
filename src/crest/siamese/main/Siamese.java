@@ -1035,8 +1035,8 @@ public class Siamese {
     public void analyseTermFreq(String indexName, String field, String freqType, String outputFileName) {
         String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
-        ArrayList<JavaTerm> tokFreq = new ArrayList<>();
-        ClassicSimilarity similarity = new ClassicSimilarity();
+        DecimalFormat df = new DecimalFormat("#.00");
+        int printEvery = 100000;
         File outputFile = new File(outputFileName);
         if (outputFile.exists()) {
             outputFile.delete();
@@ -1047,7 +1047,6 @@ public class Siamese {
         int count = 0;
         try {
             IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
-            int docnum = reader.numDocs();
             Fields fields = MultiFields.getFields(reader);
             Terms terms = fields.terms(field);
             TermsEnum termsEnum = terms.iterator();
@@ -1074,6 +1073,10 @@ public class Siamese {
                 }
                 termArr[count] = term;
                 freqArr[count] = tfreq;
+                if (count % printEvery == 0) {
+                    System.out.println("processed: " + count + " terms "
+                            + " [" + df.format((count * 100)/size) + "%]");
+                }
                 count++;
             }
             System.out.println(field + ": total = " + count);
@@ -1082,8 +1085,10 @@ public class Siamese {
             for (int i = 0; i < freqArr.length; i++) {
                 data[i] = freqArr[i];
                 output += freqArr[i] + "\n";
-                if (i > 0 && i % 10000 == 0) {
+                if (i > 0 && i % printEvery == 0) {
                     MyUtils.writeToFile("./",outputFileName, output, true);
+                    System.out.println("written: " + i + " terms "
+                            + " [" + df.format((i * 100)/size) + "%]");
                     output = "";
                 }
             }
