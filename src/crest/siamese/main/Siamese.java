@@ -106,6 +106,7 @@ public class Siamese {
     private String deleteWildcard;
     private int deleteAmount;
     private boolean[] enableRep = {true, true, true, true};
+    private IndexReader esIndexRader;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -401,6 +402,8 @@ public class Siamese {
                         OutputFormatter formatter = getOutputFormatter();
                         // create the output folder if it doesn't exist.
                         MyUtils.createDir(outputFolder);
+                        // reading the index for query reduction
+                        readESIndex(index);
                         outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
                     } else {
                         // index does not exist
@@ -517,6 +520,8 @@ public class Siamese {
                                 if (totalDocuments != 0) {
                                     // if ok, refresh the index, then search
                                     es.refresh(index);
+                                    // read the index for query reduction
+                                    readESIndex(index);
                                     EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
                                     if (resultSet.size() != 0) {
                                         EvalResult bestResult = resultSet.get(0);
@@ -808,17 +813,18 @@ public class Siamese {
                                             origTokenizer, false, ngen);
                                 }
 
-//                                System.out.println("T3: " + t3Query);
-//                                System.out.println("T2: " + t2Query);
-//                                System.out.println("T1: " + t1Query);
-//                                System.out.println("T0: " + origQuery);
-
                                 // search for results depending on the MR setting
-                                if (this.multiRep)
+                                if (this.multiRep) {
                                     results = es.search(index, type, origQuery, t3Query, t2Query, t1Query,
                                             origBoost, normBoost, t2Boost, t1Boost, isPrint, isDFS, offset, size);
-                                else
+//                                    System.out.println("T3: " + t3Query);
+//                                    System.out.println("T2: " + t2Query);
+//                                    System.out.println("T1: " + t1Query);
+//                                    System.out.println("T0: " + origQuery);
+                                } else {
                                     results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
+//                                    System.out.println("T0: " + origQuery);
+                                }
 
                                 if (this.computeSimilarity) {
                                     int[] sim = computeSimilarity(origQuery, results);
@@ -1088,6 +1094,20 @@ public class Siamese {
         }
     }
 
+    /**
+     * Read the ES index file
+     * @param indexName the name of the index
+     */
+    private void readESIndex(String indexName) {
+        String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
+                + indexName + "/0/index";
+        try {
+            esIndexRader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Read idf of each term in the query directly from Lucene index
      * @param indexName name of the index
@@ -1095,16 +1115,13 @@ public class Siamese {
      * @return selected top-selectionRatio terms
      */
     private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String field, ArrayList<String> terms) {
-        String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
-                + indexName + "/0/index";
         ArrayList<JavaTerm> selectedTermsArray = new ArrayList<>();
         try {
-            IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
             for (String term: terms) {
                 // TODO: get rid of the blank term (why it's blank?)
                 if (!term.equals("")) {
                     Term t = new Term(field, term);
-                    int freq = reader.docFreq(t);
+                    int freq = esIndexRader.docFreq(t);
                     JavaTerm newTerm = new JavaTerm(term, freq);
                     if (!selectedTermsArray.contains(newTerm))
                         selectedTermsArray.add(newTerm);
