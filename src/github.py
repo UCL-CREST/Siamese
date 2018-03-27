@@ -15,14 +15,14 @@ def filter_proj_by_stars(file):
     for line in file:
         if "Stars:" in line:
             stars = int(line.split("Stars:")[1].strip())
-            if stars > 0:
+            if stars >= 0:
                 sum += 1
                 # print(stars, end=',')
                 # if stars in stars_map:
                 #     stars_map[stars] += 1
                 # else:
                 #     stars_map[stars] = 1
-        if "Clone url: " in line and stars > 0:
+        if "Clone url: " in line and stars >= 0:
             repo = line.split("Clone url: ")[1].strip().replace("https://github.com/", "").replace(".git", "")
             # print(repo)
             projs.append([stars, repo])
@@ -180,24 +180,30 @@ def main():
     projs = filter_proj_by_stars(sys.argv[1])
     print('total:', len(projs))
     writefile('github.log', 'total:' + str(len(projs)) + '\n', 'a', False)
-    start = 29465
-    end = 10
+    #start = 29465
+    #end = 10
+    start = 0
+    end = 0
     # analyse_projects(projs, 2, 1)
 
+    count = 0
     for idx, proj in enumerate(projs):
         if start >= proj[0] >= end:
-            print(idx, proj[0], proj[1])
-            writefile('github.log', 'No. ' + str(idx) + ', ' + str(proj[0]) + ', ' + proj[1] + '\n', 'a', False)
-            config = gen_config_template()
-            config = update_config(config, 4, sys.argv[2])
-            config = update_config(config, 5, proj[1])
-            # first project, recreate the index
-            if idx == 0:
-                config = update_config(config, 17, "true")
-            write_config(config)
-            execute_siamese()
-            exit(0)
+            writefile('github-' + str(start) + '-' + str(end) + '.csv', proj[1] + '\n', 'a', False)
+            count += 1
+        #    print(idx, proj[0], proj[1])
+        #    writefile('github.log', 'No. ' + str(idx) + ', ' + str(proj[0]) + ', ' + proj[1] + '\n', 'a', False)
+        #    config = gen_config_template()
+        #    config = update_config(config, 4, sys.argv[2])
+        #    config = update_config(config, 5, proj[1])
+	    ## first project, recreate the index
+   	    #if idx == 0:
+  		#config = update_config(config, 17, "true")
+        #    write_config(config)
+        #    execute_siamese()
+	    #exit(0)
             # input("Press Enter to continue...")
+    print('Total: ' + str(count))
 
 
 main()
