@@ -1,5 +1,6 @@
 package crest.siamese.main;
 
+import crest.siamese.helpers.MyUtils;
 import org.apache.commons.cli.*;
 import org.elasticsearch.client.transport.NoNodeAvailableException;
 
@@ -21,7 +22,7 @@ public class Main {
             configFile = "config.properties";
         }
 
-        Date startDate = getCurrentTime();
+        Date startDate = MyUtils.getCurrentTime();
 
         Siamese siamese = new Siamese(configFile);
         siamese.startup();
@@ -36,7 +37,7 @@ public class Main {
 		}
 
 		siamese.shutdown();
-        Date endDate = getCurrentTime();
+        Date endDate = MyUtils.getCurrentTime();
         System.out.println("Elapse time (ms): " + (endDate.getTime() - startDate.getTime()));
     }
 
@@ -69,12 +70,4 @@ public class Main {
 		formater.printHelp("(v 0.3) $java -jar siamese.jar", options);
 		System.exit(0);
 	}
-
-	private static Date getCurrentTime() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
-        return date;
-	}
-
 }

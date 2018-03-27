@@ -54,7 +54,7 @@ public class MethodLevelEvaluator extends Evaluator {
         }
 
         MyUtils.writeToFile("resources", "searchkey.csv", textToPrint, false);
-        System.out.println("Done generating search key from " + this.clonePairFile + " ... ");
+//        System.out.println("Done generating search key from " + this.clonePairFile + " ... ");
 
         return searchKey.size();
     }

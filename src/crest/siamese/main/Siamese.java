@@ -35,16 +35,23 @@ public class Siamese {
 
     private ESConnector es;
     private String server;
+    private String cluster;
     private String index;
     private String type;
     private String inputFolder;
     private String subInputFolder;
     private String normMode;
     private NormalizerMode modes = new NormalizerMode();
+    private NormalizerMode t2modes = new NormalizerMode();
+    private NormalizerMode t1modes = new NormalizerMode();
     private int ngramSize;
+    private int t2NgramSize;
+    private int t1NgramSize;
     private boolean isNgram;
     private boolean isPrint;
     private nGramGenerator ngen;
+    private nGramGenerator t2Ngen;
+    private nGramGenerator t1Ngen;
     private boolean isDFS;
     private String outputFolder;
     private boolean writeToFile;
@@ -56,6 +63,8 @@ public class Siamese {
     private boolean queryReduction;
     private double qrPercentileNorm;
     private double qrPercentileOrig;
+    private double qrPercentileT2;
+    private double qrPercentileT1;
     private boolean recreateIndexIfExists;
     private String parseMode;
     private String cloneClusterFile;
@@ -72,6 +81,8 @@ public class Siamese {
     private int bulkSize;
     private int normBoost;
     private int origBoost;
+    private int t2Boost;
+    private int t1Boost;
     private String methodParserName;
     private String tokenizerName;
     private String normalizerName;
@@ -86,10 +97,16 @@ public class Siamese {
     private Tokenizer tokenizer;
     private Normalizer normalizer;
     private Tokenizer origTokenizer;
+    private Tokenizer t2Tokenizer;
+    private Tokenizer t1Tokenizer;
     private Normalizer origNormalizer;
+    private Normalizer t2Normalizer;
+    private Normalizer t1Normalizer;
     private String deleteField;
     private String deleteWildcard;
     private int deleteAmount;
+    private boolean[] enableRep = {true, true, true, true};
+    private IndexReader esIndexRader;
 
     public Siamese(String configFile) {
         readFromConfigFile(configFile);
@@ -98,6 +115,7 @@ public class Siamese {
     }
 
     private void readFromConfigFile(String configFile) {
+        System.out.println(configFile);
 	    /* copied from
 	    https://www.mkyong.com/java/java-properties-file-examples/
 	     */
@@ -111,6 +129,7 @@ public class Siamese {
 
             // get the property value and print it out
             server = prop.getProperty("server");
+            cluster = prop.getProperty("cluster");
             index = prop.getProperty("index");
             type = prop.getProperty("type");
             inputFolder = prop.getProperty("inputFolder");
@@ -118,12 +137,11 @@ public class Siamese {
             outputFolder = prop.getProperty("outputFolder");
 
             normMode = prop.getProperty("normMode");
-            // set the normalisation + tokenization mode
-            NormalizerMode tknzMode = new NormalizerMode();
-            modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
 
             isNgram = Boolean.parseBoolean(prop.getProperty("isNgram"));
             ngramSize = Integer.parseInt(prop.getProperty("ngramSize"));
+            t2NgramSize = Integer.parseInt(prop.getProperty("t2NgramSize"));
+            t1NgramSize = Integer.parseInt(prop.getProperty("t1NgramSize"));
             isPrint = Boolean.parseBoolean(prop.getProperty("isPrint"));
             isDFS = Boolean.parseBoolean(prop.getProperty("dfs"));
             writeToFile = Boolean.parseBoolean(prop.getProperty("writeToFile"));
@@ -152,8 +170,12 @@ public class Siamese {
             this.queryReduction = Boolean.parseBoolean(prop.getProperty("queryReduction"));
             this.qrPercentileNorm = Double.parseDouble(prop.getProperty("QRPercentileNorm"));
             this.qrPercentileOrig = Double.parseDouble(prop.getProperty("QRPercentileOrig"));
+            this.qrPercentileT2 = Double.parseDouble(prop.getProperty("QRPercentileT2"));
+            this.qrPercentileT1 = Double.parseDouble(prop.getProperty("QRPercentileT1"));
             this.normBoost = Integer.parseInt(prop.getProperty("normBoost"));
             this.origBoost = Integer.parseInt(prop.getProperty("origBoost"));
+            this.t2Boost = Integer.parseInt(prop.getProperty("t2Boost"));
+            this.t1Boost = Integer.parseInt(prop.getProperty("t1Boost"));
 
             // multi-representation
             this.multiRep = Boolean.parseBoolean(prop.getProperty("multirep"));
@@ -181,9 +203,11 @@ public class Siamese {
 
             deleteIndexAfterUse = Boolean.parseBoolean(prop.getProperty("deleteIndexAfterUse"));
 
-            prefixToRemove = inputFolder;
-            if (!prefixToRemove.endsWith("/"))
-                prefixToRemove += "/"; // append / at the end
+            // TODO: do we need this?
+//            prefixToRemove = inputFolder;
+//            if (!prefixToRemove.endsWith("/"))
+//                prefixToRemove += "/"; // append / at the end
+            prefixToRemove = "";
 
             elasticsearchLoc = prop.getProperty("elasticsearchLoc");
             outputFormat = prop.getProperty("outputFormat");
@@ -204,6 +228,12 @@ public class Siamese {
                 deleteAmount = Integer.parseInt(prop.getProperty("deleteAmount"));
             }
 
+            String[] enableRepStr = prop.getProperty("enableRep").split(",");
+            for (int i=0; i<enableRepStr.length; i++) {
+                enableRep[i] = Boolean.valueOf(enableRepStr[i]);
+            }
+            System.out.println(Arrays.toString(enableRep));
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -218,35 +248,35 @@ public class Siamese {
     }
 
     private void printConfig() {
-        System.out.println("====== Configurations ======");
-        System.out.println("------ ELASTICSEARCH -------");
+        System.out.println("========== Configurations ==========");
+        System.out.println("---------- ELASTICSEARCH -----------");
         System.out.println("server         : " + server);
         System.out.println("index          : " + index);
         System.out.println("type           : " + type);
-        System.out.println("----------- DATA -----------");
+        System.out.println("--------------- DATA ---------------");
         System.out.println("inputFolder    : " + inputFolder);
         System.out.println("outputFolder   : " + outputFolder);
         System.out.println("dfs            : " + isDFS);
         System.out.println("extension      : " + extension);
         System.out.println("minCloneSize   : " + minCloneLine);
-        System.out.println("--------- EXECUTION --------");
+        System.out.println("------------- EXECUTION ------------");
         System.out.println("command        : " + command);
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
         System.out.println("outputFormat   : " + outputFormat);
-        System.out.println("--- MULTI-REPRESENTATION ---");
+        System.out.println("------- MULTI-REPRESENTATION -------");
         System.out.println("multiRep       : " + multiRep);
         System.out.println("normalization  : " + normMode);
         System.out.println("ngramSize      : " + ngramSize);
-        System.out.println("------ QUERY REDUCTION -----");
+        System.out.println("---------- QUERY REDUCTION ---------");
         System.out.println("queryReduction : " + queryReduction);
-        System.out.println("qrThresholds   : orig=" + this.qrPercentileOrig + " / norm=" + this.qrPercentileNorm);
-        System.out.println("queryBoosts    : orig=" + origBoost + " / norm=" + normBoost);
-        System.out.println("============================");
+        System.out.println("qrThresholds   : t0=" + this.qrPercentileOrig + " t1=" + this.qrPercentileT1 + " t2=" + this.qrPercentileT2 + " t3=" + this.qrPercentileNorm);
+        System.out.println("queryBoosts    : t0=" + origBoost + " t1=" + t1Boost + " t2=" + t2Boost + " t3=" + normBoost);
+        System.out.println("====================================");
     }
 
     private void connect() {
         // create a connector
-        es = new ESConnector(server);
+        es = new ESConnector(server, cluster);
     }
 
     public void startup() {
@@ -269,6 +299,18 @@ public class Siamese {
         origNormalizer = initialiseNormalizer(tmode);
         origTokenizer = initialiseTokenizer(origNormalizer);
 
+        char[] t2NormMode = {'d', 's', 'v', 'w'};
+        t2modes = NormalizerMode.setTokenizerMode(t2NormMode);
+        t2Normalizer = initialiseNormalizer(t2modes);
+        t2Tokenizer = initialiseTokenizer(t2Normalizer);
+
+        char[] t1NormMode = {'x'};
+        t1modes = NormalizerMode.setTokenizerMode(t1NormMode);
+        t1Normalizer = initialiseNormalizer(t1modes);
+        t1Tokenizer = initialiseTokenizer(t1Normalizer);
+
+        // set the normalisation + tokenization mode
+        modes = NormalizerMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
         normalizer = initialiseNormalizer(modes);
         tokenizer = initialiseTokenizer(normalizer);
     }
@@ -303,6 +345,8 @@ public class Siamese {
 
         // initialise the n-gram generator
         ngen = new nGramGenerator(ngramSize);
+        t2Ngen = new nGramGenerator(t2NgramSize);
+        t1Ngen = new nGramGenerator(t1NgramSize);
 
         // default similarity function is TFIDF
         String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
@@ -339,54 +383,47 @@ public class Siamese {
 
         try {
             if (siameseClient != null) {
-                if (github) {
-                    indexGitHub();
-                } else {
-                    if (command.toLowerCase().equals("index")) {
-
-                        if (recreateIndexIfExists) {
-                            createIndex(indexSettings, mappingStr);
-                        }
-
-                        long startingId = 0;
-                        if (!recreateIndexIfExists && doesIndexExist()) {
-                            startingId = getMaxId(index) + 1;
-                        }
-
-                        long insertSize = insert(startingId);
-
-                        if (insertSize != 0) {
-                            // if ok, refresh the index, then search
-                            es.refresh(index);
-                            System.out.println("Successfully creating index.");
-                        } else {
-                            System.out.println("ERROR: Indexed zero file. Please check!");
-                        }
-
-                    } else if (command.toLowerCase().equals("search")) {
-                        if (es.doesIndexExist(this.index)) {
-                            OutputFormatter formatter = getOutputFormatter();
-                            outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
-                        } else {
-                            // index does not exist
-                            throw new Exception("index " + this.index + " does not exist.");
-                        }
-                    } else if (command.toLowerCase().equals("delete")) {
-                        if (es.doesIndexExist(this.index)) {
-                            delete(deleteField,
-                                    deleteWildcard,
-                                    deleteAmount);
-                        } else {
-                            // index does not exist
-                            throw new Exception("index " + this.index + " does not exist.");
-                        }
+                if (command.toLowerCase().equals("index")) {
+                    if (recreateIndexIfExists) {
+                        createIndex(indexSettings, mappingStr);
+                    }
+                    long startingId = 0;
+                    if (!recreateIndexIfExists && doesIndexExist()) {
+                        startingId = getMaxId(index) + 1;
+                    }
+                    long insertSize = insert(startingId);
+                    if (insertSize != 0) {
+                        // if ok, refresh the index, then search
+                        es.refresh(index);
+                        System.out.println("Successfully creating index.");
+                    } else {
+                        System.out.println("ERROR: Indexed zero file. Please check!");
+                    }
+                } else if (command.toLowerCase().equals("search")) {
+                    if (es.doesIndexExist(this.index)) {
+                        OutputFormatter formatter = getOutputFormatter();
+                        // create the output folder if it doesn't exist.
+                        MyUtils.createDir(outputFolder);
+                        // reading the index for query reduction
+                        readESIndex(index);
+                        outputFile = search(inputFolder, resultOffset, resultsSize, queryReduction, formatter);
+                    } else {
+                        // index does not exist
+                        throw new Exception("index " + this.index + " does not exist.");
+                    }
+                } else if (command.toLowerCase().equals("delete")) {
+                    if (es.doesIndexExist(this.index)) {
+                        delete(deleteField,
+                                deleteWildcard,
+                                deleteAmount);
+                    } else {
+                        // index does not exist
+                        throw new Exception("index " + this.index + " does not exist.");
                     }
                 }
             } else {
                 System.out.println("ERROR: cannot create Elasticsearch client ... ");
             }
-//        } catch (NoNodeAvailableException noNodeException) {
-//            throw noNodeException;
         }  catch (Exception e) {
             throw e;
         }
@@ -427,83 +464,92 @@ public class Siamese {
             String[] normModes,
             int[] ngramSizes,
             double[] dfCapNorms,
+            double[] dfCapT2s,
             double[] dfCapOrigs,
             String cloneClusterFilePrefix) {
-
         this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.parseMode + ".csv";
-
+        // create the output folder
+        MyUtils.createDir(outputFolder);
         // create a connector
-        es = new ESConnector(server);
-
+        es = new ESConnector(server, cluster);
         ArrayList<EvalResult> resultSet = new ArrayList<>();
-
         // tries to delete the combination results of all settings if the file exist.
         // we're gonna generate this from the experiment.
         File allErrorMeasureResults = new File("all_" + this.errMeasure + ".csv");
         if (allErrorMeasureResults.exists())
             allErrorMeasureResults.delete();
-
         try {
-
             es.startup();
             for (String normMode : normModes) {
                 // reset the modes before setting it again
                 modes.reset();
-                // set the normalisation + tokenization mode
-                NormalizerMode tknzMode = new NormalizerMode();
-                modes = tknzMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
+                t2modes = NormalizerMode.setTokenizerMode("svw".toLowerCase().toCharArray());
                 prepareTokenizers();
+                // set the normalisation + tokenization mode
+                // override the normalizers for the experiment
+                modes = NormalizerMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
+                normalizer = initialiseNormalizer(modes);
+                tokenizer = initialiseTokenizer(normalizer);
                 String indexPrefix = this.index;
                 for (int ngramSize : ngramSizes) {
                     for (double dfCapNorm: dfCapNorms) {
                         // replace the value read from the config file
                         this.qrPercentileNorm = dfCapNorm;
-                        for (double dfCapOrig : dfCapOrigs) {
+                        for (double dfCapT2: dfCapT2s) {
                             // replace the value read from the config file
-                            this.qrPercentileOrig = dfCapOrig;
-                            index = this.index + "_" + normMode + "_" + ngramSize + "_" + dfCapNorm + "_" + dfCapOrig;
-                            if (isPrint) System.out.println("INDEX," + index);
-                            // delete the index if it exists
-                            if (es.doesIndexExist(index)) {
-                                es.deleteIndex(index);
-                            }
-                            // create index
-                            if (!es.createIndex(index, type, indexSettings, mappingStr)) {
-                                System.err.println("Cannot create index: " + index);
-                                System.exit(-1);
-                            }
-                            // initialise the ngram generator
-                            ngen = new nGramGenerator(ngramSize);
-                            totalDocuments = (int) insert(0);
-                            if (totalDocuments != 0) {
-                                // if ok, refresh the index, then search
-                                es.refresh(index);
-                                EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
-                                if (resultSet.size() != 0) {
-                                    EvalResult bestResult = resultSet.get(0);
-                                    // check for best result
-                                    if (result.getValue() > bestResult.getValue()) {
-                                        resultSet.set(0, result);
-                                    }
-                                } else {
-                                    // add the first result twice since it's also the best result.
-                                    resultSet.add(result);
+                            this.qrPercentileT2 = dfCapT2;
+                            for (double dfCapOrig : dfCapOrigs) {
+                                // replace the value read from the config file
+                                this.qrPercentileOrig = dfCapOrig;
+                                index = this.index + "_" + normMode + "_" + ngramSize + "_" +
+                                        dfCapNorm + "_" + dfCapT2 + "_" + dfCapOrig;
+                                if (isPrint) System.out.println("INDEX," + index);
+                                // delete the index if it exists
+                                if (es.doesIndexExist(index)) {
+                                    es.deleteIndex(index);
                                 }
-                                // collect the result
-                                resultSet.add(result);
-                            } else {
-                                System.out.println("Indexing error: please check!");
-                            }
-                            // delete index
-                            if (deleteIndexAfterUse) {
-                                if (!es.deleteIndex(index)) {
-                                    System.err.println("Cannot delete index: " + index);
+                                // create index
+                                if (!es.createIndex(index, type, indexSettings, mappingStr)) {
+                                    System.err.println("Cannot create index: " + index);
                                     System.exit(-1);
                                 }
-                            }
-                            // restore index name
-                            this.index = indexPrefix;
+                                // initialise the ngram generator
+                                ngen = new nGramGenerator(ngramSize);
+                                t2Ngen = new nGramGenerator(t2NgramSize);
+                                t1Ngen = new nGramGenerator(t1NgramSize);
 
+                                totalDocuments = (int) insert(0);
+                                if (totalDocuments != 0) {
+                                    // if ok, refresh the index, then search
+                                    es.refresh(index);
+                                    // read the index for query reduction
+                                    readESIndex(index);
+                                    EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
+                                    if (resultSet.size() != 0) {
+                                        EvalResult bestResult = resultSet.get(0);
+                                        // check for best result
+                                        if (result.getValue() > bestResult.getValue()) {
+                                            resultSet.set(0, result);
+                                        }
+                                    } else {
+                                        // add the first result twice since it's also the best result.
+                                        resultSet.add(result);
+                                    }
+                                    // collect the result
+                                    resultSet.add(result);
+                                } else {
+                                    System.out.println("Indexing error: please check!");
+                                }
+                                // delete index
+                                if (deleteIndexAfterUse) {
+                                    if (!es.deleteIndex(index)) {
+                                        System.err.println("Cannot delete index: " + index);
+                                        System.exit(-1);
+                                    }
+                                }
+                                // restore index name
+                                this.index = indexPrefix;
+                            }
                         }
                     }
                 }
@@ -512,7 +558,6 @@ public class Siamese {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return resultSet;
     }
 
@@ -529,7 +574,7 @@ public class Siamese {
         // method counter
         long count = 0;
         int fileCount = 0;
-        System.out.println("Found " + listOfFiles.size() + " files.");
+        System.out.println("Indexing Phase: found " + listOfFiles.size() + " files.");
         for (File file : listOfFiles) {
             try {
                 String license = "none";
@@ -542,11 +587,8 @@ public class Siamese {
                     System.out.println(fileCount + ": " + filePath);
                 fileCount++;
                 // parse each file into method (if possible)
-                MethodParser methodParser = initialiseMethodParser(
-                        file.getAbsolutePath(),
-                        prefixToRemove,
-                        parseMode,
-                        isPrint);
+                MethodParser methodParser = initialiseMethodParser(file.getAbsolutePath(),
+                        prefixToRemove, parseMode, isPrint);
                 ArrayList<Method> methodList;
                 try {
                     methodList = methodParser.parseMethods();
@@ -562,22 +604,23 @@ public class Siamese {
                             default:
                                 license = "none";
                         }
+                        // level is in the file in the root, use it if cannot find localised license
+                        if ((license.equals("unknown") || license.equals("none"))
+                                && !this.fileLicense.equals("unknown")) {
+                            license = this.fileLicense;
+                        }
                     }
-
-                    // level is in the file in the root, use it if cannot find localised license
-                    if ((license.equals("unknown") || license.equals("none"))
-                            && !this.fileLicense.equals("unknown")) {
-                        license = this.fileLicense;
-                    }
-
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 // Create Document object and put in an array list
-                                String normSource = tokenize(method.getSrc(), tokenizer, isNgram);
-                                String tokenizedSource = tokenize(method.getSrc(), origTokenizer, false);
+                                String normSource = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
+                                String t2Source = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
+                                String t1Source = tokenize(method.getSrc(), t1Tokenizer, isNgram, t1Ngen);
+                                String tokenizedSource = tokenize(method.getComment() + " " +
+                                        method.getSrc(), origTokenizer, false, ngen);
                                 String finalUrl = this.url;
                                 if (!finalUrl.equals("none")) {
                                     String prefix = inputFolder;
@@ -591,8 +634,11 @@ public class Siamese {
                                         method.getStartLine(),
                                         method.getEndLine(),
                                         normSource,
+                                        t2Source,
+                                        t1Source,
                                         tokenizedSource,
-                                        method.getSrc(),
+//                                        method.getSrc(),
+                                        "", // TODO: insert empty original code for performance now.
                                         license,
                                         finalUrl);
                                 // add document to array
@@ -605,7 +651,6 @@ public class Siamese {
                     System.out.println("ERROR: error while extracting methods.");
                     e.printStackTrace();
                 }
-
                 if (this.indexingMode.equals(Settings.IndexingMode.SEQUENTIAL)) {
                     try {
                         isIndexed = es.sequentialInsert(index, type, docArray);
@@ -614,11 +659,10 @@ public class Siamese {
                         System.exit(0);
                     }
                     // something wrong with indexing, return false
-                    if (!isIndexed)
+                    if (!isIndexed) {
                         throw new Exception("Cannot insert docId " + count + " in sequential mode");
-                    else {
-                        // reset the array list
-                        docArray.clear();
+                    } else {
+                        docArray.clear(); // reset the array list
                     }
                 } else if (this.indexingMode.equals(Settings.IndexingMode.BULK)) {
                     // index every N docs (bulk insertion mode)
@@ -633,7 +677,6 @@ public class Siamese {
                         }
                     }
                 }
-
                 if (fileCount % printEvery == 0) {
                     double percent = (double) fileCount * 100 / listOfFiles.size();
                     DecimalFormat df = new DecimalFormat("#.00");
@@ -644,7 +687,6 @@ public class Siamese {
                 System.out.println("ERROR: error while indexing a file: " + file.getAbsolutePath() + ". Skip.");
             }
         }
-
         // the last batch
         if (this.indexingMode.equals(Settings.IndexingMode.BULK) && docArray.size() != 0) {
             isIndexed = es.bulkInsert(index, type, docArray);
@@ -662,8 +704,7 @@ public class Siamese {
                     + " [" + df.format(percent) + "%] documents (" + count + " methods).");
         }
         // successfully indexed, return true
-        System.out.println("Successfully indexed documents.");
-
+//        System.out.println("Successfully indexed documents.");
         return count;
     }
 
@@ -673,28 +714,22 @@ public class Siamese {
             int size,
             boolean queryReduction,
             OutputFormatter formatter) throws Exception {
-
         String qr = "no_qr";
-        if (queryReduction) {
-            qr = "qr";
-        }
+        if (queryReduction) qr = "qr";
         String outToFile = "";
-
         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH-mm-S");
         Date dateobj = new Date();
         String outfilePath = outputFolder + "/" + index + "_" + qr + "_" + df.format(dateobj);
-        if (formatter.getFormat().equals("csv"))
+        if (formatter.getFormat().contains("csv"))
             outfilePath += ".csv";
         else
             outfilePath += ".xml";
         File outfile = new File(outfilePath);
-
         // if file doesn't exists, then create it
         boolean isCreated = false;
         if (!outfile.exists()) {
             isCreated = outfile.createNewFile();
         }
-
         if (isCreated) {
             FileWriter fw = new FileWriter(outfile.getAbsoluteFile(), true);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -703,39 +738,33 @@ public class Siamese {
             extensions[0] = extension;
             File folder = new File(inputFolder);
             List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
-            System.out.println("Found: " + listOfFiles.size() + " files.");
-
+            System.out.println("Querying Phase: found " + listOfFiles.size() + " files.");
             int count = 0;
             int methodCount = 0;
-
             // reset the output buffer
             outToFile = "";
             if (formatter.getFormat().equals("gcf")) {
                 outToFile += "<CloneClasses>\n";
             }
-
             for (File file : listOfFiles) {
                 if (isPrint)
                     System.out.println(count + ": " + file.getAbsolutePath());
                 // parse each file into methods (if possible)
-                MethodParser methodParser = initialiseMethodParser(
-                        file.getAbsolutePath(),
-                        prefixToRemove,
-                        parseMode,
-                        isPrint);
+                MethodParser methodParser = initialiseMethodParser(file.getAbsolutePath(),
+                        prefixToRemove, parseMode, isPrint);
                 ArrayList<Method> methodList;
-                String query = "";
+                String t3Query = "";
+                String t2Query = "";
+                String t1Query = "";
                 String origQuery = "";
                 try {
                     methodList = methodParser.parseMethods();
                     String license = methodParser.getLicense();
-
                     ArrayList<Document> results = new ArrayList<>();
-
                     // check if there's a method
                     if (methodList.size() > 0) {
                         for (Method method : methodList) {
-
+                            methodCount++;
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
                                 /* TODO: fix this some time. It's weird to have a list with only a single object. */
@@ -747,33 +776,57 @@ public class Siamese {
                                 q.setEndline(method.getEndLine());
                                 outToFile += formatter.format(q, prefixToRemove, license);
 
-                                NormalizerMode tmode = new NormalizerMode();
-                                char[] noNormMode = {'x'};
-                                tmode.setTokenizerMode(noNormMode);
-                                origQuery = tokenize(method.getSrc(), origTokenizer, false);
-                                query = tokenize(method.getSrc(), tokenizer, isNgram);
-
-                                // query size limit is enforced
+                                // t3Query size limit is enforced
                                 if (queryReduction) {
                                     long docCount = getIndicesStats();
-                                    query = reduceQuery(query, "src", this.qrPercentileNorm * docCount / 100);
-                                    origQuery = reduceQuery(origQuery, "tokenizedsrc", this.qrPercentileOrig * docCount / 100);
+                                    if (enableRep[3])
+                                        t3Query = reduceQuery(tokenizeAsArray(method.getSrc(), tokenizer, isNgram, ngen),
+                                            "src", this.qrPercentileNorm * docCount / 100);
+                                    if (enableRep[2])
+                                        t2Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t2Tokenizer),
+                                            "t2src", this.qrPercentileT2 * docCount / 100);
+                                    if (enableRep[1])
+                                        t1Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t1Tokenizer),
+                                            "t1src", this.qrPercentileT1 * docCount / 100);
+                                    if (enableRep[0])
+                                        origQuery = reduceQuery(tokenizeAsArray(method.getComment() + " " +
+                                                    method.getSrc(), origTokenizer, false, ngen),
+                                            "tokenizedsrc",
+                                            this.qrPercentileOrig * docCount / 100);
                                     if (isPrint) {
-                                        System.out.println("NQ," + this.qrPercentileNorm * docCount / 100 + "," + methodCount + " : " + query);
-                                        System.out.println("OQ," + this.qrPercentileOrig * docCount / 100 + "," + methodCount + " : " + origQuery);
+                                        System.out.println("T3Q," + this.qrPercentileNorm * docCount / 100 + "," +
+                                                methodCount + " : " + t3Query);
+                                        System.out.println("T2Q," + this.qrPercentileT2 * docCount / 100 + "," +
+                                                methodCount + " : " + t2Query);
+                                        System.out.println("T1Q," + this.qrPercentileT1 * docCount / 100 + "," +
+                                                methodCount + " : " + t1Query);
+                                        System.out.println("T0Q," + this.qrPercentileOrig * docCount / 100 + "," +
+                                                methodCount + " : " + origQuery);
                                     }
+                                } else {
+                                    if (enableRep[3])
+                                        t3Query = tokenize(method.getSrc(), tokenizer, isNgram, ngen);
+                                    if (enableRep[2])
+                                        t2Query = tokenize(method.getSrc(), t2Tokenizer, isNgram, t2Ngen);
+                                    if (enableRep[1])
+                                        t1Query = tokenize(method.getSrc(), t1Tokenizer, isNgram, t1Ngen);
+                                    if (enableRep[0])
+                                        origQuery = tokenize(method.getComment() + " " + method.getSrc(),
+                                            origTokenizer, false, ngen);
                                 }
 
-//                                // TODO: only for experiment. Remove after finished.
-//                                origQuery = "";
-//                                System.out.println(query);
-//                                System.out.println(origQuery);
-
                                 // search for results depending on the MR setting
-                                if (this.multiRep)
-                                    results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
-                                else
-                                    results = es.search(index, type, query, isPrint, isDFS, offset, size);
+                                if (this.multiRep) {
+                                    results = es.search(index, type, origQuery, t3Query, t2Query, t1Query,
+                                            origBoost, normBoost, t2Boost, t1Boost, isPrint, isDFS, offset, size);
+//                                    System.out.println("T3: " + t3Query);
+//                                    System.out.println("T2: " + t2Query);
+//                                    System.out.println("T1: " + t1Query);
+//                                    System.out.println("T0: " + origQuery);
+                                } else {
+                                    results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
+//                                    System.out.println("T0: " + origQuery);
+                                }
 
                                 if (this.computeSimilarity) {
                                     int[] sim = computeSimilarity(origQuery, results);
@@ -781,57 +834,29 @@ public class Siamese {
                                 } else {
                                     outToFile += formatter.format(results, prefixToRemove);
                                 }
-                                methodCount++;
                             }
                         }
-                    } /* else {
-                        // check minimum size
-                        if (MyUtils.countLines(file.getAbsolutePath()) >= minCloneLine) {
-                            origQuery = tokenize(file, origTokenizer, false);
-                            query = tokenize(file, tokenizer, isNgram);
-                            // search for results depending on the MR setting
-                            if (this.multiRep)
-                                results = es.search(index, type, origQuery, query, origBoost, normBoost, isPrint, isDFS, offset, size);
-                            else
-                                results = es.search(index, type, query, isPrint, isDFS, offset, size);
-                            outToFile += file.getAbsolutePath().replace(prefixToRemove, "") +
-                                    "_noMethod#-1#-1#none,";
-                            if (this.computeSimilarity) {
-                                int[] sim = computeSimilarity(origQuery, results);
-                                outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
-                            } else {
-                                outToFile += formatter.format(results, prefixToRemove);
-                            }
-                            outToFile += "\n";
-                        }
-                    } */
-
+                    }
                     count++;
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());
-//                    System.out.println("ERROR: file " + count +" generates query term size exceeds 4096 (too big).");
                 }
-
                 if (count % printEvery == 0) {
                     double percent = (double) count * 100 / listOfFiles.size();
                     DecimalFormat percentFormat = new DecimalFormat("#.00");
                     System.out.println("Searched " + count
                             + " [" + percentFormat.format(percent) + "%] documents (" + methodCount + " methods).");
-
                     bw.write(outToFile);
                     // reset the output to print
                     outToFile = "";
                 }
             }
-
             if (formatter.getFormat().equals("gcf")) {
                 outToFile += "</CloneClasses>\n";
             }
             // flush the last part of output
             bw.write(outToFile);
-
             bw.close();
             System.out.println("Searching done for " + count + " files (" + methodCount + " methods after clone size filtering).");
             System.out.println("See output at " + outfile.getAbsolutePath());
@@ -851,18 +876,18 @@ public class Siamese {
         return simResults;
     }
 
-    private String reduceQuery(String query, String field, double limit) {
+    private String reduceQuery(ArrayList<String> query, String field, double limit) {
         // find the top-N rare terms in the query
-        String tmpQuery = query;
+        ArrayList<String> tmpQuery = query;
         // clear the query
-        query = "";
+        String queryStr = "";
         ArrayList<JavaTerm> sortedTerms = sortTermsByFreq(index, field, tmpQuery);
         for (int i=0; i<sortedTerms.size(); i++) {
             if (sortedTerms.get(i).getFreq() <= limit) {
-                query += sortedTerms.get(i).getTerm() + " ";
+                queryStr += sortedTerms.get(i).getTerm() + " ";
             }
         }
-        return query;
+        return queryStr;
     }
 
 
@@ -969,20 +994,40 @@ public class Siamese {
         return src;
     }
 
-//    private String tokenize(String sourcecode, NormalizerMode modes, boolean isNgram) throws Exception {
-    private String tokenize(String sourcecode, Tokenizer tokenizer, boolean isNgram) throws Exception {
-        String src;
-//        Normalizer normalizer = initialiseNormalizer(modes);
-//        Tokenizer tokenizer = initialiseTokenizer(normalizer);
-
+    private String tokenize(String sourcecode, Tokenizer tokenizer,
+                            boolean isNgram, nGramGenerator ngen) throws Exception {
         // generate tokens
         ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
         // enter ngram mode
         if (isNgram)
-            src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
+            return printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
         else
-            src = printArray(tokens, false);
+            return printArray(tokens, false);
+    }
+
+    private ArrayList<String> tokenizeAsArray(String sourcecode, Tokenizer tokenizer,
+                                              boolean isNgram, nGramGenerator ngen) throws Exception {
+        // generate tokens
+        ArrayList<String> tokens = tokenizer.getTokensFromString(sourcecode);
+        if (isNgram)
+            return ngen.generateNGramsFromJavaTokens(tokens);
+        else
+            return tokens;
+    }
+
+    private String tokenizeLine(String sourcecode, Tokenizer tokenizer) throws Exception {
+        String src;
+        // generate tokens
+        ArrayList<String> tokens = tokenizer.getTokenLinesFromString(sourcecode);
+        src = printArray(tokens, false);
         return src;
+    }
+
+    private ArrayList<String> tokenizeLineAsArray(String sourcecode, Tokenizer tokenizer) throws Exception {
+        String src;
+        // generate tokens
+        ArrayList<String> tokens = tokenizer.getTokenLinesFromString(sourcecode);
+        return tokens;
     }
 
     public long getIndicesStats() {
@@ -992,42 +1037,34 @@ public class Siamese {
     public void analyseTermFreq(String indexName, String field, String freqType, String outputFileName) {
         String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
-        ArrayList<JavaTerm> tokFreq = new ArrayList<>();
-        ClassicSimilarity similarity = new ClassicSimilarity();
-
+        DecimalFormat df = new DecimalFormat("#.00");
+        int printEvery = 100000;
         File outputFile = new File(outputFileName);
         if (outputFile.exists()) {
             outputFile.delete();
         }
-
         /* adapted from
         https://stackoverflow.com/questions/28244961/lucene-4-10-2-calculate-tf-idf-for-all-terms-in-index
          */
         int count = 0;
         try {
             IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
-            int docnum = reader.numDocs();
             Fields fields = MultiFields.getFields(reader);
             Terms terms = fields.terms(field);
-
             TermsEnum termsEnum = terms.iterator();
             int size = 0;
-
             // TODO: is there a better solution?
             // iterate to get the size
             while (termsEnum.next() != null) {
                 size++;
             }
-
             String[] termArr = new String[size];
             long[] freqArr = new long[size];
-
             // do the real work
             termsEnum = terms.iterator();
             while (termsEnum.next() != null) {
                 String term = termsEnum.term().utf8ToString();
                 long tfreq = 0;
-
                 if (freqType.equals("tf"))
                     tfreq = termsEnum.totalTermFreq();
                 else if (freqType.equals("df"))
@@ -1036,33 +1073,43 @@ public class Siamese {
                     System.out.println("Wrong frequency. Quit!");
                     System.exit(0);
                 }
-
                 termArr[count] = term;
                 freqArr[count] = tfreq;
-                count++;
-
-                if (count % 10000 == 0) {
-//                    System.out.println("Processed " + count + " terms");
+                if (count % printEvery == 0) {
+                    System.out.println("processed: " + count + " terms "
+                            + " [" + df.format((count * 100)/size) + "%]");
                 }
-
-//                System.out.println(term + "," + tfreq);
-//                MyUtils.writeToFile("./", "tok_freq.csv", term + "," + tfreq + "\n", true);
+                count++;
             }
-            System.out.println("Total: " + count);
-
+            System.out.println(field + ": total = " + count);
             double[] data = new double[size];
             String output = "freq\n";
             for (int i = 0; i < freqArr.length; i++) {
                 data[i] = freqArr[i];
                 output += freqArr[i] + "\n";
-                if (i > 0 && i % 10000 == 0) {
-//                    System.out.println("Saving " + (i) + " terms.");
+                if (i > 0 && i % printEvery == 0) {
                     MyUtils.writeToFile("./",outputFileName, output, true);
+                    System.out.println("written: " + i + " terms "
+                            + " [" + df.format((i * 100)/size) + "%]");
                     output = "";
                 }
             }
             // write the rest to the file
             MyUtils.writeToFile("./",outputFileName, output, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Read the ES index file
+     * @param indexName the name of the index
+     */
+    private void readESIndex(String indexName) {
+        String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
+                + indexName + "/0/index";
+        try {
+            esIndexRader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1074,32 +1121,24 @@ public class Siamese {
      * @param terms query containing search terms
      * @return selected top-selectionRatio terms
      */
-    private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String field, String terms) {
-
-        String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
-                + indexName + "/0/index";
+    private ArrayList<JavaTerm> sortTermsByFreq(String indexName, String field, ArrayList<String> terms) {
         ArrayList<JavaTerm> selectedTermsArray = new ArrayList<>();
-
         try {
-            IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
-            String[] termsArr = terms.split(" ");
-            for (String term: termsArr) {
+            for (String term: terms) {
                 // TODO: get rid of the blank term (why it's blank?)
                 if (!term.equals("")) {
                     Term t = new Term(field, term);
-                    int freq = reader.docFreq(t);
+                    int freq = esIndexRader.docFreq(t);
                     JavaTerm newTerm = new JavaTerm(term, freq);
                     if (!selectedTermsArray.contains(newTerm))
                         selectedTermsArray.add(newTerm);
                 }
             }
-
             /* copied from https://stackoverflow.com/questions/18441846/how-to-sort-an-arraylist-in-java */
             Collections.sort(selectedTermsArray);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return selectedTermsArray;
     }
 

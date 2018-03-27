@@ -9,6 +9,7 @@ nicad_methods = [22, 50, 178, 423, 1723, 6601, 28030, 111190]
 iclones_methods = [22, 50, 178, 1723, 6601, 28030]
 jplag_methods = [22, 50, 178, 423, 1723, 6601, 28030]
 simian_methods = [22, 50, 178, 423, 1723, 6601, 28030]
+deckard_methods = [22, 50, 178, 423, 1723, 6601, 28030, 111190]
 
 siamese = [4.13, 2.95, 4.62, 8.4, 11.94,
            36.22, 172.90, 614.90, 2077.04, 9089,
@@ -21,6 +22,7 @@ nicad = [0.34, 0.66, 2.21, 7.89, 26.50,
 iclones = [0.59, 0.67, 3.06, 4.82, 14.97, 166.95]
 jpag = [0.37, 0.91, 0.89, 1.02, 3.83, 57.92, 890.08]
 simian = [0.25, 0.30, 0.47, 2.14, 25.90, 401.93, 6506]
+deckard = [1.57, 3.59, 8.26, 18.05, 119.77, 1152.13, 462.07, 124528.96]
 
 # # seconds
 # fig = plt.figure()
@@ -46,6 +48,7 @@ nicad_m = [x / 60 for x in nicad]
 iclones_m = [x / 60 for x in iclones]
 jplag_m = [x / 60 for x in jpag]
 simian_m = [x / 60 for x in simian]
+deckard_m = [x / 60 for x in deckard]
 
 fig = plt.figure()
 # ax = fig.add_subplot(111)
@@ -55,6 +58,7 @@ plt.plot(nicad_methods, nicad_m, c="g", marker="o", label="NiCad")
 plt.plot(iclones_methods, iclones_m, c="c", marker="v", label="iClones")
 plt.plot(jplag_methods, jplag_m, c="m", marker="^", label="JPlag")
 plt.plot(simian_methods, simian_m, c="y", marker="<", label="Simian")
+plt.plot(deckard_methods, deckard_m, c="k", marker=">", label="Deckard")
 plt.yscale('log', basey=10)
 plt.xscale('log', basex=10)
 plt.xlabel("No. of methods")

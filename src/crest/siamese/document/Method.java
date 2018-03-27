@@ -9,6 +9,7 @@ public class Method {
     private String className;
     private String name;
     private String header;
+    private String comment;
     private String src;
     private int startLine;
     private int endLine;
@@ -26,6 +27,7 @@ public class Method {
                   String methodPackage,
                   String className,
                   String name,
+                  String comment,
                   String src,
                   int startLine,
                   int endLine,
@@ -35,6 +37,7 @@ public class Method {
         this.methodPackage = methodPackage;
         this.className = className;
         this.name = name;
+        this.comment = comment;
         this.src = src;
         this.startLine = startLine;
         this.endLine = endLine;
@@ -130,6 +133,14 @@ public class Method {
 
     public void setMethodPackage(String methodPackage) {
         this.methodPackage = methodPackage;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String toString() {

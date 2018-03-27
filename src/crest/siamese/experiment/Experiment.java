@@ -39,14 +39,17 @@ public class Experiment {
             "wvo", "wvod", "wvs", "wvsd", "wvsk", "wvskd", "wvsko", "wvskod", "wvso", "wvsod"};
     private static String[] normModesText = { "x" };
     private static String[] normModesDefault = { "djkopsvw" };
+//    private static String[] normModesDefault = { "dsvw" };
+//    private static String[] normModesDefault = { "x" };
     private static int[] ngramSizesAll = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
     private static int[] ngramSizesText = { 1 };
     private static int[] ngramSizeDefault = { 15 };
 
-    private static double[] dfCapNorm = { 5, 10, 20 };
-    private static double[] dfCapOrig = { 10, 20, 40, 60 };
-//    private static double[] dfCapNorm = { 5 };
-//    private static double[] dfCapOrig = { 20 };
+//    private static double[] dfCapNorm = { 5, 10, 20 };
+//    private static double[] dfCapOrig = { 10, 20, 40, 60 };
+    private static double[] dfCapNorm = { 5 };
+    private static double[] dfCapT2 = { 10 };
+    private static double[] dfCapOrig = { 20 };
 
     private static String inputDir;
     private static String workingDir;
@@ -59,8 +62,7 @@ public class Experiment {
     private static String cloneClusterFilePrefix = "clone_clusters";
 
     public static void main(String[] args) {
-
-        configFile = "config_cloplag.properties";
+        configFile = args[0];
         readFromConfigFile(configFile);
         cloneClusterFilePrefix = cloneClusterFile + "_" + cloneClusterFilePrefix;
 
@@ -152,10 +154,7 @@ public class Experiment {
                 + " = " + bestResults.get(0).getSetting() + "," + bestResults.get(0).getValue());
 
         String qr = "no_qr";
-        if (!queryReduction) {
-            System.out.println("No query reduction");
-        } else {
-            System.out.println("Query reduction enabled");
+        if (queryReduction) {
             qr = "qr";
         }
 
@@ -183,6 +182,8 @@ public class Experiment {
 
             mode = prop.getProperty("similarityMode");
             cloneClusterFile = prop.getProperty("cloneClusterFile");
+
+            ngramSizeDefault[0] = Integer.parseInt(prop.getProperty("ngramSize"));
 
             String errMeasureConfig = prop.getProperty("errorMeasure");
             if (errMeasureConfig.equals("arp"))
@@ -243,6 +244,7 @@ public class Experiment {
                 normModes,
                 ngramSizes,
                 dfCapNorm,
+                dfCapT2,
                 dfCapOrig,
                 cloneClusterFilePrefix);
     }

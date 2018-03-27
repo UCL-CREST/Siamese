@@ -26,17 +26,15 @@ def read_csv(filename):
     return df_sorted
 
 
-def plot(df1, df2, index=''):
-    result = pd.concat([df2, df1], axis=1, join_axes=[df2.index])
+def plot(df0, df1, df2, df3, index=''):
+    result = pd.concat([df3, df2, df1, df0], axis=1, join_axes=[df0.index])
     result.index += 1
     result = result.reset_index()
-    # print(result)
-    result.columns = ['index', 'freq', 'freq']
-    # print(result)
+    result.columns = ['index', 'freq', 'freq', 'freq', 'freq']
     print('plotting ...')
     # normal scale
-    ax = result.plot(x='index', y='freq')
-    ax.legend(['original', 'normalised'], prop={'size': 18})
+    ax = result.plot(x='index', y='freq', style=['r-', 'g--', 'b-.', 'k:'])
+    ax.legend(['tokens', 'T1', 'T2', 'T3'], prop={'size': 18})
     ax.set_xlabel("token rank (" + index + ")")
     ax.set_xlim(0, 1000)
     ax.set_ylabel("document frequency (DF)")
@@ -51,26 +49,15 @@ def plot(df1, df2, index=''):
     ax.yaxis.set_major_formatter(mkformatter)
 
     fig = ax.get_figure()
+    # fig.set_size_inches(4, 5)
     fig.savefig('../figure_df_' + index + '.pdf', bbox_inches='tight')
-    # # Not needed anymore
-    # # log scale
-    # ax = result.plot(x='index', y='freq')
-    # ax.legend(['original', 'normalised'])
-    # ax.set_xlabel("log(rank)")
-    # ax.set_ylabel("log(frequency)")
-    # ax.set_xscale("log", nonposx='clip')
-    # ax.set_yscale("log", nonposy='clip')
-    # fig = ax.get_figure()
-    # fig.savefig('figure_log.pdf', bbox_inches='tight')
 
 
-def plot_no_label(df1, df2, index=''):
-    result = pd.concat([df2, df1], axis=1, join_axes=[df2.index])
+def plot_no_label(df0, df1, df2, df3, index=''):
+    result = pd.concat([df3, df2, df1, df0], axis=1, join_axes=[df0.index])
     result.index += 1
     result = result.reset_index()
-    # print(result)
-    result.columns = ['index', 'freq', 'freq']
-    # print(result)
+    result.columns = ['index', 'freq', 'freq', 'freq', 'freq']
     print('plotting ...')
     # normal scale
     ax = result.plot(x='index', y='freq')
@@ -166,12 +153,14 @@ def main():
     # print('processing CSVs ...')
     index = 'qualitas'
     df_src_sorted = read_csv('../freq_df_src_' + index + '.csv')
+    df_t2src_sorted = read_csv('../freq_df_t2src_' + index + '.csv')
+    df_t1src_sorted = read_csv('../freq_df_t1src_' + index + '.csv')
     df_toksrc_sorted = read_csv('../freq_df_toksrc_' + index + '.csv')
 
-    if index == 'qualitas' or index == 'bcb':
-        plot_no_label(df_src_sorted, df_toksrc_sorted, index)
-    else:
-        plot(df_src_sorted, df_toksrc_sorted, index)
+    # if index == 'qualitas' or index == 'bcb':
+    #     plot_no_label(df_src_sorted, df_toksrc_sorted, df_t2src_sorted, index)
+    # else:
+    plot(df_src_sorted, df_t2src_sorted, df_t1src_sorted, df_toksrc_sorted, index)
     # print('computing slopes ...')
     # compute_slopes(df_toksrc_sorted)
     # plot_slopes('../slopes.csv')

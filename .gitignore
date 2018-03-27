@@ -1,4 +1,5 @@
 .idea
+bcb_clones
 target/classes
 target
 elasticsearch.iml
@@ -32,3 +33,5 @@ BellonClonesReader/bellon_benchmark
 BellonClonesReader/queries
 exp_results
 queries
+results/bcb_query_time
+results/TermFreq

@@ -43,14 +43,16 @@ import static org.elasticsearch.common.xcontent.XContentFactory.*;
 public class ESConnector {
 	private Client client;
 	private String host;
+	private String cluster;
 
-	public ESConnector(String host) {
+	public ESConnector(String host, String cluster) {
 		this.host = host;
+		this.cluster = cluster;
 	}
 
     public Client startup() throws UnknownHostException {
 		org.elasticsearch.common.settings.Settings settings = org.elasticsearch.common.settings.Settings
-				.settingsBuilder().put("cluster.name", "stackoverflow").build();
+				.settingsBuilder().put("cluster.name", cluster).build();
 		// on startup
 		client = TransportClient.builder().settings(settings).build()
 				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), 9300));
@@ -82,6 +84,8 @@ public class ESConnector {
                         .field("startline", d.getStartLine())
                         .field("endline", d.getEndLine())
                         .field("src", d.getSource())
+						.field("t2src", d.getT2Source())
+						.field("t1src", d.getT1Source())
                         .field("tokenizedsrc", d.getTokenizedSource())
                         .field("origsrc", d.getOriginalSource())
                         .field("license", d.getLicense())
@@ -124,6 +128,8 @@ public class ESConnector {
 								.field("startline", d.getStartLine())
 								.field("endline", d.getEndLine())
 								.field("src", d.getSource())
+								.field("t2src", d.getT2Source())
+								.field("t1src", d.getT1Source())
                                 .field("tokenizedsrc", d.getTokenizedSource())
 								.field("origsrc", d.getOriginalSource())
 								.field("license", d.getLicense())
@@ -219,7 +225,6 @@ public class ESConnector {
 
     public ArrayList<Document> search(String index, String type, String query, boolean isPrint
 			, boolean isDFS, int resultOffset, int resultSize) throws Exception {
-
         SearchType searchType;
 
         if (isDFS)
@@ -230,7 +235,7 @@ public class ESConnector {
 		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
 				.addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
 				.addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
-				.setQuery(QueryBuilders.matchQuery("src", query)).setFrom(resultOffset).setSize(resultSize).execute()
+				.setQuery(QueryBuilders.matchQuery("tokenizedsrc", query)).setFrom(resultOffset).setSize(resultSize).execute()
 				.actionGet();
 		SearchHit[] hits = response.getHits().getHits();
 
@@ -242,8 +247,12 @@ public class ESConnector {
             String type,
             String origQuery,
             String query,
+            String t2Query,
+			String t1Query,
             int origBoost,
             int normBoost,
+            int t2Boost,
+			int t1Boost,
             boolean isPrint,
             boolean isDFS,
             int resultOffset,
@@ -270,6 +279,20 @@ public class ESConnector {
                         QueryBuilders.matchQuery("tokenizedsrc", origQuery)
                                 .boost(origBoost)
                 )
+				.should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
+						QueryBuilders.matchQuery("t2src", t2Query)
+								.boost(t2Boost)
+				)
+				.should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
+						QueryBuilders.matchQuery("t1src", t1Query)
+								.boost(t1Boost)
+				)
                 .should(
 //                		QueryBuilders.commonTermsQuery("src", query)
 //								.cutoffFrequency(cutoff)
@@ -336,6 +359,8 @@ public class ESConnector {
                         Integer.parseInt(hit.getSource().get("startline").toString()),
                         Integer.parseInt(hit.getSource().get("endline").toString()),
                         hit.getSource().get("src").toString(),
+						hit.getSource().get("t2src").toString(),
+						hit.getSource().get("t1src").toString(),
                         hit.getSource().get("tokenizedsrc").toString(),
                         hit.getSource().get("origsrc").toString(),
                         hit.getSource().get("license").toString(),

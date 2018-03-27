@@ -56,7 +56,7 @@ public class NormalizerMode {
 		operator = Settings.Normalize.OPERATOR_NORM_OFF;
 	}
 
-	public NormalizerMode setTokenizerMode(char[] normOptions) {
+	public static NormalizerMode setTokenizerMode(char[] normOptions) {
 
 		NormalizerMode modes = new NormalizerMode();
 
