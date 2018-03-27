@@ -1,5 +1,6 @@
-for x in "bigclonebench_utf8_1shard"; do
-#for x in "4" "16" "64" "256" "1024" "4096" "16384" "65536" "262144" "1048576"; do
+#!/bin/sh
+#for x in "bigclonebench_utf8_1shard"; do
+for x in "4" "16" "64" "256" "1024" "4096" "16384" "65536" "262144" "1048576"; do
   echo $x
   count=1
   for i in `seq 1 100`; do
