@@ -1,4 +1,5 @@
 .idea
+bcb_clones
 target/classes
 target
 elasticsearch.iml

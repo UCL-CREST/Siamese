@@ -1,8 +1,16 @@
 package crest.siamese.helpers;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class MyUtils {
     public static int countLines(String filename) throws IOException {
@@ -63,5 +71,47 @@ public class MyUtils {
             e.printStackTrace();
         }
         return true;
+    }
+
+    public static boolean deleteFile(String folder, String fileName) {
+        File f = new File(folder + "/" + fileName);
+        return f.delete();
+    }
+
+    public static boolean copyFile(String fileName, String from, String to) {
+        File fromFile = null;
+        File toFile = new File(to + "/" + fileName);
+        // check the location of the file in the 3 subfolders
+        fromFile = new File(from + "/" + fileName);
+        try {
+            FileUtils.copyFile(fromFile, toFile);
+        } catch (IOException e) {
+            System.out.println("ERROR: cannot copy file. " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public static void saveClone(String loc, String filename, String[] lines, int start, int end) {
+        String cloneStr = "";
+        for (int i=start-1; i<end; i++) {
+            cloneStr += lines[i] + "\n";
+        }
+        writeToFile(loc, filename, cloneStr,false);
+    }
+
+    public static String[] readFile(String filename) throws IOException {
+        Path filePath = new File(filename).toPath();
+        Charset charset = Charset.defaultCharset();
+        List<String> stringList = Files.readAllLines(filePath, charset);
+        String[] stringArray = stringList.toArray(new String[]{});
+        return stringArray;
+    }
+
+    public static Date getCurrentTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+        return date;
     }
 }

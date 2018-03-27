@@ -203,9 +203,11 @@ public class Siamese {
 
             deleteIndexAfterUse = Boolean.parseBoolean(prop.getProperty("deleteIndexAfterUse"));
 
-            prefixToRemove = inputFolder;
-            if (!prefixToRemove.endsWith("/"))
-                prefixToRemove += "/"; // append / at the end
+            // TODO: do we need this?
+//            prefixToRemove = inputFolder;
+//            if (!prefixToRemove.endsWith("/"))
+//                prefixToRemove += "/"; // append / at the end
+            prefixToRemove = "";
 
             elasticsearchLoc = prop.getProperty("elasticsearchLoc");
             outputFormat = prop.getProperty("outputFormat");
