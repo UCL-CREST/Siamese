@@ -44,6 +44,8 @@ public class Settings {
 		public static final int STRING_NORM_OFF = 0;
 		public static final int VALUE_NORM_ON = 1;
 		public static final int VALUE_NORM_OFF = 0;
+		public static final int OPERATOR_NORM_ON = 1;
+		public static final int OPERATOR_NORM_OFF = 0;
 	}
 	
 	public class IndexingMode {

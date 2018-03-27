@@ -22,6 +22,8 @@ public class DocumentTest {
                 "import java.io.*; class BubbleSort { public static void main ( String[] args )",
                 "import java.io.*; class BubbleSort { public static void main ( String[] args )",
                 "import java.io.*; class BubbleSort { public static void main ( String[] args )",
+                "import java.io.*; class BubbleSort { public static void main ( String[] args )",
+                "import java.io.*; class BubbleSort { public static void main ( String[] args )",
                 "",
                 ""
         );
@@ -41,6 +43,8 @@ public class DocumentTest {
                 "/my/file",
                 1,
                 1,
+                "Hello world!",
+                "Hello world!",
                 "Hello world!",
                 "Hello world!",
                 "Hello world!",

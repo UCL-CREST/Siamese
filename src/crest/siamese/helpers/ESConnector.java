@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.google.gson.JsonParser;
 import crest.siamese.document.Document;
@@ -15,6 +16,7 @@ import org.elasticsearch.action.admin.indices.stats.IndicesStatsResponse;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -23,6 +25,7 @@ import org.elasticsearch.client.transport.NoNodeAvailableException;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
@@ -33,19 +36,23 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 
+import javax.management.Query;
+
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
 
 public class ESConnector {
 	private Client client;
 	private String host;
+	private String cluster;
 
-	public ESConnector(String host) {
+	public ESConnector(String host, String cluster) {
 		this.host = host;
+		this.cluster = cluster;
 	}
 
     public Client startup() throws UnknownHostException {
 		org.elasticsearch.common.settings.Settings settings = org.elasticsearch.common.settings.Settings
-				.settingsBuilder().put("cluster.name", "stackoverflow").build();
+				.settingsBuilder().put("cluster.name", cluster).build();
 		// on startup
 		client = TransportClient.builder().settings(settings).build()
 				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), 9300));
@@ -77,6 +84,8 @@ public class ESConnector {
                         .field("startline", d.getStartLine())
                         .field("endline", d.getEndLine())
                         .field("src", d.getSource())
+						.field("t2src", d.getT2Source())
+						.field("t1src", d.getT1Source())
                         .field("tokenizedsrc", d.getTokenizedSource())
                         .field("origsrc", d.getOriginalSource())
                         .field("license", d.getLicense())
@@ -119,6 +128,8 @@ public class ESConnector {
 								.field("startline", d.getStartLine())
 								.field("endline", d.getEndLine())
 								.field("src", d.getSource())
+								.field("t2src", d.getT2Source())
+								.field("t1src", d.getT1Source())
                                 .field("tokenizedsrc", d.getTokenizedSource())
 								.field("origsrc", d.getOriginalSource())
 								.field("license", d.getLicense())
@@ -165,9 +176,55 @@ public class ESConnector {
 		return maxId.longValue();
 	}
 
+	public String delete(String index, String type, String field, String query, boolean isDFS, int amount) {
+		SearchType searchType;
+		String output = "";
+		if (isDFS)
+			searchType = SearchType.DFS_QUERY_THEN_FETCH;
+		else
+			searchType = SearchType.QUERY_THEN_FETCH;
+
+		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
+				.addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
+				.addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
+				.setScroll(new TimeValue(60000))
+				.setSize(amount)
+				.setQuery(QueryBuilders.wildcardQuery(field, query)).execute()
+				.actionGet();
+
+		// Scroll until no hits are returned
+		while (true) {
+
+			SearchHit[] hits = response.getHits().getHits();
+
+			BulkRequestBuilder bulkRequest = client.prepareBulk();
+			Arrays.asList(hits).stream().forEach(h ->
+					bulkRequest.add(client.prepareDelete()
+							.setIndex(index)
+							.setType(type)
+							.setId(h.getId())));
+
+			BulkResponse bulkResponse = bulkRequest.execute().actionGet();
+
+			if (bulkResponse.hasFailures()) {
+				throw new RuntimeException(bulkResponse.buildFailureMessage());
+			} else {
+				output += "Deleted " + hits.length + " docs in " + bulkResponse.getTook() + "\n";
+			}
+
+			response = client.prepareSearchScroll(response.getScrollId())
+					.setScroll(new TimeValue(60000)).execute().actionGet();
+			//Break condition: No hits are returned
+			if (response.getHits().getHits().length == 0) {
+				break;
+			}
+		}
+
+		return output;
+	}
+
     public ArrayList<Document> search(String index, String type, String query, boolean isPrint
 			, boolean isDFS, int resultOffset, int resultSize) throws Exception {
-
         SearchType searchType;
 
         if (isDFS)
@@ -178,7 +235,7 @@ public class ESConnector {
 		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
 				.addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
 				.addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
-				.setQuery(QueryBuilders.matchQuery("src", query)).setFrom(resultOffset).setSize(resultSize).execute()
+				.setQuery(QueryBuilders.matchQuery("tokenizedsrc", query)).setFrom(resultOffset).setSize(resultSize).execute()
 				.actionGet();
 		SearchHit[] hits = response.getHits().getHits();
 
@@ -190,8 +247,12 @@ public class ESConnector {
             String type,
             String origQuery,
             String query,
+            String t2Query,
+			String t1Query,
             int origBoost,
             int normBoost,
+            int t2Boost,
+			int t1Boost,
             boolean isPrint,
             boolean isDFS,
             int resultOffset,
@@ -208,12 +269,34 @@ public class ESConnector {
         /* copied from
         https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
          */
+        float cutoff = (float) 0.05;
+        float cutoff2 = (float) 0.05;
         QueryBuilder queryBuilder = QueryBuilders.boolQuery()
                 .should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
                         QueryBuilders.matchQuery("tokenizedsrc", origQuery)
                                 .boost(origBoost)
                 )
+				.should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
+						QueryBuilders.matchQuery("t2src", t2Query)
+								.boost(t2Boost)
+				)
+				.should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
+						QueryBuilders.matchQuery("t1src", t1Query)
+								.boost(t1Boost)
+				)
                 .should(
+//                		QueryBuilders.commonTermsQuery("src", query)
+//								.cutoffFrequency(cutoff)
+//								.boost(normBoost)
                         QueryBuilders.matchQuery("src", query)
 //                                .operator(MatchQueryBuilder.Operator.AND)
                                 .boost(normBoost)
@@ -276,6 +359,8 @@ public class ESConnector {
                         Integer.parseInt(hit.getSource().get("startline").toString()),
                         Integer.parseInt(hit.getSource().get("endline").toString()),
                         hit.getSource().get("src").toString(),
+						hit.getSource().get("t2src").toString(),
+						hit.getSource().get("t1src").toString(),
                         hit.getSource().get("tokenizedsrc").toString(),
                         hit.getSource().get("origsrc").toString(),
                         hit.getSource().get("license").toString(),

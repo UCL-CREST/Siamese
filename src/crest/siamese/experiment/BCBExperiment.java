@@ -6,11 +6,14 @@ import crest.siamese.helpers.BCBEvaluator;
 import crest.siamese.helpers.MyUtils;
 import crest.siamese.main.Siamese;
 import org.apache.commons.io.FileUtils;
+import org.elasticsearch.client.transport.NoNodeAvailableException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 
 public class BCBExperiment {
@@ -18,94 +21,52 @@ public class BCBExperiment {
     private static String inputFolder;
     private static String outputFolder;
     private static int minCloneSize;
+    private static BCBEvaluator evaluator;
 
     public static void main(String[] args) {
-        String config = "config_eval_bcb.properties";
-        String bcbLoc = "/Users/Chaiyong/Downloads/dataset";
+        Date startDate = MyUtils.getCurrentTime();
+        String config = "config_bcb_search.properties";
+        String bcbLoc = "/Users/Chaiyong/Downloads/bcb_dataset";
+        String outputLoc = "bcb_clones";
         readFromConfigFile(config);
-        int resultSize = 51;
-
-        // delete the previous result file
-        File resultFile = new File("results/search_results.csv");
-        File groundTruthFile = new File("results/groundtruth.csv");
-        if (resultFile.exists())
-            resultFile.delete();
-        if (groundTruthFile.exists())
-            groundTruthFile.delete();
 
         Siamese siamese = new Siamese(config);
         siamese.startup();
+        evaluator = new BCBEvaluator();
+        evaluator.connectDB();
+//        extractClones(outputLoc, bcbLoc);
+        System.out.println("Start searching ...");
+        try {
+            siamese.execute();
+        } catch(NoNodeAvailableException nne) {
+            System.out.println("Elasticsearch is not running. Please execute the following command:\n" +
+                    "./elasticsearch-2.2.0/bin/elasticsearch -d");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        BCBEvaluator evaluator = new BCBEvaluator();
-        ArrayList<Integer> clones = evaluator.getCloneIds(700, -1, minCloneSize);
-        System.out.println("Found initial " + clones.size() + " clone groups.");
-        MyUtils.writeToFile("results", "groundtruth.csv",
-                "query,start,end,tp,total,t1,t1total,t2,t2total,t3,t3total\n", true);
+        siamese.shutdown();
+        Date endDate = MyUtils.getCurrentTime();
+        System.out.println("Elapse time (ms): " + (endDate.getTime() - startDate.getTime()));
+        evaluator.closeDBConnection();
+    }
 
-        for (int i = 0; i < clones.size(); i++) {
-
-            String outToFile = "";
-            System.out.println("\n### Query no. " + i + " ID: " + clones.get(i));
-            Document query = evaluator.getQuery(clones.get(i));
-            ArrayList<BCBDocument> cloneGroup = evaluator.getCloneGroup(clones.get(i), minCloneSize);
-            System.out.println("Clone group size: " + cloneGroup.size());
-            String queryFile = query.getFile();
-
-            boolean successful = copyBCBFile(queryFile, bcbLoc, inputFolder);
-            if (successful) {
-                String outputFile = null;
-                try {
-                    siamese.setResultOffset(0);
-
-                    // retrieve documents at double the size of the clone group.
-                    // so we can manually check for all missing pairs.
-                    siamese.setResultsSize(resultSize);
-                    outputFile = siamese.execute();
-                    System.out.println("Query size: " + resultSize + "\n" + "Q: " + query.getLocationString());
-                    evaluator.evaluateCloneQuery(query, cloneGroup, resultSize, outputFile, siamese.getComputeSimilarity(), bcbLoc);
-                    // delete the output and the query file
-                    File oFile = new File(outputFile);
-                    File qFile = new File(inputFolder + "/" + queryFile);
-                    boolean delSuccess = qFile.delete();
-                    if (!delSuccess) {
-                        System.out.println("ERROR: can't delete the query file: " + queryFile);
-                    }
-                    delSuccess = oFile.delete();
-                    if (!delSuccess) {
-                        System.out.println("ERROR: can't delete the output file: " + outputFile);
-                    }
-                    deleteBCBFile(queryFile);
-                } catch (Exception e) {
-                    System.out.println("ERROR: " + e.getMessage());
-                }
-            } else {
-                System.out.println("ERROR: can't copy the query file to " + outputFolder);
+    private static void extractClones(String outputLoc, String bcbLoc) {
+        MyUtils.createDir(outputLoc);
+        ArrayList<BCBDocument> clones = evaluator.getCloneFragments();
+        for (BCBDocument c: clones) {
+            try {
+                MyUtils.saveClone(outputLoc,
+                        c.getFile()
+                                .replace(".java", "")
+                                .replace("/", "#") + "#"  + c.getStartLine() + "#" + c.getEndLine()
+                                + ".java",
+                        MyUtils.readFile(bcbLoc + "/" + c.getFile()), c.getStartLine(), c.getEndLine());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
-        System.out.println("=============================");
-        siamese.shutdown();
-    }
-
-    public static boolean copyBCBFile(String fileName, String from, String to) {
-        File fromFile = null;
-        File toFile = new File(to + "/" + fileName);
-        // check the location of the file in the 3 subfolders
-        fromFile = new File(from + "/" + fileName);
-
-        try {
-            FileUtils.copyFile(fromFile, toFile);
-        } catch (IOException e) {
-            System.out.println("ERROR: cannot copy file. " + e.getMessage());
-            return false;
-        }
-
-        return true;
-    }
-
-    public static boolean deleteBCBFile(String fileName) {
-        File f = new File(outputFolder + "/" + fileName);
-        return f.delete();
+        System.out.println("Extracted " + clones.size() + " clones to files.");
     }
 
     private static void readFromConfigFile(String configFile) {

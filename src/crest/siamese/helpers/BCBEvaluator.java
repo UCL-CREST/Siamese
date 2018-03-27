@@ -14,44 +14,31 @@ public class BCBEvaluator extends Evaluator  {
 
     private Connection connection = null;
     private Statement stmt = null;
-    private int[] queryIDs = {
-            15247, 77532, 78884, 21155, 19968, 128812, 70932, 1761, 95983, 121803,
-            100952, 83302, 30030, 41029, 120792, 105464, 78325, 28245, 83007, 79589,
-            51877, 94629, 41035, 89548, 25927, 7503, 47322, 6039, 32324, 85558,
-            82481, 46926, 7384, 2082, 1632727, 1921449, 1676100, 702108, 759664, 2705355,
-            1919515, 2564261, 1398143, 395885, 1574657, 1023723, 2644786, 1221453, 705884, 814095,
-            2365821, 2365821, 1402632, 1402632, 1098324, 1098324 };
 
     public BCBEvaluator() {
         super();
-        /* adapted from
-        https://www.mkyong.com/jdbc/how-do-connect-to-postgresql-with-jdbc-driver-java/
-         */
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Where is your PostgreSQL JDBC Driver? "
+            System.out.println("Where is your H2 JDBC Driver? "
                     + "Include in your library path!");
             e.printStackTrace();
-            return;
+//            System.exit(0);
         }
     }
 
     public boolean connectDB() {
         try {
-            connection = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/bigclonebench",
-                    "postgres",
-                    "postgres");
-
-            if (connection == null) {
+            connection = DriverManager.
+                    getConnection("jdbc:h2:/Users/Chaiyong/Downloads/bcb_db/bcb", "sa", "");
+                        if (connection == null) {
                 System.out.println("Failed to make connection!");
             }
-
             connection.setAutoCommit(false);
             System.out.println("Opened database successfully");
             return true;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("ERROR: cannot connect to the database.");
             return false;
         }
@@ -65,12 +52,48 @@ public class BCBEvaluator extends Evaluator  {
         }
     }
 
-    private boolean isInPreviousQueryIDs(int id) {
-        for (int i: queryIDs) {
-            if (id == i)
-                return true;
+    public ArrayList<BCBDocument> getCloneFragments() {
+        if (connection == null) {
+            connectDB();
         }
-        return false;
+        ArrayList<BCBDocument> cloneList = new ArrayList<>();
+        /* adapted from
+        https://www.tutorialspoint.com/postgresql/postgresql_java.htm
+         */
+        try {
+            stmt = connection.createStatement();
+            String sql = "SELECT *\n" +
+                    "FROM (\n" +
+                    "  SELECT FUNCTION_ID_ONE\n" +
+                    "  FROM clones\n" +
+                    "  UNION SELECT FUNCTION_ID_TWO\n" +
+                    "  FROM clones\n" +
+                    ") AS A INNER JOIN FUNCTIONS ON A.FUNCTION_ID_ONE = FUNCTIONS.ID;";
+            ResultSet rs = stmt.executeQuery(sql);
+            int count = 1;
+            while (rs.next()) {
+                int id = rs.getInt("FUNCTION_ID_ONE");
+                String type = rs.getString("TYPE");
+                String name = rs.getString("NAME");
+                int start = rs.getInt("STARTLINE");
+                int end = rs.getInt("ENDLINE");
+                System.out.println(count + " " + id + " " + type + "/" + name + "(" + start + "/" + end + ")");
+                BCBDocument d = new BCBDocument();
+                d.setId(id);
+                d.setFile(type + "/" + name);
+                d.setStartline(start);
+                d.setEndline(end);
+                cloneList.add(d);
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+
+        return cloneList;
     }
 
     /***
@@ -79,6 +102,7 @@ public class BCBEvaluator extends Evaluator  {
      * @param minClonePairs threshold of the minimum no. of clone pairs for each clone id
      * @return a list of ids having clones
      */
+    @Deprecated
     public ArrayList<Integer> getCloneIds(int limit, int minClonePairs, int minCloneSize) {
         if (connection == null) {
             connectDB();
@@ -136,6 +160,7 @@ public class BCBEvaluator extends Evaluator  {
         return cloneList;
     }
 
+    @Deprecated
     public Document getQuery(int cloneId) {
         Document query = new Document();
         if (connection == null) {
@@ -167,6 +192,7 @@ public class BCBEvaluator extends Evaluator  {
         }
     }
 
+    @Deprecated
     public ArrayList<BCBDocument> getCloneGroup(int cloneId, int minCloneSize) {
         if (connection == null) {
             connectDB();
@@ -225,6 +251,7 @@ public class BCBEvaluator extends Evaluator  {
         }
     }
 
+    @Deprecated
     private int checkResults(String result, ArrayList<BCBDocument> groundTruth) {
         String[] resultSplit = result.split("#");
         for (int i=0; i<groundTruth.size(); i++) {
@@ -238,6 +265,7 @@ public class BCBEvaluator extends Evaluator  {
         return -1;
     }
 
+    @Deprecated
     public boolean evaluateCloneQuery(
             Document groundTruthQuery,
             ArrayList<BCBDocument> groundTruth,
@@ -339,6 +367,7 @@ public class BCBEvaluator extends Evaluator  {
         return false;
     }
 
+    @Deprecated
     private String printGroundTruth(ArrayList<BCBDocument> groundTruth, int tp, int type1, int type2, int type3) {
         int gtype1 = 0, gtype2 = 0, gtype3 = 0;
         String outToFile = "";
@@ -382,10 +411,12 @@ public class BCBEvaluator extends Evaluator  {
         return outToFile;
     }
 
+    @Deprecated
     private String getQueryFileName(String fileWithMethodName) {
         return fileWithMethodName.split("_")[0].trim();
     }
 
+    @Deprecated
     private boolean isQuery(Document query, String result) {
         String[] resultSplit = result.split("#");
         return getQueryFileName(query.getFile()).equals(getQueryFileName(resultSplit[0].trim())) &&

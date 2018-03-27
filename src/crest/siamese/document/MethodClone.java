@@ -9,7 +9,7 @@ public class MethodClone extends Method {
     private String cluster;
 
     public MethodClone(String file, String methodPackage, String name, String className, String src, int startLine, int endLine, List<Parameter> params, String fullHeader, String cluster) {
-        super(file, methodPackage, className, name, src, startLine, endLine, params, fullHeader);
+        super(file, methodPackage, className, name, "", src, startLine, endLine, params, fullHeader);
         this.cluster = cluster;
     }
 

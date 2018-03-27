@@ -6,6 +6,7 @@ public class NormalizerMode {
 	private int datatype;
 	private int javaClass;
 	private int javaPackage;
+	private int operator;
 	private int string;
 	private int value;
 	private int escape;
@@ -15,6 +16,7 @@ public class NormalizerMode {
 		keyword = Settings.Normalize.KEYWORD_NORM_OFF;
 		javaClass = Settings.Normalize.JAVACLASS_NORM_OFF;
 		javaPackage = Settings.Normalize.JAVAPACKAGE_NORM_OFF;
+		operator = Settings.Normalize.OPERATOR_NORM_OFF;
 		string = Settings.Normalize.STRING_NORM_OFF;
 		value = Settings.Normalize.STRING_NORM_OFF;
 		escape = Settings.Normalize.ESCAPE_OFF;
@@ -29,7 +31,8 @@ public class NormalizerMode {
             int javaPackage,
             int string,
             int value,
-            int escape) {
+            int escape,
+			int operator) {
 		this.word = word;
 		this.keyword = keyword;
 		this.javaClass = javaClass;
@@ -38,6 +41,7 @@ public class NormalizerMode {
 		this.value = value;
 		this.escape = escape;
 		this.datatype = datatype;
+		this.operator = operator;
 	}
 	
 	public void reset() {
@@ -49,15 +53,16 @@ public class NormalizerMode {
 		value = Settings.Normalize.STRING_NORM_OFF;
 		escape = Settings.Normalize.ESCAPE_OFF;
 		datatype = Settings.Normalize.DATATYPE_NORM_OFF;
+		operator = Settings.Normalize.OPERATOR_NORM_OFF;
 	}
 
-	public NormalizerMode setTokenizerMode(char[] normOptions) {
+	public static NormalizerMode setTokenizerMode(char[] normOptions) {
 
 		NormalizerMode modes = new NormalizerMode();
 
 		for (char c : normOptions) {
 			// setting all normalisation options: w, d, j, p, k, v, s
-            switch (c) {
+            switch (Character.toLowerCase(c)) {
                 case 'w':
                     modes.setWord(Settings.Normalize.WORD_NORM_ON);
                     break;
@@ -82,6 +87,9 @@ public class NormalizerMode {
                 case 's':
                     modes.setString(Settings.Normalize.STRING_NORM_ON);
                     break;
+				case 'o':
+					modes.setOperator(Settings.Normalize.OPERATOR_NORM_ON);
+					break;
                 case 'x':
                     modes.setWord(Settings.Normalize.WORD_NORM_OFF);
                     modes.setDatatype(Settings.Normalize.DATATYPE_NORM_OFF);
@@ -89,7 +97,8 @@ public class NormalizerMode {
                     modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_OFF);
                     modes.setKeyword(Settings.Normalize.KEYWORD_NORM_OFF);
                     modes.setValue(Settings.Normalize.VALUE_NORM_OFF);
-                    modes.setValue(Settings.Normalize.STRING_NORM_OFF);
+                    modes.setString(Settings.Normalize.STRING_NORM_OFF);
+                    modes.setOperator(Settings.Normalize.OPERATOR_NORM_OFF);
                     break;
                 case 'e':
                     modes.setEscape(Settings.Normalize.ESCAPE_ON);
@@ -101,7 +110,8 @@ public class NormalizerMode {
                     modes.setJavaPackage(Settings.Normalize.JAVAPACKAGE_NORM_OFF);
                     modes.setKeyword(Settings.Normalize.KEYWORD_NORM_OFF);
                     modes.setValue(Settings.Normalize.VALUE_NORM_OFF);
-                    modes.setValue(Settings.Normalize.STRING_NORM_OFF);
+                    modes.setString(Settings.Normalize.STRING_NORM_OFF);
+                    modes.setOperator(Settings.Normalize.OPERATOR_NORM_OFF);
                     break;
             }
 		}
@@ -171,5 +181,13 @@ public class NormalizerMode {
 
 	public void setDatatype(int datatype) {
 		this.datatype = datatype;
+	}
+
+	public int getOperator() {
+		return operator;
+	}
+
+	public void setOperator(int operator) {
+		this.operator = operator;
 	}
 }

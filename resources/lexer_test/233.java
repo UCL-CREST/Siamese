@@ -4,9 +4,8 @@ import java.*;
 public class Dogs5 {
     // this is a comment
     /* this is another comment */
-
     /***
-     * This is a javadoc comment
+     * This is a javadoc comment #test#
      * @param args
      * @throws Exception
      */
@@ -98,6 +97,13 @@ public class Dogs5 {
             }
         }
     }
+
+    /***
+     * Test comment
+     * @param file
+     * @return
+     * @throws Exception
+     */
     public static void executes ( String comm ) throws Exception {
         Process p = Runtime.getRuntime().exec ( new String[] {"/usr/local//bash", "-c", comm } );
         BufferedReader bf = new BufferedReader ( new InputStreamReader ( p.getErrorStream() ) );
@@ -107,6 +113,13 @@ public class Dogs5 {
         }
         p.waitFor();
     }
+
+    /***
+     * Test comment
+     * @param file
+     * @return
+     * @throws Exception
+     */
     public static String md5sum ( String file ) throws Exception {
         String cad;
         String hash = "  ";
