@@ -39,6 +39,7 @@ public class Siamese {
     private String index;
     private String type;
     private String inputFolder;
+    private String outputFolder;
     private String subInputFolder;
     private String normMode;
     private NormalizerMode modes = new NormalizerMode();
@@ -53,7 +54,6 @@ public class Siamese {
     private nGramGenerator t2Ngen;
     private nGramGenerator t1Ngen;
     private boolean isDFS;
-    private String outputFolder;
     private boolean writeToFile;
     private String extension;
     private int minCloneLine;
@@ -114,8 +114,20 @@ public class Siamese {
         prepareTokenizers();
     }
 
+    public Siamese(String configFile, String[] overridingParams) {
+        readFromConfigFile(configFile);
+        // check the overriding command line parameters
+        if (!overridingParams[0].equals("")) // input folder
+            setInputFolder(overridingParams[0]);
+        if (!overridingParams[1].equals("")) // output folder
+            setOutputFolder(overridingParams[1]);
+        if (!overridingParams[2].equals("")) // command
+            setCommand(overridingParams[2]);
+        printConfig();
+        prepareTokenizers();
+    }
+
     private void readFromConfigFile(String configFile) {
-        System.out.println(configFile);
 	    /* copied from
 	    https://www.mkyong.com/java/java-properties-file-examples/
 	     */
@@ -204,10 +216,10 @@ public class Siamese {
             deleteIndexAfterUse = Boolean.parseBoolean(prop.getProperty("deleteIndexAfterUse"));
 
             // TODO: do we need this?
-//            prefixToRemove = inputFolder;
-//            if (!prefixToRemove.endsWith("/"))
-//                prefixToRemove += "/"; // append / at the end
-            prefixToRemove = "";
+            prefixToRemove = inputFolder;
+            if (!prefixToRemove.endsWith("/"))
+                prefixToRemove += "/"; // append / at the end
+//            prefixToRemove = "";
 
             elasticsearchLoc = prop.getProperty("elasticsearchLoc");
             outputFormat = prop.getProperty("outputFormat");
@@ -232,7 +244,7 @@ public class Siamese {
             for (int i=0; i<enableRepStr.length; i++) {
                 enableRep[i] = Boolean.valueOf(enableRepStr[i]);
             }
-            System.out.println(Arrays.toString(enableRep));
+//            System.out.println(Arrays.toString(enableRep));
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -1230,30 +1242,6 @@ public class Siamese {
         return normalizer;
     }
 
-    public void setIsPrint(boolean isPrint) {
-        this.isPrint = isPrint;
-    }
-
-    public void setOutputFolder(String outputFolder) {
-        this.outputFolder = outputFolder;
-    }
-
-    public void setNormMode(String normMode) {
-        this.normMode = normMode;
-    }
-
-    public void setResultOffset(int resultOffset) {
-        this.resultOffset = resultOffset;
-    }
-
-    public void setResultsSize(int resultsSize) {
-        this.resultsSize = resultsSize;
-    }
-
-    public boolean getComputeSimilarity() {
-        return this.computeSimilarity;
-    }
-
     public void indexGitHub() throws Exception {
         if (this.inputFolder.endsWith("/"))
             this.inputFolder = StringUtils.chop(this.inputFolder);
@@ -1310,5 +1298,37 @@ public class Siamese {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    public void setIsPrint(boolean isPrint) {
+        this.isPrint = isPrint;
+    }
+
+    public void setOutputFolder(String outputFolder) {
+        this.outputFolder = outputFolder;
+    }
+
+    public void setNormMode(String normMode) {
+        this.normMode = normMode;
+    }
+
+    public void setResultOffset(int resultOffset) {
+        this.resultOffset = resultOffset;
+    }
+
+    public void setResultsSize(int resultsSize) {
+        this.resultsSize = resultsSize;
+    }
+
+    public boolean getComputeSimilarity() {
+        return this.computeSimilarity;
+    }
+
+    public void setInputFolder(String inputFolder) {
+        this.inputFolder = inputFolder;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
 }
