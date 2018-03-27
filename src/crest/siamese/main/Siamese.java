@@ -277,8 +277,9 @@ public class Siamese {
         System.out.println("outputFormat   : " + outputFormat);
         System.out.println("------- MULTI-REPRESENTATION -------");
         System.out.println("multiRep       : " + multiRep);
-        System.out.println("normalization  : " + normMode);
-        System.out.println("ngramSize      : " + t1NgramSize + " " + t2NgramSize + " " + ngramSize);
+        System.out.println("T2 norm        : dsvw");
+        System.out.println("T3 norm        : " + normMode);
+        System.out.println("ngramSize      : t1=" + t1NgramSize + " t2=" + t2NgramSize + " t3=" + ngramSize);
         System.out.println("---------- QUERY REDUCTION ---------");
         System.out.println("queryReduction : " + queryReduction);
         System.out.println("qrThresholds   : t0=" + this.qrPercentileOrig + " t1=" + this.qrPercentileT1 + " t2=" + this.qrPercentileT2 + " t3=" + this.qrPercentileNorm);
