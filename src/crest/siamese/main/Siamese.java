@@ -282,8 +282,10 @@ public class Siamese {
         System.out.println("ngramSize      : t1=" + t1NgramSize + " t2=" + t2NgramSize + " t3=" + ngramSize);
         System.out.println("---------- QUERY REDUCTION ---------");
         System.out.println("queryReduction : " + queryReduction);
-        System.out.println("qrThresholds   : t0=" + this.qrPercentileOrig + " t1=" + this.qrPercentileT1 + " t2=" + this.qrPercentileT2 + " t3=" + this.qrPercentileNorm);
-        System.out.println("queryBoosts    : t0=" + origBoost + " t1=" + t1Boost + " t2=" + t2Boost + " t3=" + normBoost);
+        System.out.println("qrThresholds   : t0=" + this.qrPercentileOrig + " t1=" + this.qrPercentileT1 +
+                " t2=" + this.qrPercentileT2 + " t3=" + this.qrPercentileNorm);
+        System.out.println("queryBoosts    : t0=" + origBoost + " t1=" + t1Boost +
+                " t2=" + t2Boost + " t3=" + normBoost);
         System.out.println("====================================");
     }
 
@@ -471,15 +473,7 @@ public class Siamese {
         }
     }
 
-    public ArrayList<EvalResult> runExperiment(
-            String indexSettings,
-            String mappingStr,
-            String[] normModes,
-            int[] ngramSizes,
-            double[] dfCapNorms,
-            double[] dfCapT2s,
-            double[] dfCapOrigs,
-            String cloneClusterFilePrefix) {
+    public ArrayList<EvalResult> runExperiment(String indexSettings, String mappingStr, String cloneClusterFilePrefix) {
         this.cloneClusterFile = "resources/" + cloneClusterFilePrefix + "_" + this.parseMode + ".csv";
         // create the output folder
         MyUtils.createDir(outputFolder);
@@ -493,78 +487,48 @@ public class Siamese {
             allErrorMeasureResults.delete();
         try {
             es.startup();
-            for (String normMode : normModes) {
-                // reset the modes before setting it again
-                modes.reset();
-                t2modes = NormalizerMode.setTokenizerMode("svw".toLowerCase().toCharArray());
-                prepareTokenizers();
-                // set the normalisation + tokenization mode
-                // override the normalizers for the experiment
-                modes = NormalizerMode.setTokenizerMode(normMode.toLowerCase().toCharArray());
-                normalizer = initialiseNormalizer(modes);
-                tokenizer = initialiseTokenizer(normalizer);
-                String indexPrefix = this.index;
-                for (int ngramSize : ngramSizes) {
-                    for (double dfCapNorm: dfCapNorms) {
-                        // replace the value read from the config file
-                        this.qrPercentileNorm = dfCapNorm;
-                        for (double dfCapT2: dfCapT2s) {
-                            // replace the value read from the config file
-                            this.qrPercentileT2 = dfCapT2;
-                            for (double dfCapOrig : dfCapOrigs) {
-                                // replace the value read from the config file
-                                this.qrPercentileOrig = dfCapOrig;
-                                index = this.index + "_" + normMode + "_" + ngramSize + "_" +
-                                        dfCapNorm + "_" + dfCapT2 + "_" + dfCapOrig;
-                                if (isPrint) System.out.println("INDEX," + index);
-                                // delete the index if it exists
-                                if (es.doesIndexExist(index)) {
-                                    es.deleteIndex(index);
-                                }
-                                // create index
-                                if (!es.createIndex(index, type, indexSettings, mappingStr)) {
-                                    System.err.println("Cannot create index: " + index);
-                                    System.exit(-1);
-                                }
-                                // initialise the ngram generator
-                                ngen = new nGramGenerator(ngramSize);
-                                t2Ngen = new nGramGenerator(t2NgramSize);
-                                t1Ngen = new nGramGenerator(t1NgramSize);
-
-                                totalDocuments = (int) insert(0);
-                                if (totalDocuments != 0) {
-                                    // if ok, refresh the index, then search
-                                    es.refresh(index);
-                                    // read the index for query reduction
-                                    readESIndex(index);
-                                    EvalResult result = evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
-                                    if (resultSet.size() != 0) {
-                                        EvalResult bestResult = resultSet.get(0);
-                                        // check for best result
-                                        if (result.getValue() > bestResult.getValue()) {
-                                            resultSet.set(0, result);
-                                        }
-                                    } else {
-                                        // add the first result twice since it's also the best result.
-                                        resultSet.add(result);
-                                    }
-                                    // collect the result
-                                    resultSet.add(result);
-                                } else {
-                                    System.out.println("Indexing error: please check!");
-                                }
-                                // delete index
-                                if (deleteIndexAfterUse) {
-                                    if (!es.deleteIndex(index)) {
-                                        System.err.println("Cannot delete index: " + index);
-                                        System.exit(-1);
-                                    }
-                                }
-                                // restore index name
-                                this.index = indexPrefix;
-                            }
-                        }
+            prepareTokenizers();
+            // delete the index if it exists
+            if (es.doesIndexExist(index)) {
+                es.deleteIndex(index);
+            }
+            // create index
+            if (!es.createIndex(index, type, indexSettings, mappingStr)) {
+                System.err.println("Cannot create index: " + index);
+                System.exit(-1);
+            }
+            // initialise the ngram generator
+            ngen = new nGramGenerator(ngramSize);
+            t2Ngen = new nGramGenerator(t2NgramSize);
+            t1Ngen = new nGramGenerator(t1NgramSize);
+            totalDocuments = (int) insert(0);
+            if (totalDocuments != 0) {
+                // if ok, refresh the index, then search
+                es.refresh(index);
+                // read the index for query reduction
+                readESIndex(index);
+                EvalResult result =
+                        evaluate(index, outputFolder, errMeasure, queryReduction, isPrint);
+                if (resultSet.size() != 0) {
+                    EvalResult bestResult = resultSet.get(0);
+                    // check for best result
+                    if (result.getValue() > bestResult.getValue()) {
+                        resultSet.set(0, result);
                     }
+                } else {
+                    // add the first result twice since it's also the best result.
+                    resultSet.add(result);
+                }
+                // collect the result
+                resultSet.add(result);
+            } else {
+                System.out.println("Indexing error: please check!");
+            }
+            // delete index
+            if (deleteIndexAfterUse) {
+                if (!es.deleteIndex(index)) {
+                    System.err.println("Cannot delete index: " + index);
+                    System.exit(-1);
                 }
             }
             es.shutdown();
@@ -609,7 +573,8 @@ public class Siamese {
                     if (this.includeLicense) {
                         switch (this.licenseExtractor.toLowerCase()) {
                             case "ninka":
-                                license = LicenseExtractor.extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
+                                license = LicenseExtractor.
+                                        extractLicenseWithNinka(file.getAbsolutePath()).split(";")[1];
                                 break;
                             case "regexp":
                                 license = methodParser.getLicense();
@@ -793,28 +758,31 @@ public class Siamese {
                                 if (queryReduction) {
                                     long docCount = getIndicesStats();
                                     if (enableRep[3])
-                                        t3Query = reduceQuery(tokenizeAsArray(method.getSrc(), tokenizer, isNgram, ngen),
-                                            "src", this.qrPercentileNorm * docCount / 100);
+                                        t3Query = reduceQuery(tokenizeAsArray(method.getSrc(),
+                                                tokenizer, isNgram, ngen),
+                                                "src", this.qrPercentileNorm * docCount / 100);
                                     if (enableRep[2])
-                                        t2Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t2Tokenizer),
+                                        t2Query = reduceQuery(tokenizeAsArray(method.getSrc(),
+                                                t2Tokenizer, isNgram, t2Ngen),
                                             "t2src", this.qrPercentileT2 * docCount / 100);
                                     if (enableRep[1])
-                                        t1Query = reduceQuery(tokenizeLineAsArray(method.getSrc(), t1Tokenizer),
+                                        t1Query = reduceQuery(tokenizeAsArray(method.getSrc(),
+                                                t1Tokenizer, isNgram, t1Ngen),
                                             "t1src", this.qrPercentileT1 * docCount / 100);
                                     if (enableRep[0])
-                                        origQuery = reduceQuery(tokenizeAsArray(method.getComment() + " " +
-                                                    method.getSrc(), origTokenizer, false, ngen),
-                                            "tokenizedsrc",
-                                            this.qrPercentileOrig * docCount / 100);
+                                        origQuery = reduceQuery(tokenizeAsArray(method.getComment() +
+                                                        " " + method.getSrc(), origTokenizer, false, ngen),
+                                            "tokenizedsrc", this.qrPercentileOrig * docCount / 100);
                                     if (isPrint) {
-                                        System.out.println("T3Q," + this.qrPercentileNorm * docCount / 100 + "," +
-                                                methodCount + " : " + t3Query);
-                                        System.out.println("T2Q," + this.qrPercentileT2 * docCount / 100 + "," +
-                                                methodCount + " : " + t2Query);
-                                        System.out.println("T1Q," + this.qrPercentileT1 * docCount / 100 + "," +
-                                                methodCount + " : " + t1Query);
-                                        System.out.println("T0Q," + this.qrPercentileOrig * docCount / 100 + "," +
-                                                methodCount + " : " + origQuery);
+                                        System.out.println(methodCount + " T3Q " +
+                                                this.qrPercentileNorm * docCount / 100 + "," + t3Query + "\n");
+                                        System.out.println(methodCount + " T2Q " +
+                                                this.qrPercentileT2 * docCount / 100 + "," + t2Query + "\n");
+                                        System.out.println(methodCount + " T1Q " +
+                                                this.qrPercentileT1 * docCount / 100 + "," + t1Query + "\n");
+                                        System.out.println(methodCount + " T0Q " +
+                                                this.qrPercentileOrig * docCount / 100 + "," + origQuery);
+                                        System.out.println("-------------------------------------------");
                                     }
                                 } else {
                                     if (enableRep[3])
@@ -871,7 +839,8 @@ public class Siamese {
             // flush the last part of output
             bw.write(outToFile);
             bw.close();
-            System.out.println("Searching done for " + count + " files (" + methodCount + " methods after clone size filtering).");
+            System.out.println("Searching done for " + count + " files (" +
+                    methodCount + " methods after clone size filtering).");
             System.out.println("See output at " + outfile.getAbsolutePath());
         } else {
             throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
@@ -969,44 +938,6 @@ public class Siamese {
         return result;
     }
 
-    public double getValueAtPercentile(ArrayList<JavaTerm> termList, int percentile) {
-        double[] data = new double[termList.size()];
-        for (int i=0; i<termList.size(); i++) {
-            data[i] = termList.get(i).getFreq();
-        }
-        /* copied from http://stackoverflow.com/questions/19700704/java-api-for-calculating-interquartile-range */
-        DescriptiveStatistics da = new DescriptiveStatistics(data);
-        return da.getPercentile(percentile);
-    }
-
-//    private String tokenize(File file, NormalizerMode modes, boolean isNgram) throws Exception {
-    private String tokenize(File file, Tokenizer tokenizer, boolean isNgram) throws Exception {
-        String src = "";
-//        Normalizer normalizer = initialiseNormalizer(modes);
-//        Tokenizer tokenizer = initialiseTokenizer(normalizer);
-
-        if (modes.getEscape() == Settings.Normalize.ESCAPE_ON) {
-            try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    ArrayList<String> tokens = tokenizer.tokenize(escapeString(line).trim());
-                    src += printArray(tokens, false);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            // generate tokens
-            ArrayList<String> tokens = tokenizer.getTokensFromFile(file.getAbsolutePath());
-            // enter ngram mode
-            if (isNgram)
-                src = printArray(ngen.generateNGramsFromJavaTokens(tokens), false);
-            else
-                src = printArray(tokens, false);
-        }
-        return src;
-    }
-
     private String tokenize(String sourcecode, Tokenizer tokenizer,
                             boolean isNgram, nGramGenerator ngen) throws Exception {
         // generate tokens
@@ -1026,21 +957,6 @@ public class Siamese {
             return ngen.generateNGramsFromJavaTokens(tokens);
         else
             return tokens;
-    }
-
-    private String tokenizeLine(String sourcecode, Tokenizer tokenizer) throws Exception {
-        String src;
-        // generate tokens
-        ArrayList<String> tokens = tokenizer.getTokenLinesFromString(sourcecode);
-        src = printArray(tokens, false);
-        return src;
-    }
-
-    private ArrayList<String> tokenizeLineAsArray(String sourcecode, Tokenizer tokenizer) throws Exception {
-        String src;
-        // generate tokens
-        ArrayList<String> tokens = tokenizer.getTokenLinesFromString(sourcecode);
-        return tokens;
     }
 
     public long getIndicesStats() {

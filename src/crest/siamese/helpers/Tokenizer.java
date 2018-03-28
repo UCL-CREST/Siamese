@@ -12,5 +12,4 @@ public interface Tokenizer {
     public ArrayList<String> tokenize(File f) throws Exception;
     public ArrayList<String> getTokensFromFile(String file) throws Exception;
     public ArrayList<String> getTokensFromString(String input) throws Exception;
-    public ArrayList<String> getTokenLinesFromString(String input) throws Exception;
 }

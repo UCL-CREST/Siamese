@@ -91,9 +91,4 @@ public class JavaTokenizer implements Tokenizer {
 	public ArrayList<String> getTokensFromString(String input) throws Exception {
 		return tokenize(new StringReader(input));
 	}
-
-    @Override
-    public ArrayList<String> getTokenLinesFromString(String input) throws Exception {
-        return tokenizeLine(new StringReader(input));
-    }
 }
