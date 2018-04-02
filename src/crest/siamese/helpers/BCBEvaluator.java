@@ -52,7 +52,7 @@ public class BCBEvaluator extends Evaluator  {
         }
     }
 
-    public ArrayList<BCBDocument> getCloneFragments() {
+    public ArrayList<BCBDocument> getCloneFragments(String sql, String IDField) {
         if (connection == null) {
             connectDB();
         }
@@ -62,17 +62,10 @@ public class BCBEvaluator extends Evaluator  {
          */
         try {
             stmt = connection.createStatement();
-            String sql = "SELECT *\n" +
-                    "FROM (\n" +
-                    "  SELECT FUNCTION_ID_ONE\n" +
-                    "  FROM clones\n" +
-                    "  UNION SELECT FUNCTION_ID_TWO\n" +
-                    "  FROM clones\n" +
-                    ") AS A INNER JOIN FUNCTIONS ON A.FUNCTION_ID_ONE = FUNCTIONS.ID;";
             ResultSet rs = stmt.executeQuery(sql);
             int count = 1;
             while (rs.next()) {
-                int id = rs.getInt("FUNCTION_ID_ONE");
+                int id = rs.getInt(IDField);
                 String type = rs.getString("TYPE");
                 String name = rs.getString("NAME");
                 int start = rs.getInt("STARTLINE");
@@ -113,16 +106,6 @@ public class BCBEvaluator extends Evaluator  {
          */
         try {
             stmt = connection.createStatement();
-//            String sql = "SELECT * FROM\n" +
-//                    "(SELECT function_id_one, count(*) AS count\n" +
-//                    "FROM clones INNER JOIN functions ON clones.function_id_one = functions.id\n" +
-//                    "WHERE functions.endline - functions.startline + 1 >= 10\n" +
-//                    "--   AND syntactic_type <= 1\n" +
-//                    "  AND syntactic_type <= 2\n" +
-//                    "  AND (similarity_token >= 0.7 OR similarity_line >= 0.7)\n" +
-//                    "GROUP BY function_id_one) AS A\n" +
-//                    "WHERE count >= 10 AND count <= 15" +
-//                    "LIMIT " + limit + ";";
             String sql = "SELECT * FROM\n" +
                     "  (\n" +
                     "    SELECT\n" +
@@ -145,8 +128,6 @@ public class BCBEvaluator extends Evaluator  {
             while (rs.next()) {
                 int id1 = rs.getInt("function_id_one");
                 System.out.println("Query ID: " + id1);
-//                if (isInPreviousQueryIDs(id1))
-//                    System.out.println("Already evaluated this ID ... skip");
                 cloneList.add(id1);
             }
             rs.close();
@@ -204,16 +185,6 @@ public class BCBEvaluator extends Evaluator  {
              */
         try {
             stmt = connection.createStatement();
-//            String sql = "SELECT A.id as id1, A.name as file1, A.type as type1, A.startline as start1, A.endline as end1,\n" +
-//                    "  B.id as id2, B.name as file2, B.type as type2, B.startline as start2, B.endline as end2, clones.syntactic_type\n" +
-//                    "FROM clones\n" +
-//                    "  INNER JOIN functions AS A ON function_id_one = A.id\n" +
-//                    "  INNER JOIN functions AS B ON function_id_two = B.id\n" +
-//                    "WHERE A.endline - A.startline + 1 >= " + minCloneSize + "\n" +
-//                    "  AND B.endline - B.startline + 1 >= " + minCloneSize + "\n" +
-//                    "  AND (similarity_token >= 0.7 OR similarity_line >= 0.7)\n" +
-//                    "  AND function_id_one=" + cloneId + "\n" +
-//                    "ORDER BY clones.syntactic_type ASC, B.name ASC;";
             String sql = "SELECT A.id as id1, A.name as file1, A.type as type1, A.startline as start1, A.endline as end1,\n" +
                     "  B.id as id2, B.name as file2, B.type as type2, B.startline as start2, B.endline as end2, clones.syntactic_type\n" +
                     "FROM clones\n" +
@@ -224,7 +195,6 @@ public class BCBEvaluator extends Evaluator  {
                     "  AND function_id_one = " + cloneId + "\n" +
                     "ORDER BY clones.syntactic_type ASC, B.name ASC\n" +
                     ";";
-//            System.out.println(sql);
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 BCBDocument d = new BCBDocument();

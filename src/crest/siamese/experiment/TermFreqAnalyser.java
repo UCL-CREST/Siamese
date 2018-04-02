@@ -2,20 +2,90 @@ package crest.siamese.experiment;
 
 import crest.siamese.helpers.MyUtils;
 import crest.siamese.main.Siamese;
+import org.apache.lucene.index.*;
+import org.apache.lucene.store.FSDirectory;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.text.DecimalFormat;
 
 public class TermFreqAnalyser {
-
-    private static Siamese siamese;
+    private static String elasticsearchLoc = "/Users/Chaiyong/Documents/phd/2017/Siamese/elasticsearch-2.2.0";
 
     public static void main(String[] args) {
-        String config = "config_bcb_search.properties";
-        siamese = new Siamese(config);
-        siamese.startup();
         analyseTerms();
 //        getIndicesStats();
-        siamese.shutdown();
+    }
+
+    private static void analyseTermFreq(String indexName, String field, String freqType, String outputFileName) {
+        String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
+                + indexName + "/0/index";
+        DecimalFormat df = new DecimalFormat("#.00");
+        int printEvery = 1000000;
+        File outputFile = new File(outputFileName);
+        if (outputFile.exists()) {
+            if (!outputFile.delete()) {
+                System.out.println("ERROR: cannot delete the output file.");
+                System.exit(0);
+            }
+        }
+        /* adapted from
+        https://stackoverflow.com/questions/28244961/lucene-4-10-2-calculate-tf-idf-for-all-terms-in-index
+         */
+        int count = 0;
+        try {
+            IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
+            Fields fields = MultiFields.getFields(reader);
+            Terms terms = fields.terms(field);
+            TermsEnum termsEnum = terms.iterator();
+            int size = 0;
+            // TODO: is there a better solution?
+            // iterate to get the size
+            while (termsEnum.next() != null) {
+                size++;
+            }
+//            String[] termArr = new String[size];
+            long[] freqArr = new long[size];
+            // do the real work
+            termsEnum = terms.iterator();
+            while (termsEnum.next() != null) {
+//                String term = termsEnum.term().utf8ToString();
+                long tfreq = 0;
+                if (freqType.equals("tf"))
+                    tfreq = termsEnum.totalTermFreq();
+                else if (freqType.equals("df"))
+                    tfreq = termsEnum.docFreq();
+                else {
+                    System.out.println("Wrong frequency. Quit!");
+                    System.exit(0);
+                }
+//                termArr[count] = term;
+                freqArr[count] = tfreq;
+                if (count % printEvery == 0) {
+                    System.out.println("processed: " + count + " terms "
+                            + " [" + df.format(((long)count * 100)/size) + "%]");
+                }
+                count++;
+            }
+            System.out.println(field + ": total = " + count);
+            double[] data = new double[size];
+            String output = "freq\n";
+            for (int i = 0; i < freqArr.length; i++) {
+                data[i] = freqArr[i];
+                output += freqArr[i] + "\n";
+                if (i > 0 && i % printEvery == 0) {
+                    MyUtils.writeToFile("./",outputFileName, output, true);
+                    System.out.println("written: " + i + " terms "
+                            + " [" + df.format(((long)i * 100)/size) + "%]");
+                    output = "";
+                }
+            }
+            // write the rest to the file
+            MyUtils.writeToFile("./",outputFileName, output, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void analyseTerms() {
@@ -35,14 +105,10 @@ public class TermFreqAnalyser {
         File srcf = new File(src);
         srcf.delete();
         // start analysing the tokens
-        siamese.analyseTermFreq(index, "tokenizedsrc", mode, toksrc);
-        siamese.analyseTermFreq(index, "t1src", mode, t1src);
-        siamese.analyseTermFreq(index, "t2src", mode, t2src);
-        siamese.analyseTermFreq(index, "src", mode, src);
+//        analyseTermFreq(index, "tokenizedsrc", mode, toksrc);
+//        analyseTermFreq(index, "t1src", mode, t1src);
+        analyseTermFreq(index, "t2src", mode, t2src);
+        analyseTermFreq(index, "src", mode, src);
         /* then call the sort_term.py python script to generate a Zipf plot */
-    }
-
-    public static void getIndicesStats() {
-        System.out.println("Docs = " + siamese.getIndicesStats());
     }
 }

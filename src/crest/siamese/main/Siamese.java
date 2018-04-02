@@ -717,8 +717,9 @@ public class Siamese {
             File folder = new File(inputFolder);
             List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
             System.out.println("Querying Phase: found " + listOfFiles.size() + " files.");
-            int count = 0;
-            int methodCount = 0;
+            long count = 0;
+            long methodCount = 0;
+            long search = 0;
             // reset the output buffer
             outToFile = "";
             if (formatter.getFormat().equals("gcf")) {
@@ -815,6 +816,9 @@ public class Siamese {
                                 } else {
                                     outToFile += formatter.format(results, prefixToRemove);
                                 }
+                                search++;
+                            } else {
+                                System.out.println("Not indexed: " + method);
                             }
                         }
                     }
@@ -826,7 +830,7 @@ public class Siamese {
                 if (count % printEvery == 0) {
                     double percent = (double) count * 100 / listOfFiles.size();
                     DecimalFormat percentFormat = new DecimalFormat("#.00");
-                    System.out.println("Searched " + count
+                    System.out.println("Searched " + search + "/" + count
                             + " [" + percentFormat.format(percent) + "%] documents (" + methodCount + " methods).");
                     bw.write(outToFile);
                     // reset the output to print
@@ -848,6 +852,12 @@ public class Siamese {
         return outfile.getAbsolutePath();
     }
 
+    /**
+     * Compute similarity between query and results using fuzzywuzzy string matching
+     * @param query the code query
+     * @param results the list of results
+     * @return an array of similarity values
+     */
     private int[] computeSimilarity(String query, ArrayList<Document> results) {
         int[] simResults = new int[results.size()];
         for (int i=0; i<results.size(); i++) {
@@ -858,6 +868,13 @@ public class Siamese {
         return simResults;
     }
 
+    /**
+     * Reduce number of tokens in the query
+     * @param query the query
+     * @param field index field to analyse
+     * @param limit the maximum number of terms in the reduced query
+     * @return the reduced query
+     */
     private String reduceQuery(ArrayList<String> query, String field, double limit) {
         // find the top-N rare terms in the query
         ArrayList<String> tmpQuery = query;
@@ -961,73 +978,6 @@ public class Siamese {
 
     public long getIndicesStats() {
         return es.getIndicesStats(this.index);
-    }
-
-    public void analyseTermFreq(String indexName, String field, String freqType, String outputFileName) {
-        String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
-                + indexName + "/0/index";
-        DecimalFormat df = new DecimalFormat("#.00");
-        int printEvery = 100000;
-        File outputFile = new File(outputFileName);
-        if (outputFile.exists()) {
-            outputFile.delete();
-        }
-        /* adapted from
-        https://stackoverflow.com/questions/28244961/lucene-4-10-2-calculate-tf-idf-for-all-terms-in-index
-         */
-        int count = 0;
-        try {
-            IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(indexFile)));
-            Fields fields = MultiFields.getFields(reader);
-            Terms terms = fields.terms(field);
-            TermsEnum termsEnum = terms.iterator();
-            int size = 0;
-            // TODO: is there a better solution?
-            // iterate to get the size
-            while (termsEnum.next() != null) {
-                size++;
-            }
-            String[] termArr = new String[size];
-            long[] freqArr = new long[size];
-            // do the real work
-            termsEnum = terms.iterator();
-            while (termsEnum.next() != null) {
-                String term = termsEnum.term().utf8ToString();
-                long tfreq = 0;
-                if (freqType.equals("tf"))
-                    tfreq = termsEnum.totalTermFreq();
-                else if (freqType.equals("df"))
-                    tfreq = termsEnum.docFreq();
-                else {
-                    System.out.println("Wrong frequency. Quit!");
-                    System.exit(0);
-                }
-                termArr[count] = term;
-                freqArr[count] = tfreq;
-                if (count % printEvery == 0) {
-                    System.out.println("processed: " + count + " terms "
-                            + " [" + df.format((count * 100)/size) + "%]");
-                }
-                count++;
-            }
-            System.out.println(field + ": total = " + count);
-            double[] data = new double[size];
-            String output = "freq\n";
-            for (int i = 0; i < freqArr.length; i++) {
-                data[i] = freqArr[i];
-                output += freqArr[i] + "\n";
-                if (i > 0 && i % printEvery == 0) {
-                    MyUtils.writeToFile("./",outputFileName, output, true);
-                    System.out.println("written: " + i + " terms "
-                            + " [" + df.format((i * 100)/size) + "%]");
-                    output = "";
-                }
-            }
-            // write the rest to the file
-            MyUtils.writeToFile("./",outputFileName, output, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
