@@ -52,7 +52,7 @@ public class BCBEvaluator extends Evaluator  {
         }
     }
 
-    public ArrayList<BCBDocument> getCloneFragments(String sql, String IDField) {
+    public ArrayList<BCBDocument> getCloneFragments(String sql, String IDField, boolean cloneType) {
         if (connection == null) {
             connectDB();
         }
@@ -70,13 +70,17 @@ public class BCBEvaluator extends Evaluator  {
                 String name = rs.getString("NAME");
                 int start = rs.getInt("STARTLINE");
                 int end = rs.getInt("ENDLINE");
-                System.out.println(count + " " + id + " " + type + "/" + name + "(" + start + "/" + end + ")");
+//                System.out.println(count + " " + id + " " + type + "/" + name + "(" + start + "/" + end + ")");
                 BCBDocument d = new BCBDocument();
                 d.setId(id);
                 d.setFile(type + "/" + name);
                 d.setStartline(start);
                 d.setEndline(end);
+                if (cloneType) {
+                    d.setSyntacticType(rs.getInt("SYNTACTIC_TYPE"));
+                }
                 cloneList.add(d);
+                count++;
             }
             rs.close();
             stmt.close();

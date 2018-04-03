@@ -36,31 +36,35 @@ public class MyUtils {
 
     public static void writeToFile(String location, String filename, String content, boolean isAppend) {
         if (createDir(location)) {
-            /* copied from https://www.mkyong.com/java/how-to-write-to-file-in-java-bufferedwriter-example/ */
-            BufferedWriter bw = null;
-            FileWriter fw = null;
-
-            try {
-                fw = new FileWriter(location + "/" + filename, isAppend);
-                bw = new BufferedWriter(fw);
-                bw.write(content);
-//                if (!isAppend)
-//                    System.out.println("Saved as: " + filename);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (bw != null)
-                        bw.close();
-                    if (fw != null)
-                        fw.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-            }
+            writeToFile(location + "/" + filename, content, isAppend);
         } else {
             System.out.println("ERROR: can't create a directory at: " + location);
+        }
+    }
+
+    public static void writeToFile(String filePath, String content, boolean isAppend) {
+        /* copied from https://www.mkyong.com/java/how-to-write-to-file-in-java-bufferedwriter-example/ */
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+
+        try {
+            fw = new FileWriter(filePath, isAppend);
+            bw = new BufferedWriter(fw);
+            bw.write(content);
+            if (!isAppend)
+                System.out.println("Saved as: " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bw != null)
+                    bw.close();
+                if (fw != null)
+                    fw.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         }
     }
 
@@ -74,7 +78,11 @@ public class MyUtils {
     }
 
     public static boolean deleteFile(String folder, String fileName) {
-        File f = new File(folder + "/" + fileName);
+        return deleteFile(folder + "/" + fileName);
+    }
+
+    public static boolean deleteFile(String filepath) {
+        File f = new File(filepath);
         return f.delete();
     }
 

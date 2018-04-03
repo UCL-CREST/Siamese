@@ -818,7 +818,7 @@ public class Siamese {
                                 }
                                 search++;
                             } else {
-                                System.out.println("Not indexed: " + method);
+                                System.out.println("Not searched: " + method.getFile());
                             }
                         }
                     }
@@ -844,7 +844,7 @@ public class Siamese {
             bw.write(outToFile);
             bw.close();
             System.out.println("Searching done for " + count + " files (" +
-                    methodCount + " methods after clone size filtering).");
+                    search + " out of " + methodCount + " methods after clone size filtering).");
             System.out.println("See output at " + outfile.getAbsolutePath());
         } else {
             throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
