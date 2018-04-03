@@ -25,13 +25,8 @@ public class BCBExperiment {
 
     public static void main(String[] args) {
         String task = args[0];
-        Date startDate = MyUtils.getCurrentTime();
-        String config = "config_bcb_search.properties";
         String bcbLoc = "/Users/Chaiyong/Downloads/bcb_dataset";
         String outputLoc;
-//        readFromConfigFile(config);
-//        Siamese siamese = new Siamese(config);
-//        siamese.startup();
         evaluator = new BCBEvaluator();
         evaluator.connectDB();
 
@@ -51,50 +46,51 @@ public class BCBExperiment {
                 System.out.println("File: " + fileToCheck);
                 String pFilename = fileToCheck.replace(".csv", "_p.csv");
                 String eFilename = fileToCheck.replace(".csv", "_e.csv");
-//                processOutputFile(fileToCheck, pFilename, prefixes, 11);
-//                evaluate(pFilename, eFilename);
-                calculate(eFilename);
+                int size = 15;
+                int checksize = 10;
+                boolean includeQuery = false;
+                processOutputFile(fileToCheck, pFilename, prefixes, size);
+                evaluate(pFilename, eFilename, includeQuery, checksize);
+                calculate(eFilename, checksize);
                 break;
         }
         evaluator.closeDBConnection();
     }
 
-    private static void calculate(String outputFile) {
-        int SIZE = 10;
+    private static void calculate(String outputFile, int size) {
         try {
             String[] lines = MyUtils.readFile(outputFile);
+            System.out.println(size + "-prec, MRR");
             double sum10Prec = 0;
             double sumMRR = 0;
             int[] types = new int[3];
-            /* check the top-10 results of each query */
-            for (int i = 0; i < lines.length; i += SIZE) {
+            /* check the top-N results of each query */
+            for (int i = 0; i < lines.length; i += (size + 1)) {
                 double tp = 0;
                 int rel = 0;
-                for (int j = 0; j < SIZE; j++) {
-//                    System.out.println(i + "," + j + ":" + lines[i + j]);
+                /* skip the query (i.e. j=0) */
+                for (int j = 1; j <= size; j++) {
                     String[] result = lines[i + j].split(",");
                     /* find a true positive */
                     if (result[result.length - 1].equals("T")) {
                         tp += 1;
                         /* found the first relevant result */
                         if (rel == 0) {
-                            rel = j + 1;
+                            rel = j;
                         }
                         int type = Integer.parseInt(result[result.length - 2]);
                         types[type - 1]++;
                     }
                 }
-
-                System.out.println("10-prec," + tp / SIZE);
-                sum10Prec += tp / SIZE;
+                sum10Prec += tp / size;
                 double mrr = 0;
                 if (rel != 0)
                     mrr = 1/rel;
-                System.out.println("MRR," + mrr);
+                System.out.println(tp / size + "," + mrr);
                 sumMRR += mrr;
             }
-            System.out.println("Avg. 10-prec," + sum10Prec/(lines.length/SIZE));
-            System.out.println("Avg. MRR," + sumMRR/(lines.length/SIZE));
+            System.out.println("Avg. " + size + "-prec," + sum10Prec/(lines.length/(size + 1)));
+            System.out.println("Avg. MRR," + sumMRR/(lines.length/(size + 1)));
             System.out.println("Type-1," + types[0]);
             System.out.println("Type-2," + types[1]);
             System.out.println("Type-3," + types[2]);
@@ -103,14 +99,14 @@ public class BCBExperiment {
         }
     }
 
-    private static void evaluate(String filename, String outputFile) {
+    private static void evaluate(String filename, String outputFile, boolean includeQuery, int size) {
         MyUtils.deleteFile(outputFile);
         int count = 1;
         try {
             String[] lines = MyUtils.readFile(filename);
             for (String line: lines) {
                 System.out.println(count + "," + line);
-                checkResults(line, outputFile);
+                checkResults(line, outputFile, includeQuery, size);
                 count++;
             }
         } catch (IOException e) {
@@ -118,31 +114,48 @@ public class BCBExperiment {
         }
     }
 
-    private static void checkResults(String result, String outputFile) {
+    /**
+     * Check the result by comparing it to the groundtruth
+     * @param result a ranked list of search results
+     * @param outputFile the file to write the check result
+     * @param includeQuery include query in the check?
+     * @param size size of the results to consider
+     * @return
+     */
+    private static void checkResults(String result, String outputFile, boolean includeQuery, int size) {
+        int check = 0;
         String[] parts = result.split(",");
         ArrayList<BCBDocument> groundtruth = getClone(parts[0]);
-//        for (BCBDocument d: groundtruth)
-//            System.out.println(d);
-//        System.out.println();
+        MyUtils.writeToFile(outputFile, parts[1] + "," + parts[2] + "," +
+                parts[3] + "," + parts[4] + ",Q\n", true);
         for (int i=5; i<parts.length; i+=4) {
-            /* skip the query in the result */
+            String toWrite = "";
+            /* check if the query is reported in the results */
             if (!identical(parts[1], parts[2], parts[3], parts[4],
                     parts[i], parts[i+1], parts[i+2], parts[i+3])) {
                 int type = inGroundtruth(groundtruth, parts[i], parts[i+1], parts[i+2], parts[i+3]);
-                if (type != 0) { // found in the groundtruth
-                    System.out.println(parts[i] + "," + parts[i+1] + "," + parts[i+2] + "," + parts[i+3]
-                            + "," + type + ",T");
-                    MyUtils.writeToFile(outputFile, parts[i] + "," + parts[i+1] + "," + parts[i+2] +
-                            "," + parts[i+3]
-                            + "," + type + ",T\n", true);
+                /* found in the groundtruth */
+                if (type != 0) {
+                    toWrite = parts[i] + "," + parts[i+1] + "," + parts[i+2] + "," + parts[i+3] + "," + type + ",T";
+
                 } else {
-                    System.out.println(parts[i] + "," + parts[i+1] + "," + parts[i+2] + "," + parts[i+3] + ",,F");
-                    MyUtils.writeToFile(outputFile, parts[i] + "," + parts[i+1] + "," + parts[i+2]
-                            + "," + parts[i+3] + ",,F\n", true);
+                    toWrite = parts[i] + "," + parts[i+1] + "," + parts[i+2] + "," + parts[i+3] + ",,F";
                 }
-//                /* already go over the groundtruth size */
-//                if (i >= (groundtruth.size() * 4) + 4)
-//                    break;
+                check++;
+            } else {
+                /* if not include query, just skip this one and not print anything */
+                if (!includeQuery) {
+                    continue;
+                }
+                /* found query as a result, as it as T1 */
+                toWrite = parts[i] + "," + parts[i+1] + "," + parts[i+2] + "," + parts[i+3] + ",1,T";
+                check++;
+            }
+            System.out.println(toWrite);
+            MyUtils.writeToFile(outputFile, toWrite + "\n", true);
+            /* return if the no. of specified results are checked */
+            if (check >= size) {
+                return;
             }
         }
     }
