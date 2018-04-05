@@ -276,7 +276,7 @@ public class Siamese {
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
         System.out.println("outputFormat   : " + outputFormat);
         System.out.println("------- MULTI-REPRESENTATION -------");
-        System.out.println("multiRep       : " + multiRep);
+        System.out.println("multiRep       : " + multiRep + " " +  Arrays.toString(enableRep));
         System.out.println("T2 norm        : dsvw");
         System.out.println("T3 norm        : " + normMode);
         System.out.println("ngramSize      : t1=" + t1NgramSize + " t2=" + t2NgramSize + " t3=" + ngramSize);

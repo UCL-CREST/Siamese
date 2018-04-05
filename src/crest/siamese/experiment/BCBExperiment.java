@@ -47,8 +47,8 @@ public class BCBExperiment {
                 String pFilename = fileToCheck.replace(".csv", "_p.csv");
                 String eFilename = fileToCheck.replace(".csv", "_e.csv");
                 int size = 15;
-                int checksize = 10;
-                boolean includeQuery = false;
+                int checksize = 15;
+                boolean includeQuery = true;
                 processOutputFile(fileToCheck, pFilename, prefixes, size);
                 evaluate(pFilename, eFilename, includeQuery, checksize);
                 calculate(eFilename, checksize);
