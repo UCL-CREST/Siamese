@@ -818,7 +818,11 @@ public class Siamese {
                                 }
                                 search++;
                             } else {
-                                System.out.println("Not searched: " + method.getFile());
+                                if (isPrint) {
+                                    System.out.println("Not searched (smaller than the threshold of " +
+                                            minCloneLine + " lines): " + method.getFullyQualifiedMethodName() +
+                                            ": " + method.getFile());
+                                }
                             }
                         }
                     }
