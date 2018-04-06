@@ -47,17 +47,18 @@ public class BCBExperiment {
                 String pFilename = fileToCheck.replace(".csv", "_p.csv");
                 String eFilename = fileToCheck.replace(".csv", "_e.csv");
                 int size = 15;
-                int checksize = 15;
+                int checksize = 10;
                 boolean includeQuery = true;
-                processOutputFile(fileToCheck, pFilename, prefixes, size);
-                evaluate(pFilename, eFilename, includeQuery, checksize);
-                calculate(eFilename, checksize);
+//                processOutputFile(fileToCheck, pFilename, prefixes, size);
+//                evaluate(pFilename, eFilename, includeQuery, checksize);
+                calculate(eFilename, size, checksize, includeQuery);
                 break;
         }
         evaluator.closeDBConnection();
     }
 
-    private static void calculate(String outputFile, int size) {
+    private static void calculate(String outputFile, int resultSize, int size, boolean includeQuery) {
+        System.out.println("Checking: " + outputFile);
         try {
             String[] lines = MyUtils.readFile(outputFile);
             System.out.println(size + "-prec, MRR");
@@ -65,38 +66,69 @@ public class BCBExperiment {
             double sumMRR = 0;
             int[] types = new int[3];
             /* check the top-N results of each query */
-            for (int i = 0; i < lines.length; i += (size + 1)) {
+            for (int i = 0; i < lines.length; i += (resultSize + 1)) {
                 double tp = 0;
                 int rel = 0;
                 /* skip the query (i.e. j=0) */
-                for (int j = 1; j <= size; j++) {
+                String[] query = lines[i].split(",");
+                int j = 1;
+                int limit = size;
+                int foundQ = 0;
+                while (j <= limit) {
+//                for (int j = 1; j <= size; j++) {
                     String[] result = lines[i + j].split(",");
+                    try {
+                        /* if not include query in the result, skip when find it */
+                        if (!includeQuery && compare(query, result, 4)) {
+                            limit++;
+                            j++;
+                            foundQ = 1;
+                            continue;
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    System.out.println(result[0] + "," + result[1] + "," + result[2]
+                            + "," + result[3] + "," + result[4] + "," + result[5]);
                     /* find a true positive */
-                    if (result[result.length - 1].equals("T")) {
+                    if (result[5].equals("T")) {
                         tp += 1;
                         /* found the first relevant result */
                         if (rel == 0) {
-                            rel = j;
+                            rel = j - foundQ;
                         }
-                        int type = Integer.parseInt(result[result.length - 2]);
+                        int type = Integer.parseInt(result[4]);
                         types[type - 1]++;
                     }
+                    j++;
                 }
                 sum10Prec += tp / size;
                 double mrr = 0;
                 if (rel != 0)
-                    mrr = 1/rel;
+                    mrr = (double)1/rel;
                 System.out.println(tp / size + "," + mrr);
                 sumMRR += mrr;
             }
-            System.out.println("Avg. " + size + "-prec," + sum10Prec/(lines.length/(size + 1)));
-            System.out.println("Avg. MRR," + sumMRR/(lines.length/(size + 1)));
+            System.out.println("Avg. " + size + "-prec," + sum10Prec/(lines.length/(resultSize + 1)));
+            System.out.println("Avg. MRR," + sumMRR/(lines.length/(resultSize + 1)));
             System.out.println("Type-1," + types[0]);
             System.out.println("Type-2," + types[1]);
             System.out.println("Type-3," + types[2]);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static boolean compare(String[] arr1, String[] arr2, int size) throws Exception {
+        if (arr1.length >= size && arr2.length >= size) {
+            for (int i = 0; i < size; i++) {
+                if (!arr1[i].equals(arr2[i]))
+                    return false;
+            }
+        } else {
+            throw new Exception("The arrays are smaller than the specified size.");
+        }
+        return true;
     }
 
     private static void evaluate(String filename, String outputFile, boolean includeQuery, int size) {
