@@ -126,6 +126,7 @@ public class OutputFormatter {
             return sb.toString();
         } else if (this.format.equals("gcf")) {
             sb.append(gcf(results, prefixToRemove));
+            sb.append("</Clone>\n");
             return sb.toString();
         } else {
             System.out.println("ERROR: unsupported format.");
