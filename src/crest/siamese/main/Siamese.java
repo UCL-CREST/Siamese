@@ -722,9 +722,6 @@ public class Siamese {
             long search = 0;
             // reset the output buffer
             outToFile = "";
-            if (formatter.getFormat().equals("gcf")) {
-                outToFile += "<CloneClasses>\n";
-            }
             for (File file : listOfFiles) {
                 if (isPrint)
                     System.out.println(count + ": " + file.getAbsolutePath());
@@ -746,9 +743,7 @@ public class Siamese {
                             methodCount++;
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
-                                /* TODO: fix this some time. It's weird to have a list with only a single object. */
                                 // write output to file
-                                ArrayList<Document> queryList = new ArrayList<>();
                                 Document q = new Document();
                                 q.setFile(method.getFile() + "_" + method.getName());
                                 q.setStartline(method.getStartLine());
@@ -836,15 +831,16 @@ public class Siamese {
                     DecimalFormat percentFormat = new DecimalFormat("#.00");
                     System.out.println("Searched " + search + "/" + count
                             + " [" + percentFormat.format(percent) + "%] documents (" + methodCount + " methods).");
+                    if (formatter.getFormat().equals("gcf"))
+                        outToFile = formatter.getXML();
                     bw.write(outToFile);
                     // reset the output to print
                     outToFile = "";
                 }
             }
-            if (formatter.getFormat().equals("gcf")) {
-                outToFile += "</CloneClasses>\n";
-            }
             // flush the last part of output
+            if (formatter.getFormat().equals("gcf"))
+                outToFile = formatter.getXML();
             bw.write(outToFile);
             bw.close();
             System.out.println("Searching done for " + count + " files (" +
