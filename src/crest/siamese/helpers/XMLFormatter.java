@@ -99,7 +99,7 @@ public class XMLFormatter {
         Element clone = this.dom.createElement("CLONE");
         Element frag = this.dom.createElement("Fragment");
         Element fElem = this.dom.createElement("File");
-        fElem.setTextContent(d.getFile());
+        fElem.setTextContent(d.getFile().split(".java_")[0] + ".java");
         frag.appendChild(fElem);
         Element startElem = this.dom.createElement("Start");
         startElem.setTextContent(String.valueOf(d.getStartLine()));
