@@ -1,0 +1,810 @@
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 15:45:28 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4
+
+real	0m0.150s
+user	0m0.061s
+sys	0m0.096s
+
+Extracted 61 functions
+
+Fri  9 Mar 15:45:29 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4
+
+Extracted 61 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	0m0.044s
+user	0m0.014s
+sys	0m0.030s
+
+Found 32 clone pairs
+
+Clustering clone pairs into classes
+
+real	0m0.056s
+user	0m0.013s
+sys	0m0.043s
+
+Clustered clone pairs into 16 classes
+
+Done.
+
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4_functions-crossclones-2018-03-09-15:45:29.log
+Results in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4_functions-crossclones
+
+Fri  9 Mar 15:45:29 GMT 2018
+
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4"
+	User time (seconds): 0.10
+	System time (seconds): 0.19
+	Percent of CPU this job got: 86%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.34
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 90748
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 18720
+	Voluntary context switches: 123
+	Involuntary context switches: 58
+	Swaps: 0
+	File system inputs: 640
+	File system outputs: 120
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 15:45:29 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16
+
+real	0m0.527s
+user	0m0.201s
+sys	0m0.333s
+
+Extracted 138 functions
+
+Fri  9 Mar 15:45:29 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16
+
+Extracted 138 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	0m0.049s
+user	0m0.018s
+sys	0m0.031s
+
+Found 52 clone pairs
+
+Clustering clone pairs into classes
+
+real	0m0.056s
+user	0m0.014s
+sys	0m0.042s
+
+Clustered clone pairs into 52 classes
+
+Done.
+
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16_functions-crossclones-2018-03-09-15:45:29.log
+Results in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16_functions-crossclones
+
+Fri  9 Mar 15:45:29 GMT 2018
+
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16"
+	User time (seconds): 0.25
+	System time (seconds): 0.43
+	Percent of CPU this job got: 102%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.66
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 90752
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 26888
+	Voluntary context switches: 151
+	Involuntary context switches: 60
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 320
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 15:45:29 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64
+
+real	0m2.035s
+user	0m0.772s
+sys	0m1.275s
+
+*** Warning: 5 source files failed to parse
+
+Extracted 401 functions
+
+Fri  9 Mar 15:45:31 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64
+
+Extracted 401 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	0m0.088s
+user	0m0.050s
+sys	0m0.039s
+
+Found 227 clone pairs
+
+Clustering clone pairs into classes
+
+real	0m0.058s
+user	0m0.010s
+sys	0m0.048s
+
+Clustered clone pairs into 157 classes
+
+Done.
+
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64_functions-crossclones-2018-03-09-15:45:31.log
+Results in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64_functions-crossclones
+
+Fri  9 Mar 15:45:32 GMT 2018
+
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64"
+	User time (seconds): 0.84
+	System time (seconds): 1.38
+	Percent of CPU this job got: 101%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.21
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 90748
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 59838
+	Voluntary context switches: 258
+	Involuntary context switches: 112
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 1080
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 15:45:32 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256
+
+real	0m7.632s
+user	0m2.642s
+sys	0m5.023s
+
+*** Warning: 13 source files failed to parse
+
+Extracted 1462 functions
+
+Fri  9 Mar 15:45:39 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256
+
+Extracted 1462 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	0m0.165s
+user	0m0.124s
+sys	0m0.041s
+
+Found 430 clone pairs
+
+Clustering clone pairs into classes
+
+real	0m0.059s
+user	0m0.020s
+sys	0m0.039s
+
+Clustered clone pairs into 385 classes
+
+Done.
+
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256_functions-crossclones-2018-03-09-15:45:39.log
+Results in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256_functions-crossclones
+
+Fri  9 Mar 15:45:40 GMT 2018
+
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256"
+	User time (seconds): 2.80
+	System time (seconds): 5.13
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:07.89
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 90748
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 195003
+	Voluntary context switches: 706
+	Involuntary context switches: 315
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 2312
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 15:45:40 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024
+
+real	0m24.947s
+user	0m9.958s
+sys	0m15.116s
+
+*** Warning: 3 source files failed to parse
+
+Extracted 7969 functions
+
+Fri  9 Mar 15:46:05 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024
+
+Extracted 7969 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	0m1.403s
+user	0m1.353s
+sys	0m0.050s
+
+Found 1959 clone pairs
+
+Clustering clone pairs into classes
+
+real	0m0.103s
+user	0m0.030s
+sys	0m0.074s
+
+Clustered clone pairs into 1550 classes
+
+Done.
+
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024_functions-crossclones-2018-03-09-15:46:05.log
+Results in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024_functions-crossclones
+
+Fri  9 Mar 15:46:06 GMT 2018
+
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024"
+	User time (seconds): 11.37
+	System time (seconds): 15.26
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:26.50
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 85840
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1070426
+	Voluntary context switches: 2635
+	Involuntary context switches: 1129
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 9576
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 15:46:06 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096
+
+real	1m5.811s
+user	0m26.000s
+sys	0m40.727s
+
+*** Warning: 14 source files failed to parse
+
+Extracted 31234 functions
+
+Fri  9 Mar 15:47:12 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096
+
+Extracted 31234 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	0m18.147s
+user	0m18.043s
+sys	0m0.104s
+
+Found 7480 clone pairs
+
+Clustering clone pairs into classes
+
+real	0m0.205s
+user	0m0.116s
+sys	0m0.089s
+
+Clustered clone pairs into 5988 classes
+
+Done.
+
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096_functions-crossclones-2018-03-09-15:47:12.log
+Results in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096_functions-crossclones
+
+Fri  9 Mar 15:47:30 GMT 2018
+
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096"
+	User time (seconds): 44.20
+	System time (seconds): 40.98
+	Percent of CPU this job got: 101%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:24.25
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 87404
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 10163551
+	Voluntary context switches: 10183
+	Involuntary context switches: 4345
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 37456
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 15:47:30 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384
+
+real	4m10.258s
+user	1m54.224s
+sys	2m20.853s
+
+*** Warning: 47 source files failed to parse
+
+Extracted 131322 functions
+
+Fri  9 Mar 15:51:41 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384
+
+Extracted 131322 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	5m22.981s
+user	5m22.728s
+sys	0m0.250s
+
+Found 33799 clone pairs
+
+Clustering clone pairs into classes
+
+real	0m1.387s
+user	0m1.265s
+sys	0m0.122s
+
+Clustered clone pairs into 24988 classes
+
+Done.
+
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384_functions-crossclones-2018-03-09-15:51:41.log
+Results in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384_functions-crossclones
+
+Fri  9 Mar 15:57:05 GMT 2018
+
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384"
+	User time (seconds): 438.34
+	System time (seconds): 141.39
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 9:34.91
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 415104
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 42170895
+	Voluntary context switches: 40906
+	Involuntary context switches: 17583
+	Swaps: 0
+	File system inputs: 640
+	File system outputs: 162240
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 15:57:05 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536
+
+real	18m9.054s
+user	7m32.922s
+sys	10m55.473s
+
+*** Warning: 196 source files failed to parse
+
+Extracted 516136 functions
+
+Fri  9 Mar 16:15:15 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536
+
+Extracted 516136 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	98m4.662s
+user	98m3.735s
+sys	0m0.872s
+
+Found 164137 clone pairs
+
+Clustering clone pairs into classes
+
+real	0m17.376s
+user	0m17.126s
+sys	0m0.250s
+
+Clustered clone pairs into 97045 classes
+
+Done.
+
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536_functions-crossclones-2018-03-09-16:15:15.log
+Results in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536_functions-crossclones
+
+Fri  9 Mar 17:53:37 GMT 2018
+
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536"
+	User time (seconds): 6354.29
+	System time (seconds): 657.13
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:56:32
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 297560
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 168444414
+	Voluntary context switches: 163539
+	Involuntary context switches: 72082
+	Swaps: 0
+	File system inputs: 640
+	File system outputs: 661888
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 17:53:37 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144
+
+real	96m43.933s
+user	30m1.217s
+sys	68m8.144s
+
+*** Warning: 792 source files failed to parse
+
+Extracted 2053308 functions
+
+Fri  9 Mar 19:30:23 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144
+
+Extracted 2053308 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	0m12.894s
+user	0m11.715s
+sys	0m1.176s
+
+*** ERROR: Cross-clone analysis failed, code 139
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144_functions-crossclones-2018-03-09-19:30:23.log
+
+Command exited with non-zero status 99
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144"
+	User time (seconds): 1814.88
+	System time (seconds): 4091.34
+	Percent of CPU this job got: 101%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:37:00
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 593420
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 673977697
+	Voluntary context switches: 655000
+	Involuntary context switches: 279932
+	Swaps: 0
+	File system inputs: 640
+	File system outputs: 1898024
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 99
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576
+
+NiCad Cross-Clone Detector v4.0 (15.2.16)
+
+config=./config/default.cfg
+system1=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576
+system2=/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576
+threshold=0.30
+granularity=functions
+language=java
+transform=none
+rename=none
+filter=none
+abstract=none
+normalize=none
+cluster=yes
+report=no
+include=
+exclude=
+
+Fri  9 Mar 19:30:38 GMT 2018
+
+Extracting functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576
+
+real	631m0.927s
+user	121m14.922s
+sys	511m4.978s
+
+*** Warning: 3141 source files failed to parse
+
+Extracted 8240098 functions
+
+Sat 10 Mar 06:01:46 GMT 2018
+
+Using previously extracted functions from java files in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576
+
+Extracted 8240098 functions
+
+Finding cross-clones between 10 and 2500 lines at UPI threshold 0.30
+
+real	0m3.681s
+user	0m3.288s
+sys	0m0.379s
+
+*** ERROR: Cross-clone analysis failed, code 139
+Detailed log in /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576_functions-crossclones-2018-03-10-06:01:46.log
+
+Command exited with non-zero status 99
+	Command being timed: "./nicad4cross functions java /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576 /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576"
+	User time (seconds): 7286.01
+	System time (seconds): 30673.79
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 10:31:18
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 440032
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 5
+	Minor (reclaiming a frame) page faults: 2695246234
+	Voluntary context switches: 3033774
+	Involuntary context switches: 1181583
+	Swaps: 0
+	File system inputs: 5083728
+	File system outputs: 7659976
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 99
