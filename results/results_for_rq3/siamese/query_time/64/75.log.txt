@@ -1,44 +1,51 @@
-2018/01/27 16:20:40
-====== Configurations ======
+2018/04/15 10:51:29
+========== Configurations ==========
+---------- ELASTICSEARCH -----------
 server         : localhost
 index          : 64
 type           : siamese
+--------------- DATA ---------------
 inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/75
 outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
-normalization  : djkpsvw
-ngramSize      : 4
-verbose        : false
 dfs            : true
 extension      : java
 minCloneSize   : 10
+------------- EXECUTION ------------
 command        : search
-queryReduction : true
-multiRep       : true
-outputFormat   : csvfline
 indexingMode   : bulk (4000)
-============================
-Jan 27, 2018 4:20:40 PM org.elasticsearch.plugins.PluginsService <init>
-INFO: [Bruiser] loaded [], sites []
-Found: 1 files.
-Searching done for 1 files (1 methods after clone size filtering).
-See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/64_qr_27-01-18_16-20-815.csv
-2018/01/27 16:20:41
-Elapse time (ms): 1568
-	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
-	User time (seconds): 3.08
-	System time (seconds): 0.26
-	Percent of CPU this job got: 191%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.74
+outputFormat   : csvfline
+------- MULTI-REPRESENTATION -------
+multiRep       : true
+T2 norm        : dsvw
+T3 norm        : djkopsvw
+ngramSize      : t1=4 t2=16 t3=14
+---------- QUERY REDUCTION ---------
+queryReduction : true
+qrThresholds   : t0=10.0 t1=10.0 t2=10.0 t3=10.0
+queryBoosts    : t0=1 t1=4 t2=16 t3=11
+====================================
+Apr 15, 2018 10:51:29 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Captain Britain] loaded [], sites []
+Querying Phase: found 1 files.
+Searching done for 1 files (1 out of 2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/64_qr_15-04-18_10-51-100.csv
+2018/04/15 10:51:30
+Elapse time (ms): 1741
+	Command being timed: "java -jar siamese-0.0.5-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 3.44
+	System time (seconds): 0.30
+	Percent of CPU this job got: 192%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.94
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 182192
+	Maximum resident set size (kbytes): 202180
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 47589
-	Voluntary context switches: 4695
-	Involuntary context switches: 90
+	Minor (reclaiming a frame) page faults: 52547
+	Voluntary context switches: 4620
+	Involuntary context switches: 95
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 88

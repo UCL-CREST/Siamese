@@ -1,0 +1,8 @@
+Best result: /Users/Chaiyong/Downloads/isics_results/cloplag_x_1_qr_09-11-17_21-44-52.csv,0.8895851801931858
+
+All results:
+/Users/Chaiyong/Downloads/isics_results/cloplag_x_1_qr_09-11-17_21-44-52.csv,0.8895851801931858
+/Users/Chaiyong/Downloads/isics_results/cloplag_x_2_qr_09-11-17_21-44-55.csv,0.8345130206793548
+/Users/Chaiyong/Downloads/isics_results/cloplag_x_3_qr_09-11-17_21-44-58.csv,0.8722743089497088
+/Users/Chaiyong/Downloads/isics_results/cloplag_x_4_qr_09-11-17_21-45-01.csv,0.8703224593549966
+/Users/Chaiyong/Downloads/isics_results/cloplag_x_5_qr_09-11-17_21-45-04.csv,0.8097476298063995

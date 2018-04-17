@@ -1,0 +1,8 @@
+Best result: /Users/Chaiyong/Downloads/isics_results/soco_x_4_qr_10-11-17_00-54-41.csv,0.9913043483443882
+
+All results:
+/Users/Chaiyong/Downloads/isics_results/soco_x_1_qr_10-11-17_00-54-14.csv,0.9507246380266936
+/Users/Chaiyong/Downloads/isics_results/soco_x_2_qr_10-11-17_00-54-24.csv,0.9724637684614762
+/Users/Chaiyong/Downloads/isics_results/soco_x_3_qr_10-11-17_00-54-32.csv,0.988405797533367
+/Users/Chaiyong/Downloads/isics_results/soco_x_4_qr_10-11-17_00-54-41.csv,0.9913043483443882
+/Users/Chaiyong/Downloads/isics_results/soco_x_5_qr_10-11-17_00-54-51.csv,0.9840579714464105

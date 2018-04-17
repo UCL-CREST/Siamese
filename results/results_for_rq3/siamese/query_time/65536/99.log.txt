@@ -1,44 +1,51 @@
-2018/01/27 16:35:13
-====== Configurations ======
+2018/04/15 11:10:12
+========== Configurations ==========
+---------- ELASTICSEARCH -----------
 server         : localhost
 index          : 65536
 type           : siamese
+--------------- DATA ---------------
 inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/99
 outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
-normalization  : djkpsvw
-ngramSize      : 4
-verbose        : false
 dfs            : true
 extension      : java
 minCloneSize   : 10
+------------- EXECUTION ------------
 command        : search
-queryReduction : true
-multiRep       : true
-outputFormat   : csvfline
 indexingMode   : bulk (4000)
-============================
-Jan 27, 2018 4:35:14 PM org.elasticsearch.plugins.PluginsService <init>
-INFO: [Martin Preston] loaded [], sites []
-Found: 1 files.
-Searching done for 1 files (1 methods after clone size filtering).
-See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/65536_qr_27-01-18_16-35-686.csv
-2018/01/27 16:35:15
-Elapse time (ms): 1697
-	Command being timed: "java -jar siamese-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
-	User time (seconds): 3.57
-	System time (seconds): 0.29
+outputFormat   : csvfline
+------- MULTI-REPRESENTATION -------
+multiRep       : true
+T2 norm        : dsvw
+T3 norm        : djkopsvw
+ngramSize      : t1=4 t2=16 t3=14
+---------- QUERY REDUCTION ---------
+queryReduction : true
+qrThresholds   : t0=10.0 t1=10.0 t2=10.0 t3=10.0
+queryBoosts    : t0=1 t1=4 t2=16 t3=11
+====================================
+Apr 15, 2018 11:10:12 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Jester] loaded [], sites []
+Querying Phase: found 1 files.
+Searching done for 1 files (1 out of 10 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/65536_qr_15-04-18_11-10-822.csv
+2018/04/15 11:10:14
+Elapse time (ms): 2036
+	Command being timed: "java -jar siamese-0.0.5-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 4.43
+	System time (seconds): 0.44
 	Percent of CPU this job got: 206%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.87
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.36
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 205616
+	Maximum resident set size (kbytes): 302252
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 54313
-	Voluntary context switches: 4925
-	Involuntary context switches: 116
+	Minor (reclaiming a frame) page faults: 80953
+	Voluntary context switches: 5158
+	Involuntary context switches: 97
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 88

@@ -1,0 +1,4 @@
+Best result: /Users/Chaiyong/Downloads/isics_results/soco_x_1_no_qr_10-11-17_16-30-48.csv,0.9751111525340356
+
+All results:
+/Users/Chaiyong/Downloads/isics_results/soco_x_1_no_qr_10-11-17_16-30-48.csv,0.9751111525340356

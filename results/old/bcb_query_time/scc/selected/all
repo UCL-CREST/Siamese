@@ -1,0 +1,4000 @@
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt1.file
+shutting down QBQ, 1516584717312
+shutting down QCQ, 1516584717313
+shutting down VCQ, 1516584717313
+shutting down RCQ, 1516584717314
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 144.88
+	System time (seconds): 5.51
+	Percent of CPU this job got: 245%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.36
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2960772
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 8
+	Minor (reclaiming a frame) page faults: 891469
+	Voluntary context switches: 15959
+	Involuntary context switches: 3360
+	Swaps: 0
+	File system inputs: 736
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt10.file
+shutting down QBQ, 1516585244274
+shutting down QCQ, 1516585244274
+shutting down VCQ, 1516585244276
+shutting down RCQ, 1516585244277
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 136.35
+	System time (seconds): 3.93
+	Percent of CPU this job got: 236%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.41
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3055204
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 913838
+	Voluntary context switches: 18469
+	Involuntary context switches: 7956
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt100.file
+shutting down QBQ, 1516590592020
+shutting down QCQ, 1516590592021
+shutting down VCQ, 1516590592021
+shutting down RCQ, 1516590592021
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.43
+	System time (seconds): 3.95
+	Percent of CPU this job got: 248%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.95
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2949896
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 887665
+	Voluntary context switches: 9377
+	Involuntary context switches: 3484
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt11.file
+shutting down QBQ, 1516585303708
+shutting down QCQ, 1516585303709
+shutting down VCQ, 1516585303710
+shutting down RCQ, 1516585303710
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.68
+	System time (seconds): 3.88
+	Percent of CPU this job got: 228%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.40
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2963708
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 891280
+	Voluntary context switches: 10291
+	Involuntary context switches: 3480
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt12.file
+shutting down QBQ, 1516585365152
+shutting down QCQ, 1516585365153
+shutting down VCQ, 1516585365154
+shutting down RCQ, 1516585365154
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 12
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 150.18
+	System time (seconds): 4.16
+	Percent of CPU this job got: 251%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.44
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3128048
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 931878
+	Voluntary context switches: 22722
+	Involuntary context switches: 4664
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt13.file
+shutting down QBQ, 1516585425070
+shutting down QCQ, 1516585425071
+shutting down VCQ, 1516585425071
+shutting down RCQ, 1516585425072
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 2
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 132.59
+	System time (seconds): 4.02
+	Percent of CPU this job got: 228%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.89
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2982724
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 895691
+	Voluntary context switches: 9820
+	Involuntary context switches: 3060
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt14.file
+shutting down QBQ, 1516585483096
+shutting down QCQ, 1516585483096
+shutting down VCQ, 1516585483097
+shutting down RCQ, 1516585483097
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.54
+	System time (seconds): 3.96
+	Percent of CPU this job got: 233%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.02
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2946000
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 886553
+	Voluntary context switches: 8905
+	Involuntary context switches: 3011
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt15.file
+shutting down QBQ, 1516585542059
+shutting down QCQ, 1516585542060
+shutting down VCQ, 1516585542061
+shutting down RCQ, 1516585542062
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 136.77
+	System time (seconds): 4.40
+	Percent of CPU this job got: 239%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.96
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3082176
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 920131
+	Voluntary context switches: 20770
+	Involuntary context switches: 6807
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt16.file
+shutting down QBQ, 1516585602220
+shutting down QCQ, 1516585602308
+shutting down VCQ, 1516585602422
+shutting down RCQ, 1516585602423
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 2
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 144.55
+	System time (seconds): 4.09
+	Percent of CPU this job got: 246%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:00.34
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2973908
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 893371
+	Voluntary context switches: 17269
+	Involuntary context switches: 4422
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt17.file
+shutting down QBQ, 1516585663699
+shutting down QCQ, 1516585663700
+shutting down VCQ, 1516585663701
+shutting down RCQ, 1516585663701
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 12
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 145.93
+	System time (seconds): 3.99
+	Percent of CPU this job got: 244%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.28
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3051168
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 912543
+	Voluntary context switches: 16233
+	Involuntary context switches: 2956
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt18.file
+shutting down QBQ, 1516585724611
+shutting down QCQ, 1516585724612
+shutting down VCQ, 1516585724612
+shutting down RCQ, 1516585724613
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 145.44
+	System time (seconds): 3.95
+	Percent of CPU this job got: 245%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:00.90
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3023020
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 906057
+	Voluntary context switches: 13918
+	Involuntary context switches: 4517
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt19.file
+shutting down QBQ, 1516585783986
+shutting down QCQ, 1516585783986
+shutting down VCQ, 1516585783986
+shutting down RCQ, 1516585783986
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.14
+	System time (seconds): 3.88
+	Percent of CPU this job got: 247%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.34
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2962376
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 890277
+	Voluntary context switches: 9357
+	Involuntary context switches: 2990
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt2.file
+shutting down QBQ, 1516584775004
+shutting down QCQ, 1516584775005
+shutting down VCQ, 1516584775005
+shutting down RCQ, 1516584775005
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.12
+	System time (seconds): 3.87
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.66
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2954232
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888169
+	Voluntary context switches: 8593
+	Involuntary context switches: 2814
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt20.file
+shutting down QBQ, 1516585843685
+shutting down QCQ, 1516585843686
+shutting down VCQ, 1516585843686
+shutting down RCQ, 1516585843686
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.91
+	System time (seconds): 3.95
+	Percent of CPU this job got: 246%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.68
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2944092
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 886037
+	Voluntary context switches: 9244
+	Involuntary context switches: 9215
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt21.file
+shutting down QBQ, 1516585903079
+shutting down QCQ, 1516585903080
+shutting down VCQ, 1516585903081
+shutting down RCQ, 1516585903081
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.64
+	System time (seconds): 3.86
+	Percent of CPU this job got: 228%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.39
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2961896
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 890744
+	Voluntary context switches: 9965
+	Involuntary context switches: 2629
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt22.file
+shutting down QBQ, 1516585964178
+shutting down QCQ, 1516585964179
+shutting down VCQ, 1516585964180
+shutting down RCQ, 1516585964180
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 1
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.05
+	System time (seconds): 3.97
+	Percent of CPU this job got: 240%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.09
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2958696
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 889928
+	Voluntary context switches: 9993
+	Involuntary context switches: 3458
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt23.file
+shutting down QBQ, 1516586022056
+shutting down QCQ, 1516586022057
+shutting down VCQ, 1516586022057
+shutting down RCQ, 1516586022057
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.77
+	System time (seconds): 3.84
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.86
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2958020
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 889125
+	Voluntary context switches: 9081
+	Involuntary context switches: 2463
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt24.file
+shutting down QBQ, 1516586078984
+shutting down QCQ, 1516586079203
+shutting down VCQ, 1516586079899
+shutting down RCQ, 1516586079899
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 133.50
+	System time (seconds): 4.04
+	Percent of CPU this job got: 237%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.85
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3024868
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 906266
+	Voluntary context switches: 14507
+	Involuntary context switches: 2626
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt25.file
+shutting down QBQ, 1516586138863
+shutting down QCQ, 1516586138863
+shutting down VCQ, 1516586138863
+shutting down RCQ, 1516586138863
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.39
+	System time (seconds): 3.90
+	Percent of CPU this job got: 248%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.94
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2949160
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 887693
+	Voluntary context switches: 9391
+	Involuntary context switches: 3158
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt26.file
+shutting down QBQ, 1516586199952
+shutting down QCQ, 1516586199953
+shutting down VCQ, 1516586199954
+shutting down RCQ, 1516586199954
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.69
+	System time (seconds): 3.94
+	Percent of CPU this job got: 240%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.08
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2951308
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 887950
+	Voluntary context switches: 9761
+	Involuntary context switches: 3310
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 176
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt27.file
+shutting down QBQ, 1516586259797
+shutting down QCQ, 1516586259798
+shutting down VCQ, 1516586259799
+shutting down RCQ, 1516586259799
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 135.20
+	System time (seconds): 4.03
+	Percent of CPU this job got: 232%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.85
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3043036
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 910697
+	Voluntary context switches: 16495
+	Involuntary context switches: 4242
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt28.file
+shutting down QBQ, 1516586321220
+shutting down QCQ, 1516586321221
+shutting down VCQ, 1516586321221
+shutting down RCQ, 1516586321222
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.97
+	System time (seconds): 3.93
+	Percent of CPU this job got: 240%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.40
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2969936
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 892540
+	Voluntary context switches: 9832
+	Involuntary context switches: 2890
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt29.file
+shutting down QBQ, 1516586380282
+shutting down QCQ, 1516586380283
+shutting down VCQ, 1516586380284
+shutting down RCQ, 1516586380284
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 1
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 134.29
+	System time (seconds): 4.57
+	Percent of CPU this job got: 235%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.06
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3069332
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 915944
+	Voluntary context switches: 14611
+	Involuntary context switches: 2676
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt3.file
+shutting down QBQ, 1516584832745
+shutting down QCQ, 1516584832746
+shutting down VCQ, 1516584832746
+shutting down RCQ, 1516584832746
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.23
+	System time (seconds): 3.83
+	Percent of CPU this job got: 233%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.73
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2959856
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 889553
+	Voluntary context switches: 8826
+	Involuntary context switches: 2688
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt30.file
+shutting down QBQ, 1516586440845
+shutting down QCQ, 1516586440845
+shutting down VCQ, 1516586440846
+shutting down RCQ, 1516586440846
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 132.41
+	System time (seconds): 3.86
+	Percent of CPU this job got: 225%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:00.53
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2954132
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888293
+	Voluntary context switches: 9670
+	Involuntary context switches: 3009
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt31.file
+shutting down QBQ, 1516586500227
+shutting down QCQ, 1516586500228
+shutting down VCQ, 1516586500229
+shutting down RCQ, 1516586500230
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 133.12
+	System time (seconds): 4.38
+	Percent of CPU this job got: 231%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.38
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2994664
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 898682
+	Voluntary context switches: 11851
+	Involuntary context switches: 2952
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt32.file
+shutting down QBQ, 1516586561289
+shutting down QCQ, 1516586561291
+shutting down VCQ, 1516586561292
+shutting down RCQ, 1516586561292
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 49
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 151.01
+	System time (seconds): 4.67
+	Percent of CPU this job got: 254%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.08
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3155792
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 939523
+	Voluntary context switches: 22960
+	Involuntary context switches: 5269
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt33.file
+shutting down QBQ, 1516586622322
+shutting down QCQ, 1516586622322
+shutting down VCQ, 1516586622323
+shutting down RCQ, 1516586622324
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 144.29
+	System time (seconds): 4.00
+	Percent of CPU this job got: 243%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:00.99
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2991104
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 898598
+	Voluntary context switches: 11794
+	Involuntary context switches: 3184
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt34.file
+shutting down QBQ, 1516586679771
+shutting down QCQ, 1516586679772
+shutting down VCQ, 1516586679772
+shutting down RCQ, 1516586679772
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 130.69
+	System time (seconds): 3.91
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.43
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2948836
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 886875
+	Voluntary context switches: 8785
+	Involuntary context switches: 3079
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt35.file
+shutting down QBQ, 1516586738419
+shutting down QCQ, 1516586738419
+shutting down VCQ, 1516586738420
+shutting down RCQ, 1516586738420
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 124.19
+	System time (seconds): 4.20
+	Percent of CPU this job got: 218%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.64
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2854328
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 859638
+	Voluntary context switches: 6926
+	Involuntary context switches: 3349
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt36.file
+shutting down QBQ, 1516586797031
+shutting down QCQ, 1516586797031
+shutting down VCQ, 1516586797031
+shutting down RCQ, 1516586797031
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 141.71
+	System time (seconds): 4.56
+	Percent of CPU this job got: 249%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.60
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2932724
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 881568
+	Voluntary context switches: 9103
+	Involuntary context switches: 3085
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt37.file
+shutting down QBQ, 1516586854349
+shutting down QCQ, 1516586854349
+shutting down VCQ, 1516586854349
+shutting down RCQ, 1516586854350
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 130.60
+	System time (seconds): 4.58
+	Percent of CPU this job got: 235%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.30
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2939652
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 883492
+	Voluntary context switches: 9016
+	Involuntary context switches: 2911
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt38.file
+shutting down QBQ, 1516586913341
+shutting down QCQ, 1516586913341
+shutting down VCQ, 1516586913341
+shutting down RCQ, 1516586913341
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.69
+	System time (seconds): 4.01
+	Percent of CPU this job got: 248%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.99
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2949088
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 887295
+	Voluntary context switches: 9545
+	Involuntary context switches: 2978
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt39.file
+shutting down QBQ, 1516586972170
+shutting down QCQ, 1516586972171
+shutting down VCQ, 1516586972172
+shutting down RCQ, 1516586972172
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 135.01
+	System time (seconds): 4.31
+	Percent of CPU this job got: 236%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.84
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3029832
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 907144
+	Voluntary context switches: 20147
+	Involuntary context switches: 4943
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt4.file
+shutting down QBQ, 1516584892103
+shutting down QCQ, 1516584892103
+shutting down VCQ, 1516584892103
+shutting down RCQ, 1516584892103
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.97
+	System time (seconds): 3.95
+	Percent of CPU this job got: 247%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.35
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2960192
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 889583
+	Voluntary context switches: 10175
+	Involuntary context switches: 3441
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt40.file
+shutting down QBQ, 1516587031979
+shutting down QCQ, 1516587031980
+shutting down VCQ, 1516587031981
+shutting down RCQ, 1516587031982
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 137.43
+	System time (seconds): 4.04
+	Percent of CPU this job got: 236%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.83
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3089228
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 921894
+	Voluntary context switches: 19250
+	Involuntary context switches: 3633
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt41.file
+shutting down QBQ, 1516587089048
+shutting down QCQ, 1516587089049
+shutting down VCQ, 1516587089049
+shutting down RCQ, 1516587089049
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 130.05
+	System time (seconds): 4.41
+	Percent of CPU this job got: 235%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.00
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2933980
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 881674
+	Voluntary context switches: 8586
+	Involuntary context switches: 3048
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt42.file
+shutting down QBQ, 1516587147608
+shutting down QCQ, 1516587147608
+shutting down VCQ, 1516587147608
+shutting down RCQ, 1516587147608
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 132.21
+	System time (seconds): 3.86
+	Percent of CPU this job got: 232%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.57
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2955580
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888505
+	Voluntary context switches: 8919
+	Involuntary context switches: 3092
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt43.file
+shutting down QBQ, 1516587207355
+shutting down QCQ, 1516587207356
+shutting down VCQ, 1516587207357
+shutting down RCQ, 1516587207357
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 11
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 134.17
+	System time (seconds): 3.83
+	Percent of CPU this job got: 231%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.73
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3012952
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 903578
+	Voluntary context switches: 13013
+	Involuntary context switches: 2868
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 152
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt44.file
+shutting down QBQ, 1516587265521
+shutting down QCQ, 1516587265522
+shutting down VCQ, 1516587265523
+shutting down RCQ, 1516587265523
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 2
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 125.22
+	System time (seconds): 3.94
+	Percent of CPU this job got: 222%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.14
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2887416
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 868860
+	Voluntary context switches: 9020
+	Involuntary context switches: 3221
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 152
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt45.file
+shutting down QBQ, 1516587322914
+shutting down QCQ, 1516587322914
+shutting down VCQ, 1516587322914
+shutting down RCQ, 1516587322914
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 130.78
+	System time (seconds): 3.88
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.39
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2945328
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 886351
+	Voluntary context switches: 8779
+	Involuntary context switches: 3429
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt46.file
+shutting down QBQ, 1516587382729
+shutting down QCQ, 1516587382729
+shutting down VCQ, 1516587382731
+shutting down RCQ, 1516587382731
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.53
+	System time (seconds): 3.95
+	Percent of CPU this job got: 226%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.80
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2963400
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 890728
+	Voluntary context switches: 9476
+	Involuntary context switches: 4034
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt47.file
+shutting down QBQ, 1516587441178
+shutting down QCQ, 1516587441178
+shutting down VCQ, 1516587441178
+shutting down RCQ, 1516587441178
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.55
+	System time (seconds): 3.85
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.80
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2962012
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 890372
+	Voluntary context switches: 8995
+	Involuntary context switches: 4778
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt48.file
+shutting down QBQ, 1516587500479
+shutting down QCQ, 1516587500479
+shutting down VCQ, 1516587500479
+shutting down RCQ, 1516587500479
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.87
+	System time (seconds): 4.00
+	Percent of CPU this job got: 247%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.29
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2960448
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 889857
+	Voluntary context switches: 9369
+	Involuntary context switches: 3933
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt49.file
+shutting down QBQ, 1516587561876
+shutting down QCQ, 1516587561876
+shutting down VCQ, 1516587561878
+shutting down RCQ, 1516587561878
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.94
+	System time (seconds): 3.97
+	Percent of CPU this job got: 239%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.39
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2959696
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 889532
+	Voluntary context switches: 11013
+	Involuntary context switches: 4307
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt5.file
+shutting down QBQ, 1516584950153
+shutting down QCQ, 1516584950154
+shutting down VCQ, 1516584950154
+shutting down RCQ, 1516584950154
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 132.03
+	System time (seconds): 3.85
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2964572
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 891301
+	Voluntary context switches: 8743
+	Involuntary context switches: 3186
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt50.file
+shutting down QBQ, 1516587623810
+shutting down QCQ, 1516587623812
+shutting down VCQ, 1516587623813
+shutting down RCQ, 1516587623813
+Total run Time:  00h:01m:01s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 150.04
+	System time (seconds): 4.19
+	Percent of CPU this job got: 248%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:02.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3146868
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 936413
+	Voluntary context switches: 22165
+	Involuntary context switches: 4026
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt51.file
+shutting down QBQ, 1516587683282
+shutting down QCQ, 1516587683282
+shutting down VCQ, 1516587683282
+shutting down RCQ, 1516587683282
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.97
+	System time (seconds): 3.86
+	Percent of CPU this job got: 247%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.34
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2956276
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888908
+	Voluntary context switches: 9423
+	Involuntary context switches: 4880
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt52.file
+shutting down QBQ, 1516587740746
+shutting down QCQ, 1516587740746
+shutting down VCQ, 1516587740746
+shutting down RCQ, 1516587740746
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.16
+	System time (seconds): 3.80
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.45
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2949732
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 887989
+	Voluntary context switches: 8963
+	Involuntary context switches: 3482
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt53.file
+shutting down QBQ, 1516587800463
+shutting down QCQ, 1516587800464
+shutting down VCQ, 1516587800464
+shutting down RCQ, 1516587800465
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.26
+	System time (seconds): 3.93
+	Percent of CPU this job got: 226%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.71
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2956812
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888741
+	Voluntary context switches: 8990
+	Involuntary context switches: 2552
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt54.file
+shutting down QBQ, 1516587860103
+shutting down QCQ, 1516587860104
+shutting down VCQ, 1516587860105
+shutting down RCQ, 1516587860106
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 133.02
+	System time (seconds): 4.06
+	Percent of CPU this job got: 229%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.65
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3050892
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 912266
+	Voluntary context switches: 14268
+	Involuntary context switches: 3218
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt55.file
+shutting down QBQ, 1516587918086
+shutting down QCQ, 1516587918087
+shutting down VCQ, 1516587918087
+shutting down RCQ, 1516587918087
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.53
+	System time (seconds): 3.81
+	Percent of CPU this job got: 233%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.95
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2956764
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888717
+	Voluntary context switches: 8955
+	Involuntary context switches: 3208
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt56.file
+shutting down QBQ, 1516587977427
+shutting down QCQ, 1516587977428
+shutting down VCQ, 1516587977429
+shutting down RCQ, 1516587977433
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.33
+	System time (seconds): 3.85
+	Percent of CPU this job got: 227%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.34
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2955408
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 889074
+	Voluntary context switches: 9539
+	Involuntary context switches: 2770
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt57.file
+shutting down QBQ, 1516588036900
+shutting down QCQ, 1516588036978
+shutting down VCQ, 1516588037005
+shutting down RCQ, 1516588037005
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.51
+	System time (seconds): 4.03
+	Percent of CPU this job got: 247%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.56
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2970676
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 892858
+	Voluntary context switches: 10278
+	Involuntary context switches: 3112
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt58.file
+shutting down QBQ, 1516588096612
+shutting down QCQ, 1516588096613
+shutting down VCQ, 1516588096614
+shutting down RCQ, 1516588096614
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 136.22
+	System time (seconds): 4.03
+	Percent of CPU this job got: 235%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.60
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2983892
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 896452
+	Voluntary context switches: 20369
+	Involuntary context switches: 6536
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt59.file
+shutting down QBQ, 1516588158003
+shutting down QCQ, 1516588158004
+shutting down VCQ, 1516588158006
+shutting down RCQ, 1516588158006
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 145.08
+	System time (seconds): 4.09
+	Percent of CPU this job got: 242%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.39
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3017484
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 904186
+	Voluntary context switches: 12240
+	Involuntary context switches: 3295
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 176
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt6.file
+shutting down QBQ, 1516585007111
+shutting down QCQ, 1516585007112
+shutting down VCQ, 1516585007113
+shutting down RCQ, 1516585007113
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 117.08
+	System time (seconds): 4.39
+	Percent of CPU this job got: 213%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:56.94
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2837880
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 855307
+	Voluntary context switches: 5056
+	Involuntary context switches: 2239
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt60.file
+shutting down QBQ, 1516588217227
+shutting down QCQ, 1516588217228
+shutting down VCQ, 1516588217229
+shutting down RCQ, 1516588217229
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 136.85
+	System time (seconds): 4.39
+	Percent of CPU this job got: 238%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.22
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3161044
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 940619
+	Voluntary context switches: 22118
+	Involuntary context switches: 2922
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt61.file
+shutting down QBQ, 1516588274889
+shutting down QCQ, 1516588274890
+shutting down VCQ, 1516588274890
+shutting down RCQ, 1516588274890
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 129.65
+	System time (seconds): 4.64
+	Percent of CPU this job got: 233%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.62
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2938024
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 883025
+	Voluntary context switches: 8773
+	Involuntary context switches: 2696
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt62.file
+shutting down QBQ, 1516588334776
+shutting down QCQ, 1516588335069
+shutting down VCQ, 1516588335344
+shutting down RCQ, 1516588335345
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 146.28
+	System time (seconds): 3.97
+	Percent of CPU this job got: 248%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:00.49
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3020316
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 904972
+	Voluntary context switches: 12791
+	Involuntary context switches: 2982
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt63.file
+shutting down QBQ, 1516588396721
+shutting down QCQ, 1516588396722
+shutting down VCQ, 1516588396723
+shutting down RCQ, 1516588396723
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 144.52
+	System time (seconds): 3.98
+	Percent of CPU this job got: 242%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.33
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2995720
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 898606
+	Voluntary context switches: 10796
+	Involuntary context switches: 2945
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt64.file
+shutting down QBQ, 1516588454607
+shutting down QCQ, 1516588454607
+shutting down VCQ, 1516588454607
+shutting down RCQ, 1516588454607
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.72
+	System time (seconds): 3.84
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.86
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2956456
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888784
+	Voluntary context switches: 9336
+	Involuntary context switches: 2551
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt65.file
+shutting down QBQ, 1516588513350
+shutting down QCQ, 1516588513350
+shutting down VCQ, 1516588513350
+shutting down RCQ, 1516588513350
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.08
+	System time (seconds): 4.45
+	Percent of CPU this job got: 249%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.74
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2946384
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 886520
+	Voluntary context switches: 9238
+	Involuntary context switches: 2930
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt66.file
+shutting down QBQ, 1516588574389
+shutting down QCQ, 1516588574390
+shutting down VCQ, 1516588574390
+shutting down RCQ, 1516588574391
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.44
+	System time (seconds): 3.95
+	Percent of CPU this job got: 241%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.03
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2971400
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 893350
+	Voluntary context switches: 10553
+	Involuntary context switches: 3408
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt67.file
+shutting down QBQ, 1516588631907
+shutting down QCQ, 1516588631907
+shutting down VCQ, 1516588631907
+shutting down RCQ, 1516588631907
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.08
+	System time (seconds): 3.86
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.50
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2949004
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 887533
+	Voluntary context switches: 9032
+	Involuntary context switches: 3587
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt68.file
+shutting down QBQ, 1516588693333
+shutting down QCQ, 1516588693334
+shutting down VCQ, 1516588693335
+shutting down RCQ, 1516588693335
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 144.85
+	System time (seconds): 3.91
+	Percent of CPU this job got: 242%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.43
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2990088
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 897591
+	Voluntary context switches: 11441
+	Involuntary context switches: 3177
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt69.file
+shutting down QBQ, 1516588752211
+shutting down QCQ, 1516588752211
+shutting down VCQ, 1516588752212
+shutting down RCQ, 1516588752212
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.07
+	System time (seconds): 4.02
+	Percent of CPU this job got: 248%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.86
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2949980
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 887819
+	Voluntary context switches: 9220
+	Involuntary context switches: 2894
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt7.file
+shutting down QBQ, 1516585066535
+shutting down QCQ, 1516585066536
+shutting down VCQ, 1516585066536
+shutting down RCQ, 1516585066536
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.53
+	System time (seconds): 3.95
+	Percent of CPU this job got: 246%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.43
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2954292
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888065
+	Voluntary context switches: 9444
+	Involuntary context switches: 5129
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt70.file
+shutting down QBQ, 1516588809425
+shutting down QCQ, 1516588809425
+shutting down VCQ, 1516588809425
+shutting down RCQ, 1516588809425
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 130.65
+	System time (seconds): 4.53
+	Percent of CPU this job got: 236%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2938872
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 883310
+	Voluntary context switches: 8929
+	Involuntary context switches: 3083
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt71.file
+shutting down QBQ, 1516588869291
+shutting down QCQ, 1516588869292
+shutting down VCQ, 1516588869293
+shutting down RCQ, 1516588869293
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 134.13
+	System time (seconds): 3.99
+	Percent of CPU this job got: 230%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.88
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3031080
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 907287
+	Voluntary context switches: 13077
+	Involuntary context switches: 2742
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt72.file
+shutting down QBQ, 1516588930378
+shutting down QCQ, 1516588930378
+shutting down VCQ, 1516588930380
+shutting down RCQ, 1516588930380
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.35
+	System time (seconds): 4.02
+	Percent of CPU this job got: 241%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.06
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2970240
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 892748
+	Voluntary context switches: 10974
+	Involuntary context switches: 3529
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt73.file
+shutting down QBQ, 1516588989798
+shutting down QCQ, 1516588989799
+shutting down VCQ, 1516588989800
+shutting down RCQ, 1516588989801
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 137.43
+	System time (seconds): 4.10
+	Percent of CPU this job got: 238%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.43
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3100336
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 925368
+	Voluntary context switches: 19929
+	Involuntary context switches: 6977
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt74.file
+shutting down QBQ, 1516589048687
+shutting down QCQ, 1516589048688
+shutting down VCQ, 1516589048689
+shutting down RCQ, 1516589048689
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.12
+	System time (seconds): 4.18
+	Percent of CPU this job got: 229%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.85
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2948844
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 886706
+	Voluntary context switches: 9959
+	Involuntary context switches: 3219
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt75.file
+shutting down QBQ, 1516589109989
+shutting down QCQ, 1516589109990
+shutting down VCQ, 1516589109993
+shutting down RCQ, 1516589109993
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.81
+	System time (seconds): 3.85
+	Percent of CPU this job got: 239%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.29
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2957328
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888986
+	Voluntary context switches: 9713
+	Involuntary context switches: 3877
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 184
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt76.file
+shutting down QBQ, 1516589168912
+shutting down QCQ, 1516589168912
+shutting down VCQ, 1516589168912
+shutting down RCQ, 1516589168912
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.80
+	System time (seconds): 4.35
+	Percent of CPU this job got: 249%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.91
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2952444
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888856
+	Voluntary context switches: 9394
+	Involuntary context switches: 3892
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt77.file
+shutting down QBQ, 1516589226756
+shutting down QCQ, 1516589226756
+shutting down VCQ, 1516589226756
+shutting down RCQ, 1516589226756
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.30
+	System time (seconds): 3.91
+	Percent of CPU this job got: 233%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.82
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2955752
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888505
+	Voluntary context switches: 8910
+	Involuntary context switches: 2887
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt78.file
+shutting down QBQ, 1516589288367
+shutting down QCQ, 1516589288367
+shutting down VCQ, 1516589288369
+shutting down RCQ, 1516589288369
+Total run Time:  00h:01m:01s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.99
+	System time (seconds): 3.88
+	Percent of CPU this job got: 239%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.61
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2971240
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 892821
+	Voluntary context switches: 10196
+	Involuntary context switches: 3722
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt79.file
+shutting down QBQ, 1516589347252
+shutting down QCQ, 1516589347253
+shutting down VCQ, 1516589347253
+shutting down RCQ, 1516589347253
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 141.96
+	System time (seconds): 4.64
+	Percent of CPU this job got: 249%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.86
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2928348
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 880464
+	Voluntary context switches: 9082
+	Involuntary context switches: 3297
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt8.file
+shutting down QBQ, 1516585125602
+shutting down QCQ, 1516585125603
+shutting down VCQ, 1516585125604
+shutting down RCQ, 1516585125604
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 123.72
+	System time (seconds): 3.80
+	Percent of CPU this job got: 215%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2850288
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 859518
+	Voluntary context switches: 6457
+	Involuntary context switches: 2399
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt80.file
+shutting down QBQ, 1516589404709
+shutting down QCQ, 1516589404710
+shutting down VCQ, 1516589404711
+shutting down RCQ, 1516589404711
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 117.68
+	System time (seconds): 3.76
+	Percent of CPU this job got: 211%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.45
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2871856
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 864941
+	Voluntary context switches: 5959
+	Involuntary context switches: 2892
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt81.file
+shutting down QBQ, 1516589461357
+shutting down QCQ, 1516589461358
+shutting down VCQ, 1516589461360
+shutting down RCQ, 1516589461360
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 117.25
+	System time (seconds): 4.36
+	Percent of CPU this job got: 214%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:56.64
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2879612
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 865515
+	Voluntary context switches: 6816
+	Involuntary context switches: 2874
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt82.file
+shutting down QBQ, 1516589521507
+shutting down QCQ, 1516589521508
+shutting down VCQ, 1516589521508
+shutting down RCQ, 1516589521508
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.67
+	System time (seconds): 3.95
+	Percent of CPU this job got: 245%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:00.15
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2956584
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888838
+	Voluntary context switches: 10263
+	Involuntary context switches: 2906
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt83.file
+shutting down QBQ, 1516589582532
+shutting down QCQ, 1516589582532
+shutting down VCQ, 1516589582533
+shutting down RCQ, 1516589582534
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.79
+	System time (seconds): 3.98
+	Percent of CPU this job got: 242%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.03
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2980864
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 895424
+	Voluntary context switches: 10551
+	Involuntary context switches: 3056
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt84.file
+shutting down QBQ, 1516589641400
+shutting down QCQ, 1516589641612
+shutting down VCQ, 1516589641836
+shutting down RCQ, 1516589641837
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 144.66
+	System time (seconds): 4.50
+	Percent of CPU this job got: 251%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.30
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2982584
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 894463
+	Voluntary context switches: 12041
+	Involuntary context switches: 3103
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt85.file
+shutting down QBQ, 1516589702610
+shutting down QCQ, 1516589702611
+shutting down VCQ, 1516589702613
+shutting down RCQ, 1516589702613
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 146.70
+	System time (seconds): 4.74
+	Percent of CPU this job got: 249%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:00.76
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3055348
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 912805
+	Voluntary context switches: 16843
+	Involuntary context switches: 3957
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt86.file
+shutting down QBQ, 1516589760117
+shutting down QCQ, 1516589760117
+shutting down VCQ, 1516589760117
+shutting down RCQ, 1516589760117
+Total run Time:  00h:00m:56s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.09
+	System time (seconds): 3.90
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.47
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2948804
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 887287
+	Voluntary context switches: 8853
+	Involuntary context switches: 3217
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt87.file
+shutting down QBQ, 1516589819292
+shutting down QCQ, 1516589819292
+shutting down VCQ, 1516589819292
+shutting down RCQ, 1516589819292
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 142.80
+	System time (seconds): 3.97
+	Percent of CPU this job got: 248%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.16
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2955308
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888394
+	Voluntary context switches: 9332
+	Involuntary context switches: 4504
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt88.file
+shutting down QBQ, 1516589878747
+shutting down QCQ, 1516589878748
+shutting down VCQ, 1516589878749
+shutting down RCQ, 1516589878749
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.63
+	System time (seconds): 3.90
+	Percent of CPU this job got: 227%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.45
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2966292
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 891728
+	Voluntary context switches: 9648
+	Involuntary context switches: 3739
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt89.file
+shutting down QBQ, 1516589934894
+shutting down QCQ, 1516589934894
+shutting down VCQ, 1516589934894
+shutting down RCQ, 1516589934894
+Total run Time:  00h:00m:55s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 122.82
+	System time (seconds): 3.82
+	Percent of CPU this job got: 222%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:56.95
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2831104
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 854437
+	Voluntary context switches: 5059
+	Involuntary context switches: 2451
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt9.file
+shutting down QBQ, 1516585184883
+shutting down QCQ, 1516585184883
+shutting down VCQ, 1516585184884
+shutting down RCQ, 1516585184885
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.18
+	System time (seconds): 4.65
+	Percent of CPU this job got: 229%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.29
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2951244
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 886648
+	Voluntary context switches: 9515
+	Involuntary context switches: 4064
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt90.file
+shutting down QBQ, 1516589995150
+shutting down QCQ, 1516589995150
+shutting down VCQ, 1516589995150
+shutting down RCQ, 1516589995150
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.11
+	System time (seconds): 3.94
+	Percent of CPU this job got: 247%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.43
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2960828
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 889937
+	Voluntary context switches: 9511
+	Involuntary context switches: 3002
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt91.file
+shutting down QBQ, 1516590056131
+shutting down QCQ, 1516590056132
+shutting down VCQ, 1516590056134
+shutting down RCQ, 1516590056134
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 145.44
+	System time (seconds): 4.04
+	Percent of CPU this job got: 245%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:00.98
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3029844
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 908432
+	Voluntary context switches: 12927
+	Involuntary context switches: 3561
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 176
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt92.file
+shutting down QBQ, 1516590117226
+shutting down QCQ, 1516590117226
+shutting down VCQ, 1516590117227
+shutting down RCQ, 1516590117228
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.78
+	System time (seconds): 3.92
+	Percent of CPU this job got: 241%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.06
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2973856
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 894709
+	Voluntary context switches: 10320
+	Involuntary context switches: 3020
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt93.file
+shutting down QBQ, 1516590174947
+shutting down QCQ, 1516590174948
+shutting down VCQ, 1516590174948
+shutting down RCQ, 1516590174948
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.25
+	System time (seconds): 3.97
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.72
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2963924
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 890752
+	Voluntary context switches: 9028
+	Involuntary context switches: 2647
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt94.file
+shutting down QBQ, 1516590232521
+shutting down QCQ, 1516590232521
+shutting down VCQ, 1516590232521
+shutting down RCQ, 1516590232521
+Total run Time:  00h:00m:57s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.07
+	System time (seconds): 3.96
+	Percent of CPU this job got: 234%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.56
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2952244
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888198
+	Voluntary context switches: 9015
+	Involuntary context switches: 2764
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt95.file
+shutting down QBQ, 1516590292577
+shutting down QCQ, 1516590292578
+shutting down VCQ, 1516590292579
+shutting down RCQ, 1516590292580
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 1
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 134.37
+	System time (seconds): 4.39
+	Percent of CPU this job got: 231%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:00.07
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3016052
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 904002
+	Voluntary context switches: 13204
+	Involuntary context switches: 3211
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt96.file
+shutting down QBQ, 1516590353899
+shutting down QCQ, 1516590353899
+shutting down VCQ, 1516590353901
+shutting down RCQ, 1516590353901
+Total run Time:  00h:01m:00s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 145.56
+	System time (seconds): 4.00
+	Percent of CPU this job got: 243%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:01.30
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3030020
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 907349
+	Voluntary context switches: 12605
+	Involuntary context switches: 3475
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt97.file
+shutting down QBQ, 1516590413805
+shutting down QCQ, 1516590413805
+shutting down VCQ, 1516590413806
+shutting down RCQ, 1516590413806
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.42
+	System time (seconds): 3.95
+	Percent of CPU this job got: 226%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.88
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2964020
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 890790
+	Voluntary context switches: 9581
+	Involuntary context switches: 2848
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt98.file
+shutting down QBQ, 1516590473329
+shutting down QCQ, 1516590473329
+shutting down VCQ, 1516590473329
+shutting down RCQ, 1516590473329
+Total run Time:  00h:00m:58s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 143.28
+	System time (seconds): 3.97
+	Percent of CPU this job got: 247%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.51
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2956012
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 888417
+	Voluntary context switches: 9200
+	Involuntary context switches: 3367
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+reading Q values from properties file
+acton: search
+threshold: 8
+QBQ_THREADS: 2, QBQ_SIZE: 80
+QCQ_THREADS: 5, QCQ_SIZE: 80
+VCQ_THREADS: 1, VCQ_SIZE: 40
+RCQ_THREADS: 1, RCQ_SIZE: 10
+
+search size of GTPM: 9694590
+Directory: query
+Query File: input/query/qt99.file
+shutting down QBQ, 1516590533042
+shutting down QCQ, 1516590533043
+shutting down VCQ, 1516590533044
+shutting down RCQ, 1516590533044
+Total run Time:  00h:00m:59s
+number of clone pairs detected: 0
+	Command being timed: "java -jar dist/indexbased.SearchManager.jar search 8"
+	User time (seconds): 131.35
+	System time (seconds): 3.97
+	Percent of CPU this job got: 226%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:59.72
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2960060
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 890572
+	Voluntary context switches: 9337
+	Involuntary context switches: 2976
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
