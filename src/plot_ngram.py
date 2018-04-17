@@ -70,9 +70,9 @@ ax = fig.add_subplot(111)
 ax.scatter([4, 11, 12, 13, 14, 16],
            [0.3592592592592593, 0.145985401459854, 0.145985401459854, 0.145985401459854, 0.145985401459854, 0.22505023442732752],
            c="black", marker="o", label="best")
-ax.plot(size, bellon_t1, c="red", linestyle="-", label="original")
-ax.plot(size, bellon_t2, c="green", linestyle="-", label="renamed")
-ax.plot(size, bellon_t3, c="blue", linestyle="-", label="full renamed")
+ax.plot(size, bellon_t1, c="red", linestyle="-", label=r'original $(I_1)$')
+ax.plot(size, bellon_t2, c="green", linestyle="--", label=r'renamed $(I_2)$')
+ax.plot(size, bellon_t3, c="blue", linestyle=":", label=r'full renamed $(I_3)$')
 # ax.plot(size, soco, c="g", marker="o", label="SOCO (File)")
 # plt.yscale('log', basey=10)
 # plt.xscale('log', basex=10)
