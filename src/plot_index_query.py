@@ -10,17 +10,18 @@ iclones_methods = [22, 50, 178, 1723, 6601, 28030]
 jplag_methods = [22, 50, 178, 423, 1723, 6601, 28030]
 simian_methods = [22, 50, 178, 423, 1723, 6601, 28030]
 deckard_methods = [22, 50, 178, 423, 1723, 6601, 28030, 111190]
+ccfx_methods = [22, 50, 178, 423, 1723, 6601, 28030]
 
 siamese = [4.8, 5.26, 9.54, 19.21, 23.16, 97.07, 576.78, 1999.95, 6195, 25699, 74304]
 scc = [(0.58 + 2.03), (0.88 + 0.68), (2.68 + 0.98), (3.81 + 1.37), (9.18 + 2.15),
        (28.40 + 4.96), (110.09 + 16.78), (432.52 + 60.96), (1694.23 + 219.8), (6786 + 870.08),
        (18606 + 2348.9)]
-nicad = [0.34, 0.66, 2.21, 7.89, 26.50,
-         84.25, 574.91, 6992]
+nicad = [0.34, 0.66, 2.21, 7.89, 26.50, 84.25, 574.91, 6992]
 iclones = [0.59, 0.67, 3.06, 4.82, 14.97, 166.95]
 jpag = [0.37, 0.91, 0.89, 1.02, 3.83, 57.92, 890.08]
 simian = [0.25, 0.30, 0.47, 2.14, 25.90, 401.93, 6506]
-deckard = [1.57, 3.59, 8.26, 18.05, 119.77, 1152.13, 462.07, 124528.96]
+deckard = [1.56, 3.51, 8.29, 18.15, 109.66, 1159.29, 26051.83, 0]
+ccfx = [0.18, 0.21, 0.34, 1.62, 5.72, 35.04, 2769.78]
 
 # # seconds
 # fig = plt.figure()
@@ -47,16 +48,18 @@ iclones_m = [x / 60 for x in iclones]
 jplag_m = [x / 60 for x in jpag]
 simian_m = [x / 60 for x in simian]
 deckard_m = [x / 60 for x in deckard]
+ccfx_m = [x / 60 for x in ccfx]
 
 fig = plt.figure()
 # ax = fig.add_subplot(111)
 plt.plot(methods, siamese_m, c="b", marker="s", label="Siamese")
 plt.plot(methods, scc_m, c="r", marker="x", label="SourcererCC")
-plt.plot(nicad_methods, nicad_m, c="g", marker="o", linestyle=":", label="NiCad")
+plt.plot(ccfx_methods, ccfx_m, c="#5B2C6F", marker="p", linestyle=":", label="CCFinderX")
+plt.plot(deckard_methods, deckard_m, c="k", marker=">", linestyle=":", label="Deckard")
 plt.plot(iclones_methods, iclones_m, c="c", marker="v", linestyle=":", label="iClones")
 plt.plot(jplag_methods, jplag_m, c="m", marker="^", linestyle=":", label="JPlag")
+plt.plot(nicad_methods, nicad_m, c="g", marker="o", linestyle=":", label="NiCad")
 plt.plot(simian_methods, simian_m, c="y", marker="<", linestyle=":", label="Simian")
-plt.plot(deckard_methods, deckard_m, c="k", marker=">", linestyle=":", label="Deckard")
 plt.yscale('log', basey=10)
 plt.xscale('log', basex=10)
 plt.xlabel("No. of methods")

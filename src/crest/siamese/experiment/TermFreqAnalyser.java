@@ -75,7 +75,7 @@ public class TermFreqAnalyser {
                 data[i] = freqArr[i];
                 output += freqArr[i] + "\n";
                 if (i > 0 && i % printEvery == 0) {
-                    MyUtils.writeToFile("./",outputFileName, output, true);
+                    MyUtils.writeToFile("./", outputFileName, output, true);
                     System.out.println("written: " + i + " terms "
                             + " [" + df.format(((long)i * 100)/size) + "%]");
                     output = "";
@@ -106,9 +106,9 @@ public class TermFreqAnalyser {
         srcf.delete();
         // start analysing the tokens
         analyseTermFreq(index, "tokenizedsrc", mode, toksrc);
-        analyseTermFreq(index, "t1src", mode, t1src);
-        analyseTermFreq(index, "t2src", mode, t2src);
-        analyseTermFreq(index, "src", mode, src);
+//        analyseTermFreq(index, "t1src", mode, t1src);
+//        analyseTermFreq(index, "t2src", mode, t2src);
+//        analyseTermFreq(index, "src", mode, src);
         /* then call the sort_term.py python script to generate a Zipf plot */
     }
 }
