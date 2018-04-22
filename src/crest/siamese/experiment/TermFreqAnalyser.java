@@ -105,8 +105,8 @@ public class TermFreqAnalyser {
         File srcf = new File(src);
         srcf.delete();
         // start analysing the tokens
-        analyseTermFreq(index, "tokenizedsrc", mode, toksrc);
-//        analyseTermFreq(index, "t1src", mode, t1src);
+//        analyseTermFreq(index, "tokenizedsrc", mode, toksrc);
+        analyseTermFreq(index, "t1src", mode, t1src);
 //        analyseTermFreq(index, "t2src", mode, t2src);
 //        analyseTermFreq(index, "src", mode, src);
         /* then call the sort_term.py python script to generate a Zipf plot */
