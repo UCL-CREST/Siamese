@@ -28,7 +28,7 @@ for i in `ls *.zip`; do
 	rm $i 
 	# read
 	cd $SHOME
-    echo ">> START-UPDATE"
+    echo ">> START-UPDATE "$i
 	/usr/bin/time -v java -jar siamese-0.0.5-SNAPSHOT.jar -cf config_delete_incremental.properties
 	/usr/bin/time -v java -jar siamese-0.0.5-SNAPSHOT.jar -cf config_incremental_index.properties
     echo ">> END-UPDATE"
