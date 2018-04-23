@@ -32,7 +32,6 @@ for i in `ls *.zip`; do
 	/usr/bin/time -v java -jar siamese-0.0.5-SNAPSHOT.jar -cf config_delete_incremental.properties
 	/usr/bin/time -v java -jar siamese-0.0.5-SNAPSHOT.jar -cf config_incremental_index.properties
     echo ">> END-UPDATE"
-	cd $PROJHOME/unzipped
-	rm -rf elasticsearch*
-	cd ..
+	cd $PROJHOME
+	rm -rf $PROJHOME/unzipped/*
 done
