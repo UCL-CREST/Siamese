@@ -225,3 +225,28 @@ bash-4.2$ /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/c
         Signals delivered: 0
         Page size (bytes): 4096
         Exit status: 0
+
+bash-4.2$ /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/1048576/
+Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/1048576/"
+        User time (seconds): 22482.51
+        System time (seconds): 1633.69
+        Percent of CPU this job got: 72%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 9:14:15
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 1724460
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 22
+        Minor (reclaiming a frame) page faults: 15115396
+        Voluntary context switches: 4579195
+        Involuntary context switches: 34232
+        Swaps: 0
+        File system inputs: 48729920
+        File system outputs: 123079720
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
