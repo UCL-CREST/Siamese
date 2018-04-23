@@ -7,13 +7,12 @@ import pandas as pd
 interval = 20
 
 
-def extract_data():
+def extract_data(file):
     releases = []
     update_time = []
     labels = []
-    with open(sys.argv[1], encoding="utf-8") as file:
+    with open(file, encoding="utf-8") as file:
         times = [l.strip() for l in file]
-
     for idx, time in enumerate(times):
         splitted_time = time.split(',')
         releases.append(splitted_time[0])
@@ -52,11 +51,11 @@ def plot():
 
 
 def boxplot(data1, data2, data3):
-    df = pd.DataFrame(
-        {'RxJava': data1,
-         'java-design-patterns': data1,
-         'Elasticsearch': data1
-         })
+    df1 = pd.DataFrame({'RxJava': data1})
+    df2 = pd.DataFrame({'java-design-patterns': data2})
+    df3 = pd.DataFrame({'Elasticsearch': data3})
+    df = pd.concat([df1,df2,df3], ignore_index=True, axis=1)
+    df.columns = ['RxJava', 'java-design-patterns', 'Elasticsearch']
 
     print(df)
     sns.set_style("whitegrid")
@@ -66,16 +65,18 @@ def boxplot(data1, data2, data3):
     ax.yaxis.set_tick_params(labelsize=16)
     ax.xaxis.set_tick_params(labelsize=16)
     plt.ylabel("index update time (s)")
-    plt.show()
+    # plt.show()
 
     fig = ax.get_figure()
     fig.savefig('../update_time.pdf', bbox_inches='tight')
 
 
 def main():
-    releases, update_time, labels = extract_data()
+    releases1, update_time1, labels1 = extract_data(sys.argv[1])
+    releases2, update_time2, labels2 = extract_data(sys.argv[2])
+    releases3, update_time3, labels3 = extract_data(sys.argv[3])
     # plot()
-    boxplot(update_time, update_time, update_time)
+    boxplot(update_time1, update_time2, update_time3)
 
 
 main()
