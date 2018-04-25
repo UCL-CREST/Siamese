@@ -68,6 +68,7 @@ def boxplot(data1, data2, data3):
     # plt.show()
 
     fig = ax.get_figure()
+    fig.set_size_inches(10, 3)
     fig.savefig('../update_time.pdf', bbox_inches='tight')
 
 

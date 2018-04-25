@@ -27,21 +27,21 @@ def read_csv(filename):
 
 
 def plot(df0, df1, df2, df3, index=''):
-    result = pd.concat([df3, df2, df1, df0], axis=1, join_axes=[df0.index])
+    result = pd.concat([df0, df1, df2, df3], axis=1, join_axes=[df0.index])
     result.index += 1
     result = result.reset_index()
     result.columns = ['index', 'freq', 'freq', 'freq', 'freq']
     print('plotting ...')
     # normal scale
     ax = result.plot(x='index', y='freq', style=['r-', 'g--', 'b-.', 'k:'])
-    ax.legend([r'$I_0$', r'$I_1$', r'$I_2$', r'$I_3$'], prop={'size': 18})
+    ax.legend([r'$f_0$', r'$f_1$', r'$f_2$', r'$f_3$'], prop={'size': 22})
     ax.set_xlabel("token rank (" + index + ")")
     ax.set_xlim(0, 1000)
     ax.set_ylabel("document frequency (DF)")
-    ax.yaxis.label.set_size(18)
-    ax.xaxis.label.set_size(18)
-    ax.yaxis.set_tick_params(labelsize=16)
-    ax.xaxis.set_tick_params(labelsize=16)
+    ax.yaxis.label.set_size(22)
+    ax.xaxis.label.set_size(22)
+    ax.yaxis.set_tick_params(labelsize=20)
+    ax.xaxis.set_tick_params(labelsize=20)
     # set 'K', and 'M', on y-axis tick marks.
     ax = matplotlib.pyplot.gca()
     mkfunc = lambda x, pos: '%1.0fM' % (x * 1e-6) if x >= 1e6 else '%1.0fK' % (x * 1e-3) if x >= 1e3 else '%1.0f' % x
@@ -152,15 +152,15 @@ def plot_slopes(filename):
 def main():
     # print('processing CSVs ...')
     index = 'qualitas'
-    df_src_sorted = read_csv('../freq_df_src_' + index + '.csv')
-    df_t2src_sorted = read_csv('../freq_df_t2src_' + index + '.csv')
+    df_t0src_sorted = read_csv('../freq_df_t0src_' + index + '.csv')
     df_t1src_sorted = read_csv('../freq_df_t1src_' + index + '.csv')
-    df_toksrc_sorted = read_csv('../freq_df_toksrc_' + index + '.csv')
+    df_t2src_sorted = read_csv('../freq_df_t2src_' + index + '.csv')
+    df_t3src_sorted = read_csv('../freq_df_t3src_' + index + '.csv')
 
     # if index == 'qualitas' or index == 'bcb':
     #     plot_no_label(df_src_sorted, df_toksrc_sorted, df_t2src_sorted, index)
     # else:
-    plot(df_src_sorted, df_t2src_sorted, df_t1src_sorted, df_toksrc_sorted, index)
+    plot(df_t0src_sorted, df_t1src_sorted, df_t2src_sorted, df_t3src_sorted, index)
     # print('computing slopes ...')
     # compute_slopes(df_toksrc_sorted)
     # plot_slopes('../slopes.csv')
