@@ -1,10 +1,11 @@
-public long checksum(File f) throws IOException {
-        CRC32 crc = new CRC32();
-        FileReader fr = new FileReader(f);
-        int data;
-        while((data = fr.read()) != -1) {
-        crc.update(data);
-        }
-        fr.close();
-        return crc.getValue();
+public static int binarySearch1(int arr[], int key, int imin, int imax) {
+    if (imax < imin)
+        return -1;
+    int imid = (imin+imax)/2;
+    if (arr[imid] > key)
+        return binarySearch1(arr,key,imin,imid-1);
+    else if (arr[imid] < key)
+        return binarySearch1(arr,key,imid+1,imax);
+    else
+        return imid;
 }

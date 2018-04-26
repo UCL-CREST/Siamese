@@ -56,8 +56,7 @@ def boxplot(data1, data2, data3):
     df3 = pd.DataFrame({'Elasticsearch': data3})
     df = pd.concat([df1,df2,df3], ignore_index=True, axis=1)
     df.columns = ['RxJava', 'java-design-patterns', 'Elasticsearch']
-
-    print(df)
+    # print(df)
     sns.set_style("whitegrid")
     ax = sns.boxplot(data=df)
     ax.yaxis.label.set_size(18)
@@ -72,10 +71,17 @@ def boxplot(data1, data2, data3):
     fig.savefig('../update_time.pdf', bbox_inches='tight')
 
 
+def stats(data1, data2, data3):
+    print('mean', np.mean(data1), 'med', np.median(data1), 'max', max(data1))
+    print('mean', np.mean(data2), 'med', np.median(data2), 'max', max(data2))
+    print('mean', np.mean(data3), 'med', np.median(data3), 'max', max(data3), 'min', min(data3))
+
+
 def main():
     releases1, update_time1, labels1 = extract_data(sys.argv[1])
     releases2, update_time2, labels2 = extract_data(sys.argv[2])
     releases3, update_time3, labels3 = extract_data(sys.argv[3])
+    stats(update_time1, update_time2, update_time3)
     # plot()
     boxplot(update_time1, update_time2, update_time3)
 
