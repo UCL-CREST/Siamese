@@ -862,7 +862,7 @@ public class Siamese {
         int[] simResults = new int[results.size()];
         for (int i=0; i<results.size(); i++) {
             Document d = results.get(i);
-            int sim = FuzzySearch.tokenSetRatio(query, d.getOriginalSource());
+            int sim = FuzzySearch.tokenSetRatio(query, d.getTokenizedSource());
             simResults[i] = sim;
         }
         return simResults;
