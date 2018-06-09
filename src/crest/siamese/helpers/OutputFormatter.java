@@ -88,7 +88,7 @@ public class OutputFormatter {
         }
     }
 
-    public String format(ArrayList<Document> results, int[] sim, int threshod, String prefixToRemove) {
+    public String format(ArrayList<Document> results, int[] sim, int threshold, String prefixToRemove) {
         StringBuilder sb = new StringBuilder();
         int resultCount = 0;
         if (this.format.equals("csv")) {
@@ -97,7 +97,7 @@ public class OutputFormatter {
                 if (resultCount > 0)
                     sb.append(","); // add comma in between
                 // only add the results that has similarity higher than the threshold
-                if (sim[i] >= threshod) {
+                if (sim[i] >= threshold) {
                     sb.append(d.getFile().replace(prefixToRemove, ""));
                     if (addStartEndLine) {
                         sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i] + "#" + d.getLicense());

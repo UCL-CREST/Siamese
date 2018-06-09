@@ -30,6 +30,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Siamese {
 
@@ -92,8 +93,8 @@ public class Siamese {
     private String url = "none";
     private String fileLicense = "unknown";
     private boolean github = false;
-    private boolean computeSimilarity = false;
-    private int simThreshold = 0;
+    private String computeSimilarity = "none";
+    private String[] simThreshold = {"80%", "80%", "80%", "80%"};
     private Tokenizer tokenizer;
     private Normalizer normalizer;
     private Tokenizer origTokenizer;
@@ -231,8 +232,12 @@ public class Siamese {
 
             github = Boolean.parseBoolean(prop.getProperty("github"));
 
-            computeSimilarity = Boolean.parseBoolean(prop.getProperty("computeSimilarity"));
-            simThreshold = Integer.parseInt(prop.getProperty("simThreshold"));
+            computeSimilarity = prop.getProperty("computeSimilarity");
+            /* copied from
+            https://stackoverflow.com/questions/43338223/reading-a-int-from-java-properties-file
+             */
+            String simThresholds = prop.getProperty("simThreshold");
+            simThreshold = simThresholds.split(",");
 
             if (command.equals("delete")) {
                 deleteField = prop.getProperty("deleteField");
@@ -795,7 +800,8 @@ public class Siamese {
                                 // search for results depending on the MR setting
                                 if (this.multiRep) {
                                     results = es.search(index, type, origQuery, t3Query, t2Query, t1Query,
-                                            origBoost, normBoost, t2Boost, t1Boost, isPrint, isDFS, offset, size, simThreshold);
+                                            origBoost, normBoost, t2Boost, t1Boost, isPrint, isDFS, offset,
+                                            size, this.computeSimilarity, simThreshold);
 //                                    System.out.println("T3: " + t3Query);
 //                                    System.out.println("T2: " + t2Query);
 //                                    System.out.println("T1: " + t1Query);
@@ -804,10 +810,12 @@ public class Siamese {
                                     results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
 //                                    System.out.println("T0: " + origQuery);
                                 }
-
-                                if (this.computeSimilarity) {
+                                // fuzzywuzzy similarity is applied after the search
+                                if (this.computeSimilarity.equals("fuzzywuzzy")) {
                                     int[] sim = computeSimilarity(origQuery, results);
-                                    outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
+                                    outToFile += formatter.format(results, sim,
+                                            Integer.parseInt(this.simThreshold[0].split("%")[0]),
+                                            prefixToRemove);
                                 } else {
                                     outToFile += formatter.format(results, prefixToRemove);
                                 }
@@ -1187,7 +1195,7 @@ public class Siamese {
         this.resultsSize = resultsSize;
     }
 
-    public boolean getComputeSimilarity() {
+    public String getComputeSimilarity() {
         return this.computeSimilarity;
     }
 
