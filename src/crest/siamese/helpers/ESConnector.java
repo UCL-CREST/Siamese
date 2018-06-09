@@ -256,7 +256,8 @@ public class ESConnector {
             boolean isPrint,
             boolean isDFS,
             int resultOffset,
-            int resultSize) throws Exception {
+            int resultSize,
+			int similarity) throws Exception {
 
         ArrayList<Document> results = new ArrayList<Document>();
         SearchType searchType;
@@ -269,14 +270,14 @@ public class ESConnector {
         /* copied from
         https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
          */
-        float cutoff = (float) 0.05;
-        float cutoff2 = (float) 0.05;
+        String minShouldMatch = similarity + "%";
         QueryBuilder queryBuilder = QueryBuilders.boolQuery()
                 .should(
 //						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
 //								.cutoffFrequency(cutoff2)
 //								.boost(origBoost)
                         QueryBuilders.matchQuery("tokenizedsrc", origQuery)
+								.minimumShouldMatch(minShouldMatch)
                                 .boost(origBoost)
                 )
 				.should(
@@ -284,6 +285,7 @@ public class ESConnector {
 //								.cutoffFrequency(cutoff2)
 //								.boost(origBoost)
 						QueryBuilders.matchQuery("t2src", t2Query)
+								.minimumShouldMatch(minShouldMatch)
 								.boost(t2Boost)
 				)
 				.should(
@@ -291,6 +293,7 @@ public class ESConnector {
 //								.cutoffFrequency(cutoff2)
 //								.boost(origBoost)
 						QueryBuilders.matchQuery("t1src", t1Query)
+								.minimumShouldMatch(minShouldMatch)
 								.boost(t1Boost)
 				)
                 .should(
@@ -299,8 +302,9 @@ public class ESConnector {
 //								.boost(normBoost)
                         QueryBuilders.matchQuery("src", query)
 //                                .operator(MatchQueryBuilder.Operator.AND)
+								.minimumShouldMatch(minShouldMatch)
                                 .boost(normBoost)
-                );
+                ).minimumShouldMatch("4"); // all four representation must match at the given similarity
 
         SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
                 .addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))

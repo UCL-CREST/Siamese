@@ -26,29 +26,30 @@ class Clone(Fragment):
 
 def format_clone(c, ctype, threshold):
     parts = c.split('#')
-    f = None
-    if ctype is 'query':
-        f = Fragment(parts[0].split('.java_')[0] + '.java', parts[1], parts[2])
-    else:
-        try:
-            if int(parts[3]) >= threshold:
-                f = Clone(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], parts[3])
-        except ValueError: # failure from fuzzywuzzy results in no similarity value
-            return None
+    # f = None
+    # if ctype is 'query':
+    f = Fragment(parts[0].split('.java_')[0] + '.java', parts[1], parts[2])
+    # else:
+    #     try:
+    #         if int(parts[3]) >= threshold:
+    #             f = Clone(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], parts[3])
+    #     except ValueError: # failure from fuzzywuzzy results in no similarity value
+    #         return None
     return f
 
 
 def extract_clone_set(line, prefix, threshold):
     clones = line.split(',')
     clone_pairs = list()
-    for idx, c in enumerate(clones):
-        ctype = 'clones'
-        if idx == 0:
-            ctype = 'query'
+    if len(clones) >= 2 and clones[1] is not '\n': # skip blank result
+        for idx, c in enumerate(clones):
+            ctype = 'clones'
+            if idx == 0:
+                ctype = 'query'
 
-        c = format_clone(c.replace(prefix, ''), ctype, threshold)
-        if c is not None:
-            clone_pairs.append(c)
+            c = format_clone(c.replace(prefix, ''), ctype, threshold)
+            if c is not None:
+                clone_pairs.append(c)
 
     # if len(clone_pairs) > 1:
     #     for c in clone_pairs:
@@ -61,10 +62,10 @@ def print_clone_pairs(clones):
     for cs in clones:
         query = cs[0] # query
         for c in cs[1:]:
-            print(query.file, query.start, query.end, c.file, c.start, c.end, c.similarity)
+            # print(query.file, query.start, query.end, c.file, c.start, c.end)
             writefile('../results/results_for_thesis/so-qualitas_clone_pairs.csv',
                       query.file + ',' + query.start + ',' + query.end + ',' +
-                      c.file + ',' + c.start + ',' + c.end + ',' + c.similarity + '\n', 'a', False)
+                      c.file + ',' + c.start + ',' + c.end.strip() + '\n', 'a', False)
 
 
 def main():
@@ -80,7 +81,9 @@ def main():
 
     all_clones = list()
     for line in file:
-        all_clones.append(extract_clone_set(line, prefix, sim))
+        clones = extract_clone_set(line, prefix, sim)
+        if len(clones) > 0:
+            all_clones.append(clones)
 
     print_clone_pairs(all_clones)
 

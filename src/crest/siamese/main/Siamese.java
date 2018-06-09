@@ -795,7 +795,7 @@ public class Siamese {
                                 // search for results depending on the MR setting
                                 if (this.multiRep) {
                                     results = es.search(index, type, origQuery, t3Query, t2Query, t1Query,
-                                            origBoost, normBoost, t2Boost, t1Boost, isPrint, isDFS, offset, size);
+                                            origBoost, normBoost, t2Boost, t1Boost, isPrint, isDFS, offset, size, simThreshold);
 //                                    System.out.println("T3: " + t3Query);
 //                                    System.out.println("T2: " + t2Query);
 //                                    System.out.println("T1: " + t1Query);
