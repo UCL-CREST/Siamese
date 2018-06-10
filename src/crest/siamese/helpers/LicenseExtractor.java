@@ -37,7 +37,8 @@ public class LicenseExtractor {
     }
 
     public static String extractLicenseWithRegExp(String license) {
-        if (license.contains("MIT License"))
+        if (license.contains("MIT License") ||
+                license.contains("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED"))
             return "mit";
         else if (license.contains("GNU GENERAL PUBLIC LICENSE")) {
             if (license.contains("Version 2"))

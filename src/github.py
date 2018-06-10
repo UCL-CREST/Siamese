@@ -227,8 +227,8 @@ def main():
                 config = update_config(config, 30, "true")
             write_config(config)
             execute_siamese()
-        if idx > 1:
-            exit(0)
+        # if idx > 1:
+        exit(0)
     logging.debug('Total: ' + str(count))
 
 
