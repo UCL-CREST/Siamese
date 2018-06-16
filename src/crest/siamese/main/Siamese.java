@@ -324,6 +324,8 @@ public class Siamese {
         } else if (outputFormat.equals("csvfline")) {
             formatter.setFormat("csv");
             formatter.setAddStartEndLine(true);
+            if (this.includeLicense)
+                formatter.setAddLicense(true);
         } else if (outputFormat.equals("gcf")) {
             formatter.setFormat("gcf");
         } else {
