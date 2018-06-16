@@ -11,11 +11,13 @@ public class OutputFormatter {
     private XMLFormatter xmlFormatter;
     private Document query;
     private int ccid = 1;
+    private boolean addLicense;
 
     public OutputFormatter() {
         format = "csv";
         addStartEndLine = true;
         xmlFormatter = new XMLFormatter();
+        addLicense = false;
     }
 
     public String getFormat() {
@@ -37,9 +39,18 @@ public class OutputFormatter {
         this.addStartEndLine = addStartEndLine;
     }
 
-    public OutputFormatter(String format, boolean addStartEndLine) {
+    public boolean isAddLicense() {
+        return addLicense;
+    }
+
+    public void setAddLicense(boolean addLicense) {
+        this.addLicense = addLicense;
+    }
+
+    public OutputFormatter(String format, boolean addStartEndLine, boolean addLicense) {
         this.format = format;
         this.addStartEndLine = addStartEndLine;
+        this.addLicense = addLicense;
     }
 
     public String format(Document query, String prefixToRemove, String license) {
@@ -47,7 +58,10 @@ public class OutputFormatter {
         if (this.format.equals("csv")) {
             sb.append(query.getFile().replace(prefixToRemove, ""));
             if (addStartEndLine) {
-                sb.append("#" + query.getStartLine() + "#" + query.getEndLine() + "#" + license);
+                sb.append("#" + query.getStartLine() + "#" + query.getEndLine());
+            }
+            if (addLicense) {
+                sb.append("#" + license);
             }
             sb.append(",");
             return sb.toString();
@@ -71,6 +85,9 @@ public class OutputFormatter {
                 sb.append(d.getFile().replace(prefixToRemove, ""));
                 if (addStartEndLine) {
                     sb.append("#" + d.getStartLine() + "#" + d.getEndLine());
+                }
+                if (addLicense) {
+                    sb.append("#" + d.getLicense());
                 }
                 resultCount++;
             }
@@ -100,7 +117,10 @@ public class OutputFormatter {
                 if (sim[i] >= threshold) {
                     sb.append(d.getFile().replace(prefixToRemove, ""));
                     if (addStartEndLine) {
-                        sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i] + "#" + d.getLicense());
+                        sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i]);
+                    }
+                    if (addLicense) {
+                        sb.append("#" + d.getLicense());
                     }
                     resultCount++;
                 }
