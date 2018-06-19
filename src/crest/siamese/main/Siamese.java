@@ -799,9 +799,9 @@ public class Siamese {
                                 }
                                 // fuzzywuzzy similarity is applied after the search
                                 if (this.computeSimilarity.equals("fuzzywuzzy")) {
-                                    int[] sim = computeSimilarity(origQuery, results);
+                                    int[][] sim = computeSimilarity(origQuery, t1Query, t2Query, t3Query, results);
                                     outToFile += formatter.format(results, sim,
-                                            Integer.parseInt(this.simThreshold[0].split("%")[0]),
+                                            this.simThreshold,
                                             prefixToRemove);
                                 } else {
                                     outToFile += formatter.format(results, prefixToRemove);
@@ -849,16 +849,26 @@ public class Siamese {
 
     /**
      * Compute similarity between query and results using fuzzywuzzy string matching
-     * @param query the code query
+     * @param origQuery the f0 code query (original)
+     * @param t1Query the f1 code query
+     * @param t2Query the f2 code query
+     * @param t3Query the f3 code query
      * @param results the list of results
-     * @return an array of similarity values
+     * @return a 2D array of similarity values
      */
-    private int[] computeSimilarity(String query, ArrayList<Document> results) {
-        int[] simResults = new int[results.size()];
+    private int[][] computeSimilarity(String query,
+                                    String t1Query, String t2Query, String t3Query,
+                                    ArrayList<Document> results) {
+        int[][] simResults = new int[results.size()][4]; // 2D sim array of four representations
         for (int i=0; i<results.size(); i++) {
             Document d = results.get(i);
-            int sim = FuzzySearch.tokenSetRatio(query, d.getTokenizedSource());
-            simResults[i] = sim;
+            int sim0 = FuzzySearch.tokenSetRatio(query, d.getTokenizedSource());
+            int sim1 = FuzzySearch.tokenSetRatio(t1Query, d.getT1Source());
+            int sim2 = FuzzySearch.tokenSetRatio(t2Query, d.getT2Source());
+            int sim3 = FuzzySearch.tokenSetRatio(t3Query, d.getSource());
+            // compute an average similarity of the four representations
+            int[] sims = { sim0, sim1, sim2, sim3 };
+            simResults[i] = sims;
         }
         return simResults;
     }

@@ -4,10 +4,11 @@ from helpers import *
 
 
 class Fragment(object):
-    def __init__(self, file, start, end):
+    def __init__(self, file, start, end, license):
         self.file = file
         self.start = start
         self.end = end
+        self.license = license
 
     def print(self):
         print(self.file + '(' + self.start + ',' + self.end + ')')
@@ -24,11 +25,15 @@ class Clone(Fragment):
         print(self.file + '(' + self.start + ',' + self.end + ') ' + self.similarity)
 
 
-def format_clone(c, ctype, threshold):
+def format_clone(c, ctype, threshold, include_license):
     parts = c.split('#')
+    print(parts)
     # f = None
     # if ctype is 'query':
-    f = Fragment(parts[0].split('.java_')[0] + '.java', parts[1], parts[2])
+    if not include_license:
+        f = Fragment(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], None)
+    else:
+        f = Fragment(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], parts[3])
     # else:
     #     try:
     #         if int(parts[3]) >= threshold:
@@ -38,7 +43,7 @@ def format_clone(c, ctype, threshold):
     return f
 
 
-def extract_clone_set(line, prefix, threshold):
+def extract_clone_set(line, prefix, threshold, include_license):
     clones = line.split(',')
     clone_pairs = list()
     if len(clones) >= 2 and clones[1] is not '\n': # skip blank result
@@ -47,7 +52,7 @@ def extract_clone_set(line, prefix, threshold):
             if idx == 0:
                 ctype = 'query'
 
-            c = format_clone(c.replace(prefix, ''), ctype, threshold)
+            c = format_clone(c.replace(prefix, ''), ctype, threshold, include_license)
             if c is not None:
                 clone_pairs.append(c)
 
@@ -58,14 +63,15 @@ def extract_clone_set(line, prefix, threshold):
     return clone_pairs
 
 
-def print_clone_pairs(clones):
+def print_clone_pairs(clones, outputfile):
     for cs in clones:
         query = cs[0] # query
         for c in cs[1:]:
             # print(query.file, query.start, query.end, c.file, c.start, c.end)
-            writefile('../results/results_for_thesis/so-qualitas_clone_pairs.csv',
+            writefile(outputfile,
                       query.file + ',' + query.start + ',' + query.end + ',' +
-                      c.file + ',' + c.start + ',' + c.end.strip() + '\n', 'a', False)
+                      c.file + ',' + c.start + ',' + c.end.strip() + ',' +
+                      str(query.license) + ',' + str(c.license).strip() + '\n', 'a', False)
 
 
 def main():
@@ -76,16 +82,18 @@ def main():
     sim = 80
     if len(sys.argv) >= 4:
         sim = int(sys.argv[3])
-
+    outputfile = '../results/results_for_thesis/so-qualitas_clone_pairs.csv'
+    if len(sys.argv) >= 5:
+        outputfile = sys.argv[4]
+    if len(sys.argv) >= 6:
+        include_license = sys.argv[5]
     file = open(inputfile, 'r')
-
     all_clones = list()
     for line in file:
-        clones = extract_clone_set(line, prefix, sim)
+        clones = extract_clone_set(line, prefix, sim, include_license)
         if len(clones) > 0:
             all_clones.append(clones)
-
-    print_clone_pairs(all_clones)
+    print_clone_pairs(all_clones, outputfile)
 
 
 main()
