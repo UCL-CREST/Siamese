@@ -20,12 +20,13 @@ class Clone(Fragment):
         self.start = start
         self.end = end
         self.similarity = similarity
+        self.license = None
 
     def print(self):
         print(self.file + '(' + self.start + ',' + self.end + ') ' + self.similarity)
 
 
-def format_clone(c, ctype, threshold, include_license):
+def format_clone_license(c, include_license):
     parts = c.split('#')
     print(parts)
     # f = None
@@ -43,6 +44,24 @@ def format_clone(c, ctype, threshold, include_license):
     return f
 
 
+def format_clone_sim(c, ctype, threshold):
+    parts = c.split('#')
+    # print(parts)
+    f = None
+    if ctype is 'query':
+        f = Fragment(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], None)
+    else:
+        try:
+            sims = parts[3].split('$')
+            if int(sims[0]) >= threshold and int(sims[1]) >= threshold and int(sims[2]) >= threshold \
+                    and int(sims[3]) >= threshold:
+                print(parts)
+                f = Clone(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], parts[3])
+        except ValueError: # failure from fuzzywuzzy results in no similarity value
+            return None
+    return f
+
+
 def extract_clone_set(line, prefix, threshold, include_license):
     clones = line.split(',')
     clone_pairs = list()
@@ -51,8 +70,8 @@ def extract_clone_set(line, prefix, threshold, include_license):
             ctype = 'clones'
             if idx == 0:
                 ctype = 'query'
-
-            c = format_clone(c.replace(prefix, ''), ctype, threshold, include_license)
+            # c = format_clone_license(c.replace(prefix, ''), include_license)
+            c = format_clone_sim(c.replace(prefix, ''), ctype, threshold)
             if c is not None:
                 clone_pairs.append(c)
 
@@ -73,6 +92,8 @@ def print_clone_pairs(clones, outputfile):
                       c.file + ',' + c.start + ',' + c.end.strip() + ',' +
                       str(query.license) + ',' + str(c.license).strip() + '\n', 'a', False)
 
+    print('saved to: ' + outputfile)
+
 
 def main():
     inputfile = sys.argv[1]
@@ -82,9 +103,10 @@ def main():
     sim = 80
     if len(sys.argv) >= 4:
         sim = int(sys.argv[3])
-    outputfile = '../results/results_for_thesis/so-qualitas_clone_pairs.csv'
+    outputfile = '../results/results_for_thesis/so-qualitas_clone_pairs_fw' + str(sim) + '_4rep.csv'
     if len(sys.argv) >= 5:
         outputfile = sys.argv[4]
+    include_license = False
     if len(sys.argv) >= 6:
         include_license = sys.argv[5]
     file = open(inputfile, 'r')
