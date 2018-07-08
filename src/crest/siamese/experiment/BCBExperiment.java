@@ -39,6 +39,11 @@ public class BCBExperiment {
                 outputLoc = "sample_clones";
                 extractSamplePairs(outputLoc, bcbLoc, getSamplePairs());
                 break;
+            case "type1":
+                outputLoc = "type1_clones";
+                int limit = 50;
+                extractType1Pairs(outputLoc, bcbLoc, getType1Pairs(limit));
+                break;
             case "check":
                 String fileToCheck = args[1];
                 String[] prefixes = {"/Users/Chaiyong/Documents/phd/2017/Siamese/",
@@ -46,18 +51,27 @@ public class BCBExperiment {
                 System.out.println("File: " + fileToCheck);
                 String pFilename = fileToCheck.replace(".csv", "_p.csv");
                 String eFilename = fileToCheck.replace(".csv", "_e.csv");
-                int size = 15;
+                int size = 10;
                 int checksize = 10;
                 boolean includeQuery = true;
 //                processOutputFile(fileToCheck, pFilename, prefixes, size);
 //                evaluate(pFilename, eFilename, includeQuery, checksize);
-                calculate(eFilename, size, checksize, includeQuery);
+                int[] targetTypes = {3};
+                calculate(eFilename, size, checksize, includeQuery, targetTypes);
                 break;
         }
         evaluator.closeDBConnection();
     }
 
-    private static void calculate(String outputFile, int resultSize, int size, boolean includeQuery) {
+    private static boolean checkInArray(int[] arr, int item) {
+        for (int i=0; i<arr.length; i++) {
+            if (item == arr[i])
+                return true;
+        }
+        return false;
+    }
+
+    private static void calculate(String outputFile, int resultSize, int size, boolean includeQuery, int[] targetTypes) {
         System.out.println("Checking: " + outputFile);
         try {
             String[] lines = MyUtils.readFile(outputFile);
@@ -91,7 +105,7 @@ public class BCBExperiment {
                     System.out.println(result[0] + "," + result[1] + "," + result[2]
                             + "," + result[3] + "," + result[4] + "," + result[5]);
                     /* find a true positive */
-                    if (result[5].equals("T")) {
+                    if (result[5].equals("T") && checkInArray(targetTypes, Integer.parseInt(result[4]))) {
                         tp += 1;
                         /* found the first relevant result */
                         if (rel == 0) {
@@ -288,8 +302,32 @@ public class BCBExperiment {
         return clones;
     }
 
-    private static void extractSamplePairs(String outputLoc, String bcbLoc,
-                                                             ArrayList<BCBDocument> clones) {
+    private static ArrayList<BCBDocument> getType1Pairs(int limit) {
+        /* get sample clone fragments */
+        ArrayList<BCBDocument> clones;
+        String sql = "SELECT * FROM\n" +
+                "  (SELECT FUNCTION_ID_ONE\n" +
+                "   FROM clones\n" +
+                "    WHERE SYNTACTIC_TYPE = 1\n" +
+                "   UNION\n" +
+                "   SELECT FUNCTION_ID_TWO\n" +
+                "   FROM clones\n" +
+                "    WHERE SYNTACTIC_TYPE = 1\n" +
+                "  )\n" +
+                "    AS A\n" +
+                "  INNER JOIN FUNCTIONS\n" +
+                "    ON A.FUNCTION_ID_ONE = FUNCTIONS.ID\n" +
+                "AND FUNCTIONS.ENDLINE - FUNCTIONS.STARTLINE + 1 >= 6\n" +
+                "LIMIT " + limit + ";";
+        clones = evaluator.getCloneFragments(sql, "ID", false);
+        return clones;
+    }
+
+    private static void extractSamplePairs(String outputLoc, String bcbLoc, ArrayList<BCBDocument> clones) {
+        extractClones(outputLoc, bcbLoc, clones);
+    }
+
+    private static void extractType1Pairs(String outputLoc, String bcbLoc, ArrayList<BCBDocument> clones) {
         extractClones(outputLoc, bcbLoc, clones);
     }
 
