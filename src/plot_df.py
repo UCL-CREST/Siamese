@@ -34,7 +34,7 @@ def plot(df0, df1, df2, df3, index=''):
     print('plotting ...')
     # normal scale
     ax = result.plot(x='index', y='freq', style=['r-', 'g--', 'b-.', 'k:'])
-    ax.legend([r'$f_0$', r'$f_1$', r'$f_2$', r'$f_3$'], prop={'size': 22})
+    ax.legend([r'$r_0$', r'$r_1$', r'$r_2$', r'$r_3$'], prop={'size': 22})
     ax.set_xlabel("token rank (" + index + ")")
     ax.set_xlim(0, 1000)
     ax.set_ylabel("document frequency (DF)")
