@@ -1,14 +1,14 @@
 #!/bin/bash
-type=1
-start=16
-end=16
+type=$1
+start=1
+end=40
 origIndexConfig="config_bellon_index_t"$type".properties"
 origSearchConfig="config_bellon_search_t"$type".properties"
 
 for i in `seq $start $end`
 do
     clear
-    echo "n-gram size: "$i
+    echo "type $1, n-gram size: "$i
     iconfig="itemp.properties"
     sconfig="stemp.properties"
     # create the config according the gram size
@@ -24,7 +24,7 @@ do
     mvn exec:java -Dexec.mainClass=crest.siamese.main.Main -Dexec.args="-cf $sconfig" # 2> /dev/null
 
     # rename the result to match with the n-gram size
-    mv /Users/Chaiyong/Documents/phd/2017/Siamese/exp_results/bellon_no_qr_* /Users/Chaiyong/Documents/phd/2017/Siamese/exp_results/$i.csv
+    mv /Users/Chaiyong/Documents/phd/2017/Siamese/t$1_results/bellon_no_qr_* /Users/Chaiyong/Documents/phd/2017/Siamese/t$1_results/$i.csv
 
     # clean up
     rm $iconfig $sconfig
