@@ -612,9 +612,10 @@ public class Siamese {
                                         method.getStartLine(),
                                         method.getEndLine(),
                                         normSource,
-                                        t2Source,
-                                        t1Source,
-                                        tokenizedSource,
+                                        "", "", "",
+//                                        t2Source,
+//                                        t1Source,
+//                                        tokenizedSource,
 //                                        method.getSrc(),
                                         "", // TODO: insert empty original code for performance now.
                                         license,
@@ -801,8 +802,9 @@ public class Siamese {
 //                                    System.out.println("T1: " + t1Query);
 //                                    System.out.println("T0: " + origQuery);
                                 } else {
-                                    results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
-//                                    System.out.println("T0: " + origQuery);
+//                                    results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
+                                    results = es.search(index, type, t3Query, isPrint, isDFS, offset, size);
+                                    System.out.println("T3: " + t3Query);
                                 }
 
                                 if (this.computeSimilarity) {
