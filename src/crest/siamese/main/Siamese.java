@@ -265,13 +265,13 @@ public class Siamese {
         System.out.println("server         : " + server);
         System.out.println("index          : " + index);
         System.out.println("type           : " + type);
-        System.out.println("--------------- DATA ---------------");
+        System.out.println("------------- DATA -----------------");
         System.out.println("inputFolder    : " + inputFolder);
         System.out.println("outputFolder   : " + outputFolder);
         System.out.println("dfs            : " + isDFS);
         System.out.println("extension      : " + extension);
         System.out.println("minCloneSize   : " + minCloneLine);
-        System.out.println("------------- EXECUTION ------------");
+        System.out.println("----------- EXECUTION --------------");
         System.out.println("command        : " + command);
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
         System.out.println("outputFormat   : " + outputFormat);
@@ -280,7 +280,7 @@ public class Siamese {
         System.out.println("T2 norm        : dsvw");
         System.out.println("T3 norm        : " + normMode);
         System.out.println("ngramSize      : t1=" + t1NgramSize + " t2=" + t2NgramSize + " t3=" + ngramSize);
-        System.out.println("---------- QUERY REDUCTION ---------");
+        System.out.println("--------- QUERY REDUCTION ----------");
         System.out.println("queryReduction : " + queryReduction);
         System.out.println("qrThresholds   : t0=" + this.qrPercentileOrig + " t1=" + this.qrPercentileT1 +
                 " t2=" + this.qrPercentileT2 + " t3=" + this.qrPercentileNorm);
@@ -612,10 +612,10 @@ public class Siamese {
                                         method.getStartLine(),
                                         method.getEndLine(),
                                         normSource,
-                                        "", "", "",
-//                                        t2Source,
-//                                        t1Source,
-//                                        tokenizedSource,
+//                                        "", "", "",
+                                        t2Source,
+                                        t1Source,
+                                        tokenizedSource,
 //                                        method.getSrc(),
                                         "", // TODO: insert empty original code for performance now.
                                         license,
@@ -802,9 +802,9 @@ public class Siamese {
 //                                    System.out.println("T1: " + t1Query);
 //                                    System.out.println("T0: " + origQuery);
                                 } else {
+//                                    System.out.println("QUERY: " + methodCount + "\nT3: " + t3Query);
 //                                    results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
                                     results = es.search(index, type, t3Query, isPrint, isDFS, offset, size);
-                                    System.out.println("T3: " + t3Query);
                                 }
 
                                 if (this.computeSimilarity) {

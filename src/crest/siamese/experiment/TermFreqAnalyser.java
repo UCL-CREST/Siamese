@@ -22,7 +22,7 @@ public class TermFreqAnalyser {
         String indexFile = elasticsearchLoc + "/data/stackoverflow/nodes/0/indices/"
                 + indexName + "/0/index";
         DecimalFormat df = new DecimalFormat("#.00");
-        int printEvery = 1000000;
+        int printEvery = 100000;
         File outputFile = new File(outputFileName);
         if (outputFile.exists()) {
             if (!outputFile.delete()) {
@@ -89,7 +89,7 @@ public class TermFreqAnalyser {
     }
 
     public static void analyseTerms() {
-        String index = "bcb";
+        String index = "qualitas";
         String mode = "df";
         String toksrc = "freq_" + mode + "_t0src_" + index + ".csv";
         String t1src = "freq_" + mode + "_t1src_" + index + ".csv";
@@ -105,10 +105,10 @@ public class TermFreqAnalyser {
         File srcf = new File(src);
         srcf.delete();
         // start analysing the tokens
-//        analyseTermFreq(index, "tokenizedsrc", mode, toksrc);
+        analyseTermFreq(index, "tokenizedsrc", mode, toksrc);
         analyseTermFreq(index, "t1src", mode, t1src);
-//        analyseTermFreq(index, "t2src", mode, t2src);
-//        analyseTermFreq(index, "src", mode, src);
+        analyseTermFreq(index, "t2src", mode, t2src);
+        analyseTermFreq(index, "src", mode, src);
         /* then call the sort_term.py python script to generate a Zipf plot */
     }
 }
