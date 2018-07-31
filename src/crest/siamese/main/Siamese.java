@@ -802,7 +802,7 @@ public class Siamese {
 //                                    System.out.println("T1: " + t1Query);
 //                                    System.out.println("T0: " + origQuery);
                                 } else {
-                                    System.out.println("QUERY: " + methodCount + "\nT3: " + origQuery);
+                                    System.out.println("QUERY: " + methodCount + "\n" + origQuery);
 //                                    results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
                                     results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
                                 }

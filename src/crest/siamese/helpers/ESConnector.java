@@ -235,8 +235,8 @@ public class ESConnector {
 		SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
 				.addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
 				.addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
-//				.setQuery(QueryBuilders.matchQuery("tokenizedsrc", query))
-				.setQuery(QueryBuilders.matchQuery("src", query))
+				.setQuery(QueryBuilders.matchQuery("tokenizedsrc", query))
+//				.setQuery(QueryBuilders.matchQuery("src", query))
 				.setFrom(resultOffset).setSize(resultSize).execute()
 				.actionGet();
 		SearchHit[] hits = response.getHits().getHits();
