@@ -37,3 +37,5 @@ results/bcb_query_time
 results/TermFreq
 bcb_sample_clones
 results/old
+elasticsearch-2.2.0_ngrams
+elasticsearch-2.2.0-ngrams

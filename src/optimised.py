@@ -64,22 +64,22 @@ def gen_config_template():
     config['deleteIndexAfterUse'] = 'true'
     config['multirep'] = 'true'
     config['queryReduction'] = 'true'
-    config['ngramSize'] = '11'
-    config['t2NgramSize'] = '16'
-    config['t1NgramSize'] = '4'
+    config['ngramSize'] = '14'
+    config['t2NgramSize'] = '24'
+    config['t1NgramSize'] = '14'
     config['QRPercentileOrig'] = '10'
     config['QRPercentileT2'] = '10'
     config['QRPercentileT1'] = '10'
     config['QRPercentileNorm'] = '10'
-    config['normBoost'] = '11'
-    config['t2Boost'] = '16'
-    config['t1Boost'] = '4'
+    config['normBoost'] = '14'
+    config['t2Boost'] = '24'
+    config['t1Boost'] = '14'
     config['origBoost'] = '1'
     config['enableRep'] = 'true,true,true,true'
-    config['license'] = 'true'
-    config['licenseFileDetection'] = 'true'
+    config['license'] = 'false'
+    config['licenseFileDetection'] = 'false'
     config['licenseExtractor'] = 'regexp'
-    config["github"] = "true"
+    config["github"] = 'false'
     config['parseMode'] = 'file'
     config['errorMeasure'] = 'map'
     config['similarityMode'] = 'tfidf_text_def'
@@ -148,6 +148,7 @@ def execute_siamese():
             writefile('optimised_summary.csv', mapstr + '\n', 'a', False)
             print(mapstr)
     # print(err)
+    # print(output.decode())
     logging.debug(output.decode())
     logging.debug(err.decode())
 
@@ -155,11 +156,11 @@ def execute_siamese():
 def main():
     setup_logger()
     config = gen_config_template()
-    update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/soco_f/formatted/')
-    update_config(config, 'cloneClusterFile', 'soco')
-
-    # update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/tests')
-    # update_config(config, 'cloneClusterFile', 'cloplag')
+    # update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/soco_f/formatted/')
+    # update_config(config, 'cloneClusterFile', 'soco')
+    #
+    update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/tests')
+    update_config(config, 'cloneClusterFile', 'cloplag')
 
     print('ngramSize,t2NgramSize,t1NgramSize,'
           'QRPercentileNorm,QRPercentileT2,QRPercentileT1,QRPercentileOrig,'
@@ -167,34 +168,34 @@ def main():
     writefile('optimised_summary.csv', 'ngramSize,t2NgramSize,t1NgramSize,'
                                        'QRPercentileNorm,QRPercentileT2,QRPercentileT1,QRPercentileOrig,'
                                        'normBoost,t2Boost,t1Boost,map\n', 'w', False)
-    for i in range(1, 5):
-        for j in range(1, 5):
-            for k in range(1, 5):
-                for l in range(1, 4):
-                    # for m in range(1, 3):
-                    #     for n in range(1, 3):
-                    #         for o in range(1, 3):
-                                mul = 10
-                                print(str(i * 4) + ',' + str(j * 4) + ',' + str(k * 4) + ',' +
-                                str(l * mul) + ',' + str(l * mul) + ',' + str(l * mul) + ',' + str(l * mul) + ',' +
-                                str(i * 4) + ',' + str(j * 4) + ',' + str(k * 4) + ',', end='')
-                                writefile('optimised_summary.csv',
-                                          str(i * 4) + ',' + str(j * 4) + ',' + str(k * 4) + ',' +
-                                          str(l * 30) + ',' + str(l * 30) + ',' + str(l * 30) + ',' + str(l * 30) + ',' +
-                                          str(i * 4) + ',' + str(j * 4) + ',' + str(k * 4) + ',', 'a', False)
-                                update_config(config, 'ngramSize', str(i * 4))
-                                update_config(config, 't2NgramSize', str(j * 4))
-                                update_config(config, 't1NgramSize', str(k * 4))
-                                update_config(config, 'QRPercentileNorm', str(l * 10))
-                                update_config(config, 'QRPercentileT2', str(l * 10))
-                                update_config(config, 'QRPercentileT1', str(l * 10))
-                                update_config(config, 'QRPercentileOrig', str(l * 10))
-                                update_config(config, 'normBoost', str(i * 4))
-                                update_config(config, 't2Boost', str(j * 4))
-                                update_config(config, 't1Boost', str(k * 4))
-                                write_config(config)
-                                # writefile('optimised_summary.csv', '\n', 'a', False)
-                                execute_siamese()
+    for t3_ngram_size in range(1, 7):
+        for t2_ngram_size in range(1, 7):
+            for t1_ngram_size in range(1, 7):
+                for qr in range(1, 6):
+                    nmul = 4
+                    qmul = 2
+                    print(str(t3_ngram_size * nmul) + ',' + str(t2_ngram_size * nmul) + ',' + str(t1_ngram_size * nmul)
+                          + ',' + str(qr * qmul) + ',' + str(qr * qmul) + ',' + str(qr * qmul) + ',' + str(qr * qmul)
+                          + ',' + str(t3_ngram_size * nmul) + ',' + str(t2_ngram_size * nmul) + ','
+                          + str(t1_ngram_size * nmul) + ',', end='')
+                    writefile('optimised_summary.csv',
+                              str(t3_ngram_size * nmul) + ',' + str(t2_ngram_size * nmul)
+                              + ',' + str(t1_ngram_size * nmul) + ',' + str(qr * qmul) + ',' + str(qr * qmul)
+                              + ',' + str(qr * qmul) + ',' + str(qr * qmul) + ',' + str(t3_ngram_size * nmul)
+                              + ',' + str(t2_ngram_size * nmul) + ',' + str(t1_ngram_size * nmul) + ',', 'a', False)
+                    update_config(config, 'ngramSize', str(t3_ngram_size * nmul))
+                    update_config(config, 't2NgramSize', str(t2_ngram_size * nmul))
+                    update_config(config, 't1NgramSize', str(t2_ngram_size * nmul))
+                    update_config(config, 'QRPercentileNorm', str(qr * qmul))
+                    update_config(config, 'QRPercentileT2', str(qr * qmul))
+                    update_config(config, 'QRPercentileT1', str(qr * qmul))
+                    update_config(config, 'QRPercentileOrig', str(qr * qmul))
+                    update_config(config, 'normBoost', str(t3_ngram_size * nmul))
+                    update_config(config, 't2Boost', str(t2_ngram_size * nmul))
+                    update_config(config, 't1Boost', str(t2_ngram_size * nmul))
+                    write_config(config)
+                    # writefile('optimised_summary.csv', '\n', 'a', False)
+                    execute_siamese()
 
 
 main()
