@@ -1,0 +1,56 @@
+2018/04/15 10:34:28
+========== Configurations ==========
+---------- ELASTICSEARCH -----------
+server         : localhost
+index          : bcb
+type           : siamese
+--------------- DATA ---------------
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/queries/avg/84
+outputFolder   : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results
+dfs            : true
+extension      : java
+minCloneSize   : 10
+------------- EXECUTION ------------
+command        : search
+indexingMode   : bulk (4000)
+outputFormat   : csvfline
+------- MULTI-REPRESENTATION -------
+multiRep       : true
+T2 norm        : dsvw
+T3 norm        : djkopsvw
+ngramSize      : t1=4 t2=16 t3=14
+---------- QUERY REDUCTION ---------
+queryReduction : true
+qrThresholds   : t0=10.0 t1=10.0 t2=10.0 t3=10.0
+queryBoosts    : t0=1 t1=4 t2=16 t3=11
+====================================
+Apr 15, 2018 10:34:28 AM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Amun] loaded [], sites []
+Querying Phase: found 1 files.
+Searching done for 1 files (2 out of 2 methods after clone size filtering).
+See output at /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/results/bcb_qr_15-04-18_10-34-910.csv
+2018/04/15 10:35:11
+Elapse time (ms): 42649
+	Command being timed: "java -jar siamese-0.0.5-SNAPSHOT.jar -cf myconfig.properties"
+	User time (seconds): 11.07
+	System time (seconds): 2.05
+	Percent of CPU this job got: 30%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:43.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1325096
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1323
+	Minor (reclaiming a frame) page faults: 401621
+	Voluntary context switches: 11164
+	Involuntary context switches: 370
+	Swaps: 0
+	File system inputs: 227576
+	File system outputs: 480
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

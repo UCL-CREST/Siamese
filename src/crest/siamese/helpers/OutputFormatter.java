@@ -5,14 +5,17 @@ import crest.siamese.document.Document;
 import java.util.ArrayList;
 
 public class OutputFormatter {
-
     /* csv, xml, json */
     private String format;
     private boolean addStartEndLine;
+    private XMLFormatter xmlFormatter;
+    private Document query;
+    private int ccid = 1;
 
     public OutputFormatter() {
         format = "csv";
         addStartEndLine = true;
+        xmlFormatter = new XMLFormatter();
     }
 
     public String getFormat() {
@@ -21,6 +24,9 @@ public class OutputFormatter {
 
     public void setFormat(String format) {
         this.format = format;
+        if (this.format.toLowerCase().equals("addClone")) {
+            xmlFormatter.createDocument();
+        }
     }
 
     public boolean isAddStartEndLine() {
@@ -36,31 +42,6 @@ public class OutputFormatter {
         this.addStartEndLine = addStartEndLine;
     }
 
-    private String gcf(Document d, String prefixToRemove) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<Fragment>\n");
-        sb.append("<File>" + d.getFile().replace(prefixToRemove, "") + "</File>\n");
-        sb.append("<Start>" + d.getStartLine() + "</Start>\n");
-        sb.append("<End>" + d.getEndLine() + "</End>\n");
-        sb.append("<License>" + d.getLicense() + "</License>\n");
-        sb.append("</Fragment>\n");
-        return sb.toString();
-    }
-
-    private String gcf(ArrayList<Document> results, String prefixToRemove) {
-        StringBuilder sb = new StringBuilder();
-        for (int i =0; i<results.size(); i++) {
-            Document d = results.get(i);
-            sb.append("<Fragment>\n");
-            sb.append("<File>" + d.getFile().replace(prefixToRemove, "") + "</File>\n");
-            sb.append("<Start>" + d.getStartLine() + "</Start>\n");
-            sb.append("<End>" + d.getEndLine() + "</End>\n");
-            sb.append("<License>" + d.getLicense() + "</License>\n");
-            sb.append("</Fragment>\n");
-        }
-        return sb.toString();
-    }
-
     public String format(Document query, String prefixToRemove, String license) {
         StringBuilder sb = new StringBuilder();
         if (this.format.equals("csv")) {
@@ -71,9 +52,9 @@ public class OutputFormatter {
             sb.append(",");
             return sb.toString();
         } else if (this.format.equals("gcf")) {
-            sb.append("<Clone>\n");
-            sb.append(gcf(query, prefixToRemove));
-            return sb.toString();
+            /* query, don't do anything yet */
+            this.query = query;
+            return "";
         } else {
             System.out.println("ERROR: unsupported format.");
             return null;
@@ -96,9 +77,11 @@ public class OutputFormatter {
             sb.append("\n");
             return sb.toString();
         } else if (this.format.equals("gcf")) {
-            sb.append(gcf(results, prefixToRemove));
-            sb.append("</Clone>\n");
-            return sb.toString();
+            /* put query at the front */
+            results.add(0, this.query);
+            xmlFormatter.addCloneClass(this.ccid, -1, results);
+            this.ccid++;
+            return "";
         } else {
             System.out.println("ERROR: unsupported format.");
             return null;
@@ -125,11 +108,18 @@ public class OutputFormatter {
             sb.append("\n");
             return sb.toString();
         } else if (this.format.equals("gcf")) {
-            sb.append(gcf(results, prefixToRemove));
-            return sb.toString();
+            /* put query at the front */
+            results.add(0, this.query);
+            xmlFormatter.addCloneClass(this.ccid, -1, results);
+            this.ccid++;
+            return "";
         } else {
             System.out.println("ERROR: unsupported format.");
             return null;
         }
+    }
+
+    public String getXML() {
+        return xmlFormatter.getXMLAsString();
     }
 }

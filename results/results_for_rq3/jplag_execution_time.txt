@@ -1,0 +1,328 @@
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4 
+initialize ok
+4 submissions
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4"
+	User time (seconds): 0.71
+	System time (seconds): 0.07
+	Percent of CPU this job got: 212%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.37
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 62264
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 8738
+	Voluntary context switches: 1221
+	Involuntary context switches: 370
+	Swaps: 0
+	File system inputs: 48
+	File system outputs: 320
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16 
+initialize ok
+16 submissions
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16"
+	User time (seconds): 1.85
+	System time (seconds): 0.25
+	Percent of CPU this job got: 229%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.91
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 318252
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 10406
+	Voluntary context switches: 1677
+	Involuntary context switches: 373
+	Swaps: 0
+	File system inputs: 8
+	File system outputs: 2920
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64 
+initialize ok
+64 submissions
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64"
+	User time (seconds): 2.92
+	System time (seconds): 0.19
+	Percent of CPU this job got: 349%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.89
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 207684
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 15450
+	Voluntary context switches: 1560
+	Involuntary context switches: 779
+	Swaps: 0
+	File system inputs: 16
+	File system outputs: 5664
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256 
+initialize ok
+256 submissions
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256"
+	User time (seconds): 3.57
+	System time (seconds): 0.20
+	Percent of CPU this job got: 367%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.02
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 125856
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 16977
+	Voluntary context switches: 1649
+	Involuntary context switches: 915
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 2256
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024 
+initialize ok
+1024 submissions
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024"
+	User time (seconds): 10.27
+	System time (seconds): 0.36
+	Percent of CPU this job got: 277%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.83
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 246868
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 20483
+	Voluntary context switches: 2098
+	Involuntary context switches: 671
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 1736
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096 
+initialize ok
+4096 submissions
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096"
+	User time (seconds): 72.23
+	System time (seconds): 1.64
+	Percent of CPU this job got: 127%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:57.92
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1163236
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 24785
+	Voluntary context switches: 3611
+	Involuntary context switches: 375
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 1816
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384 
+initialize ok
+16384 submissions
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384"
+	User time (seconds): 917.12
+	System time (seconds): 5.36
+	Percent of CPU this job got: 103%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 14:50.08
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2870084
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 335794
+	Voluntary context switches: 24941
+	Involuntary context switches: 1191
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 2816
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536 
+initialize ok
+65536 submissions
+[Mon Mar 12 01:42:47 GMT 2018] Unknown exception during parsing of submission "115594.java"
+java.lang.Error: Invalid escape character at line 429 column 9.
+	at jplag.java15.grammar.JavaTabModCharStream.readChar(JavaTabModCharStream.java:318)
+	at jplag.java15.grammar.JavaParserTokenManager.getNextToken(JavaParserTokenManager.java:1625)
+	at jplag.java15.grammar.JavaParser.jj_ntk(JavaParser.java:6385)
+	at jplag.java15.grammar.JavaParser.ClassOrInterfaceBody(JavaParser.java:566)
+	at jplag.java15.grammar.JavaParser.ClassOrInterfaceDeclaration(JavaParser.java:375)
+	at jplag.java15.grammar.JavaParser.TypeDeclaration(JavaParser.java:319)
+	at jplag.java15.grammar.JavaParser.CompilationUnit(JavaParser.java:186)
+	at jplag.java15.grammar.JavaParser.parseFile(JavaParser.java:121)
+	at jplag.java15.Parser.parse(Parser.java:68)
+	at jplag.java15.Language.parse(Language.java:37)
+	at jplag.Submission.parse(Submission.java:137)
+	at jplag.Program.parseAll(Program.java:913)
+	at jplag.Program.run(Program.java:1137)
+	at jplag.JPlag.main(JPlag.java:16)
+Error: Unknown exception during parsing of submission "115594.java"
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536"
+	User time (seconds): 15.70
+	System time (seconds): 1.43
+	Percent of CPU this job got: 372%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:04.59
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 399644
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 27797
+	Voluntary context switches: 1678
+	Involuntary context switches: 264
+	Swaps: 0
+	File system inputs: 256
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144 
+initialize ok
+262144 submissions
+[Mon Mar 12 01:43:00 GMT 2018] Unknown exception during parsing of submission "115594.java"
+java.lang.Error: Invalid escape character at line 429 column 9.
+	at jplag.java15.grammar.JavaTabModCharStream.readChar(JavaTabModCharStream.java:318)
+	at jplag.java15.grammar.JavaParserTokenManager.getNextToken(JavaParserTokenManager.java:1625)
+	at jplag.java15.grammar.JavaParser.jj_ntk(JavaParser.java:6385)
+	at jplag.java15.grammar.JavaParser.ClassOrInterfaceBody(JavaParser.java:566)
+	at jplag.java15.grammar.JavaParser.ClassOrInterfaceDeclaration(JavaParser.java:375)
+	at jplag.java15.grammar.JavaParser.TypeDeclaration(JavaParser.java:319)
+	at jplag.java15.grammar.JavaParser.CompilationUnit(JavaParser.java:186)
+	at jplag.java15.grammar.JavaParser.parseFile(JavaParser.java:121)
+	at jplag.java15.Parser.parse(Parser.java:68)
+	at jplag.java15.Language.parse(Language.java:37)
+	at jplag.Submission.parse(Submission.java:137)
+	at jplag.Program.parseAll(Program.java:913)
+	at jplag.Program.run(Program.java:1137)
+	at jplag.JPlag.main(JPlag.java:16)
+Error: Unknown exception during parsing of submission "115594.java"
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144"
+	User time (seconds): 29.12
+	System time (seconds): 5.26
+	Percent of CPU this job got: 265%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.93
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1095516
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 32079
+	Voluntary context switches: 3535
+	Involuntary context switches: 328
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 72
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576
+Language accepted: Java1.5 Parser
+Command line: -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576 
+initialize ok
+1048576 submissions
+[Mon Mar 12 02:22:31 GMT 2018] Unknown exception during parsing of submission "1860197.java"
+java.lang.Error: Invalid escape character at line 85 column 9.
+	at jplag.java15.grammar.JavaTabModCharStream.readChar(JavaTabModCharStream.java:318)
+	at jplag.java15.grammar.JavaParserTokenManager.getNextToken(JavaParserTokenManager.java:1625)
+	at jplag.java15.grammar.JavaParser.jj_ntk(JavaParser.java:6385)
+	at jplag.java15.grammar.JavaParser.CompilationUnit(JavaParser.java:153)
+	at jplag.java15.grammar.JavaParser.parseFile(JavaParser.java:121)
+	at jplag.java15.Parser.parse(Parser.java:68)
+	at jplag.java15.Language.parse(Language.java:37)
+	at jplag.Submission.parse(Submission.java:137)
+	at jplag.Program.parseAll(Program.java:913)
+	at jplag.Program.run(Program.java:1137)
+	at jplag.JPlag.main(JPlag.java:16)
+Error: Unknown exception during parsing of submission "1860197.java"
+	Command being timed: "java -jar -Xmx8g jplag-2.11.8-SNAPSHOT-jar-with-dependencies.jar -l java15 -vq /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1048576"
+	User time (seconds): 607.87
+	System time (seconds): 38.44
+	Percent of CPU this job got: 27%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 39:30.72
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 5252120
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 948871
+	Voluntary context switches: 311925
+	Involuntary context switches: 14553
+	Swaps: 0
+	File system inputs: 3096864
+	File system outputs: 2272
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

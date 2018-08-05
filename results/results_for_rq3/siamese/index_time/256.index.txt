@@ -1,48 +1,54 @@
-2018/01/26 22:50:36
-====== Configurations ======
+2018/04/06 22:00:22
+========== Configurations ==========
+---------- ELASTICSEARCH -----------
 server         : localhost
 index          : 256
 type           : siamese
+--------------- DATA ---------------
 inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256
-outputFolder   : /Users/Chaiyong/Downloads/isics_results
-normalization  : djkpsvw
-ngramSize      : 4
-verbose        : false
+outputFolder   : search_results
 dfs            : true
 extension      : java
 minCloneSize   : 10
+------------- EXECUTION ------------
 command        : index
-queryReduction : true
-multiRep       : true
-outputFormat   : csvfline
 indexingMode   : bulk (4000)
-============================
-Jan 26, 2018 10:50:37 PM org.elasticsearch.plugins.PluginsService <init>
-INFO: [Shaman] loaded [], sites []
-Found 256 files.
+outputFormat   : csvfline
+------- MULTI-REPRESENTATION -------
+multiRep       : true
+T2 norm        : dsvw
+T3 norm        : djkopsvw
+ngramSize      : t1=4 t2=16 t3=11
+---------- QUERY REDUCTION ---------
+queryReduction : true
+qrThresholds   : t0=10.0 t1=10.0 t2=10.0 t3=10.0
+queryBoosts    : t0=1 t1=4 t2=16 t3=11
+====================================
+Apr 06, 2018 10:00:22 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Ariel] loaded [], sites []
+Indexing Phase: found 256 files.
 Indexed 256 [100.00%] documents (423 methods).
-Successfully indexed documents.
 Successfully creating index.
-2018/01/26 22:50:44
-Elapse time (ms): 8010
-	Command being timed: "java -jar siamese-1shard-0.0.4-SNAPSHOT.jar -cf myconfig.properties"
-	User time (seconds): 19.52
-	System time (seconds): 1.31
-	Percent of CPU this job got: 247%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:08.40
+2018/04/06 22:00:41
+Elapse time (ms): 18862
+	Command being timed: "java -jar siamese-0.0.5-SNAPSHOT.jar -i /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256 -c index -cf myconfig.properties"
+	User time (seconds): 29.90
+	System time (seconds): 2.15
+	Percent of CPU this job got: 166%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:19.21
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 1248840
+	Maximum resident set size (kbytes): 2090820
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 1
-	Minor (reclaiming a frame) page faults: 320046
-	Voluntary context switches: 8159
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 324353
+	Voluntary context switches: 10364
 	Involuntary context switches: 415
 	Swaps: 0
-	File system inputs: 27768
-	File system outputs: 80
+	File system inputs: 3784
+	File system outputs: 88
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0

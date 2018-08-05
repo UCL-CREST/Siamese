@@ -132,7 +132,7 @@ public class JavaMethodParser implements MethodParser {
             int lines = content.split("\r\n|\r|\n").length;
 
             Method m = new Method(
-                    FILE_PATH.replace(PREFIX_TO_REMOVE, ""),
+                    FILE_PATH,
                     "package",
                     "ClassName",
                     "method",
@@ -251,7 +251,7 @@ public class JavaMethodParser implements MethodParser {
     private Method createNewMethod(String name, String comment, String src, int begin, int end,
                                    ArrayList<crest.siamese.document.Parameter> paramsList, String declaration) {
         Method m = new Method(
-                FILE_PATH.replace(PREFIX_TO_REMOVE, "")
+                FILE_PATH
                 , JAVA_PACKAGE, JAVA_CLASS, name, comment, src, begin, end, paramsList, declaration);
         return m;
     }

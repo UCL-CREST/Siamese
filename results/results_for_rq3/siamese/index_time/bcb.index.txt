@@ -1,0 +1,341 @@
+2018/04/07 23:04:28
+========== Configurations ==========
+---------- ELASTICSEARCH -----------
+server         : localhost
+index          : bcb
+type           : siamese
+--------------- DATA ---------------
+inputFolder    : /scratch0/NOT_BACKED_UP/crest/cragkhit/dataset
+outputFolder   : search_results
+dfs            : true
+extension      : java
+minCloneSize   : 10
+------------- EXECUTION ------------
+command        : index
+indexingMode   : bulk (4000)
+outputFormat   : csvfline
+------- MULTI-REPRESENTATION -------
+multiRep       : true
+T2 norm        : dsvw
+T3 norm        : djkopsvw
+ngramSize      : t1=4 t2=16 t3=11
+---------- QUERY REDUCTION ---------
+queryReduction : true
+qrThresholds   : t0=10.0 t1=10.0 t2=10.0 t3=10.0
+queryBoosts    : t0=1 t1=4 t2=16 t3=11
+====================================
+Indexing Phase: found 2876220 files.
+Indexed 10000 [.35%] documents (17879 methods).
+Indexed 20000 [.70%] documents (36173 methods).
+Indexed 30000 [1.04%] documents (54216 methods).
+Indexed 40000 [1.39%] documents (71977 methods).
+Indexed 50000 [1.74%] documents (89638 methods).
+Indexed 60000 [2.09%] documents (107479 methods).
+Indexed 70000 [2.43%] documents (124622 methods).
+Indexed 80000 [2.78%] documents (142766 methods).
+Indexed 90000 [3.13%] documents (160754 methods).
+Indexed 100000 [3.48%] documents (178434 methods).
+Indexed 110000 [3.82%] documents (195899 methods).
+Indexed 120000 [4.17%] documents (213911 methods).
+Indexed 130000 [4.52%] documents (231252 methods).
+Indexed 140000 [4.87%] documents (248902 methods).
+Indexed 150000 [5.22%] documents (265280 methods).
+Indexed 160000 [5.56%] documents (282100 methods).
+Indexed 170000 [5.91%] documents (299285 methods).
+Indexed 180000 [6.26%] documents (316468 methods).
+Indexed 190000 [6.61%] documents (333150 methods).
+Indexed 200000 [6.95%] documents (349599 methods).
+Indexed 210000 [7.30%] documents (366655 methods).
+Indexed 220000 [7.65%] documents (383588 methods).
+Indexed 230000 [8.00%] documents (400087 methods).
+Indexed 240000 [8.34%] documents (416822 methods).
+Indexed 250000 [8.69%] documents (433902 methods).
+Indexed 260000 [9.04%] documents (450968 methods).
+Indexed 270000 [9.39%] documents (467682 methods).
+Indexed 280000 [9.73%] documents (484582 methods).
+Indexed 290000 [10.08%] documents (501347 methods).
+Indexed 300000 [10.43%] documents (518340 methods).
+Indexed 310000 [10.78%] documents (535382 methods).
+Indexed 320000 [11.13%] documents (552417 methods).
+Indexed 330000 [11.47%] documents (569350 methods).
+Indexed 340000 [11.82%] documents (586535 methods).
+Indexed 350000 [12.17%] documents (603237 methods).
+Indexed 360000 [12.52%] documents (619797 methods).
+Indexed 370000 [12.86%] documents (636743 methods).
+Indexed 380000 [13.21%] documents (653004 methods).
+Indexed 390000 [13.56%] documents (670193 methods).
+Indexed 400000 [13.91%] documents (687283 methods).
+Indexed 410000 [14.25%] documents (703391 methods).
+Indexed 420000 [14.60%] documents (720066 methods).
+Indexed 430000 [14.95%] documents (736687 methods).
+Indexed 440000 [15.30%] documents (753673 methods).
+Indexed 450000 [15.65%] documents (770726 methods).
+Indexed 460000 [15.99%] documents (787193 methods).
+Indexed 470000 [16.34%] documents (803916 methods).
+Indexed 480000 [16.69%] documents (820232 methods).
+Indexed 490000 [17.04%] documents (837629 methods).
+Indexed 500000 [17.38%] documents (854219 methods).
+Indexed 510000 [17.73%] documents (870812 methods).
+Indexed 520000 [18.08%] documents (888263 methods).
+Indexed 530000 [18.43%] documents (905125 methods).
+Indexed 540000 [18.77%] documents (921756 methods).
+Indexed 550000 [19.12%] documents (938560 methods).
+Indexed 560000 [19.47%] documents (956153 methods).
+Indexed 570000 [19.82%] documents (973997 methods).
+Indexed 580000 [20.17%] documents (990253 methods).
+Indexed 590000 [20.51%] documents (1007183 methods).
+Indexed 600000 [20.86%] documents (1023734 methods).
+Indexed 610000 [21.21%] documents (1041150 methods).
+Indexed 620000 [21.56%] documents (1057572 methods).
+Indexed 630000 [21.90%] documents (1074623 methods).
+Indexed 640000 [22.25%] documents (1091064 methods).
+Indexed 650000 [22.60%] documents (1107690 methods).
+Indexed 660000 [22.95%] documents (1124948 methods).
+Indexed 670000 [23.29%] documents (1141929 methods).
+Indexed 680000 [23.64%] documents (1158695 methods).
+Indexed 690000 [23.99%] documents (1175694 methods).
+Indexed 700000 [24.34%] documents (1192762 methods).
+Indexed 710000 [24.69%] documents (1210182 methods).
+Indexed 720000 [25.03%] documents (1227397 methods).
+Indexed 730000 [25.38%] documents (1243901 methods).
+Indexed 740000 [25.73%] documents (1261095 methods).
+Indexed 750000 [26.08%] documents (1278665 methods).
+Indexed 760000 [26.42%] documents (1295494 methods).
+Indexed 770000 [26.77%] documents (1312471 methods).
+Indexed 780000 [27.12%] documents (1329340 methods).
+Indexed 790000 [27.47%] documents (1345515 methods).
+Indexed 800000 [27.81%] documents (1362410 methods).
+Indexed 810000 [28.16%] documents (1379515 methods).
+Indexed 820000 [28.51%] documents (1396116 methods).
+Indexed 830000 [28.86%] documents (1412866 methods).
+Indexed 840000 [29.20%] documents (1430011 methods).
+Indexed 850000 [29.55%] documents (1446512 methods).
+Indexed 860000 [29.90%] documents (1463141 methods).
+Indexed 870000 [30.25%] documents (1479848 methods).
+Indexed 880000 [30.60%] documents (1496749 methods).
+Indexed 890000 [30.94%] documents (1513941 methods).
+Indexed 900000 [31.29%] documents (1530986 methods).
+Indexed 910000 [31.64%] documents (1547598 methods).
+Indexed 920000 [31.99%] documents (1564587 methods).
+Indexed 930000 [32.33%] documents (1580869 methods).
+Indexed 940000 [32.68%] documents (1597998 methods).
+Indexed 950000 [33.03%] documents (1615484 methods).
+Indexed 960000 [33.38%] documents (1632491 methods).
+Indexed 970000 [33.72%] documents (1648861 methods).
+Indexed 980000 [34.07%] documents (1666027 methods).
+Indexed 990000 [34.42%] documents (1682753 methods).
+Indexed 1000000 [34.77%] documents (1699938 methods).
+Indexed 1010000 [35.12%] documents (1716337 methods).
+Indexed 1020000 [35.46%] documents (1732967 methods).
+Indexed 1030000 [35.81%] documents (1750642 methods).
+Indexed 1040000 [36.16%] documents (1767540 methods).
+Indexed 1050000 [36.51%] documents (1784393 methods).
+Indexed 1060000 [36.85%] documents (1801871 methods).
+Indexed 1070000 [37.20%] documents (1818961 methods).
+Indexed 1080000 [37.55%] documents (1835573 methods).
+Indexed 1090000 [37.90%] documents (1852218 methods).
+Indexed 1100000 [38.24%] documents (1869089 methods).
+Indexed 1110000 [38.59%] documents (1886043 methods).
+Indexed 1120000 [38.94%] documents (1902823 methods).
+Indexed 1130000 [39.29%] documents (1919760 methods).
+Indexed 1140000 [39.64%] documents (1936461 methods).
+Indexed 1150000 [39.98%] documents (1953125 methods).
+Indexed 1160000 [40.33%] documents (1970169 methods).
+Indexed 1170000 [40.68%] documents (1986659 methods).
+Indexed 1180000 [41.03%] documents (2003447 methods).
+Indexed 1190000 [41.37%] documents (2020133 methods).
+Indexed 1200000 [41.72%] documents (2036767 methods).
+Indexed 1210000 [42.07%] documents (2053942 methods).
+Indexed 1220000 [42.42%] documents (2071475 methods).
+Indexed 1230000 [42.76%] documents (2088543 methods).
+Indexed 1240000 [43.11%] documents (2105191 methods).
+Indexed 1250000 [43.46%] documents (2121919 methods).
+Indexed 1260000 [43.81%] documents (2138239 methods).
+Indexed 1270000 [44.16%] documents (2155252 methods).
+Indexed 1280000 [44.50%] documents (2172112 methods).
+Indexed 1290000 [44.85%] documents (2188693 methods).
+Indexed 1300000 [45.20%] documents (2205345 methods).
+Indexed 1310000 [45.55%] documents (2222532 methods).
+Indexed 1320000 [45.89%] documents (2239243 methods).
+Indexed 1330000 [46.24%] documents (2256154 methods).
+Indexed 1340000 [46.59%] documents (2272868 methods).
+Indexed 1350000 [46.94%] documents (2289645 methods).
+Indexed 1360000 [47.28%] documents (2306709 methods).
+Indexed 1370000 [47.63%] documents (2323372 methods).
+Indexed 1380000 [47.98%] documents (2340420 methods).
+Indexed 1390000 [48.33%] documents (2356717 methods).
+Indexed 1400000 [48.67%] documents (2373435 methods).
+Indexed 1410000 [49.02%] documents (2390890 methods).
+Indexed 1420000 [49.37%] documents (2407668 methods).
+Indexed 1430000 [49.72%] documents (2424563 methods).
+Indexed 1440000 [50.07%] documents (2441520 methods).
+Indexed 1450000 [50.41%] documents (2457670 methods).
+Indexed 1460000 [50.76%] documents (2474908 methods).
+Indexed 1470000 [51.11%] documents (2491655 methods).
+Indexed 1480000 [51.46%] documents (2508389 methods).
+Indexed 1490000 [51.80%] documents (2525813 methods).
+Indexed 1500000 [52.15%] documents (2542278 methods).
+Indexed 1510000 [52.50%] documents (2559072 methods).
+Indexed 1520000 [52.85%] documents (2576977 methods).
+Indexed 1530000 [53.19%] documents (2594019 methods).
+Indexed 1540000 [53.54%] documents (2610968 methods).
+Indexed 1550000 [53.89%] documents (2627835 methods).
+Indexed 1560000 [54.24%] documents (2644485 methods).
+Indexed 1570000 [54.59%] documents (2661468 methods).
+Indexed 1580000 [54.93%] documents (2678624 methods).
+Indexed 1590000 [55.28%] documents (2695948 methods).
+Indexed 1600000 [55.63%] documents (2712776 methods).
+Indexed 1610000 [55.98%] documents (2730158 methods).
+Indexed 1620000 [56.32%] documents (2746669 methods).
+Indexed 1630000 [56.67%] documents (2763595 methods).
+Indexed 1640000 [57.02%] documents (2780294 methods).
+Indexed 1650000 [57.37%] documents (2797018 methods).
+Indexed 1660000 [57.71%] documents (2813881 methods).
+Indexed 1670000 [58.06%] documents (2830704 methods).
+Indexed 1680000 [58.41%] documents (2847502 methods).
+Indexed 1690000 [58.76%] documents (2864251 methods).
+Indexed 1700000 [59.11%] documents (2881520 methods).
+Indexed 1710000 [59.45%] documents (2898776 methods).
+Indexed 1720000 [59.80%] documents (2915896 methods).
+Indexed 1730000 [60.15%] documents (2932724 methods).
+Indexed 1740000 [60.50%] documents (2949689 methods).
+Indexed 1750000 [60.84%] documents (2967134 methods).
+Indexed 1760000 [61.19%] documents (2984460 methods).
+Indexed 1770000 [61.54%] documents (3001007 methods).
+Indexed 1780000 [61.89%] documents (3017261 methods).
+Indexed 1790000 [62.23%] documents (3034469 methods).
+Indexed 1800000 [62.58%] documents (3051701 methods).
+Indexed 1810000 [62.93%] documents (3068188 methods).
+Indexed 1820000 [63.28%] documents (3085118 methods).
+Indexed 1830000 [63.63%] documents (3102108 methods).
+Indexed 1840000 [63.97%] documents (3119274 methods).
+Indexed 1850000 [64.32%] documents (3136401 methods).
+Indexed 1860000 [64.67%] documents (3153402 methods).
+Indexed 1870000 [65.02%] documents (3169969 methods).
+Indexed 1880000 [65.36%] documents (3187032 methods).
+Indexed 1890000 [65.71%] documents (3204121 methods).
+Indexed 1900000 [66.06%] documents (3220618 methods).
+Indexed 1910000 [66.41%] documents (3237352 methods).
+Indexed 1920000 [66.75%] documents (3254358 methods).
+Indexed 1930000 [67.10%] documents (3271384 methods).
+Indexed 1940000 [67.45%] documents (3288561 methods).
+Indexed 1950000 [67.80%] documents (3305253 methods).
+Indexed 1960000 [68.14%] documents (3321771 methods).
+Indexed 1970000 [68.49%] documents (3338165 methods).
+Indexed 1980000 [68.84%] documents (3355537 methods).
+Indexed 1990000 [69.19%] documents (3372265 methods).
+Indexed 2000000 [69.54%] documents (3389451 methods).
+Indexed 2010000 [69.88%] documents (3406490 methods).
+Indexed 2020000 [70.23%] documents (3423307 methods).
+Indexed 2030000 [70.58%] documents (3440209 methods).
+Indexed 2040000 [70.93%] documents (3456835 methods).
+Indexed 2050000 [71.27%] documents (3473693 methods).
+Indexed 2060000 [71.62%] documents (3490817 methods).
+Indexed 2070000 [71.97%] documents (3508425 methods).
+Indexed 2080000 [72.32%] documents (3525511 methods).
+Indexed 2090000 [72.66%] documents (3541741 methods).
+Indexed 2100000 [73.01%] documents (3558665 methods).
+Indexed 2110000 [73.36%] documents (3575769 methods).
+Indexed 2120000 [73.71%] documents (3592469 methods).
+Indexed 2130000 [74.06%] documents (3609323 methods).
+Indexed 2140000 [74.40%] documents (3626463 methods).
+Indexed 2150000 [74.75%] documents (3643257 methods).
+Indexed 2160000 [75.10%] documents (3660065 methods).
+Indexed 2170000 [75.45%] documents (3677444 methods).
+Indexed 2180000 [75.79%] documents (3693805 methods).
+Indexed 2190000 [76.14%] documents (3710230 methods).
+Indexed 2200000 [76.49%] documents (3727426 methods).
+Indexed 2210000 [76.84%] documents (3743884 methods).
+Indexed 2220000 [77.18%] documents (3760378 methods).
+Indexed 2230000 [77.53%] documents (3777371 methods).
+Indexed 2240000 [77.88%] documents (3794054 methods).
+Indexed 2250000 [78.23%] documents (3810819 methods).
+Indexed 2260000 [78.58%] documents (3826969 methods).
+Indexed 2270000 [78.92%] documents (3844370 methods).
+Indexed 2280000 [79.27%] documents (3861191 methods).
+Indexed 2290000 [79.62%] documents (3877818 methods).
+Indexed 2300000 [79.97%] documents (3894612 methods).
+Indexed 2310000 [80.31%] documents (3911417 methods).
+Indexed 2320000 [80.66%] documents (3927891 methods).
+Indexed 2330000 [81.01%] documents (3945203 methods).
+Indexed 2340000 [81.36%] documents (3961958 methods).
+Indexed 2350000 [81.70%] documents (3978508 methods).
+Indexed 2360000 [82.05%] documents (3995300 methods).
+Indexed 2370000 [82.40%] documents (4012434 methods).
+Indexed 2380000 [82.75%] documents (4029579 methods).
+Indexed 2390000 [83.10%] documents (4046360 methods).
+Indexed 2400000 [83.44%] documents (4063517 methods).
+Indexed 2410000 [83.79%] documents (4080455 methods).
+Indexed 2420000 [84.14%] documents (4097496 methods).
+Indexed 2430000 [84.49%] documents (4114737 methods).
+Indexed 2440000 [84.83%] documents (4131861 methods).
+Indexed 2450000 [85.18%] documents (4148542 methods).
+Indexed 2460000 [85.53%] documents (4165684 methods).
+Indexed 2470000 [85.88%] documents (4182393 methods).
+Indexed 2480000 [86.22%] documents (4199410 methods).
+Indexed 2490000 [86.57%] documents (4216041 methods).
+Indexed 2500000 [86.92%] documents (4232745 methods).
+Indexed 2510000 [87.27%] documents (4249786 methods).
+Indexed 2520000 [87.61%] documents (4266829 methods).
+Indexed 2530000 [87.96%] documents (4283796 methods).
+Indexed 2540000 [88.31%] documents (4300892 methods).
+Indexed 2550000 [88.66%] documents (4317108 methods).
+Indexed 2560000 [89.01%] documents (4333895 methods).
+Indexed 2570000 [89.35%] documents (4350896 methods).
+Indexed 2580000 [89.70%] documents (4367753 methods).
+Indexed 2590000 [90.05%] documents (4384584 methods).
+Indexed 2600000 [90.40%] documents (4401307 methods).
+Indexed 2610000 [90.74%] documents (4418534 methods).
+Indexed 2620000 [91.09%] documents (4435193 methods).
+Indexed 2630000 [91.44%] documents (4452262 methods).
+Indexed 2640000 [91.79%] documents (4469438 methods).
+Indexed 2650000 [92.13%] documents (4486791 methods).
+Indexed 2660000 [92.48%] documents (4503468 methods).
+Indexed 2670000 [92.83%] documents (4520242 methods).
+Indexed 2680000 [93.18%] documents (4537425 methods).
+Indexed 2690000 [93.53%] documents (4554449 methods).
+Indexed 2700000 [93.87%] documents (4571848 methods).
+Indexed 2710000 [94.22%] documents (4589149 methods).
+Indexed 2720000 [94.57%] documents (4605943 methods).
+Indexed 2730000 [94.92%] documents (4622937 methods).
+Indexed 2740000 [95.26%] documents (4639470 methods).
+Indexed 2750000 [95.61%] documents (4656148 methods).
+Indexed 2760000 [95.96%] documents (4672922 methods).
+Indexed 2770000 [96.31%] documents (4689917 methods).
+Indexed 2780000 [96.65%] documents (4707084 methods).
+Indexed 2790000 [97.00%] documents (4722982 methods).
+Indexed 2800000 [97.35%] documents (4739638 methods).
+Indexed 2810000 [97.70%] documents (4756961 methods).
+Indexed 2820000 [98.05%] documents (4773585 methods).
+Indexed 2830000 [98.39%] documents (4790486 methods).
+Indexed 2840000 [98.74%] documents (4807624 methods).
+Indexed 2850000 [99.09%] documents (4824753 methods).
+Indexed 2860000 [99.44%] documents (4842551 methods).
+Indexed 2870000 [99.78%] documents (4859638 methods).
+Indexed 2876220 [100.00%] documents (4870119 methods).
+Successfully creating index.
+2018/04/08 19:42:51
+Elapse time (ms): 74303720
+        Command being timed: "java -jar siamese-0.0.5-SNAPSHOT.jar -cf myconfig.properties"
+        User time (seconds): 67056.11
+        System time (seconds): 642.14
+        Percent of CPU this job got: 91%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 20:38:24
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 7115464
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 295
+        Minor (reclaiming a frame) page faults: 19671127
+        Voluntary context switches: 9661072
+        Involuntary context switches: 581618
+        Swaps: 0
+        File system inputs: 41568904
+        File system outputs: 378984
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0

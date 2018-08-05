@@ -265,22 +265,22 @@ public class Siamese {
         System.out.println("server         : " + server);
         System.out.println("index          : " + index);
         System.out.println("type           : " + type);
-        System.out.println("--------------- DATA ---------------");
+        System.out.println("------------- DATA -----------------");
         System.out.println("inputFolder    : " + inputFolder);
         System.out.println("outputFolder   : " + outputFolder);
         System.out.println("dfs            : " + isDFS);
         System.out.println("extension      : " + extension);
         System.out.println("minCloneSize   : " + minCloneLine);
-        System.out.println("------------- EXECUTION ------------");
+        System.out.println("----------- EXECUTION --------------");
         System.out.println("command        : " + command);
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
         System.out.println("outputFormat   : " + outputFormat);
         System.out.println("------- MULTI-REPRESENTATION -------");
-        System.out.println("multiRep       : " + multiRep);
+        System.out.println("multiRep       : " + multiRep + " " +  Arrays.toString(enableRep));
         System.out.println("T2 norm        : dsvw");
         System.out.println("T3 norm        : " + normMode);
         System.out.println("ngramSize      : t1=" + t1NgramSize + " t2=" + t2NgramSize + " t3=" + ngramSize);
-        System.out.println("---------- QUERY REDUCTION ---------");
+        System.out.println("--------- QUERY REDUCTION ----------");
         System.out.println("queryReduction : " + queryReduction);
         System.out.println("qrThresholds   : t0=" + this.qrPercentileOrig + " t1=" + this.qrPercentileT1 +
                 " t2=" + this.qrPercentileT2 + " t3=" + this.qrPercentileNorm);
@@ -612,6 +612,7 @@ public class Siamese {
                                         method.getStartLine(),
                                         method.getEndLine(),
                                         normSource,
+//                                        "", "", "",
                                         t2Source,
                                         t1Source,
                                         tokenizedSource,
@@ -722,9 +723,6 @@ public class Siamese {
             long search = 0;
             // reset the output buffer
             outToFile = "";
-            if (formatter.getFormat().equals("gcf")) {
-                outToFile += "<CloneClasses>\n";
-            }
             for (File file : listOfFiles) {
                 if (isPrint)
                     System.out.println(count + ": " + file.getAbsolutePath());
@@ -746,9 +744,7 @@ public class Siamese {
                             methodCount++;
                             // check minimum size
                             if ((method.getEndLine() - method.getStartLine() + 1) >= minCloneLine) {
-                                /* TODO: fix this some time. It's weird to have a list with only a single object. */
                                 // write output to file
-                                ArrayList<Document> queryList = new ArrayList<>();
                                 Document q = new Document();
                                 q.setFile(method.getFile() + "_" + method.getName());
                                 q.setStartline(method.getStartLine());
@@ -806,8 +802,9 @@ public class Siamese {
 //                                    System.out.println("T1: " + t1Query);
 //                                    System.out.println("T0: " + origQuery);
                                 } else {
+                                    System.out.println("QUERY: " + methodCount + "\n" + origQuery);
+//                                    results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
                                     results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
-//                                    System.out.println("T0: " + origQuery);
                                 }
 
                                 if (this.computeSimilarity) {
@@ -836,15 +833,16 @@ public class Siamese {
                     DecimalFormat percentFormat = new DecimalFormat("#.00");
                     System.out.println("Searched " + search + "/" + count
                             + " [" + percentFormat.format(percent) + "%] documents (" + methodCount + " methods).");
+                    if (formatter.getFormat().equals("gcf"))
+                        outToFile = formatter.getXML();
                     bw.write(outToFile);
                     // reset the output to print
                     outToFile = "";
                 }
             }
-            if (formatter.getFormat().equals("gcf")) {
-                outToFile += "</CloneClasses>\n";
-            }
             // flush the last part of output
+            if (formatter.getFormat().equals("gcf"))
+                outToFile = formatter.getXML();
             bw.write(outToFile);
             bw.close();
             System.out.println("Searching done for " + count + " files (" +
@@ -866,7 +864,7 @@ public class Siamese {
         int[] simResults = new int[results.size()];
         for (int i=0; i<results.size(); i++) {
             Document d = results.get(i);
-            int sim = FuzzySearch.tokenSetRatio(query, d.getOriginalSource());
+            int sim = FuzzySearch.tokenSetRatio(query, d.getTokenizedSource());
             simResults[i] = sim;
         }
         return simResults;

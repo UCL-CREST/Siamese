@@ -1,0 +1,252 @@
+68 cragkhit@summit% /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/4/
+        Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/4/"
+        User time (seconds): 0.18
+        System time (seconds): 0.27
+        Percent of CPU this job got: 101%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.45
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 248932
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 77620
+        Voluntary context switches: 266
+        Involuntary context switches: 20
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 88
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+
+69 cragkhit@summit% /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/16/
+        Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/16/"
+        User time (seconds): 0.21
+        System time (seconds): 0.28
+        Percent of CPU this job got: 101%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.48
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 248928
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 77758
+        Voluntary context switches: 552
+        Involuntary context switches: 18
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 128
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+
+70 cragkhit@summit% /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/64
+        Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/64"
+        User time (seconds): 0.34
+        System time (seconds): 0.29
+        Percent of CPU this job got: 105%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.61
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 249492
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 78033
+        Voluntary context switches: 1596
+        Involuntary context switches: 20
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 536
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+
+71 cragkhit@summit% /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/256/
+        Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/256/"
+        User time (seconds): 1.62
+        System time (seconds): 0.36
+        Percent of CPU this job got: 103%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.92
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 250900
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 80699
+        Voluntary context switches: 3287
+        Involuntary context switches: 22
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 3680
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+
+73 cragkhit@summit% rm /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/1024/2668051.java
+74 cragkhit@summit% /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/1024/
+        Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/1024/"
+        User time (seconds): 5.72
+        System time (seconds): 0.57
+        Percent of CPU this job got: 95%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 0:06.58
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 249160
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 86461
+        Voluntary context switches: 15844
+        Involuntary context switches: 31
+        Swaps: 0
+        File system inputs: 22952
+        File system outputs: 13040
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+
+rm /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/4096/1484402.java
+rm /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/4096/1994758.java
+79 cragkhit@summit% /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/4096/
+        Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/4096/"
+        User time (seconds): 35.04
+        System time (seconds): 1.65
+        Percent of CPU this job got: 101%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 0:36.02
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 250432
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 101989
+        Voluntary context switches: 46258
+        Involuntary context switches: 84
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 78232
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+
+108 cragkhit@summit% /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/16384/
+        Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/16384/"
+        User time (seconds): 2769.78
+        System time (seconds): 9.99
+        Percent of CPU this job got: 100%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 46:17.12
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 252468
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 203539
+        Voluntary context switches: 167940
+        Involuntary context switches: 1198
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 687464
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+
+77 cragkhit@summit% /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/65536/
+        Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/65536/"
+        User time (seconds): 87.64
+        System time (seconds): 11.63
+        Percent of CPU this job got: 102%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 1:36.64
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 375656
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 258173
+        Voluntary context switches: 95170
+        Involuntary context switches: 167
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 430224
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+
+bash-4.2$ /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/262144/
+        Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/262144/"
+        User time (seconds): 966.45
+        System time (seconds): 119.79
+        Percent of CPU this job got: 42%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 42:46.56
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 1575024
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 4
+        Minor (reclaiming a frame) page faults: 1358208
+        Voluntary context switches: 656128
+        Involuntary context switches: 1632
+        Swaps: 0
+        File system inputs: 4529456
+        File system outputs: 6219344
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+
+bash-4.2$ /usr/bin/time -v ./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/1048576/
+Command being timed: "./ccfx/ccfx d java -d /scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3_ccfx/1048576/"
+        User time (seconds): 22482.51
+        System time (seconds): 1633.69
+        Percent of CPU this job got: 72%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 9:14:15
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 1724460
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 22
+        Minor (reclaiming a frame) page faults: 15115396
+        Voluntary context switches: 4579195
+        Involuntary context switches: 34232
+        Swaps: 0
+        File system inputs: 48729920
+        File system outputs: 123079720
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0

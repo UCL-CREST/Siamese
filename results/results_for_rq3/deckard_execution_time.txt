@@ -1,0 +1,620 @@
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4
+DECKARD--A Tree-Based Code Clone Detection Toolkit. Version 1.3.1
+Copyright (c) 2007-2013. University of California / Singapore Management University
+Distributed under the three-clause BSD license.
+
+==== Configuration checking...Done.
+
+==== Start clone detection ====
+
+Vector generation.../scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/jvecgen *.java
+
+vgen: 30 2 ...Done. Log: times/vgen_30_2
+...deleting intermediate vector files...Done
+
+Vector generation done. Logs in times/vgen_*
+Vector files in vectors/vdb_*
+
+Vector clustering and filtering...
+
+= Vector clustering w/ MIN_TOKENS=30, STRIDE=2, SIMILARITY=0.95 ...
+
+grouping: vectors/vdb_30_2 with distance=1.224745...Done grouping 30 2 1.224745. See groups in vectors/vdb_30_2_g[0-9]*_1.224745_30*
+paramsetting: 30 2 0.95 ...Looking for optimal parameters by Setting Parameters for all other groups (may take hours on cygwin but only minutes on Linux...why?)...Done paramsetting 30 2 0.95. Log: times/paramsetting_30_2_0.95_30
+Cluster every vector groups...
+Done clustering. Check log: times/cluster_vdb_30_2_allg_1.224745_30 and times/cluster_vdb_30_2_g[0-9]+_1.224745_30
+Merging all clone reports into clusters/cluster_vdb_30_2_allg_0.95_30 ...Done merging clusters/cluster_vdb_30_2_all_0.95_30. Log: times/merging_30_2_0.95_30
+Post processing clusters/cluster_vdb_30_2_allg_0.95_30 ...Done post-processing clusters/cluster_vdb_30_2_allg_0.95_30. Log: times/post_cluster_vdb_30_2_allg_0.95_30
+Cleaning up all intermediate files...
+...deleting vdb_*_*_g*_*_*, including parameter files ...Done
+...deleting cluster_vdb_*_*_g*_*_* ...Done
+
+Done clustering: 30 2 0.95. See clone reports in clusters/post_cluster_vdb_30_2_allg_0.95_30
+
+Clone detection done. Logs in times/*
+Clone reports in clusters/post_cluster_*
+
+In addition, potential clone-related bugs may be produced by running the scripts:
+(Be careful about the file overwriting and the choice for programming language)
+
+(0) search clone reports and find out suspicious ones for all config combinations: 
+(Note that it may be slow if there are many clone groups)
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/deckardd.sh"
+
+Or, run "bugfilter" for each clone cluster file, but need to export DECKARD_DIR first:
+    export DECKARD_DIR=/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3
+(1) search clone reports and find out suspicious ones: 
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/bugfiltering" "clusters/post_<filename>" java > "clusters/bug_<filename>" 2> "times/bugfiltering_<filename>"
+(2) transform the bug reports to html for easier investigation:
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/out2html" "clusters/bug_<filename>" > "clusters/bug_<filename>.html"
+
+
+==== All Done for the current 'config' file ====
+
+	Command being timed: "./scripts/clonedetect/deckard.sh"
+	User time (seconds): 1.57
+	System time (seconds): 2.59
+	Percent of CPU this job got: 307%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.35
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 49672
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 811757
+	Voluntary context switches: 6329
+	Involuntary context switches: 2568
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 3984
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16
+DECKARD--A Tree-Based Code Clone Detection Toolkit. Version 1.3.1
+Copyright (c) 2007-2013. University of California / Singapore Management University
+Distributed under the three-clause BSD license.
+
+==== Configuration checking...Done.
+
+==== Start clone detection ====
+
+Vector generation.../scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/jvecgen *.java
+
+vgen: 30 2 ...Done. Log: times/vgen_30_2
+...deleting intermediate vector files...Done
+
+Vector generation done. Logs in times/vgen_*
+Vector files in vectors/vdb_*
+
+Vector clustering and filtering...
+
+= Vector clustering w/ MIN_TOKENS=30, STRIDE=2, SIMILARITY=0.95 ...
+
+grouping: vectors/vdb_30_2 with distance=1.224745...Done grouping 30 2 1.224745. See groups in vectors/vdb_30_2_g[0-9]*_1.224745_30*
+paramsetting: 30 2 0.95 ...Looking for optimal parameters by Setting Parameters for all other groups (may take hours on cygwin but only minutes on Linux...why?)...Done paramsetting 30 2 0.95. Log: times/paramsetting_30_2_0.95_30
+Cluster every vector groups...
+Done clustering. Check log: times/cluster_vdb_30_2_allg_1.224745_30 and times/cluster_vdb_30_2_g[0-9]+_1.224745_30
+Merging all clone reports into clusters/cluster_vdb_30_2_allg_0.95_30 ...Done merging clusters/cluster_vdb_30_2_all_0.95_30. Log: times/merging_30_2_0.95_30
+Post processing clusters/cluster_vdb_30_2_allg_0.95_30 ...Done post-processing clusters/cluster_vdb_30_2_allg_0.95_30. Log: times/post_cluster_vdb_30_2_allg_0.95_30
+Cleaning up all intermediate files...
+...deleting vdb_*_*_g*_*_*, including parameter files ...Done
+...deleting cluster_vdb_*_*_g*_*_* ...Done
+
+Done clustering: 30 2 0.95. See clone reports in clusters/post_cluster_vdb_30_2_allg_0.95_30
+
+Clone detection done. Logs in times/*
+Clone reports in clusters/post_cluster_*
+
+In addition, potential clone-related bugs may be produced by running the scripts:
+(Be careful about the file overwriting and the choice for programming language)
+
+(0) search clone reports and find out suspicious ones for all config combinations: 
+(Note that it may be slow if there are many clone groups)
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/deckardd.sh"
+
+Or, run "bugfilter" for each clone cluster file, but need to export DECKARD_DIR first:
+    export DECKARD_DIR=/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3
+(1) search clone reports and find out suspicious ones: 
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/bugfiltering" "clusters/post_<filename>" java > "clusters/bug_<filename>" 2> "times/bugfiltering_<filename>"
+(2) transform the bug reports to html for easier investigation:
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/out2html" "clusters/bug_<filename>" > "clusters/bug_<filename>.html"
+
+
+==== All Done for the current 'config' file ====
+
+	Command being timed: "./scripts/clonedetect/deckard.sh"
+	User time (seconds): 3.59
+	System time (seconds): 4.70
+	Percent of CPU this job got: 316%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.62
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 56600
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1459748
+	Voluntary context switches: 11132
+	Involuntary context switches: 4588
+	Swaps: 0
+	File system inputs: 120
+	File system outputs: 11848
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/64
+DECKARD--A Tree-Based Code Clone Detection Toolkit. Version 1.3.1
+Copyright (c) 2007-2013. University of California / Singapore Management University
+Distributed under the three-clause BSD license.
+
+==== Configuration checking...Done.
+
+==== Start clone detection ====
+
+Vector generation.../scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/jvecgen *.java
+
+vgen: 30 2 ...Done. Log: times/vgen_30_2
+...deleting intermediate vector files...Done
+
+Vector generation done. Logs in times/vgen_*
+Vector files in vectors/vdb_*
+
+Vector clustering and filtering...
+
+= Vector clustering w/ MIN_TOKENS=30, STRIDE=2, SIMILARITY=0.95 ...
+
+grouping: vectors/vdb_30_2 with distance=1.224745...Done grouping 30 2 1.224745. See groups in vectors/vdb_30_2_g[0-9]*_1.224745_30*
+paramsetting: 30 2 0.95 ...Looking for optimal parameters by Setting Parameters for all other groups (may take hours on cygwin but only minutes on Linux...why?)...Done paramsetting 30 2 0.95. Log: times/paramsetting_30_2_0.95_30
+Cluster every vector groups...
+Done clustering. Check log: times/cluster_vdb_30_2_allg_1.224745_30 and times/cluster_vdb_30_2_g[0-9]+_1.224745_30
+Merging all clone reports into clusters/cluster_vdb_30_2_allg_0.95_30 ...Done merging clusters/cluster_vdb_30_2_all_0.95_30. Log: times/merging_30_2_0.95_30
+Post processing clusters/cluster_vdb_30_2_allg_0.95_30 ...Done post-processing clusters/cluster_vdb_30_2_allg_0.95_30. Log: times/post_cluster_vdb_30_2_allg_0.95_30
+Cleaning up all intermediate files...
+...deleting vdb_*_*_g*_*_*, including parameter files ...Done
+...deleting cluster_vdb_*_*_g*_*_* ...Done
+
+Done clustering: 30 2 0.95. See clone reports in clusters/post_cluster_vdb_30_2_allg_0.95_30
+
+Clone detection done. Logs in times/*
+Clone reports in clusters/post_cluster_*
+
+In addition, potential clone-related bugs may be produced by running the scripts:
+(Be careful about the file overwriting and the choice for programming language)
+
+(0) search clone reports and find out suspicious ones for all config combinations: 
+(Note that it may be slow if there are many clone groups)
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/deckardd.sh"
+
+Or, run "bugfilter" for each clone cluster file, but need to export DECKARD_DIR first:
+    export DECKARD_DIR=/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3
+(1) search clone reports and find out suspicious ones: 
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/bugfiltering" "clusters/post_<filename>" java > "clusters/bug_<filename>" 2> "times/bugfiltering_<filename>"
+(2) transform the bug reports to html for easier investigation:
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/out2html" "clusters/bug_<filename>" > "clusters/bug_<filename>.html"
+
+
+==== All Done for the current 'config' file ====
+
+	Command being timed: "./scripts/clonedetect/deckard.sh"
+	User time (seconds): 8.26
+	System time (seconds): 6.36
+	Percent of CPU this job got: 287%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.08
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 88744
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1869285
+	Voluntary context switches: 13116
+	Involuntary context switches: 5565
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 38632
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/256
+DECKARD--A Tree-Based Code Clone Detection Toolkit. Version 1.3.1
+Copyright (c) 2007-2013. University of California / Singapore Management University
+Distributed under the three-clause BSD license.
+
+==== Configuration checking...Done.
+
+==== Start clone detection ====
+
+Vector generation.../scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/jvecgen *.java
+
+vgen: 30 2 ...Done. Log: times/vgen_30_2
+...deleting intermediate vector files...Done
+
+Vector generation done. Logs in times/vgen_*
+Vector files in vectors/vdb_*
+
+Vector clustering and filtering...
+
+= Vector clustering w/ MIN_TOKENS=30, STRIDE=2, SIMILARITY=0.95 ...
+
+grouping: vectors/vdb_30_2 with distance=1.224745...Done grouping 30 2 1.224745. See groups in vectors/vdb_30_2_g[0-9]*_1.224745_30*
+paramsetting: 30 2 0.95 ...Looking for optimal parameters by Setting Parameters for all other groups (may take hours on cygwin but only minutes on Linux...why?)...Done paramsetting 30 2 0.95. Log: times/paramsetting_30_2_0.95_30
+Cluster every vector groups...
+Done clustering. Check log: times/cluster_vdb_30_2_allg_1.224745_30 and times/cluster_vdb_30_2_g[0-9]+_1.224745_30
+Merging all clone reports into clusters/cluster_vdb_30_2_allg_0.95_30 ...Done merging clusters/cluster_vdb_30_2_all_0.95_30. Log: times/merging_30_2_0.95_30
+Post processing clusters/cluster_vdb_30_2_allg_0.95_30 ...Done post-processing clusters/cluster_vdb_30_2_allg_0.95_30. Log: times/post_cluster_vdb_30_2_allg_0.95_30
+Cleaning up all intermediate files...
+...deleting vdb_*_*_g*_*_*, including parameter files ...Done
+...deleting cluster_vdb_*_*_g*_*_* ...Done
+
+Done clustering: 30 2 0.95. See clone reports in clusters/post_cluster_vdb_30_2_allg_0.95_30
+
+Clone detection done. Logs in times/*
+Clone reports in clusters/post_cluster_*
+
+In addition, potential clone-related bugs may be produced by running the scripts:
+(Be careful about the file overwriting and the choice for programming language)
+
+(0) search clone reports and find out suspicious ones for all config combinations: 
+(Note that it may be slow if there are many clone groups)
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/deckardd.sh"
+
+Or, run "bugfilter" for each clone cluster file, but need to export DECKARD_DIR first:
+    export DECKARD_DIR=/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3
+(1) search clone reports and find out suspicious ones: 
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/bugfiltering" "clusters/post_<filename>" java > "clusters/bug_<filename>" 2> "times/bugfiltering_<filename>"
+(2) transform the bug reports to html for easier investigation:
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/out2html" "clusters/bug_<filename>" > "clusters/bug_<filename>.html"
+
+
+==== All Done for the current 'config' file ====
+
+	Command being timed: "./scripts/clonedetect/deckard.sh"
+	User time (seconds): 18.05
+	System time (seconds): 8.70
+	Percent of CPU this job got: 233%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:11.45
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 181208
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2485945
+	Voluntary context switches: 15466
+	Involuntary context switches: 6548
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 100544
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/1024
+DECKARD--A Tree-Based Code Clone Detection Toolkit. Version 1.3.1
+Copyright (c) 2007-2013. University of California / Singapore Management University
+Distributed under the three-clause BSD license.
+
+==== Configuration checking...Done.
+
+==== Start clone detection ====
+
+Vector generation.../scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/jvecgen *.java
+
+vgen: 30 2 ...Done. Log: times/vgen_30_2
+...deleting intermediate vector files...Done
+
+Vector generation done. Logs in times/vgen_*
+Vector files in vectors/vdb_*
+
+Vector clustering and filtering...
+
+= Vector clustering w/ MIN_TOKENS=30, STRIDE=2, SIMILARITY=0.95 ...
+
+grouping: vectors/vdb_30_2 with distance=1.224745...Done grouping 30 2 1.224745. See groups in vectors/vdb_30_2_g[0-9]*_1.224745_30*
+paramsetting: 30 2 0.95 ...Looking for optimal parameters by Setting Parameters for all other groups (may take hours on cygwin but only minutes on Linux...why?)...Done paramsetting 30 2 0.95. Log: times/paramsetting_30_2_0.95_30
+Cluster every vector groups...
+Done clustering. Check log: times/cluster_vdb_30_2_allg_1.224745_30 and times/cluster_vdb_30_2_g[0-9]+_1.224745_30
+Merging all clone reports into clusters/cluster_vdb_30_2_allg_0.95_30 ...Done merging clusters/cluster_vdb_30_2_all_0.95_30. Log: times/merging_30_2_0.95_30
+Post processing clusters/cluster_vdb_30_2_allg_0.95_30 ...Done post-processing clusters/cluster_vdb_30_2_allg_0.95_30. Log: times/post_cluster_vdb_30_2_allg_0.95_30
+Cleaning up all intermediate files...
+...deleting vdb_*_*_g*_*_*, including parameter files ...Done
+...deleting cluster_vdb_*_*_g*_*_* ...Done
+
+Done clustering: 30 2 0.95. See clone reports in clusters/post_cluster_vdb_30_2_allg_0.95_30
+
+Clone detection done. Logs in times/*
+Clone reports in clusters/post_cluster_*
+
+In addition, potential clone-related bugs may be produced by running the scripts:
+(Be careful about the file overwriting and the choice for programming language)
+
+(0) search clone reports and find out suspicious ones for all config combinations: 
+(Note that it may be slow if there are many clone groups)
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/deckardd.sh"
+
+Or, run "bugfilter" for each clone cluster file, but need to export DECKARD_DIR first:
+    export DECKARD_DIR=/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3
+(1) search clone reports and find out suspicious ones: 
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/bugfiltering" "clusters/post_<filename>" java > "clusters/bug_<filename>" 2> "times/bugfiltering_<filename>"
+(2) transform the bug reports to html for easier investigation:
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/out2html" "clusters/bug_<filename>" > "clusters/bug_<filename>.html"
+
+
+==== All Done for the current 'config' file ====
+
+	Command being timed: "./scripts/clonedetect/deckard.sh"
+	User time (seconds): 119.77
+	System time (seconds): 15.39
+	Percent of CPU this job got: 152%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:28.59
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 294168
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 4157920
+	Voluntary context switches: 20902
+	Involuntary context switches: 9876
+	Swaps: 0
+	File system inputs: 832
+	File system outputs: 358144
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/4096
+DECKARD--A Tree-Based Code Clone Detection Toolkit. Version 1.3.1
+Copyright (c) 2007-2013. University of California / Singapore Management University
+Distributed under the three-clause BSD license.
+
+==== Configuration checking...Done.
+
+==== Start clone detection ====
+
+Vector generation.../scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/jvecgen *.java
+
+vgen: 30 2 ...Done. Log: times/vgen_30_2
+...deleting intermediate vector files...Done
+
+Vector generation done. Logs in times/vgen_*
+Vector files in vectors/vdb_*
+
+Vector clustering and filtering...
+
+= Vector clustering w/ MIN_TOKENS=30, STRIDE=2, SIMILARITY=0.95 ...
+
+grouping: vectors/vdb_30_2 with distance=1.224745...Done grouping 30 2 1.224745. See groups in vectors/vdb_30_2_g[0-9]*_1.224745_30*
+paramsetting: 30 2 0.95 ...Looking for optimal parameters by Setting Parameters for all other groups (may take hours on cygwin but only minutes on Linux...why?)...Done paramsetting 30 2 0.95. Log: times/paramsetting_30_2_0.95_30
+Cluster every vector groups...
+Done clustering. Check log: times/cluster_vdb_30_2_allg_1.224745_30 and times/cluster_vdb_30_2_g[0-9]+_1.224745_30
+Merging all clone reports into clusters/cluster_vdb_30_2_allg_0.95_30 ...Done merging clusters/cluster_vdb_30_2_all_0.95_30. Log: times/merging_30_2_0.95_30
+Post processing clusters/cluster_vdb_30_2_allg_0.95_30 ...Done post-processing clusters/cluster_vdb_30_2_allg_0.95_30. Log: times/post_cluster_vdb_30_2_allg_0.95_30
+Cleaning up all intermediate files...
+...deleting vdb_*_*_g*_*_*, including parameter files ...Done
+...deleting cluster_vdb_*_*_g*_*_* ...Done
+
+Done clustering: 30 2 0.95. See clone reports in clusters/post_cluster_vdb_30_2_allg_0.95_30
+
+Clone detection done. Logs in times/*
+Clone reports in clusters/post_cluster_*
+
+In addition, potential clone-related bugs may be produced by running the scripts:
+(Be careful about the file overwriting and the choice for programming language)
+
+(0) search clone reports and find out suspicious ones for all config combinations: 
+(Note that it may be slow if there are many clone groups)
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/deckardd.sh"
+
+Or, run "bugfilter" for each clone cluster file, but need to export DECKARD_DIR first:
+    export DECKARD_DIR=/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3
+(1) search clone reports and find out suspicious ones: 
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/bugfiltering" "clusters/post_<filename>" java > "clusters/bug_<filename>" 2> "times/bugfiltering_<filename>"
+(2) transform the bug reports to html for easier investigation:
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/out2html" "clusters/bug_<filename>" > "clusters/bug_<filename>.html"
+
+
+==== All Done for the current 'config' file ====
+
+	Command being timed: "./scripts/clonedetect/deckard.sh"
+	User time (seconds): 1152.13
+	System time (seconds): 46.11
+	Percent of CPU this job got: 118%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 16:55.44
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 380724
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 11467843
+	Voluntary context switches: 44120
+	Involuntary context switches: 23035
+	Swaps: 0
+	File system inputs: 2200
+	File system outputs: 1442840
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/16384
+DECKARD--A Tree-Based Code Clone Detection Toolkit. Version 1.3.1
+Copyright (c) 2007-2013. University of California / Singapore Management University
+Distributed under the three-clause BSD license.
+
+==== Configuration checking...Done.
+
+==== Start clone detection ====
+
+Vector generation.../scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/jvecgen *.java
+
+vgen: 30 2 ...Done. Log: times/vgen_30_2
+...deleting intermediate vector files...Done
+
+Vector generation done. Logs in times/vgen_*
+Vector files in vectors/vdb_*
+
+Vector clustering and filtering...
+
+= Vector clustering w/ MIN_TOKENS=30, STRIDE=2, SIMILARITY=0.95 ...
+
+grouping: vectors/vdb_30_2 with distance=1.224745...Done grouping 30 2 1.224745. See groups in vectors/vdb_30_2_g[0-9]*_1.224745_30*
+paramsetting: 30 2 0.95 ...Looking for optimal parameters by Setting Parameters for all other groups (may take hours on cygwin but only minutes on Linux...why?)...Done paramsetting 30 2 0.95. Log: times/paramsetting_30_2_0.95_30
+Cluster every vector groups...
+Done clustering. Check log: times/cluster_vdb_30_2_allg_1.224745_30 and times/cluster_vdb_30_2_g[0-9]+_1.224745_30
+Merging all clone reports into clusters/cluster_vdb_30_2_allg_0.95_30 ...Done merging clusters/cluster_vdb_30_2_all_0.95_30. Log: times/merging_30_2_0.95_30
+Post processing clusters/cluster_vdb_30_2_allg_0.95_30 ...Done post-processing clusters/cluster_vdb_30_2_allg_0.95_30. Log: times/post_cluster_vdb_30_2_allg_0.95_30
+Cleaning up all intermediate files...
+...deleting vdb_*_*_g*_*_*, including parameter files ...Done
+...deleting cluster_vdb_*_*_g*_*_* ...Done
+
+Done clustering: 30 2 0.95. See clone reports in clusters/post_cluster_vdb_30_2_allg_0.95_30
+
+Clone detection done. Logs in times/*
+Clone reports in clusters/post_cluster_*
+
+In addition, potential clone-related bugs may be produced by running the scripts:
+(Be careful about the file overwriting and the choice for programming language)
+
+(0) search clone reports and find out suspicious ones for all config combinations: 
+(Note that it may be slow if there are many clone groups)
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/deckardd.sh"
+
+Or, run "bugfilter" for each clone cluster file, but need to export DECKARD_DIR first:
+    export DECKARD_DIR=/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3
+(1) search clone reports and find out suspicious ones: 
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/bugfiltering" "clusters/post_<filename>" java > "clusters/bug_<filename>" 2> "times/bugfiltering_<filename>"
+(2) transform the bug reports to html for easier investigation:
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/out2html" "clusters/bug_<filename>" > "clusters/bug_<filename>.html"
+
+
+==== All Done for the current 'config' file ====
+
+	Command being timed: "./scripts/clonedetect/deckard.sh"
+	User time (seconds): 462.07
+	System time (seconds): 139.50
+	Percent of CPU this job got: 684%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:27.87
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 291176
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 36265151
+	Voluntary context switches: 92736
+	Involuntary context switches: 54310
+	Swaps: 0
+	File system inputs: 392
+	File system outputs: 2927736
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/65536
+DECKARD--A Tree-Based Code Clone Detection Toolkit. Version 1.3.1
+Copyright (c) 2007-2013. University of California / Singapore Management University
+Distributed under the three-clause BSD license.
+
+==== Configuration checking...Done.
+
+==== Start clone detection ====
+
+Vector generation.../scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/jvecgen *.java
+
+vgen: 30 2 ...Done. Log: times/vgen_30_2
+...deleting intermediate vector files...Done
+
+Vector generation done. Logs in times/vgen_*
+Vector files in vectors/vdb_*
+
+Vector clustering and filtering...
+
+= Vector clustering w/ MIN_TOKENS=30, STRIDE=2, SIMILARITY=0.95 ...
+
+grouping: vectors/vdb_30_2 with distance=1.224745...Done grouping 30 2 1.224745. See groups in vectors/vdb_30_2_g[0-9]*_1.224745_30*
+paramsetting: 30 2 0.95 ...Looking for optimal parameters by Setting Parameters for all other groups (may take hours on cygwin but only minutes on Linux...why?)...Done paramsetting 30 2 0.95. Log: times/paramsetting_30_2_0.95_30
+Cluster every vector groups...
+Done clustering. Check log: times/cluster_vdb_30_2_allg_1.224745_30 and times/cluster_vdb_30_2_g[0-9]+_1.224745_30
+Merging all clone reports into clusters/cluster_vdb_30_2_allg_0.95_30 ...Done merging clusters/cluster_vdb_30_2_all_0.95_30. Log: times/merging_30_2_0.95_30
+Post processing clusters/cluster_vdb_30_2_allg_0.95_30 ...pcluster: Possible errors occurred. Check log: times/post_cluster_vdb_30_2_allg_0.95_30
+Cleaning up all intermediate files...
+...deleting vdb_*_*_g*_*_*, including parameter files ...Done
+...deleting cluster_vdb_*_*_g*_*_* ...Done
+
+Done clustering: 30 2 0.95. See clone reports in clusters/post_cluster_vdb_30_2_allg_0.95_30
+
+Clone detection done. Logs in times/*
+Clone reports in clusters/post_cluster_*
+
+In addition, potential clone-related bugs may be produced by running the scripts:
+(Be careful about the file overwriting and the choice for programming language)
+
+(0) search clone reports and find out suspicious ones for all config combinations: 
+(Note that it may be slow if there are many clone groups)
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/deckardd.sh"
+
+Or, run "bugfilter" for each clone cluster file, but need to export DECKARD_DIR first:
+    export DECKARD_DIR=/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3
+(1) search clone reports and find out suspicious ones: 
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/scripts/bugdetect/bugfiltering" "clusters/post_<filename>" java > "clusters/bug_<filename>" 2> "times/bugfiltering_<filename>"
+(2) transform the bug reports to html for easier investigation:
+    "/scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/out2html" "clusters/bug_<filename>" > "clusters/bug_<filename>.html"
+
+
+==== All Done for the current 'config' file ====
+
+	Command being timed: "./scripts/clonedetect/deckard.sh"
+	User time (seconds): 124528.96
+	System time (seconds): 675.01
+	Percent of CPU this job got: 114%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 30:15:53
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2643632
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 31
+	Minor (reclaiming a frame) page faults: 152591653
+	Voluntary context switches: 514519
+	Involuntary context switches: 482311
+	Swaps: 0
+	File system inputs: 4952
+	File system outputs: 25691096
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+/scratch0/NOT_BACKED_UP/crest/cragkhit/siamese/data_for_rq3/262144
+DECKARD--A Tree-Based Code Clone Detection Toolkit. Version 1.3.1
+Copyright (c) 2007-2013. University of California / Singapore Management University
+Distributed under the three-clause BSD license.
+
+==== Configuration checking...Done.
+
+==== Start clone detection ====
+
+Vector generation.../scratch0/NOT_BACKED_UP/crest/cragkhit/tools/Deckard-parallel1.3/src/main/jvecgen *.java
+
+vgen: 30 2 ...

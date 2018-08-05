@@ -1,0 +1,4 @@
+Best result: /Users/Chaiyong/Downloads/isics_results/cloplag_x_1_qr_09-11-17_20-50-53.csv,0.7587705281581363
+
+All results:
+/Users/Chaiyong/Downloads/isics_results/cloplag_x_1_qr_09-11-17_20-50-53.csv,0.7587705281581363

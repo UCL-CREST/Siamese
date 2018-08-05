@@ -38,7 +38,9 @@ public class JavaTokenizer implements Tokenizer {
         String[] symbols = JavaLexer._SYMBOLIC_NAMES;
         for(Token token : tokenList){
             // normalize the token except white space (skip)
-            if (!symbols[token.getType()].equals("WS")) {
+            if (!symbols[token.getType()].equals("WS")
+                    && !symbols[token.getType()].equals("COMMENT")
+                    && !symbols[token.getType()].equals("LINE_COMMENT")) {
                 tokens.add(normalizer.normalizeAToken(token.getText().trim(), symbols[token.getType()]));
             }
         }

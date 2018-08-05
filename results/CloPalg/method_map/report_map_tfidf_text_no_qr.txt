@@ -1,4 +1,0 @@
-Best result: /Users/Chaiyong/IdeasProjects/Siamese/exp_results/cloplag_x_1_25.0_75.0_no_qr_09-01-18_13-23-238.csv,0.6603817600464704
-
-All results:
-/Users/Chaiyong/IdeasProjects/Siamese/exp_results/cloplag_x_1_25.0_75.0_no_qr_09-01-18_13-23-238.csv,0.6603817600464704
