@@ -137,7 +137,8 @@ def writefile(filename, fcontent, mode, isprint):
 
 
 def execute_siamese():
-    command = ["mvn", "exec:java", "-Dexec.mainClass=crest.siamese.experiment.Experiment", "-Dexec.args=myconfig.properties"]
+    command = ["mvn", "exec:java", "-Dexec.mainClass=crest.siamese.experiment.Experiment",
+               "-Dexec.args=myconfig.properties"]
     # print(command)
     p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     output, err = p.communicate()
@@ -147,20 +148,20 @@ def execute_siamese():
             mapstr = i.split(' ')[2]
             writefile('optimised_summary.csv', mapstr + '\n', 'a', False)
             print(mapstr)
-    # print(err)
-    # print(output.decode())
-    logging.debug(output.decode())
-    logging.debug(err.decode())
+    # print(err.decode('utf-8'))
+    # print(output.decode('utf-8'))
+    logging.debug(output.decode('utf-8'))
+    logging.debug(err.decode('utf-8'))
 
 
 def main():
     setup_logger()
     config = gen_config_template()
-    # update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/soco_f/formatted/')
-    # update_config(config, 'cloneClusterFile', 'soco')
+    update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/soco_f/formatted/')
+    update_config(config, 'cloneClusterFile', 'soco')
     #
-    update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/tests')
-    update_config(config, 'cloneClusterFile', 'cloplag')
+    # update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/tests')
+    # update_config(config, 'cloneClusterFile', 'cloplag')
 
     print('ngramSize,t2NgramSize,t1NgramSize,'
           'QRPercentileNorm,QRPercentileT2,QRPercentileT1,QRPercentileOrig,'
@@ -168,7 +169,8 @@ def main():
     writefile('optimised_summary.csv', 'ngramSize,t2NgramSize,t1NgramSize,'
                                        'QRPercentileNorm,QRPercentileT2,QRPercentileT1,QRPercentileOrig,'
                                        'normBoost,t2Boost,t1Boost,map\n', 'w', False)
-    for t3_ngram_size in range(1, 7):
+    # for t3_ngram_size in range(1, 7):
+    for t3_ngram_size in range(4, 7):
         for t2_ngram_size in range(1, 7):
             for t1_ngram_size in range(1, 7):
                 for qr in range(1, 6):
