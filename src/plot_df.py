@@ -26,7 +26,7 @@ def read_csv(filename):
     return df_sorted
 
 
-def plot(df0, df1, df2, df3, index=''):
+def plot(df0, df1, df2, df3, dir, index=''):
     result = pd.concat([df0, df1, df2, df3], axis=1, join_axes=[df0.index])
     result.index += 1
     result = result.reset_index()
@@ -50,7 +50,7 @@ def plot(df0, df1, df2, df3, index=''):
 
     fig = ax.get_figure()
     # fig.set_size_inches(4, 5)
-    fig.savefig('../figure_df_' + index + '.pdf', bbox_inches='tight')
+    fig.savefig(dir + '/figure_df_' + index + '.pdf', bbox_inches='tight')
 
 
 def plot_no_label(df0, df1, df2, df3, index=''):
@@ -151,16 +151,17 @@ def plot_slopes(filename):
 
 def main():
     # print('processing CSVs ...')
-    index = 'qualitas'
-    df_t0src_sorted = read_csv('../freq_df_t0src_' + index + '.csv')
-    df_t1src_sorted = read_csv('../freq_df_t1src_' + index + '.csv')
-    df_t2src_sorted = read_csv('../freq_df_t2src_' + index + '.csv')
-    df_t3src_sorted = read_csv('../freq_df_t3src_' + index + '.csv')
+    index = 'bellon'
+    dir = '../results/results_for_rq0_qr_thresholds/'
+    df_t0src_sorted = read_csv(dir + 'freq_df_t0src_' + index + '.csv')
+    df_t1src_sorted = read_csv(dir + 'freq_df_t1src_' + index + '.csv')
+    df_t2src_sorted = read_csv(dir + 'freq_df_t2src_' + index + '.csv')
+    df_t3src_sorted = read_csv(dir + 'freq_df_t3src_' + index + '.csv')
 
     # if index == 'qualitas' or index == 'bcb':
     #     plot_no_label(df_src_sorted, df_toksrc_sorted, df_t2src_sorted, index)
     # else:
-    plot(df_t0src_sorted, df_t1src_sorted, df_t2src_sorted, df_t3src_sorted, index)
+    plot(df_t0src_sorted, df_t1src_sorted, df_t2src_sorted, df_t3src_sorted, dir, index)
     # print('computing slopes ...')
     # compute_slopes(df_toksrc_sorted)
     # plot_slopes('../slopes.csv')

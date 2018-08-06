@@ -1,0 +1,10406 @@
+2018/07/29 22:41:07
+========== Configurations ==========
+---------- ELASTICSEARCH -----------
+server         : localhost
+index          : bellon7
+type           : siamese
+--------------- DATA ---------------
+inputFolder    : /Users/Chaiyong/Desktop/temp
+outputFolder   : exp_results
+dfs            : true
+extension      : java
+minCloneSize   : 1
+------------- EXECUTION ------------
+command        : search
+indexingMode   : bulk (4000)
+outputFormat   : csvfline
+------- MULTI-REPRESENTATION -------
+multiRep       : false [true, true, true, true]
+T2 norm        : dsvw
+T3 norm        : x
+ngramSize      : t1=4 t2=16 t3=7
+---------- QUERY REDUCTION ---------
+queryReduction : false
+qrThresholds   : t0=10.0 t1=10.0 t2=10.0 t3=10.0
+queryBoosts    : t0=1 t1=4 t2=16 t3=6
+====================================
+Jul 29, 2018 10:41:08 PM org.elasticsearch.plugins.PluginsService <init>
+INFO: [Oddball] loaded [], sites []
+Querying Phase: found 1 files (queries_t1/205.java)
+INDEX: 1
+T3: if(parentButton.getClientProperty("paintActive" (parentButton.getClientProperty("paintActive") parentButton.getClientProperty("paintActive")!= .getClientProperty("paintActive")!=Boolean getClientProperty("paintActive")!=Boolean. ("paintActive")!=Boolean.TRUE "paintActive")!=Boolean.TRUE) )!=Boolean.TRUE){ !=Boolean.TRUE){backgroundColor Boolean.TRUE){backgroundColor= .TRUE){backgroundColor=MetalLookAndFeel TRUE){backgroundColor=MetalLookAndFeel. ){backgroundColor=MetalLookAndFeel.getControl {backgroundColor=MetalLookAndFeel.getControl( backgroundColor=MetalLookAndFeel.getControl() =MetalLookAndFeel.getControl(); MetalLookAndFeel.getControl();internalBackgroundColor .getControl();internalBackgroundColor= getControl();internalBackgroundColor=backgroundColor ();internalBackgroundColor=backgroundColor; );internalBackgroundColor=backgroundColor;mainItemColor ;internalBackgroundColor=backgroundColor;mainItemColor= internalBackgroundColor=backgroundColor;mainItemColor=MetalLookAndFeel =backgroundColor;mainItemColor=MetalLookAndFeel. backgroundColor;mainItemColor=MetalLookAndFeel.getControlDarkShadow ;mainItemColor=MetalLookAndFeel.getControlDarkShadow( mainItemColor=MetalLookAndFeel.getControlDarkShadow() =MetalLookAndFeel.getControlDarkShadow(); MetalLookAndFeel.getControlDarkShadow();if .getControlDarkShadow();if( getControlDarkShadow();if(buttonModel ();if(buttonModel. );if(buttonModel.isPressed ;if(buttonModel.isPressed( if(buttonModel.isPressed() (buttonModel.isPressed()&& buttonModel.isPressed()&&buttonModel .isPressed()&&buttonModel. isPressed()&&buttonModel.isArmed ()&&buttonModel.isArmed( )&&buttonModel.isArmed() &&buttonModel.isArmed()) buttonModel.isArmed()){ .isArmed()){internalBackgroundColor isArmed()){internalBackgroundColor= ()){internalBackgroundColor=MetalLookAndFeel )){internalBackgroundColor=MetalLookAndFeel. ){internalBackgroundColor=MetalLookAndFeel.getControlShadow {internalBackgroundColor=MetalLookAndFeel.getControlShadow( internalBackgroundColor=MetalLookAndFeel.getControlShadow() =MetalLookAndFeel.getControlShadow(); MetalLookAndFeel.getControlShadow();ulLightHighlightColor .getControlShadow();ulLightHighlightColor= getControlShadow();ulLightHighlightColor=internalBackgroundColor ();ulLightHighlightColor=internalBackgroundColor; );ulLightHighlightColor=internalBackgroundColor;mainItemColor ;ulLightHighlightColor=internalBackgroundColor;mainItemColor= ulLightHighlightColor=internalBackgroundColor;mainItemColor=darkHighlightColor =internalBackgroundColor;mainItemColor=darkHighlightColor; internalBackgroundColor;mainItemColor=darkHighlightColor;} ;mainItemColor=darkHighlightColor;}} 
+RESULT: 3.243439
+/Users/Chaiyong/Documents/phd/2017/BellonClonesReader/bellon_benchmark/j2sdk1.4.0-javax-swing/src/plaf/metal/MetalIconFactory.java_paintIcon
+597,675
+<ul>
+<li>3.2434394 = sum of:<br />
+<ul>
+<li>0.0473737 = weight(src:if(parentButton.getClientProperty("paintActive" in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:(parentButton.getClientProperty("paintActive") in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:parentButton.getClientProperty("paintActive")!= in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.getClientProperty("paintActive")!=Boolean in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:getClientProperty("paintActive")!=Boolean. in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:("paintActive")!=Boolean.TRUE in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:"paintActive")!=Boolean.TRUE) in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:)!=Boolean.TRUE){ in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:!=Boolean.TRUE){backgroundColor in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:Boolean.TRUE){backgroundColor= in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.TRUE){backgroundColor=MetalLookAndFeel in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:TRUE){backgroundColor=MetalLookAndFeel. in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:){backgroundColor=MetalLookAndFeel.getControl in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:{backgroundColor=MetalLookAndFeel.getControl( in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:backgroundColor=MetalLookAndFeel.getControl() in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:=MetalLookAndFeel.getControl(); in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:MetalLookAndFeel.getControl();internalBackgroundColor in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.getControl();internalBackgroundColor= in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:getControl();internalBackgroundColor=backgroundColor in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:();internalBackgroundColor=backgroundColor; in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:);internalBackgroundColor=backgroundColor;mainItemColor in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:;internalBackgroundColor=backgroundColor;mainItemColor= in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:internalBackgroundColor=backgroundColor;mainItemColor=MetalLookAndFeel in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:=backgroundColor;mainItemColor=MetalLookAndFeel. in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:backgroundColor;mainItemColor=MetalLookAndFeel.getControlDarkShadow in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:;mainItemColor=MetalLookAndFeel.getControlDarkShadow( in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:mainItemColor=MetalLookAndFeel.getControlDarkShadow() in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.041661058 = weight(src:=MetalLookAndFeel.getControlDarkShadow(); in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.041661058 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12040697 = queryWeight, product of:<br />
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.34600204 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:MetalLookAndFeel.getControlDarkShadow();if in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.getControlDarkShadow();if( in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:getControlDarkShadow();if(buttonModel in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.045562487 = weight(src:();if(buttonModel. in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.045562487 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36184055 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.045562487 = weight(src:);if(buttonModel.isPressed in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.045562487 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36184055 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.045562487 = weight(src:;if(buttonModel.isPressed( in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.045562487 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36184055 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:if(buttonModel.isPressed() in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:(buttonModel.isPressed()&& in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:buttonModel.isPressed()&&buttonModel in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:.isPressed()&&buttonModel. in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:isPressed()&&buttonModel.isArmed in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:()&&buttonModel.isArmed( in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:)&&buttonModel.isArmed() in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:&&buttonModel.isArmed()) in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:buttonModel.isArmed()){ in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:.isArmed()){internalBackgroundColor in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:isArmed()){internalBackgroundColor= in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:()){internalBackgroundColor=MetalLookAndFeel in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:)){internalBackgroundColor=MetalLookAndFeel. in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:){internalBackgroundColor=MetalLookAndFeel.getControlShadow in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:{internalBackgroundColor=MetalLookAndFeel.getControlShadow( in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:internalBackgroundColor=MetalLookAndFeel.getControlShadow() in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.04277639 = weight(src:=MetalLookAndFeel.getControlShadow(); in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.04277639 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12200806 = queryWeight, product of:<br />
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.35060298 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0496385 = weight(src:MetalLookAndFeel.getControlShadow();ulLightHighlightColor in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0496385 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.37767902 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0496385 = weight(src:.getControlShadow();ulLightHighlightColor= in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0496385 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.37767902 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0496385 = weight(src:getControlShadow();ulLightHighlightColor=internalBackgroundColor in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0496385 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.37767902 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.07019944 = weight(src:();ulLightHighlightColor=internalBackgroundColor; in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.07019944 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5341188 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.07019944 = weight(src:);ulLightHighlightColor=internalBackgroundColor;mainItemColor in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.07019944 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5341188 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.07019944 = weight(src:;ulLightHighlightColor=internalBackgroundColor;mainItemColor= in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.07019944 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5341188 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.07019944 = weight(src:ulLightHighlightColor=internalBackgroundColor;mainItemColor=darkHighlightColor in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.07019944 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5341188 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:=internalBackgroundColor;mainItemColor=darkHighlightColor; in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:internalBackgroundColor;mainItemColor=darkHighlightColor;} in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2849,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:;mainItemColor=darkHighlightColor;}} in 2849) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2849,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2849, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2849)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+RESULT: 3.243439
+/Users/Chaiyong/Documents/phd/2017/BellonClonesReader/bellon_benchmark/j2sdk1.4.0-javax-swing/src/plaf/metal/MetalIconFactory.java_paintIcon
+686,757
+<ul>
+<li>3.2434394 = sum of:<br />
+<ul>
+<li>0.0473737 = weight(src:if(parentButton.getClientProperty("paintActive" in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:(parentButton.getClientProperty("paintActive") in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:parentButton.getClientProperty("paintActive")!= in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.getClientProperty("paintActive")!=Boolean in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:getClientProperty("paintActive")!=Boolean. in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:("paintActive")!=Boolean.TRUE in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:"paintActive")!=Boolean.TRUE) in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:)!=Boolean.TRUE){ in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:!=Boolean.TRUE){backgroundColor in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:Boolean.TRUE){backgroundColor= in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.TRUE){backgroundColor=MetalLookAndFeel in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:TRUE){backgroundColor=MetalLookAndFeel. in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:){backgroundColor=MetalLookAndFeel.getControl in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:{backgroundColor=MetalLookAndFeel.getControl( in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:backgroundColor=MetalLookAndFeel.getControl() in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:=MetalLookAndFeel.getControl(); in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:MetalLookAndFeel.getControl();internalBackgroundColor in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.getControl();internalBackgroundColor= in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:getControl();internalBackgroundColor=backgroundColor in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:();internalBackgroundColor=backgroundColor; in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:);internalBackgroundColor=backgroundColor;mainItemColor in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:;internalBackgroundColor=backgroundColor;mainItemColor= in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:internalBackgroundColor=backgroundColor;mainItemColor=MetalLookAndFeel in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:=backgroundColor;mainItemColor=MetalLookAndFeel. in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:backgroundColor;mainItemColor=MetalLookAndFeel.getControlDarkShadow in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:;mainItemColor=MetalLookAndFeel.getControlDarkShadow( in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:mainItemColor=MetalLookAndFeel.getControlDarkShadow() in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.041661058 = weight(src:=MetalLookAndFeel.getControlDarkShadow(); in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.041661058 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12040697 = queryWeight, product of:<br />
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.34600204 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:MetalLookAndFeel.getControlDarkShadow();if in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.getControlDarkShadow();if( in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:getControlDarkShadow();if(buttonModel in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.045562487 = weight(src:();if(buttonModel. in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.045562487 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36184055 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.045562487 = weight(src:);if(buttonModel.isPressed in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.045562487 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36184055 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.045562487 = weight(src:;if(buttonModel.isPressed( in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.045562487 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36184055 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:if(buttonModel.isPressed() in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:(buttonModel.isPressed()&& in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:buttonModel.isPressed()&&buttonModel in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:.isPressed()&&buttonModel. in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:isPressed()&&buttonModel.isArmed in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:()&&buttonModel.isArmed( in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:)&&buttonModel.isArmed() in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:&&buttonModel.isArmed()) in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:buttonModel.isArmed()){ in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:.isArmed()){internalBackgroundColor in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:isArmed()){internalBackgroundColor= in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:()){internalBackgroundColor=MetalLookAndFeel in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:)){internalBackgroundColor=MetalLookAndFeel. in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:){internalBackgroundColor=MetalLookAndFeel.getControlShadow in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:{internalBackgroundColor=MetalLookAndFeel.getControlShadow( in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:internalBackgroundColor=MetalLookAndFeel.getControlShadow() in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.04277639 = weight(src:=MetalLookAndFeel.getControlShadow(); in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.04277639 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12200806 = queryWeight, product of:<br />
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.35060298 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0496385 = weight(src:MetalLookAndFeel.getControlShadow();ulLightHighlightColor in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0496385 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.37767902 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0496385 = weight(src:.getControlShadow();ulLightHighlightColor= in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0496385 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.37767902 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0496385 = weight(src:getControlShadow();ulLightHighlightColor=internalBackgroundColor in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0496385 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.37767902 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.07019944 = weight(src:();ulLightHighlightColor=internalBackgroundColor; in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.07019944 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5341188 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.07019944 = weight(src:);ulLightHighlightColor=internalBackgroundColor;mainItemColor in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.07019944 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5341188 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.07019944 = weight(src:;ulLightHighlightColor=internalBackgroundColor;mainItemColor= in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.07019944 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5341188 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.07019944 = weight(src:ulLightHighlightColor=internalBackgroundColor;mainItemColor=darkHighlightColor in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.07019944 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5341188 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:=internalBackgroundColor;mainItemColor=darkHighlightColor; in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:internalBackgroundColor;mainItemColor=darkHighlightColor;} in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2852,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:;mainItemColor=darkHighlightColor;}} in 2852) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2852,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2852, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2852)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+RESULT: 2.5947511
+/Users/Chaiyong/Documents/phd/2017/BellonClonesReader/bellon_benchmark/j2sdk1.4.0-javax-swing/src/plaf/metal/MetalIconFactory.java_paintIcon
+468,548
+<ul>
+<li>2.594751 = sum of:<br />
+<ul>
+<li>0.03789896 = weight(src:if(parentButton.getClientProperty("paintActive" in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:(parentButton.getClientProperty("paintActive") in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:parentButton.getClientProperty("paintActive")!= in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:.getClientProperty("paintActive")!=Boolean in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:getClientProperty("paintActive")!=Boolean. in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:("paintActive")!=Boolean.TRUE in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:"paintActive")!=Boolean.TRUE) in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:)!=Boolean.TRUE){ in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:!=Boolean.TRUE){backgroundColor in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:Boolean.TRUE){backgroundColor= in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:.TRUE){backgroundColor=MetalLookAndFeel in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:TRUE){backgroundColor=MetalLookAndFeel. in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:){backgroundColor=MetalLookAndFeel.getControl in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:{backgroundColor=MetalLookAndFeel.getControl( in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:backgroundColor=MetalLookAndFeel.getControl() in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:=MetalLookAndFeel.getControl(); in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:MetalLookAndFeel.getControl();internalBackgroundColor in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:.getControl();internalBackgroundColor= in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:getControl();internalBackgroundColor=backgroundColor in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:();internalBackgroundColor=backgroundColor; in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:);internalBackgroundColor=backgroundColor;mainItemColor in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:;internalBackgroundColor=backgroundColor;mainItemColor= in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:internalBackgroundColor=backgroundColor;mainItemColor=MetalLookAndFeel in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:=backgroundColor;mainItemColor=MetalLookAndFeel. in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:backgroundColor;mainItemColor=MetalLookAndFeel.getControlDarkShadow in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:;mainItemColor=MetalLookAndFeel.getControlDarkShadow( in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:mainItemColor=MetalLookAndFeel.getControlDarkShadow() in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.033328846 = weight(src:=MetalLookAndFeel.getControlDarkShadow(); in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.033328846 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12040697 = queryWeight, product of:<br />
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.27680165 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:MetalLookAndFeel.getControlDarkShadow();if in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:.getControlDarkShadow();if( in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:getControlDarkShadow();if(buttonModel in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.036449987 = weight(src:();if(buttonModel. in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.036449987 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.28947243 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.036449987 = weight(src:);if(buttonModel.isPressed in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.036449987 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.28947243 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.036449987 = weight(src:;if(buttonModel.isPressed( in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.036449987 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.28947243 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051548064 = weight(src:if(buttonModel.isPressed() in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051548064 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.40937582 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051548064 = weight(src:(buttonModel.isPressed()&& in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051548064 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.40937582 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051548064 = weight(src:buttonModel.isPressed()&&buttonModel in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051548064 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.40937582 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051548064 = weight(src:.isPressed()&&buttonModel. in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051548064 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.40937582 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051548064 = weight(src:isPressed()&&buttonModel.isArmed in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051548064 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.40937582 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051548064 = weight(src:()&&buttonModel.isArmed( in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051548064 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.40937582 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051548064 = weight(src:)&&buttonModel.isArmed() in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051548064 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.40937582 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051548064 = weight(src:&&buttonModel.isArmed()) in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051548064 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.40937582 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051548064 = weight(src:buttonModel.isArmed()){ in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051548064 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.40937582 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.053597227 = weight(src:.isArmed()){internalBackgroundColor in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.053597227 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.41743338 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.053597227 = weight(src:isArmed()){internalBackgroundColor= in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.053597227 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.41743338 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.053597227 = weight(src:()){internalBackgroundColor=MetalLookAndFeel in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.053597227 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.41743338 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.053597227 = weight(src:)){internalBackgroundColor=MetalLookAndFeel. in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.053597227 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.41743338 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:){internalBackgroundColor=MetalLookAndFeel.getControlShadow in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:{internalBackgroundColor=MetalLookAndFeel.getControlShadow( in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:internalBackgroundColor=MetalLookAndFeel.getControlShadow() in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.034221113 = weight(src:=MetalLookAndFeel.getControlShadow(); in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.034221113 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12200806 = queryWeight, product of:<br />
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.28048238 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0397108 = weight(src:MetalLookAndFeel.getControlShadow();ulLightHighlightColor in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0397108 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.30214322 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0397108 = weight(src:.getControlShadow();ulLightHighlightColor= in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0397108 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.30214322 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0397108 = weight(src:getControlShadow();ulLightHighlightColor=internalBackgroundColor in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0397108 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.30214322 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.056159552 = weight(src:();ulLightHighlightColor=internalBackgroundColor; in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.056159552 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.42729503 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.056159552 = weight(src:);ulLightHighlightColor=internalBackgroundColor;mainItemColor in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.056159552 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.42729503 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.056159552 = weight(src:;ulLightHighlightColor=internalBackgroundColor;mainItemColor= in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.056159552 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.42729503 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.056159552 = weight(src:ulLightHighlightColor=internalBackgroundColor;mainItemColor=darkHighlightColor in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.056159552 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.13143039 = queryWeight, product of:<br />
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.42729503 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.668583 = idf(docFreq=3, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.053597227 = weight(src:=internalBackgroundColor;mainItemColor=darkHighlightColor; in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.053597227 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.41743338 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.053597227 = weight(src:internalBackgroundColor;mainItemColor=darkHighlightColor;} in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.053597227 = score(doc=2843,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.41743338 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.03789896 = weight(src:;mainItemColor=darkHighlightColor;}} in 2843) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.03789896 = score(doc=2843,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.29516998 = fieldWeight in 2843, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=2843)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+RESULT: 2.4908392
+/Users/Chaiyong/Documents/phd/2017/BellonClonesReader/bellon_benchmark/j2sdk1.4.0-javax-swing/src/plaf/metal/MetalIconFactory.java_paintIcon
+383,457
+<ul>
+<li>2.4908395 = product of:<br />
+<ul>
+<li>2.813726 = sum of:<br />
+<ul>
+<li>0.0473737 = weight(src:if(parentButton.getClientProperty("paintActive" in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:(parentButton.getClientProperty("paintActive") in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:parentButton.getClientProperty("paintActive")!= in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.getClientProperty("paintActive")!=Boolean in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:getClientProperty("paintActive")!=Boolean. in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:("paintActive")!=Boolean.TRUE in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:"paintActive")!=Boolean.TRUE) in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:)!=Boolean.TRUE){ in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:!=Boolean.TRUE){backgroundColor in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:Boolean.TRUE){backgroundColor= in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.TRUE){backgroundColor=MetalLookAndFeel in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:TRUE){backgroundColor=MetalLookAndFeel. in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:){backgroundColor=MetalLookAndFeel.getControl in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:{backgroundColor=MetalLookAndFeel.getControl( in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:backgroundColor=MetalLookAndFeel.getControl() in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:=MetalLookAndFeel.getControl(); in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:MetalLookAndFeel.getControl();internalBackgroundColor in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.getControl();internalBackgroundColor= in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:getControl();internalBackgroundColor=backgroundColor in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:();internalBackgroundColor=backgroundColor; in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:);internalBackgroundColor=backgroundColor;mainItemColor in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:;internalBackgroundColor=backgroundColor;mainItemColor= in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:internalBackgroundColor=backgroundColor;mainItemColor=MetalLookAndFeel in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:=backgroundColor;mainItemColor=MetalLookAndFeel. in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:backgroundColor;mainItemColor=MetalLookAndFeel.getControlDarkShadow in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:;mainItemColor=MetalLookAndFeel.getControlDarkShadow( in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:mainItemColor=MetalLookAndFeel.getControlDarkShadow() in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.041661058 = weight(src:=MetalLookAndFeel.getControlDarkShadow(); in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.041661058 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12040697 = queryWeight, product of:<br />
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.34600204 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:MetalLookAndFeel.getControlDarkShadow();if in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:.getControlDarkShadow();if( in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:getControlDarkShadow();if(buttonModel in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.045562487 = weight(src:();if(buttonModel. in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.045562487 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36184055 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.045562487 = weight(src:);if(buttonModel.isPressed in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.045562487 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36184055 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.045562487 = weight(src:;if(buttonModel.isPressed( in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.045562487 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36184055 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:if(buttonModel.isPressed() in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:(buttonModel.isPressed()&& in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:buttonModel.isPressed()&&buttonModel in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:.isPressed()&&buttonModel. in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:isPressed()&&buttonModel.isArmed in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:()&&buttonModel.isArmed( in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:)&&buttonModel.isArmed() in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:&&buttonModel.isArmed()) in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06443508 = weight(src:buttonModel.isArmed()){ in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06443508 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.51171976 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:.isArmed()){internalBackgroundColor in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:isArmed()){internalBackgroundColor= in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:()){internalBackgroundColor=MetalLookAndFeel in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:)){internalBackgroundColor=MetalLookAndFeel. in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:){internalBackgroundColor=MetalLookAndFeel.getControlShadow in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:{internalBackgroundColor=MetalLookAndFeel.getControlShadow( in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:internalBackgroundColor=MetalLookAndFeel.getControlShadow() in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.04277639 = weight(src:=MetalLookAndFeel.getControlShadow(); in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.04277639 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12200806 = queryWeight, product of:<br />
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.35060298 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:=internalBackgroundColor;mainItemColor=darkHighlightColor; in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.06699653 = weight(src:internalBackgroundColor;mainItemColor=darkHighlightColor;} in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.06699653 = score(doc=2840,freq=2.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.5217917 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.4142135 = tf(freq=2.0), with freq of:<br />
+<ul>
+<li>2.0 = termFreq=2.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.0473737 = weight(src:;mainItemColor=darkHighlightColor;}} in 2840) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.0473737 = score(doc=2840,freq=1.0), product of:<br />
+<ul>
+<li>0.12839708 = queryWeight, product of:<br />
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.36896247 = fieldWeight in 2840, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.445439 = idf(docFreq=4, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2840)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.8852459 = coord(54/61)<br />
+</li>
+</ul>
+</li>
+</ul>
+
+
+RESULT: 0.17209175
+/Users/Chaiyong/Documents/phd/2017/BellonClonesReader/bellon_benchmark/j2sdk1.4.0-javax-swing/src/plaf/metal/MetalIconFactory.java_paintIcon
+351,373
+<ul>
+<li>0.17209177 = product of:<br />
+<ul>
+<li>0.8747998 = sum of:<br />
+<ul>
+<li>0.072899975 = weight(src:();if(buttonModel. in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:);if(buttonModel.isPressed in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:;if(buttonModel.isPressed( in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:if(buttonModel.isPressed() in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:(buttonModel.isPressed()&& in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:buttonModel.isPressed()&&buttonModel in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:.isPressed()&&buttonModel. in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:isPressed()&&buttonModel.isArmed in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:()&&buttonModel.isArmed( in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:)&&buttonModel.isArmed() in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:&&buttonModel.isArmed()) in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.072899975 = weight(src:buttonModel.isArmed()){ in 2837) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.072899975 = score(doc=2837,freq=1.0), product of:<br />
+<ul>
+<li>0.12591869 = queryWeight, product of:<br />
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.57894486 = fieldWeight in 2837, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>9.263118 = idf(docFreq=5, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0625 = fieldNorm(doc=2837)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.19672132 = coord(12/61)<br />
+</li>
+</ul>
+</li>
+</ul>
+
+
+RESULT: 0.003322129
+/Users/Chaiyong/Documents/phd/2017/BellonClonesReader/bellon_benchmark/j2sdk1.4.0-javax-swing/src/plaf/metal/MetalBorders.java_paintBorder
+71,106
+<ul>
+<li>0.003322129 = product of:<br />
+<ul>
+<li>0.10132494 = sum of:<br />
+<ul>
+<li>0.049993273 = weight(src:=MetalLookAndFeel.getControlDarkShadow(); in 3113) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.049993273 = score(doc=3113,freq=1.0), product of:<br />
+<ul>
+<li>0.12040697 = queryWeight, product of:<br />
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.41520247 = fieldWeight in 3113, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.046875 = fieldNorm(doc=3113)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051331665 = weight(src:=MetalLookAndFeel.getControlShadow(); in 3113) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051331665 = score(doc=3113,freq=1.0), product of:<br />
+<ul>
+<li>0.12200806 = queryWeight, product of:<br />
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.42072356 = fieldWeight in 3113, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.046875 = fieldNorm(doc=3113)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.032786883 = coord(2/61)<br />
+</li>
+</ul>
+</li>
+</ul>
+
+
+RESULT: 0.003322129
+/Users/Chaiyong/Documents/phd/2017/BellonClonesReader/bellon_benchmark/j2sdk1.4.0-javax-swing/src/plaf/metal/MetalBorders.java_paintBorder
+122,157
+<ul>
+<li>0.003322129 = product of:<br />
+<ul>
+<li>0.10132494 = sum of:<br />
+<ul>
+<li>0.049993273 = weight(src:=MetalLookAndFeel.getControlDarkShadow(); in 3116) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.049993273 = score(doc=3116,freq=1.0), product of:<br />
+<ul>
+<li>0.12040697 = queryWeight, product of:<br />
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.41520247 = fieldWeight in 3116, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.046875 = fieldNorm(doc=3116)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.051331665 = weight(src:=MetalLookAndFeel.getControlShadow(); in 3116) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.051331665 = score(doc=3116,freq=1.0), product of:<br />
+<ul>
+<li>0.12200806 = queryWeight, product of:<br />
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.42072356 = fieldWeight in 3116, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.046875 = fieldNorm(doc=3116)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.032786883 = coord(2/61)<br />
+</li>
+</ul>
+</li>
+</ul>
+
+
+RESULT: 0.0027684406
+/Users/Chaiyong/Documents/phd/2017/BellonClonesReader/bellon_benchmark/j2sdk1.4.0-javax-swing/src/plaf/metal/MetalIconFactory.java_paintIcon
+795,858
+<ul>
+<li>0.0027684406 = product of:<br />
+<ul>
+<li>0.084437445 = sum of:<br />
+<ul>
+<li>0.041661058 = weight(src:=MetalLookAndFeel.getControlDarkShadow(); in 2860) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.041661058 = score(doc=2860,freq=1.0), product of:<br />
+<ul>
+<li>0.12040697 = queryWeight, product of:<br />
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.34600204 = fieldWeight in 2860, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2860)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.04277639 = weight(src:=MetalLookAndFeel.getControlShadow(); in 2860) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.04277639 = score(doc=2860,freq=1.0), product of:<br />
+<ul>
+<li>0.12200806 = queryWeight, product of:<br />
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.35060298 = fieldWeight in 2860, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.975436 = idf(docFreq=7, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.0390625 = fieldNorm(doc=2860)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.032786883 = coord(2/61)<br />
+</li>
+</ul>
+</li>
+</ul>
+
+
+RESULT: 5.463745E-4
+/Users/Chaiyong/Documents/phd/2017/BellonClonesReader/bellon_benchmark/j2sdk1.4.0-javax-swing/src/plaf/metal/MetalInternalFrameTitlePane.java_paintComponent
+234,318
+<ul>
+<li>5.463745E-4 = product of:<br />
+<ul>
+<li>0.033328846 = sum of:<br />
+<ul>
+<li>0.033328846 = weight(src:=MetalLookAndFeel.getControlDarkShadow(); in 3180) [PerFieldSimilarity], result of:<br />
+<ul>
+<li>0.033328846 = score(doc=3180,freq=1.0), product of:<br />
+<ul>
+<li>0.12040697 = queryWeight, product of:<br />
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.013593553 = queryNorm<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.27680165 = fieldWeight in 3180, product of:<br />
+<ul>
+<li>1.0 = tf(freq=1.0), with freq of:<br />
+<ul>
+<li>1.0 = termFreq=1.0<br />
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>8.857653 = idf(docFreq=8, maxDocs=23269)<br />
+</li>
+</ul>
+<ul>
+<li>0.03125 = fieldNorm(doc=3180)<br />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>0.016393442 = coord(1/61)<br />
+</li>
+</ul>
+</li>
+</ul>
+
+
+Searching done for 1 files (1 out of 1 methods after clone size filtering).
+See output at /Users/Chaiyong/Documents/phd/2017/Siamese/exp_results/bellon7_no_qr_29-07-18_22-41-290.csv
+2018/07/29 22:41:10
+Elapse time (ms): 3620
+
+Process finished with exit code 0
