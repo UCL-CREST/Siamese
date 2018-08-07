@@ -40,14 +40,18 @@ public class LicenseExtractor {
         if (license.toLowerCase().contains("mit license"))
             return "mit";
 
-        else if (license.trim().toLowerCase().startsWith("gnu lesser general public license")) {
+        else if (license.trim().toLowerCase().startsWith("gnu lesser general public license") ||
+                license.toLowerCase()
+                        .contains("the terms of the gnu lesser public license")) {
             if (license.toLowerCase().contains("version 2.1"))
                 return "lgpl-2.1";
             else if (license.toLowerCase().contains("version 3"))
                 return "lgpl-3.0";
         }
 
-        else if (license.trim().toLowerCase().startsWith("gnu general public license")) {
+        else if (license.trim().toLowerCase().startsWith("gnu general public license") ||
+                    license.toLowerCase()
+                            .contains("the terms of the gnu general public license")) {
             if (license.toLowerCase().contains("version 2"))
                 return "gpl-2.0";
             else if (license.toLowerCase().contains("version 3"))
@@ -56,7 +60,9 @@ public class LicenseExtractor {
                 return "gpl";
         }
 
-        else if (license.trim().toLowerCase().startsWith("gnu affero general public license")
+        else if ((license.trim().toLowerCase().startsWith("gnu affero general public license") ||
+                license.toLowerCase()
+                        .contains("the terms of the gnu affero public license"))
                 && license.toLowerCase().contains("version 3"))
             return "agpl-3.0";
 

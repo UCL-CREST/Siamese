@@ -1138,6 +1138,7 @@ public class Siamese {
                 for (String line : lines) {
                     licenseStr += line + " ";
                 }
+                licenseStr = licenseStr.trim().replaceAll("\\s+", " ");
                 license = LicenseExtractor.extractLicenseWithRegExp(licenseStr);
                 if (!license.equals("unknown")) {
                     this.fileLicense = license;

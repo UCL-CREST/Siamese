@@ -23,6 +23,8 @@ public class LicenseExtractorTest {
                     licenseStr += line + " ";
                 }
             }
+            licenseStr = licenseStr.trim().replaceAll("\\s+", " ");
+            System.out.println(licenseStr);
         } catch (
                 IOException e) {
             System.out.println("ERROR: cannot read the license file.");
