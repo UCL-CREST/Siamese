@@ -1156,57 +1156,11 @@ public class Siamese {
     }
 
     private void genGitHubInfo() {
-        if (this.inputFolder.endsWith("/"))
-            this.inputFolder = StringUtils.chop(this.inputFolder);
-        if (this.subInputFolder.endsWith("/"))
-            this.subInputFolder = StringUtils.chop(this.subInputFolder);
-        this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
-        this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
+        String[] inputPath = this.inputFolder.split("/");
+        String projName = inputPath[inputPath.length-2] + "/" + inputPath[inputPath.length-1];
+        this.url = "https://github.com/" + projName + "/blob/master";
     }
-
-    public void indexGitHub() throws Exception {
-        if (this.inputFolder.endsWith("/"))
-            this.inputFolder = StringUtils.chop(this.inputFolder);
-        if (this.subInputFolder.endsWith("/"))
-            this.subInputFolder = StringUtils.chop(this.subInputFolder);
-        this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
-        System.out.println("Indexing: " + this.inputFolder);
-        this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
-
-        extractProjectLicense();
-
-        // initialise the n-gram generator
-        ngen = new nGramGenerator(ngramSize);
-        // default similarity function is TFIDF
-        String indexSettings = IndexSettings.TFIDF.getIndexSettings(IndexSettings.TFIDF.DisCountOverlap.NO);
-        String mappingStr = IndexSettings.TFIDF.mappingStr;
-
-        try {
-            if (siameseClient != null) {
-                if (command.toLowerCase().equals("index")) {
-                    if (recreateIndexIfExists) {
-                        createIndex(indexSettings, mappingStr);
-                    }
-                    long startingId = 0;
-                    if (!recreateIndexIfExists && doesIndexExist()) {
-                        startingId = getMaxId(index) + 1;
-                    }
-                    long insertSize = insert(startingId);
-                    if (insertSize != 0) {
-                        // if ok, refresh the index, then search
-                        es.refresh(index);
-                    } else {
-                        System.out.println("ERROR: Indexed zero file. Please check!");
-                    }
-                }
-            } else {
-                System.out.println("ERROR: cannot create Elasticsearch client ... ");
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
+    
     public void setIsPrint(boolean isPrint) {
         this.isPrint = isPrint;
     }
