@@ -552,6 +552,10 @@ public class Siamese {
         long count = 0;
         int fileCount = 0;
         System.out.println("Indexing Phase: found " + listOfFiles.size() + " files.");
+        // extract the license at project level
+        if (this.includeLicense) {
+            this.fileLicense = extractProjectLicense();
+        }
         for (File file : listOfFiles) {
             try {
                 String license = "none";
@@ -1111,31 +1115,42 @@ public class Siamese {
         return normalizer;
     }
 
-    public void indexGitHub() throws Exception {
-        if (this.inputFolder.endsWith("/"))
-            this.inputFolder = StringUtils.chop(this.inputFolder);
-        if (this.subInputFolder.endsWith("/"))
-            this.subInputFolder = StringUtils.chop(this.subInputFolder);
-
-        this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
-        System.out.println("Indexing: " + this.inputFolder);
-        this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
-
+    public String extractProjectLicense() {
         File f = new File(this.inputFolder + "/LICENSE.txt");
         if (!f.exists() || f.isDirectory()) {
             f = new File(this.inputFolder + "/LICENSE");
         }
 
-        if (f.exists() && !f.isDirectory()) {
-            String[] lines = FileUtils.readFileToString(f).split("\n");
-            for (String line : lines) {
-                String license = LicenseExtractor.extractLicenseWithRegExp(line);
+        String license = "none";
+        String licenseStr = "";
+        try {
+            if (f.exists() && !f.isDirectory()) {
+                String[] lines = FileUtils.readFileToString(f).split("\n");
+                // concat the license string into one single line
+                for (String line : lines) {
+                    licenseStr += line + " ";
+                }
+                license = LicenseExtractor.extractLicenseWithRegExp(licenseStr);
                 if (!license.equals("unknown")) {
                     this.fileLicense = license;
-                    break;
                 }
             }
+        } catch (IOException e) {
+            System.out.println("ERROR: cannot read the license file.");
         }
+        return license;
+    }
+
+    public void indexGitHub() throws Exception {
+        if (this.inputFolder.endsWith("/"))
+            this.inputFolder = StringUtils.chop(this.inputFolder);
+        if (this.subInputFolder.endsWith("/"))
+            this.subInputFolder = StringUtils.chop(this.subInputFolder);
+        this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
+        System.out.println("Indexing: " + this.inputFolder);
+        this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
+
+        extractProjectLicense();
 
         // initialise the n-gram generator
         ngen = new nGramGenerator(ngramSize);
