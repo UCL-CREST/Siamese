@@ -37,27 +37,30 @@ public class LicenseExtractor {
     }
 
     public static String extractLicenseWithRegExp(String license) {
-        if (license.contains("MIT License"))
+        if (license.toLowerCase().contains("mit license"))
             return "mit";
-        else if (license.contains("GNU GENERAL PUBLIC LICENSE")) {
-            if (license.contains("Version 2"))
+        else if (license.toLowerCase().contains("gnu general public license")) {
+            if (license.toLowerCase().contains("version 2"))
                 return "gpl-2.0";
-            else if (license.contains("Version 3"))
+            else if (license.toLowerCase().contains("version 3"))
                 return "gpl-3.0";
             else
-                return "unknown";
+                return "gpl";
         }
-        else if (license.contains("Apache License, Version 2.0"))
+        else if (license.toLowerCase().contains("apache license, version 2.0"))
             return "apache-2.0";
-        else if (license.contains("BSD")) {
+        else if (license.toLowerCase().contains("apache license"))
+            return "apache";
+        else if (license.toLowerCase().contains("redistribution and use in source and binary forms")) {
             int clauseCount = 0;
-            if (license.contains("Redistributions of source code"))
+            if (license.toLowerCase().contains("redistributions of source code"))
                 clauseCount++;
-            if (license.contains("Redistributions in binary form"))
+            if (license.toLowerCase().contains("redistributions in binary form"))
                 clauseCount++;
-            if (license.contains("Neither the name"))
+            if (license.toLowerCase().contains("neither the name"))
                 clauseCount++;
-            if (license.contains("NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE"))
+            if (license.toLowerCase()
+                    .contains("no express or implied licenses to any party's patent rights are granted by this license"))
                 clauseCount++;
 
             if (clauseCount == 2)
@@ -69,54 +72,59 @@ public class LicenseExtractor {
             else
                 return "unknown";
         }
-        else if (license.contains("http://unlicense.org"))
+        else if (license.toLowerCase().contains("http://unlicense.org"))
             return "unlicense";
 
-        else if (license.contains("GNU LESSER GENERAL PUBLIC LICENSE")) {
-            if (license.contains("Version 2.1"))
+        else if (license.toLowerCase().contains("gnu lesser general public license")) {
+            if (license.toLowerCase().contains("version 2.1"))
                 return "lgpl-2.1";
-            else if (license.contains("Version 3"))
+            else if (license.toLowerCase().contains("version 3"))
                 return "lgpl-3.0";
             else
                 return "unknown";
         }
-        else if (license.contains("GNU AFFERO GENERAL PUBLIC LICENSE") && license.contains("Version 3"))
+        else if (license.toLowerCase().contains("gnu affero general public license")
+                && license.toLowerCase().contains("version 3"))
             return "agpl-3.0";
-        else if (license.contains("Mozilla Public License Version 2.0"))
+        else if (license.toLowerCase().contains("mozilla public license version 2.0"))
             return "mpl-2.0";
-        else if (license.contains("Open Software License version 3.0"))
+        else if (license.toLowerCase().contains("open software license version 3.0"))
             return "osl-3.0";
-        else if (license.contains("Academic Free License version 3.0"))
+        else if (license.toLowerCase().contains("academic free license version 3.0"))
             return "afl-3.0";
-        else if (license.contains("Artistic License 2.0"))
+        else if (license.toLowerCase().contains("artistic license 2.0"))
             return "artistic-2.0";
-        else if (license.contains("CC0 1.0"))
+        else if (license.toLowerCase().contains("cc0 1.0"))
             return "cc0-1.0";
-        else if (license.contains("Creative Commons Attribution 4.0"))
+        else if (license.toLowerCase().contains("creative commons attribution 4.0"))
             return "cc-by-4.0";
-        else if (license.contains("Attribution-NonCommercial-ShareAlike 4.0"))
+        else if (license.toLowerCase().contains("attribution-nonCommercial-sharealike 4.0"))
             return "cc-by-sa-4.0";
-        else if (license.contains("DO WHAT THE FUCK YOU WANT TO"))
+        else if (license.toLowerCase().contains("do what the fuck you want to"))
             return "wtfpl";
-        else if (license.contains("Educational Community License, Version 2.0") || license.contains("ECL-2.0"))
+        else if (license.toLowerCase().contains("educational community license, version 2.0")
+                || license.toLowerCase().contains("ecl-2.0"))
             return "ecl-2.0";
-        else if (license.contains("Eclipse Public License - v 1.0"))
+        else if (license.toLowerCase().contains("eclipse public license - v 1.0"))
             return "epl-1.0";
-        else if (license.contains("EUPL V.1.1"))
+        else if (license.toLowerCase().contains("eupl V.1.1"))
             return "eupl-1.1";
-        else if (license.contains("ISC License"))
+        else if (license.toLowerCase().contains("isc license"))
             return "isc";
-        else if (license.contains("LPPL Version 1.3c"))
+        else if (license.toLowerCase().contains("lppl version 1.3c"))
             return "lppl-1.3c";
-        else if (license.contains("Microsoft Public License") || license.contains("(MS-PL)"))
+        else if (license.toLowerCase().contains("microsoft public license")
+                || license.toLowerCase().contains("(ms-pl)"))
             return "ms-pl";
-        else if (license.contains("PostgreSQL License"))
+        else if (license.toLowerCase().contains("postgresql license"))
             return "postgresql";
-        else if (license.contains("SIL Open Font License") && license.toLowerCase().contains("version 1.1"))
+        else if (license.toLowerCase().contains("sil open font license")
+                && license.toLowerCase().contains("version 1.1"))
             return "ofl-1.1";
-        else if (license.contains("NCSA Open Source License"))
+        else if (license.toLowerCase().contains("ncsa open source license"))
             return "ncsa";
-        else if (license.contains("Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software"))
+        else if (license.toLowerCase()
+                .contains("altered source versions must be plainly marked as such, and must not be misrepresented as being the original software"))
             return "zlib";
         else
             return "unknown";
