@@ -251,27 +251,30 @@ public class Siamese {
         System.out.println("server         : " + server);
         System.out.println("index          : " + index);
         System.out.println("type           : " + type);
-        System.out.println("------------- DATA -----------------");
+        System.out.println("---------- DATA --------------------");
         System.out.println("inputFolder    : " + inputFolder);
         System.out.println("outputFolder   : " + outputFolder);
         System.out.println("dfs            : " + isDFS);
         System.out.println("extension      : " + extension);
         System.out.println("minCloneSize   : " + minCloneLine);
-        System.out.println("----------- EXECUTION --------------");
+        System.out.println("---------- EXECUTION ---------------");
         System.out.println("command        : " + command);
         System.out.println("indexingMode   : " + indexingMode + " (" + bulkSize + ")");
         System.out.println("outputFormat   : " + outputFormat);
-        System.out.println("------- MULTI-REPRESENTATION -------");
+        System.out.println("---------- MULTI-REPRESENTATION ----");
         System.out.println("multiRep       : " + multiRep + " " +  Arrays.toString(enableRep));
         System.out.println("T2 norm        : dsvw");
         System.out.println("T3 norm        : " + normMode);
         System.out.println("ngramSize      : t1=" + t1NgramSize + " t2=" + t2NgramSize + " t3=" + ngramSize);
-        System.out.println("--------- QUERY REDUCTION ----------");
+        System.out.println("---------- QUERY REDUCTION ---------");
         System.out.println("queryReduction : " + queryReduction);
         System.out.println("qrThresholds   : t0=" + this.qrPercentileOrig + " t1=" + this.qrPercentileT1 +
                 " t2=" + this.qrPercentileT2 + " t3=" + this.qrPercentileNorm);
         System.out.println("queryBoosts    : t0=" + origBoost + " t1=" + t1Boost +
                 " t2=" + t2Boost + " t3=" + normBoost);
+        System.out.println("---------- SIMILARITY --------------");
+        System.out.println("computeSimilarity : " + computeSimilarity);
+        System.out.println("simThreshold      : " + simThreshold);
         System.out.println("====================================");
     }
 
@@ -712,7 +715,7 @@ public class Siamese {
             extensions[0] = extension;
             File folder = new File(inputFolder);
             List<File> listOfFiles = (List<File>) FileUtils.listFiles(folder, extensions, true);
-            System.out.println("Querying Phase: found " + listOfFiles.size() + " files.");
+            System.out.println("Querying Phase: found " + listOfFiles.size() + " source code files.");
             long count = 0;
             long methodCount = 0;
             long search = 0;
@@ -830,7 +833,7 @@ public class Siamese {
                     double percent = (double) count * 100 / listOfFiles.size();
                     DecimalFormat percentFormat = new DecimalFormat("#.00");
                     System.out.println("Searched " + search + "/" + count
-                            + " [" + percentFormat.format(percent) + "%] documents (" + methodCount + " methods).");
+                            + " [" + percentFormat.format(percent) + "%] files (" + methodCount + " methods).");
                     if (formatter.getFormat().equals("gcf"))
                         outToFile = formatter.getXML();
                     bw.write(outToFile);
@@ -1160,7 +1163,7 @@ public class Siamese {
         String projName = inputPath[inputPath.length-2] + "/" + inputPath[inputPath.length-1];
         this.url = "https://github.com/" + projName + "/blob/master";
     }
-    
+
     public void setIsPrint(boolean isPrint) {
         this.isPrint = isPrint;
     }
