@@ -283,7 +283,7 @@ public class ESConnector {
 //                                .operator(MatchQueryBuilder.Operator.AND)
 								.minimumShouldMatch(similarity[3])
 								.boost(normBoost)
-				).minimumShouldMatch("1"); // number of representations that must match at the given similarity
+				).minimumShouldMatch("4"); // number of representations that must match at the given similarity
 		return queryBuilder;
 	}
 
