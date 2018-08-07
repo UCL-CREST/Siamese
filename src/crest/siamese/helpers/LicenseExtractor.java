@@ -37,7 +37,9 @@ public class LicenseExtractor {
     }
 
     public static String extractLicenseWithRegExp(String license) {
-        if (license.toLowerCase().contains("mit license"))
+        if (license.toLowerCase().contains("mit license") ||
+            license.toLowerCase()
+                    .contains("the software is provided \"as is\", without warranty of any kind, express or implied"))
             return "mit";
 
         else if (license.trim().toLowerCase().startsWith("gnu lesser general public license") ||

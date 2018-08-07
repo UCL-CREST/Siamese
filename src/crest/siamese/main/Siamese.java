@@ -9,12 +9,8 @@ import crest.siamese.document.Document;
 import crest.siamese.document.Method;
 import crest.siamese.settings.IndexSettings;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
-import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.lucene.index.*;
-import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.elasticsearch.client.Client;
 
 import org.apache.commons.io.FileUtils;
@@ -91,9 +87,9 @@ public class Siamese {
     private String licenseExtractor;
     private String url = "none";
     private String fileLicense = "unknown";
-    private boolean github = false;
-    private boolean computeSimilarity = false;
-    private int simThreshold = 0;
+    private boolean licenseFileDetection = false;
+    private String computeSimilarity = "none";
+    private String[] simThreshold = {"80%", "80%", "80%", "80%"};
     private Tokenizer tokenizer;
     private Normalizer normalizer;
     private Tokenizer origTokenizer;
@@ -106,6 +102,7 @@ public class Siamese {
     private String deleteWildcard;
     private int deleteAmount;
     private boolean[] enableRep = {true, true, true, true};
+    private boolean github = false;
     private IndexReader esIndexRader;
 
     public Siamese(String configFile) {
@@ -188,23 +185,18 @@ public class Siamese {
             this.origBoost = Integer.parseInt(prop.getProperty("origBoost"));
             this.t2Boost = Integer.parseInt(prop.getProperty("t2Boost"));
             this.t1Boost = Integer.parseInt(prop.getProperty("t1Boost"));
-
             // multi-representation
             this.multiRep = Boolean.parseBoolean(prop.getProperty("multirep"));
-
             // customization to support other languages
             this.methodParserName = prop.getProperty("methodParser");
             this.tokenizerName = prop.getProperty("tokenizer");
             this.normalizerName = prop.getProperty("normalizer");
-
             this.recreateIndexIfExists = Boolean.parseBoolean(prop.getProperty("recreateIndexIfExists"));
-
             String parseModeConfig = prop.getProperty("parseMode");
             if (parseModeConfig.equals("method"))
                 this.parseMode = Settings.MethodParserType.METHOD;
             else
                 this.parseMode = Settings.MethodParserType.FILE;
-
             this.printEvery = Integer.parseInt(prop.getProperty("printEvery"));
             this.cloneClusterFile = "resources/clone_clusters_" + this.parseMode + ".csv";
             String errMeasureConfig = prop.getProperty("errorMeasure");
@@ -212,40 +204,34 @@ public class Siamese {
                 errMeasure = Settings.ErrorMeasure.ARP;
             else
                 errMeasure = Settings.ErrorMeasure.MAP;
-
             deleteIndexAfterUse = Boolean.parseBoolean(prop.getProperty("deleteIndexAfterUse"));
-
             // TODO: do we need this?
             prefixToRemove = inputFolder;
             if (!prefixToRemove.endsWith("/"))
                 prefixToRemove += "/"; // append / at the end
-//            prefixToRemove = "";
-
             elasticsearchLoc = prop.getProperty("elasticsearchLoc");
             outputFormat = prop.getProperty("outputFormat");
             indexingMode = prop.getProperty("indexingMode");
             bulkSize = Integer.parseInt(prop.getProperty("bulkSize"));
-
             includeLicense = Boolean.parseBoolean(prop.getProperty("license"));
             licenseExtractor = prop.getProperty("licenseExtractor");
-
-            github = Boolean.parseBoolean(prop.getProperty("github"));
-
-            computeSimilarity = Boolean.parseBoolean(prop.getProperty("computeSimilarity"));
-            simThreshold = Integer.parseInt(prop.getProperty("simThreshold"));
-
+            licenseFileDetection = Boolean.parseBoolean(prop.getProperty("licenseFileDetection"));
+            computeSimilarity = prop.getProperty("computeSimilarity");
+            /* copied from
+            https://stackoverflow.com/questions/43338223/reading-a-int-from-java-properties-file
+             */
+            String simThresholds = prop.getProperty("simThreshold");
+            simThreshold = simThresholds.split(",");
             if (command.equals("delete")) {
                 deleteField = prop.getProperty("deleteField");
                 deleteWildcard = prop.getProperty("deleteWildcard");
                 deleteAmount = Integer.parseInt(prop.getProperty("deleteAmount"));
             }
-
             String[] enableRepStr = prop.getProperty("enableRep").split(",");
             for (int i=0; i<enableRepStr.length; i++) {
                 enableRep[i] = Boolean.valueOf(enableRepStr[i]);
             }
-//            System.out.println(Arrays.toString(enableRep));
-
+            github = Boolean.parseBoolean(prop.getProperty("github"));
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -338,6 +324,8 @@ public class Siamese {
         } else if (outputFormat.equals("csvfline")) {
             formatter.setFormat("csv");
             formatter.setAddStartEndLine(true);
+            if (this.includeLicense)
+                formatter.setAddLicense(true);
         } else if (outputFormat.equals("gcf")) {
             formatter.setFormat("gcf");
         } else {
@@ -399,9 +387,12 @@ public class Siamese {
         try {
             if (siameseClient != null) {
                 if (command.toLowerCase().equals("index")) {
-                    if (recreateIndexIfExists) {
-                        createIndex(indexSettings, mappingStr);
-                    }
+                    if (this.github) genGitHubInfo();
+                    /*
+                    Read the license from the license file at the root dir.
+                    Do this only once per input folder.
+                     */
+                    if (recreateIndexIfExists) createIndex(indexSettings, mappingStr);
                     long startingId = 0;
                     if (!recreateIndexIfExists && doesIndexExist()) {
                         startingId = getMaxId(index) + 1;
@@ -800,7 +791,8 @@ public class Siamese {
                                 // search for results depending on the MR setting
                                 if (this.multiRep) {
                                     results = es.search(index, type, origQuery, t3Query, t2Query, t1Query,
-                                            origBoost, normBoost, t2Boost, t1Boost, isPrint, isDFS, offset, size);
+                                            origBoost, normBoost, t2Boost, t1Boost, isPrint, isDFS, offset,
+                                            size, this.computeSimilarity, simThreshold);
 //                                    System.out.println("T3: " + t3Query);
 //                                    System.out.println("T2: " + t2Query);
 //                                    System.out.println("T1: " + t1Query);
@@ -810,10 +802,12 @@ public class Siamese {
 //                                    results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
                                     results = es.search(index, type, origQuery, isPrint, isDFS, offset, size);
                                 }
-
-                                if (this.computeSimilarity) {
-                                    int[] sim = computeSimilarity(origQuery, results);
-                                    outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
+                                // fuzzywuzzy similarity is applied after the search
+                                if (this.computeSimilarity.equals("fuzzywuzzy")) {
+                                    int[][] sim = computeSimilarity(origQuery, t1Query, t2Query, t3Query, results);
+                                    outToFile += formatter.format(results, sim,
+                                            this.simThreshold,
+                                            prefixToRemove);
                                 } else {
                                     outToFile += formatter.format(results, prefixToRemove);
                                 }
@@ -860,16 +854,26 @@ public class Siamese {
 
     /**
      * Compute similarity between query and results using fuzzywuzzy string matching
-     * @param query the code query
+     * @param query the f0 code query (original)
+     * @param t1Query the f1 code query
+     * @param t2Query the f2 code query
+     * @param t3Query the f3 code query
      * @param results the list of results
-     * @return an array of similarity values
+     * @return a 2D array of similarity values
      */
-    private int[] computeSimilarity(String query, ArrayList<Document> results) {
-        int[] simResults = new int[results.size()];
+    private int[][] computeSimilarity(String query,
+                                    String t1Query, String t2Query, String t3Query,
+                                    ArrayList<Document> results) {
+        int[][] simResults = new int[results.size()][4]; // 2D sim array of four representations
         for (int i=0; i<results.size(); i++) {
             Document d = results.get(i);
-            int sim = FuzzySearch.tokenSetRatio(query, d.getTokenizedSource());
-            simResults[i] = sim;
+            int sim0 = FuzzySearch.tokenSetRatio(query, d.getTokenizedSource());
+            int sim1 = FuzzySearch.tokenSetRatio(t1Query, d.getT1Source());
+            int sim2 = FuzzySearch.tokenSetRatio(t2Query, d.getT2Source());
+            int sim3 = FuzzySearch.tokenSetRatio(t3Query, d.getSource());
+            // compute an average similarity of the four representations
+            int[] sims = { sim0, sim1, sim2, sim3 };
+            simResults[i] = sims;
         }
         return simResults;
     }
@@ -1140,6 +1144,7 @@ public class Siamese {
                 }
                 licenseStr = licenseStr.trim().replaceAll("\\s+", " ");
                 license = LicenseExtractor.extractLicenseWithRegExp(licenseStr);
+
                 if (!license.equals("unknown")) {
                     this.fileLicense = license;
                 }
@@ -1148,6 +1153,15 @@ public class Siamese {
             System.out.println("ERROR: cannot read the license file.");
         }
         return license;
+    }
+
+    private void genGitHubInfo() {
+        if (this.inputFolder.endsWith("/"))
+            this.inputFolder = StringUtils.chop(this.inputFolder);
+        if (this.subInputFolder.endsWith("/"))
+            this.subInputFolder = StringUtils.chop(this.subInputFolder);
+        this.inputFolder = this.inputFolder + "/" + this.subInputFolder;
+        this.url = "https://github.com/" + this.subInputFolder + "/blob/master";
     }
 
     public void indexGitHub() throws Exception {
@@ -1213,7 +1227,7 @@ public class Siamese {
         this.resultsSize = resultsSize;
     }
 
-    public boolean getComputeSimilarity() {
+    public String getComputeSimilarity() {
         return this.computeSimilarity;
     }
 

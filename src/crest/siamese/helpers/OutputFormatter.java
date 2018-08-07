@@ -11,11 +11,13 @@ public class OutputFormatter {
     private XMLFormatter xmlFormatter;
     private Document query;
     private int ccid = 1;
+    private boolean addLicense;
 
     public OutputFormatter() {
         format = "csv";
         addStartEndLine = true;
         xmlFormatter = new XMLFormatter();
+        addLicense = false;
     }
 
     public String getFormat() {
@@ -37,9 +39,18 @@ public class OutputFormatter {
         this.addStartEndLine = addStartEndLine;
     }
 
-    public OutputFormatter(String format, boolean addStartEndLine) {
+    public boolean isAddLicense() {
+        return addLicense;
+    }
+
+    public void setAddLicense(boolean addLicense) {
+        this.addLicense = addLicense;
+    }
+
+    public OutputFormatter(String format, boolean addStartEndLine, boolean addLicense) {
         this.format = format;
         this.addStartEndLine = addStartEndLine;
+        this.addLicense = addLicense;
     }
 
     public String format(Document query, String prefixToRemove, String license) {
@@ -47,7 +58,10 @@ public class OutputFormatter {
         if (this.format.equals("csv")) {
             sb.append(query.getFile().replace(prefixToRemove, ""));
             if (addStartEndLine) {
-                sb.append("#" + query.getStartLine() + "#" + query.getEndLine() + "#" + license);
+                sb.append("#" + query.getStartLine() + "#" + query.getEndLine());
+            }
+            if (addLicense) {
+                sb.append("#" + license);
             }
             sb.append(",");
             return sb.toString();
@@ -72,6 +86,9 @@ public class OutputFormatter {
                 if (addStartEndLine) {
                     sb.append("#" + d.getStartLine() + "#" + d.getEndLine());
                 }
+                if (addLicense) {
+                    sb.append("#" + d.getLicense());
+                }
                 resultCount++;
             }
             sb.append("\n");
@@ -88,19 +105,27 @@ public class OutputFormatter {
         }
     }
 
-    public String format(ArrayList<Document> results, int[] sim, int threshod, String prefixToRemove) {
+    public String format(ArrayList<Document> results, int[][] sim, String[] thresholds, String prefixToRemove) {
         StringBuilder sb = new StringBuilder();
         int resultCount = 0;
+        int[] simT = new int[4];
+        for (int i=0; i<4; i++)
+            simT[i] = Integer.parseInt(thresholds[i].split("%")[0]);
         if (this.format.equals("csv")) {
             for (int i =0; i<results.size(); i++) {
                 Document d = results.get(i);
-                if (resultCount > 0)
-                    sb.append(","); // add comma in between
                 // only add the results that has similarity higher than the threshold
-                if (sim[i] >= threshod) {
+                if (sim[i][0] >= simT[0] && sim[i][1] >= simT[1]
+                        && sim[i][2] >= simT[2] && sim[i][3] >= simT[3]) {
+                    if (resultCount > 0)
+                        sb.append(","); // add comma in between
                     sb.append(d.getFile().replace(prefixToRemove, ""));
                     if (addStartEndLine) {
-                        sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i] + "#" + d.getLicense());
+                        sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" +
+                                sim[i][0] + "$" + sim[i][1] + "$" + sim[i][2] + "$" + sim[i][3]);
+                    }
+                    if (addLicense) {
+                        sb.append("#" + d.getLicense());
                     }
                     resultCount++;
                 }

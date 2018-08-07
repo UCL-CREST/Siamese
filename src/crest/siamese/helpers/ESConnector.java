@@ -244,6 +244,74 @@ public class ESConnector {
         return prepareResults(hits, resultSize, isPrint);
     }
 
+    private QueryBuilder getQueryBuilder(String origQuery, int origBoost, String t2Query, int t2Boost,
+										 String t1Query, int t1Boost, String query, int normBoost,
+										 String[] similarity) {
+    	        /* copied from
+        https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
+         */
+		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
+				.should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
+						QueryBuilders.matchQuery("tokenizedsrc", origQuery)
+								.minimumShouldMatch(similarity[0])
+								.boost(origBoost)
+				)
+				.should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
+						QueryBuilders.matchQuery("t2src", t2Query)
+								.minimumShouldMatch(similarity[2])
+								.boost(t2Boost)
+				)
+				.should(
+//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
+//								.cutoffFrequency(cutoff2)
+//								.boost(origBoost)
+						QueryBuilders.matchQuery("t1src", t1Query)
+								.minimumShouldMatch(similarity[1])
+								.boost(t1Boost)
+				)
+				.should(
+//                		QueryBuilders.commonTermsQuery("src", query)
+//								.cutoffFrequency(cutoff)
+//								.boost(normBoost)
+						QueryBuilders.matchQuery("src", query)
+//                                .operator(MatchQueryBuilder.Operator.AND)
+								.minimumShouldMatch(similarity[3])
+								.boost(normBoost)
+				).minimumShouldMatch("4"); // all four representation must match at the given similarity
+		return queryBuilder;
+	}
+
+	private QueryBuilder getQueryBuilder(String origQuery, int origBoost, String t2Query, int t2Boost,
+										 String t1Query, int t1Boost, String query, int normBoost) {
+    	/* copied from
+        https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
+         */
+		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
+				.should(
+						QueryBuilders.matchQuery("tokenizedsrc", origQuery)
+								.boost(origBoost)
+				)
+				.should(
+						QueryBuilders.matchQuery("t2src", t2Query)
+								.boost(t2Boost)
+				)
+				.should(
+						QueryBuilders.matchQuery("t1src", t1Query)
+								.boost(t1Boost)
+				)
+				.should(
+						QueryBuilders.matchQuery("src", query)
+								.boost(normBoost)
+				);
+		return queryBuilder;
+	}
+
     public ArrayList<Document> search(
             String index,
             String type,
@@ -258,52 +326,23 @@ public class ESConnector {
             boolean isPrint,
             boolean isDFS,
             int resultOffset,
-            int resultSize) throws Exception {
-
-        ArrayList<Document> results = new ArrayList<Document>();
+            int resultSize,
+			String computeSimilarity,
+			String[] similarity) throws Exception {
         SearchType searchType;
-
         if (isDFS)
             searchType = SearchType.DFS_QUERY_THEN_FETCH;
         else
             searchType = SearchType.QUERY_THEN_FETCH;
-
-        /* copied from
-        https://stackoverflow.com/questions/43394976/can-i-search-by-multiple-fields-using-the-elastic-search-java-api
-         */
-        float cutoff = (float) 0.05;
-        float cutoff2 = (float) 0.05;
-        QueryBuilder queryBuilder = QueryBuilders.boolQuery()
-                .should(
-//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
-//								.cutoffFrequency(cutoff2)
-//								.boost(origBoost)
-                        QueryBuilders.matchQuery("tokenizedsrc", origQuery)
-                                .boost(origBoost)
-                )
-				.should(
-//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
-//								.cutoffFrequency(cutoff2)
-//								.boost(origBoost)
-						QueryBuilders.matchQuery("t2src", t2Query)
-								.boost(t2Boost)
-				)
-				.should(
-//						QueryBuilders.commonTermsQuery("tokenizedsrc", origQuery)
-//								.cutoffFrequency(cutoff2)
-//								.boost(origBoost)
-						QueryBuilders.matchQuery("t1src", t1Query)
-								.boost(t1Boost)
-				)
-                .should(
-//                		QueryBuilders.commonTermsQuery("src", query)
-//								.cutoffFrequency(cutoff)
-//								.boost(normBoost)
-                        QueryBuilders.matchQuery("src", query)
-//                                .operator(MatchQueryBuilder.Operator.AND)
-                                .boost(normBoost)
-                );
-
+		QueryBuilder queryBuilder;
+		if (computeSimilarity.equals("none") || computeSimilarity.equals("fuzzywuzzy"))
+			queryBuilder = getQueryBuilder(origQuery, origBoost, t2Query, t2Boost,
+					t1Query, t1Boost, query, normBoost);
+		else if (computeSimilarity.equals("tokenratio"))
+			queryBuilder = getQueryBuilder(origQuery, origBoost, t2Query, t2Boost,
+					t1Query, t1Boost, query, normBoost, similarity);
+		else
+			throw new Exception("ERROR: wrong similarity measure.");
         SearchResponse response = client.prepareSearch(index).setSearchType(searchType)
                 .addSort(SortBuilders.fieldSort("_score").order(SortOrder.DESC))
                 .addSort(SortBuilders.fieldSort("file").order(SortOrder.DESC))
