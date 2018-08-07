@@ -1119,6 +1119,14 @@ public class Siamese {
         File f = new File(this.inputFolder + "/LICENSE.txt");
         if (!f.exists() || f.isDirectory()) {
             f = new File(this.inputFolder + "/LICENSE");
+        } else if (!f.exists() || f.isDirectory()) {
+            f = new File(this.inputFolder + "/LICENSE.md");
+        } else if (!f.exists() || f.isDirectory()) {
+            f = new File(this.inputFolder + "/license.txt");
+        } else if (!f.exists() || f.isDirectory()) {
+            f = new File(this.inputFolder + "/COPYING");
+        } else if (!f.exists() || f.isDirectory()) {
+            f = new File(this.inputFolder + "/COPYING.LESSER");
         }
 
         String license = "none";
