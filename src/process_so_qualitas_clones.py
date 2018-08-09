@@ -96,6 +96,12 @@ def print_clone_pairs(clones, outputfile):
 
 
 def main():
+    if len(sys.argv) <= 1:
+        print('Usage: python process_so_qualitas_clones.py '
+              '<input file> <prefix to remove> '
+              '<similarity> <output file> <include license [True, False]>')
+        exit(0)
+
     inputfile = sys.argv[1]
     prefix = ''
     if len(sys.argv) >= 3:
