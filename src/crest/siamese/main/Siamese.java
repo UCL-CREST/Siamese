@@ -274,7 +274,8 @@ public class Siamese {
                 " t2=" + t2Boost + " t3=" + normBoost);
         System.out.println("---------- SIMILARITY --------------");
         System.out.println("computeSimilarity : " + computeSimilarity);
-        System.out.println("simThreshold      : " + simThreshold);
+        System.out.println("simThreshold      : " + simThreshold[0] + "," + simThreshold[1] + ","
+                                                  + simThreshold[2] + "," + simThreshold[3]);
         System.out.println("====================================");
     }
 
@@ -545,7 +546,7 @@ public class Siamese {
         // method counter
         long count = 0;
         int fileCount = 0;
-        System.out.println("Indexing Phase: found " + listOfFiles.size() + " files.");
+        System.out.println("Indexing Phase: found " + listOfFiles.size() + " source code files.");
         // extract the license at project level
         if (this.includeLicense) {
             this.fileLicense = extractProjectLicense();
@@ -658,7 +659,7 @@ public class Siamese {
                     double percent = (double) fileCount * 100 / listOfFiles.size();
                     DecimalFormat df = new DecimalFormat("#.00");
                     System.out.println("Indexed " + fileCount
-                            + " [" + df.format(percent) + "%] documents (" + count + " methods).");
+                            + " [" + df.format(percent) + "%] documents/files (" + count + " methods).");
                 }
             } catch (Exception e) {
                 System.out.println("ERROR: error while indexing a file: " + file.getAbsolutePath() + ". Skip.");
@@ -678,7 +679,7 @@ public class Siamese {
             double percent = (double) fileCount * 100 / listOfFiles.size();
             DecimalFormat df = new DecimalFormat("#.00");
             System.out.println("Indexed " + fileCount
-                    + " [" + df.format(percent) + "%] documents (" + count + " methods).");
+                    + " [" + df.format(percent) + "%] files (" + count + " methods).");
         }
         // successfully indexed, return true
 //        System.out.println("Successfully indexed documents.");
