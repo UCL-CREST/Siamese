@@ -833,8 +833,9 @@ public class Siamese {
                 if (count % printEvery == 0) {
                     double percent = (double) count * 100 / listOfFiles.size();
                     DecimalFormat percentFormat = new DecimalFormat("#.00");
-                    System.out.println("Searched " + search + "/" + count
-                            + " [" + percentFormat.format(percent) + "%] files (" + methodCount + " methods).");
+                    System.out.println("Searched " + search + " code fragments ["
+                            + percentFormat.format(percent) + "%] (from " + count
+                            + " files/" + methodCount + " methods).");
                     if (formatter.getFormat().equals("gcf"))
                         outToFile = formatter.getXML();
                     bw.write(outToFile);
