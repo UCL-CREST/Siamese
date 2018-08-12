@@ -33,34 +33,34 @@ bellon_t1_index = [20.08, 21.16, 22.55, 23.19, 24.42, 25.50, 26.63, 27.53, 27.96
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
-plt.scatter(bellon_t1_2, bellon_t1_index, c='green')
+plt.scatter(bellon_t1_index, bellon_t1_2, c='green')
 plt.title('Representation 1')
 
 i = 2
 ax.annotate(str(i+1) + '-gram ('
-            + str(round(bellon_t1_2[i], decimal)) + ', '
-            + str(round(bellon_t1_index[i], decimal)) + ')',
-            xy=(bellon_t1_2[i], bellon_t1_index[i]),
-            xytext=(bellon_t1_2[i] - 0.05, bellon_t1_index[i] + i),
+            + str(round(bellon_t1_index[i], decimal)) + 's, '
+            + str(round(bellon_t1_2[i], decimal)) + ')',
+            xy=(bellon_t1_index[i], bellon_t1_2[i]),
+            xytext=(bellon_t1_index[i], bellon_t1_2[i] - 0.05),
             arrowprops=dict(arrowstyle="->", connectionstyle="arc3"))
 
 i = 3
 ax.annotate(str(i+1) + '-gram ('
-            + str(round(bellon_t1_2[i], decimal)) + ', '
-            + str(round(bellon_t1_index[i], decimal)) + ')',
-            xy=(bellon_t1_2[i], bellon_t1_index[i]),
-            xytext=(bellon_t1_2[i] - 0.06, bellon_t1_index[i] + 6),
+            + str(round(bellon_t1_index[i], decimal)) + 's, '
+            + str(round(bellon_t1_2[i], decimal)) + ')',
+            xy=(bellon_t1_index[i], bellon_t1_2[i]),
+            xytext=(bellon_t1_index[i] + 3, bellon_t1_2[i] - 0.03),
             arrowprops=dict(arrowstyle="->", connectionstyle="arc3"))
 
 i = 4
 ax.annotate(str(i+1) + '-gram ('
-            + str(round(bellon_t1_2[i], decimal)) + ', '
-            + str(round(bellon_t1_index[i], decimal)) + ')',
-            xy=(bellon_t1_2[i], bellon_t1_index[i]),
-            xytext=(bellon_t1_2[i] - 0.04, bellon_t1_index[i] + 7),
+            + str(round(bellon_t1_index[i], decimal)) + 's, '
+            + str(round(bellon_t1_2[i], decimal)) + ')',
+            xy=(bellon_t1_index[i], bellon_t1_2[i]),
+            xytext=(bellon_t1_index[i] + 5, bellon_t1_2[i] - 0.02),
             arrowprops=dict(arrowstyle="->", connectionstyle="arc3"))
-plt.xlabel('MRR')
-plt.ylabel('Index time (s)')
+plt.xlabel('Index time (s)')
+plt.ylabel('MRR')
 # plt.show()
 fig = ax.get_figure()
 fig.set_size_inches(7, 5)
@@ -90,35 +90,36 @@ bellon_t2_index = [	19.31, 20.37, 20.37, 20.77, 20.92, 21.71, 22.15, 22.25, 22.8
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
-plt.scatter(bellon_t2_2, bellon_t2_index, c='blue')
+plt.scatter(bellon_t2_index, bellon_t2_2, c='blue')
 plt.title('Representation 2')
 
 # for i in range(0, 40):
 #     if i in {2, 3, 4, 5, 6, 7}:
 i = 3
-ax.annotate(str(i+1) + '-gram (' + str(round(bellon_t2_2[i], decimal)) + ', '
-            + str(round(bellon_t2_index[i], decimal)) + ')',
-            xy=(bellon_t2_2[i], bellon_t2_index[i]),
-            xytext=(bellon_t2_2[i] - 0.06, bellon_t2_index[i] + 1),
+ax.annotate(str(i+1) + '-gram ('
+            + str(round(bellon_t2_index[i], decimal)) + 's, '
+            + str(round(bellon_t2_2[i], decimal)) + ')',
+            xy=(bellon_t2_index[i], bellon_t2_2[i]),
+            xytext=(bellon_t2_index[i], bellon_t2_2[i] - 0.08),
             arrowprops=dict(arrowstyle="->", connectionstyle="arc3"))
 i = 4
 ax.annotate(str(i+1) + '-gram ('
-            + str(round(bellon_t2_2[i], decimal)) + ', '
-            + str(round(bellon_t2_index[i], decimal)) + ')',
-            xy=(bellon_t2_2[i], bellon_t2_index[i]),
-            xytext=(bellon_t2_2[i] - 0.07, bellon_t2_index[i] + 3),
+            + str(round(bellon_t2_index[i], decimal)) + 's, '
+            + str(round(bellon_t2_2[i], decimal)) + ')',
+            xy=(bellon_t2_index[i], bellon_t2_2[i]),
+            xytext=(bellon_t2_index[i] + 1.5, bellon_t2_2[i] - 0.06),
             arrowprops=dict(arrowstyle="->", connectionstyle="arc3"))
 
 i = 5
 ax.annotate(str(i+1) + '-gram ('
-            + str(round(bellon_t2_2[i], decimal)) + ', '
-            + str(round(bellon_t2_index[i], decimal)) + ')',
-            xy=(bellon_t2_2[i], bellon_t2_index[i]),
-            xytext=(bellon_t2_2[i] - 0.06, bellon_t2_index[i] + 4),
+            + str(round(bellon_t2_index[i], decimal)) + 's, '
+            + str(round(bellon_t2_2[i], decimal)) + ')',
+            xy=(bellon_t2_index[i], bellon_t2_2[i]),
+            xytext=(bellon_t2_index[i] + 3, bellon_t2_2[i] - 0.04),
             arrowprops=dict(arrowstyle="->", connectionstyle="arc3"))
 
-plt.xlabel('MRR')
-plt.ylabel('Index time (s)')
+plt.xlabel('Index time (s)')
+plt.ylabel('MRR')
 # plt.show()
 fig = ax.get_figure()
 fig.set_size_inches(7, 5)
@@ -148,7 +149,7 @@ bellon_t3_index = [19.14, 19.41, 19.84, 19.98, 20.40, 20.64, 20.87, 21.25, 21.53
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
-plt.scatter(bellon_t3_1, bellon_t3_index, c='purple')
+plt.scatter(bellon_t3_index, bellon_t3_1, c='purple')
 plt.title('Representation 3')
 
 # for i in range(10, 15):
@@ -160,30 +161,30 @@ plt.title('Representation 3')
 
 i = 7
 ax.annotate(str(i+1) + '-gram ('
-            + str(round(bellon_t3_1[i], decimal)) + ', '
-            + str(round(bellon_t3_index[i], decimal)) + ')',
-            xy=(bellon_t3_1[i], bellon_t3_index[i]),
-            xytext=(bellon_t3_1[i] - 0.07, bellon_t3_index[i]),
+            + str(round(bellon_t3_index[i], decimal)) + ', '
+            + str(round(bellon_t3_1[i], decimal)) + ')',
+            xy=(bellon_t3_index[i], bellon_t3_1[i]),
+            xytext=(bellon_t3_index[i], bellon_t3_1[i] - 0.09),
             arrowprops=dict(arrowstyle="->", connectionstyle="arc3"))
 
 i = 8
 ax.annotate(str(i+1) + '-gram ('
-            + str(round(bellon_t3_1[i], decimal)) + ', '
-            + str(round(bellon_t3_index[i], decimal)) + ')',
-            xy=(bellon_t3_1[i], bellon_t3_index[i]),
-            xytext=(bellon_t3_1[i] - 0.08, bellon_t3_index[i] + 0.7),
+            + str(round(bellon_t3_index[i], decimal)) + ', '
+            + str(round(bellon_t3_1[i], decimal)) + ')',
+            xy=(bellon_t3_index[i], bellon_t3_1[i]),
+            xytext=(bellon_t3_index[i] + 0.7, bellon_t3_1[i] - 0.06),
             arrowprops=dict(arrowstyle="->", connectionstyle="arc3"))
 
 i = 10
 ax.annotate(str(i+1) + '-gram ('
-            + str(round(bellon_t3_1[i], decimal)) + ', '
-            + str(round(bellon_t3_index[i], decimal)) + ')',
-            xy=(bellon_t3_1[i], bellon_t3_index[i]),
-            xytext=(bellon_t3_1[i] - 0.08, bellon_t3_index[i] + 1.2),
+            + str(round(bellon_t3_index[i], decimal)) + ', '
+            + str(round(bellon_t3_1[i], decimal)) + ')',
+            xy=(bellon_t3_index[i], bellon_t3_1[i]),
+            xytext=(bellon_t3_index[i] + 1.2, bellon_t3_1[i] - 0.03),
             arrowprops=dict(arrowstyle="->", connectionstyle="arc3"))
 
-plt.xlabel('MRR')
-plt.ylabel('Index time (s)')
+plt.xlabel('Index time (s)')
+plt.ylabel('MRR')
 # plt.show()
 fig = ax.get_figure()
 fig.set_size_inches(7, 5)
