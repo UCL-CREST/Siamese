@@ -44,25 +44,29 @@ def format_clone_license(c, include_license):
     return f
 
 
-def format_clone_sim(c, ctype, threshold):
+def format_clone_sim(c, ctype, threshold, mode):
     parts = c.split('#')
     # print(parts)
     f = None
     if ctype is 'query':
         f = Fragment(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], None)
     else:
-        try:
-            sims = parts[3].split('$')
-            if int(sims[0]) >= threshold and int(sims[1]) >= threshold and int(sims[2]) >= threshold \
-                    and int(sims[3]) >= threshold:
-                print(parts)
-                f = Clone(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], parts[3])
-        except ValueError: # failure from fuzzywuzzy results in no similarity value
-            return None
+        if mode == 'fuzzywuzzy':
+            try:
+                sims = parts[3].split('$')
+                if int(sims[0]) >= threshold and int(sims[1]) >= threshold and int(sims[2]) >= threshold \
+                        and int(sims[3]) >= threshold:
+                    print(parts)
+                    f = Clone(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], parts[3])
+            except ValueError: # failure from fuzzywuzzy results in no similarity value
+                return None
+        elif mode == 'tokenratio':
+            print(parts)
+            f = Clone(parts[0].split('.java_')[0] + '.java', parts[1], parts[2], '')
     return f
 
 
-def extract_clone_set(line, prefix, threshold, include_license):
+def extract_clone_set(line, prefix, threshold, include_license, mode):
     clones = line.split(',')
     clone_pairs = list()
     if len(clones) >= 2 and clones[1] is not '\n': # skip blank result
@@ -71,7 +75,7 @@ def extract_clone_set(line, prefix, threshold, include_license):
             if idx == 0:
                 ctype = 'query'
             # c = format_clone_license(c.replace(prefix, ''), include_license)
-            c = format_clone_sim(c.replace(prefix, ''), ctype, threshold)
+            c = format_clone_sim(c.replace(prefix, ''), ctype, threshold, mode)
             if c is not None:
                 clone_pairs.append(c)
 
@@ -99,7 +103,7 @@ def main():
     if len(sys.argv) <= 1:
         print('Usage: python process_so_qualitas_clones.py '
               '<input file> <prefix to remove> '
-              '<similarity> <output file> <include license [True, False]>')
+              '<similarity> <output file> <include license [True, False]> <fuzzywuzzy|tokenratio>')
         exit(0)
 
     inputfile = sys.argv[1]
@@ -115,10 +119,12 @@ def main():
     include_license = False
     if len(sys.argv) >= 6:
         include_license = sys.argv[5]
+    if len(sys.argv) >= 7:
+        mode = sys.argv[6]
     file = open(inputfile, 'r')
     all_clones = list()
     for line in file:
-        clones = extract_clone_set(line, prefix, sim, include_license)
+        clones = extract_clone_set(line, prefix, sim, include_license, mode)
         if len(clones) > 0:
             all_clones.append(clones)
     print_clone_pairs(all_clones, outputfile)
