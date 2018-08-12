@@ -1,49 +1,50 @@
 import pandas as pd
 from helpers import *
 import os
+import numpy as np
 
 
 def main():
-    # TODO:
-    # 1) open the files in excel once before running this to fill in the missing columns
-    # 2) move the method names into another column
-    # 3) remove the extra 51st results (there are 10 of them).
-    file1_name = '../results/bcb_search_results_qr-10-10-10.csv'
-    file2_name = '../results/bcb_search_results_qr-25-75-10-new_copied.csv'
+    # TODO: pen the files in excel once before running this to fill in the missing columns
+    file1_name = '../results/results_for_rq2/precision/bcb_default_3-5-8_e.csv'
+    file2_name = '../results/results_for_rq2/precision/old_results/bcb_default_e.csv'
     data = pd.read_csv(file1_name, sep=',', header=None)
     data2 = pd.read_csv(file2_name, sep=',', header=None)
-
-    QUERIES = 142
-    RESULTSIZE = 50
-
+    QUERIES = 96
+    RESULTSIZE = 16 # result size + query
     for i in range(1, (QUERIES + 1)):
-        start = i + (i - 1) * RESULTSIZE - 1
-        end = i * RESULTSIZE + i - 1
+        start = (i-1) * RESULTSIZE
+        end = i * RESULTSIZE - 1
+
         print('processing:', start, '-', end)
         file1 = data.loc[start: end]
         file2 = data2.loc[start: end]
 
-        for index, row in file1.iterrows():
-            if row[1].strip() == 'Q':
-                out = str(row[0]) + ',' + row[1] + ',' + row[2] + ',' + row[3] + ',' + \
-                      str(row[4]) + ',' + str(row[5]) + '\n'
+        for index, c1 in file1.iterrows():
+            matched = None
+            # out = str(c1[0]) + ',' + str(c1[1]) + ',' + str(c1[2]) + ',' + \
+            #       str(c1[3]) + ',' + str(c1[4]) + ',,,\n'
+            # writefile(file1_name.replace('.csv', '_copied.csv'), out, 'a', True)
+            if index % RESULTSIZE == 0:
+                c1 = c1.replace(np.nan, '', regex=True)
+                out = str(c1[0]) + ',' + str(c1[1]) + ',' + str(c1[2]) + ',' + \
+                      str(c1[3]) + ',' + str(c1[4]) + ',,,\n'
                 writefile(file1_name.replace('.csv', '_copied.csv'), out, 'a', True)
             else:
-                matched = False
-                for index2, row2 in file2.iterrows():
-                    if row[2].strip() == row2[2].strip() \
-                            and int(row[4]) == int(row2[4]) \
-                            and int(row[5]) == int(row2[5]):
-                        out = str(row[0]) + ',' + row[1] + ',' + row[2] + ',' + row[3] + ',' + \
-                                  str(row[4]) + ',' + str(row[5]) + ',' + str(row[6]) + ',' + row2[7] + ',M\n'
-                        writefile(file1_name.replace('.csv', '_copied.csv'), out, 'a', True)
-                        matched = True
+                for index2, c2 in file2.iterrows():
+                    c2 = c2.replace(np.nan, '', regex=True)
+                    if c1[0] == c2[0] and c1[1] == c2[1] and c1[2] == c2[2] and c1[3] == c2[3]:
+                        matched = c2
                         break
-                if not matched:
-                    out = str(row[0]) + ',' + row[1] + ',' + row[2] + ',' + row[3] + ',' + \
-                          str(row[4]) + ',' + str(row[5]) + ',' + str(row[6]) + ',' + row[7] + ',N\n'
-                    writefile(file1_name.replace('.csv', '_copied.csv'), out, 'a', True)
-
+                if matched is not None:
+                    out = str(matched[0]) + ',' + str(matched[1]) + ',' + str(matched[2]) + ',' + \
+                          str(matched[3]) + ',' + str(matched[4]) + ',' + str(matched[5]) + ',' + \
+                          str(matched[6]) + ',' + str(matched[7]) + '\n'
+                else:
+                    c1 = c1.replace(np.nan, '', regex=True)
+                    out = str(c1[0]) + ',' + str(c1[1]) + ',' + str(c1[2]) + ',' + \
+                          str(c1[3]) + ',' + str(c1[4]) + ',' + str(c1[5]) + ',,\n'
+                writefile(file1_name.replace('.csv', '_copied.csv'), out, 'a', True)
 
 
 main()
