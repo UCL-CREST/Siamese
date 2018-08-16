@@ -47,8 +47,8 @@ def gen_config_template():
     config['outputFormat'] = 'csv'
     config['indexingMode'] = 'bulk'
     config['bulkSize'] = '4000'
-    config['computeSimilarity'] = 'false'
-    config['simThreshold'] = '80'
+    config['computeSimilarity'] = 'none'
+    config['simThreshold'] = '80%,80%,80%,80%'
     config['deleteField'] = ''
     config['deleteWildcard'] = ''
     config['deleteAmount'] = '1000'
@@ -157,11 +157,11 @@ def execute_siamese():
 def main():
     setup_logger()
     config = gen_config_template()
-    update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/soco_f/formatted/')
-    update_config(config, 'cloneClusterFile', 'soco')
+    # update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/soco_f/formatted/')
+    # update_config(config, 'cloneClusterFile', 'soco')
     #
-    # update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/tests')
-    # update_config(config, 'cloneClusterFile', 'cloplag')
+    update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/tests')
+    update_config(config, 'cloneClusterFile', 'cloplag')
 
     print('ngramSize,t2NgramSize,t1NgramSize,'
           'QRPercentileNorm,QRPercentileT2,QRPercentileT1,QRPercentileOrig,'
@@ -170,11 +170,11 @@ def main():
                                        'QRPercentileNorm,QRPercentileT2,QRPercentileT1,QRPercentileOrig,'
                                        'normBoost,t2Boost,t1Boost,map\n', 'w', False)
     # for t3_ngram_size in range(1, 7):
-    for t3_ngram_size in range(4, 7):
-        for t2_ngram_size in range(1, 7):
-            for t1_ngram_size in range(1, 7):
+    for t3_ngram_size in {2, 6, 10, 14, 18, 22}:
+        for t2_ngram_size in {2, 6, 10, 14, 18, 22}:
+            for t1_ngram_size in {2, 6, 10, 14, 18, 22}:
                 for qr in range(1, 6):
-                    nmul = 4
+                    nmul = 1
                     qmul = 2
                     print(str(t3_ngram_size * nmul) + ',' + str(t2_ngram_size * nmul) + ',' + str(t1_ngram_size * nmul)
                           + ',' + str(qr * qmul) + ',' + str(qr * qmul) + ',' + str(qr * qmul) + ',' + str(qr * qmul)
