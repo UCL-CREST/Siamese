@@ -54,13 +54,15 @@ public class BCBExperiment {
                 // Settings for analysing a raw result file
                 int size = 16;
                 int checksize = 15;
-                boolean includeQuery = false;
-//                processOutputFile(fileToCheck, pFilename, prefixes, size);
-//                evaluate(pFilename, eFilename, includeQuery, checksize);
+//                boolean includeQuery = false;
+                boolean includeQuery = true;
+                processOutputFile(fileToCheck, pFilename, prefixes, size);
+                evaluate(pFilename, eFilename, includeQuery, checksize);
                 // Settings for analysing the result file with result size = 15
                 size = 15;
                 checksize = 10;
                 int[] targetTypes = {1, 2, 3};
+//                int[] targetTypes = {3};
                 calculate(eFilename, size, checksize, includeQuery, targetTypes);
                 break;
         }
@@ -109,6 +111,8 @@ public class BCBExperiment {
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
+                    System.out.println(result[0] + "," + result[1] + "," + result[2]
+                                    + "," + result[3] + "," + result[4]);
                     System.out.println(result[0] + "," + result[1] + "," + result[2]
                             + "," + result[3] + "," + result[4] + "," + result[5]);
                     /* find a true positive */
