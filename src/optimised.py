@@ -1,6 +1,6 @@
 import sys
 from subprocess import Popen, PIPE
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import logging
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,7 @@ def setup_logger():
 
 def gen_config_template():
     config = dict()
-    config['elasticsearchLoc'] = '/Users/Chaiyong/Documents/phd/2017/Siamese/elasticsearch-2.2.0'
+    config['elasticsearchLoc'] = '/data/Siamese/elasticsearch-2.2.0'
     config['server'] = 'localhost'
     config['cluster'] = 'stackoverflow'
     config['index'] = 'cloplag'
@@ -47,8 +47,8 @@ def gen_config_template():
     config['outputFormat'] = 'csv'
     config['indexingMode'] = 'bulk'
     config['bulkSize'] = '4000'
-    config['computeSimilarity'] = 'false'
-    config['simThreshold'] = '80'
+    config['computeSimilarity'] = 'none'
+    config['simThreshold'] = '80%,80%,80%,80%'
     config['deleteField'] = ''
     config['deleteWildcard'] = ''
     config['deleteAmount'] = '1000'
@@ -64,16 +64,16 @@ def gen_config_template():
     config['deleteIndexAfterUse'] = 'true'
     config['multirep'] = 'true'
     config['queryReduction'] = 'true'
-    config['ngramSize'] = '14'
-    config['t2NgramSize'] = '24'
-    config['t1NgramSize'] = '14'
+    config['ngramSize'] = '4'
+    config['t2NgramSize'] = '4'
+    config['t1NgramSize'] = '4'
     config['QRPercentileOrig'] = '10'
     config['QRPercentileT2'] = '10'
     config['QRPercentileT1'] = '10'
     config['QRPercentileNorm'] = '10'
-    config['normBoost'] = '14'
-    config['t2Boost'] = '24'
-    config['t1Boost'] = '14'
+    config['normBoost'] = '4'
+    config['t2Boost'] = '4'
+    config['t1Boost'] = '4'
     config['origBoost'] = '1'
     config['enableRep'] = 'true,true,true,true'
     config['license'] = 'false'
@@ -157,10 +157,10 @@ def execute_siamese():
 def main():
     setup_logger()
     config = gen_config_template()
-    update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/soco_f/formatted/')
+    update_config(config, 'inputFolder', '/data/data_sets/soco_f/formatted/')
     update_config(config, 'cloneClusterFile', 'soco')
     #
-    # update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/tests')
+    # update_config(config, 'inputFolder', '/data/data_sets/tests')
     # update_config(config, 'cloneClusterFile', 'cloplag')
 
     print('ngramSize,t2NgramSize,t1NgramSize,'
@@ -170,11 +170,11 @@ def main():
                                        'QRPercentileNorm,QRPercentileT2,QRPercentileT1,QRPercentileOrig,'
                                        'normBoost,t2Boost,t1Boost,map\n', 'w', False)
     # for t3_ngram_size in range(1, 7):
-    for t3_ngram_size in range(4, 7):
-        for t2_ngram_size in range(1, 7):
-            for t1_ngram_size in range(1, 7):
+    for t3_ngram_size in range(2, 25):
+        for t2_ngram_size in range(2, 25):
+            for t1_ngram_size in range(2, 25):
                 for qr in range(1, 6):
-                    nmul = 4
+                    nmul = 1
                     qmul = 2
                     print(str(t3_ngram_size * nmul) + ',' + str(t2_ngram_size * nmul) + ',' + str(t1_ngram_size * nmul)
                           + ',' + str(qr * qmul) + ',' + str(qr * qmul) + ',' + str(qr * qmul) + ',' + str(qr * qmul)
