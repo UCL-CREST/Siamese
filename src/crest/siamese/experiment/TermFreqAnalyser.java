@@ -91,10 +91,11 @@ public class TermFreqAnalyser {
     public static void analyseTerms() {
         String index = "qualitas";
         String mode = "df";
-        String toksrc = "freq_" + mode + "_t0src_" + index + ".csv";
-        String t1src = "freq_" + mode + "_t1src_" + index + ".csv";
-        String t2src = "freq_" + mode + "_t2src_" + index + ".csv";
-        String src = "freq_" + mode + "_t3src_" + index + ".csv";
+        String dir = "results/results_for_rq0_qr_thresholds/";
+        String toksrc = dir + "freq_" + mode + "_t0src_" + index + ".csv";
+        String t1src = dir + "freq_" + mode + "_t1src_" + index + ".csv";
+        String t2src = dir + "freq_" + mode + "_t2src_" + index + ".csv";
+        String src = dir + "freq_" + mode + "_t3src_" + index + ".csv";
         // delete previous result files.
         File toksrcf = new File(toksrc);
         toksrcf.delete();

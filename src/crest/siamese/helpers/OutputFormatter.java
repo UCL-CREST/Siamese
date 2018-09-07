@@ -105,6 +105,44 @@ public class OutputFormatter {
         }
     }
 
+    public String format(ArrayList<Document> results, int[] sim, String[] thresholds, String prefixToRemove) {
+        StringBuilder sb = new StringBuilder();
+        int resultCount = 0;
+        int[] simT = new int[4];
+        for (int i=0; i<4; i++)
+            simT[i] = Integer.parseInt(thresholds[i].split("%")[0]);
+        if (this.format.equals("csv")) {
+            for (int i =0; i<results.size(); i++) {
+                Document d = results.get(i);
+                // only add the results that has similarity higher than the threshold
+                // (only based on the original representation)
+                if (sim[i] >= simT[0]) {
+                    if (resultCount > 0)
+                        sb.append(","); // add comma in between
+                    sb.append(d.getFile().replace(prefixToRemove, ""));
+                    if (addStartEndLine) {
+                        sb.append("#" + d.getStartLine() + "#" + d.getEndLine() + "#" + sim[i] + "$0$0$0");
+                    }
+                    if (addLicense) {
+                        sb.append("#" + d.getLicense());
+                    }
+                    resultCount++;
+                }
+            }
+            sb.append("\n");
+            return sb.toString();
+        } else if (this.format.equals("gcf")) {
+            /* put query at the front */
+            results.add(0, this.query);
+            xmlFormatter.addCloneClass(this.ccid, -1, results);
+            this.ccid++;
+            return "";
+        } else {
+            System.out.println("ERROR: unsupported format.");
+            return null;
+        }
+    }
+
     public String format(ArrayList<Document> results, int[][] sim, String[] thresholds, String prefixToRemove) {
         StringBuilder sb = new StringBuilder();
         int resultCount = 0;

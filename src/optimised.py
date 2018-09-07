@@ -157,11 +157,19 @@ def execute_siamese():
 def main():
     setup_logger()
     config = gen_config_template()
+<<<<<<< HEAD
     update_config(config, 'inputFolder', '/data/data_sets/soco_f/formatted/')
     update_config(config, 'cloneClusterFile', 'soco')
     #
     # update_config(config, 'inputFolder', '/data/data_sets/tests')
     # update_config(config, 'cloneClusterFile', 'cloplag')
+=======
+    # update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/soco_f/formatted/')
+    # update_config(config, 'cloneClusterFile', 'soco')
+    #
+    update_config(config, 'inputFolder', '/Users/Chaiyong/Documents/phd/2016/cloplag/tests')
+    update_config(config, 'cloneClusterFile', 'cloplag')
+>>>>>>> 80c9ef8d5e27549a9b475e6b4b75815e925cfc04
 
     print('ngramSize,t2NgramSize,t1NgramSize,'
           'QRPercentileNorm,QRPercentileT2,QRPercentileT1,QRPercentileOrig,'
@@ -170,9 +178,15 @@ def main():
                                        'QRPercentileNorm,QRPercentileT2,QRPercentileT1,QRPercentileOrig,'
                                        'normBoost,t2Boost,t1Boost,map\n', 'w', False)
     # for t3_ngram_size in range(1, 7):
+<<<<<<< HEAD
     for t3_ngram_size in range(2, 25):
         for t2_ngram_size in range(2, 25):
             for t1_ngram_size in range(2, 25):
+=======
+    for t3_ngram_size in {2, 6, 10, 14, 18, 22}:
+        for t2_ngram_size in {2, 6, 10, 14, 18, 22}:
+            for t1_ngram_size in {2, 6, 10, 14, 18, 22}:
+>>>>>>> 80c9ef8d5e27549a9b475e6b4b75815e925cfc04
                 for qr in range(1, 6):
                     nmul = 1
                     qmul = 2

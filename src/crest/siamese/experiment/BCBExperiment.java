@@ -51,12 +51,18 @@ public class BCBExperiment {
                 System.out.println("File: " + fileToCheck);
                 String pFilename = fileToCheck.replace(".csv", "_p.csv");
                 String eFilename = fileToCheck.replace(".csv", "_e.csv");
-                int size = 10;
-                int checksize = 10;
+                // Settings for analysing a raw result file
+                int size = 16;
+                int checksize = 15;
+//                boolean includeQuery = false;
                 boolean includeQuery = true;
-//                processOutputFile(fileToCheck, pFilename, prefixes, size);
-//                evaluate(pFilename, eFilename, includeQuery, checksize);
-                int[] targetTypes = {3};
+                processOutputFile(fileToCheck, pFilename, prefixes, size);
+                evaluate(pFilename, eFilename, includeQuery, checksize);
+                // Settings for analysing the result file with result size = 15
+                size = 15;
+                checksize = 10;
+                int[] targetTypes = {1, 2, 3};
+//                int[] targetTypes = {3};
                 calculate(eFilename, size, checksize, includeQuery, targetTypes);
                 break;
         }
@@ -71,7 +77,10 @@ public class BCBExperiment {
         return false;
     }
 
-    private static void calculate(String outputFile, int resultSize, int size, boolean includeQuery, int[] targetTypes) {
+    private static void calculate(String outputFile,
+                                  int resultSize,
+                                  int size,
+                                  boolean includeQuery, int[] targetTypes) {
         System.out.println("Checking: " + outputFile);
         try {
             String[] lines = MyUtils.readFile(outputFile);
@@ -102,6 +111,8 @@ public class BCBExperiment {
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
+                    System.out.println(result[0] + "," + result[1] + "," + result[2]
+                                    + "," + result[3] + "," + result[4]);
                     System.out.println(result[0] + "," + result[1] + "," + result[2]
                             + "," + result[3] + "," + result[4] + "," + result[5]);
                     /* find a true positive */
@@ -250,7 +261,7 @@ public class BCBExperiment {
             MyUtils.deleteFile(outfile);
             String[] lines = MyUtils.readFile(fileToCheck);
             for (String line: lines) {
-                for (String pref: prefixes) {
+                for (String pref : prefixes) {
                     line = line.replace(pref, "");
                 }
                 String[] parts = line.split(",");
@@ -259,7 +270,7 @@ public class BCBExperiment {
                 String query = q[0] + "," + q[1] + "," + q[2] + ".java," + q[3] + "," + q[4].split("\\.")[0];
                 line = query;
                 /* start working on the result */
-                for (int i=1; i<parts.length && i<=limit; i++) {
+                for (int i = 1; i < parts.length && i <= limit; i++) {
                     String[] rParts = parts[i].split("#");
                     String[] names = rParts[0].split(".java_")[0].split("/");
                     line += "," + names[0] + "," + names[1] + ".java," + rParts[1] + "," + rParts[2];
@@ -270,6 +281,7 @@ public class BCBExperiment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Processed file: " + outfile);
     }
 
     private static void extractAllClonePairs(String outputLoc, String bcbLoc) {

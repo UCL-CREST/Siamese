@@ -808,6 +808,9 @@ public class Siamese {
                                 }
                                 // fuzzywuzzy similarity is applied after the search
                                 if (this.computeSimilarity.equals("fuzzywuzzy")) {
+//                                    int[] sim = computeSimilarityOneRep(origQuery, results);
+//                                    outToFile += formatter.format(results, sim, this.simThreshold, prefixToRemove);
+                                    // TODO: only for the thesis, put this back after the experiment.
                                     int[][] sim = computeSimilarity(origQuery, t1Query, t2Query, t3Query, results);
                                     outToFile += formatter.format(results, sim,
                                             this.simThreshold,
@@ -855,6 +858,22 @@ public class Siamese {
             throw new IOException("Cannot create the output file: " + outfile.getAbsolutePath());
         }
         return outfile.getAbsolutePath();
+    }
+
+    /**
+     * Compute similarity between query and results using fuzzywuzzy string matching
+     * @param query the f0 code query (original)
+     * @return a 2D array of similarity values
+     */
+    private int[] computeSimilarityOneRep(String query, ArrayList<Document> results) {
+        int[] simResults = new int[results.size()]; // 2D sim array of four representations
+        for (int i=0; i<results.size(); i++) {
+            Document d = results.get(i);
+            int sim0 = FuzzySearch.tokenSetRatio(query, d.getTokenizedSource());
+            // compute an average similarity of the four representations
+            simResults[i]=sim0;
+        }
+        return simResults;
     }
 
     /**
