@@ -171,6 +171,11 @@ The file will be using the pattern ```data_qr_<timestamp>.xml```.
 
 ---
 
+### Contact:
+If you have any questions or find any issues, please contact Chaiyong Ragkhitwetsagul at ```cragkhit [at] gmail [dot] com```.
+
+---
+
 <!--
 # Early Experimental Results
 No. of combinations of IR scoring parameter I searched for:
