@@ -93,7 +93,7 @@ public class Main {
 
 	private static void showHelp() {
 		HelpFormatter formater = new HelpFormatter();
-		formater.printHelp("(v 0.5) $java -jar siamese.jar -cf <config file> [-i input] [-o output] [-c command] [-h help]\n" +
+		formater.printHelp("(v 0.6) $java -jar siamese.jar -cf <config file> [-i input] [-o output] [-c command] [-h help]\n" +
 				"Example: java -jar siamese.jar -cf config.properties\n" +
 				"Example: java -jar siamese.jar -cf config.properties -i /my/input/dir -o /my/output/dir -c index", options);
 		System.exit(0);
