@@ -151,7 +151,7 @@ def plot_slopes(filename):
 
 def main():
     # print('processing CSVs ...')
-    index = 'qualitas'
+    index = 'bellon'
     dir = '../results/results_for_rq0_qr_thresholds/'
     df_t0src_sorted = read_csv(dir + 'freq_df_t0src_' + index + '.csv')
     df_t1src_sorted = read_csv(dir + 'freq_df_t1src_' + index + '.csv')
