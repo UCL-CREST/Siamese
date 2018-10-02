@@ -161,7 +161,7 @@ Example: java -jar siamese.jar -cf config.properties -i /my/input/dir -o
 java -jar siamese-0.0.6-SNAPSHOT.jar -c index -i /my/dir/foo -cf config.properties
 ```
 
-11\. Then, tell Siamese to search for clones of "foo" in "bar".
+11\. Then, tell Siamese to search for clones of "bar" in the index of "foo".
 ```bash
 java -jar siamese-0.0.6-SNAPSHOT.jar -c search -i /my/dir/bar -o /my/output/dir -cf config.properties
 ```
