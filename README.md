@@ -169,6 +169,15 @@ java -jar siamese-0.0.6-SNAPSHOT.jar -c search -i /my/dir/bar -o /my/output/dir 
 12\. After Siamese finishes its execution, the output file (clone classes) will be located at ```/my/output/dir```.
 The file will be using the pattern ```data_qr_<timestamp>.xml```.
 
+13\. If you want to enforce similarity threshold on the search results, 
+modify the ```config.properties``` file to enable fuzzywuzzy or tokenratio (recommended) similarity.
+Choose any similarity thresholds you like for the four code representations (r0, r1, r2, r3) respectively.
+
+```bash
+computeSimilarity : tokenratio
+simThreshold      : 50%,50%,50%,50%
+```
+
 ---
 
 ### Contact:
