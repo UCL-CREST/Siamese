@@ -75,36 +75,6 @@ public class OutputFormatter {
         }
     }
 
-    public String format(ArrayList<Document> results, String prefixToRemove) {
-        StringBuilder sb = new StringBuilder();
-        int resultCount = 0;
-        if (this.format.equals("csv")) {
-            for (Document d : results) {
-                if (resultCount > 0)
-                    sb.append(","); // add comma in between
-                sb.append(d.getFile().replace(prefixToRemove, ""));
-                if (addStartEndLine) {
-                    sb.append("#" + d.getStartLine() + "#" + d.getEndLine());
-                }
-                if (addLicense) {
-                    sb.append("#" + d.getLicense());
-                }
-                resultCount++;
-            }
-            sb.append("\n");
-            return sb.toString();
-        } else if (this.format.equals("gcf")) {
-            /* put query at the front */
-            results.add(0, this.query);
-            xmlFormatter.addCloneClass(this.ccid, -1, results);
-            this.ccid++;
-            return "";
-        } else {
-            System.out.println("ERROR: unsupported format.");
-            return null;
-        }
-    }
-
     public String format(ArrayList<Document> results, int[] sim, String[] thresholds, String prefixToRemove) {
         StringBuilder sb = new StringBuilder();
         int resultCount = 0;
@@ -143,7 +113,49 @@ public class OutputFormatter {
         }
     }
 
-    public String format(ArrayList<Document> results, int[][] sim, String[] thresholds, String prefixToRemove) {
+    public String format(ArrayList<Document> results, String prefixToRemove,
+                         boolean ignoreQueryClones, Document query, String queryText) {
+        StringBuilder sb = new StringBuilder();
+        int resultCount = 0;
+        if (this.format.equals("csv")) {
+            for (Document d : results) {
+                if (ignoreQueryClones && d.getFile().equals(query.getFile())
+                        && d.getStartLine() == query.getStartLine()
+                        && d.getEndLine() == query.getEndLine())
+                    continue; // skip the query clones
+                if (resultCount > 0)
+                    sb.append(","); // add comma in between
+                sb.append(d.getFile().replace(prefixToRemove, ""));
+                if (addStartEndLine) {
+                    sb.append("#" + d.getStartLine() + "#" + d.getEndLine());
+                }
+                if (addLicense) {
+                    sb.append("#" + d.getLicense());
+                }
+                resultCount++;
+            }
+
+            if (resultCount > 0) {
+                sb.append("\n");
+                sb.insert(0, queryText);
+                return sb.toString();
+            } else {
+                return "";
+            }
+        } else if (this.format.equals("gcf")) {
+            /* put query at the front */
+            results.add(0, this.query);
+            xmlFormatter.addCloneClass(this.ccid, -1, results);
+            this.ccid++;
+            return "";
+        } else {
+            System.out.println("ERROR: unsupported format.");
+            return null;
+        }
+    }
+
+    public String format(ArrayList<Document> results, int[][] sim, String[] thresholds,
+                         String prefixToRemove, boolean ignoreQueryClones, Document query, String queryText) {
         StringBuilder sb = new StringBuilder();
         int resultCount = 0;
         int[] simT = new int[4];
@@ -152,6 +164,10 @@ public class OutputFormatter {
         if (this.format.equals("csv")) {
             for (int i =0; i<results.size(); i++) {
                 Document d = results.get(i);
+                if (ignoreQueryClones && d.getFile().equals(query.getFile())
+                        && d.getStartLine() == query.getStartLine()
+                        && d.getEndLine() == query.getEndLine())
+                    continue; // skip the query clones
                 // only add the results that has similarity higher than the threshold
                 if (sim[i][0] >= simT[0] && sim[i][1] >= simT[1]
                         && sim[i][2] >= simT[2] && sim[i][3] >= simT[3]) {
@@ -168,8 +184,13 @@ public class OutputFormatter {
                     resultCount++;
                 }
             }
-            sb.append("\n");
-            return sb.toString();
+            if (resultCount > 0) {
+                sb.append("\n");
+                sb.insert(0, queryText);
+                return sb.toString();
+            } else {
+                return "";
+            }
         } else if (this.format.equals("gcf")) {
             /* put query at the front */
             results.add(0, this.query);

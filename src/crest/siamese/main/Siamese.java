@@ -103,6 +103,7 @@ public class Siamese {
     private int deleteAmount;
     private boolean[] enableRep = {true, true, true, true};
     private boolean github = false;
+    private boolean ignoreQueryClones = false;
     private IndexReader esIndexRader;
 
     public Siamese(String configFile) {
@@ -232,6 +233,7 @@ public class Siamese {
                 enableRep[i] = Boolean.valueOf(enableRepStr[i]);
             }
             github = Boolean.parseBoolean(prop.getProperty("github"));
+            ignoreQueryClones = Boolean.parseBoolean(prop.getProperty("ignoreQueryClones"));
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -748,7 +750,7 @@ public class Siamese {
                                 q.setFile(method.getFile() + "_" + method.getName());
                                 q.setStartline(method.getStartLine());
                                 q.setEndline(method.getEndLine());
-                                outToFile += formatter.format(q, prefixToRemove, license);
+                                String queryText = formatter.format(q, prefixToRemove, license);
 
                                 // t3Query size limit is enforced
                                 if (queryReduction) {
@@ -814,9 +816,11 @@ public class Siamese {
                                     int[][] sim = computeSimilarity(origQuery, t1Query, t2Query, t3Query, results);
                                     outToFile += formatter.format(results, sim,
                                             this.simThreshold,
-                                            prefixToRemove);
+                                            prefixToRemove,
+                                            ignoreQueryClones, q, queryText);
                                 } else {
-                                    outToFile += formatter.format(results, prefixToRemove);
+                                    outToFile += formatter.format(results, prefixToRemove,
+                                            ignoreQueryClones, q, queryText);
                                 }
                                 search++;
                             } else {
