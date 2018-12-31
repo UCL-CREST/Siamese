@@ -69,7 +69,7 @@ def format_clone_sim(c, ctype, threshold, mode):
 def extract_clone_set(line, prefix, threshold, include_license, mode):
     clones = line.split(',')
     clone_pairs = list()
-    if len(clones) >= 2 and clones[1] is not '\n': # skip blank result
+    if len(clones) >= 2 and clones[1] is not '\n':  # skip blank result
         for idx, c in enumerate(clones):
             ctype = 'clones'
             if idx == 0:
@@ -82,6 +82,7 @@ def extract_clone_set(line, prefix, threshold, include_license, mode):
     # if len(clone_pairs) > 1:
     #     for c in clone_pairs:
     #         c.print()
+    #     print('>' * 60)
 
     return clone_pairs
 
@@ -123,11 +124,22 @@ def main():
         mode = sys.argv[6]
     file = open(inputfile, 'r')
     all_clones = list()
+    count = 0
+    cplist = []
     for line in file:
         clones = extract_clone_set(line, prefix, sim, include_license, mode)
         if len(clones) > 0:
             all_clones.append(clones)
+            cplist.append(len(clones) - 1)
+        count += 1
     print_clone_pairs(all_clones, outputfile)
+    print('no. of queries with clones: ', len(all_clones))
+    print('frequency of no. of clones per query')
+    d = {x: cplist.count(x) for x in cplist}
+    print(d)
+    print('avg. clone pairs per query: ', (sum(cplist) * 1.0)/count)
+    print('max clone pairs per query: ', max(cplist))
+    print('min clone pairs per query: ', min(cplist))
 
 
 main()

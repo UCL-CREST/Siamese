@@ -51,7 +51,7 @@ def extract_file_name(file):
 
 
 def main():
-    tpfp_files = count_tpfp_at(read_csv('../results/results_for_rq2/10_so_snippets_clones2.csv'), 20)
+    tpfp_files = count_tpfp_at(read_csv('../results/results_for_rq2/10_so_snippets_clones2.csv'), 10)
     compute_prec(tpfp_files)
 
 

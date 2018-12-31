@@ -34,9 +34,12 @@ def plot(df0, df1, df2, df3, dir, index=''):
     print('plotting ...')
     # normal scale
     ax = result.plot(x='index', y='freq', style=['r-', 'g--', 'b-.', 'k:'])
+    # log-log scale
+    # ax.set_xscale('log')
+    # ax.set_yscale('log')
     ax.legend([r'$r_0$', r'$r_1$', r'$r_2$', r'$r_3$'], prop={'size': 22})
     ax.set_xlabel("token rank (" + index + ")")
-    ax.set_xlim(0, 1000)
+    ax.set_xlim(0, 100)
     ax.set_ylabel("document frequency (DF)")
     ax.yaxis.label.set_size(22)
     ax.xaxis.label.set_size(22)
@@ -151,7 +154,7 @@ def plot_slopes(filename):
 
 def main():
     # print('processing CSVs ...')
-    index = 'bellon'
+    index = 'qualitas'
     dir = '../results/results_for_rq0_qr_thresholds/'
     df_t0src_sorted = read_csv(dir + 'freq_df_t0src_' + index + '.csv')
     df_t1src_sorted = read_csv(dir + 'freq_df_t1src_' + index + '.csv')
