@@ -240,7 +240,9 @@ simThreshold      : 50%,50%,50%,50%
   * **RQ2 Comparison with Code Search Tools**
   Due to limited space, we do not include all the results from using the 10 highest-voted Stack Overflow posts in the paper. We thus include them here.
   * The full search results can be found [here](https://raw.githubusercontent.com/UCL-CREST/Siamese/master/results/results_for_rq2/10_so_snippets_clones_web.csv)
-  * **How to read the results** Siamese search results include multiple parts: (1) file path, (2) method name, (3) starting and ending line.
+    * **How to read the results** Siamese search results include multiple parts: (1) file path, (2) method name, (3) starting and ending line.
+
+    * For example, a clone pair of ```10_so/299495_0.java_paintComponent#22#26``` and ```mattibal/meshnet/MeshNetBase/src/com/mattibal/meshnet/utils/color/gui/LabChooserJFrame.java_paintComponent#89#95``` means the method ```painComponent``` in the file ```10_so/299495_0.java``` from line number 22 to 26 is a clone of the method ```paintComponent``` in the file ```mattibal/meshnet/MeshNetBase/src/com/mattibal/meshnet/utils/color/gui/LabChooserJFrame.java``` from line 89 to line 95.
 
 ---
 
