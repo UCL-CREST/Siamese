@@ -233,7 +233,9 @@ simThreshold      : 50%,50%,50%,50%
     * **OCD (Obfuscation/Compilcation/Decompilation)** data set. The OCD data set is from a study by Ragkhitwetsagul et al. and can be found here: [OCD data set](http://crest.cs.ucl.ac.uk/resources/cloplag/).
     * **SOCO (SOurce COde Re-use)** data set. The SOCO data set was created for the detection of source code reuse competition and can be downloaded here: [SOCO](http://users.dsic.upv.es/grupos/nle/soco/). However, the clone oracle has some issues which Ragkhitwetsagul et al. found and fixed. Please download the corrected clone oracle from: [Fixed clone oracle](http://crest.cs.ucl.ac.uk/fileadmin/crest/cloplag/soco_train_clones_fixed.txt).
     * **BigCloneBench** data set. The BigCloneBench is created by Svajlenko et al., it is one of the largest clone benchmarks available to date. It is created from IJaDataset 2.0 of 25,000 Java systems. The benchmark contains 2.8 million files with 8 million manually validated clone pairs of type-1 up to type-4. The data set and the clone oracle can be downloaded here: [BigCloneBench](https://github.com/jeffsvajlenko/BigCloneEval).
-    * **GitHub** data set. We used 131,307 GitHub Java projects to evaluate Siamese's incremental update module. Since the projects are all open source, you can download the GitHub projects from [GitHub](https://github.com) directly.
+    * **GitHub** data set. We used 16,738 and 130,719 GitHub Java projects to evaluate Siamese's precision and incremental update module. Since the projects are all open source, you can download the GitHub projects from [GitHub](https://github.com) directly. The list of the projects we used can be found below:
+      * [16,738 GitHub projects](https://raw.githubusercontent.com/UCL-CREST/Siamese/master/resources/github_proj_max_to_10.csv)
+      * [130,719 GitHub projects]()
     * **10 highest-voted Stack Overflow code snippets** We reused the code snippets from Kim et al.'s study. The 10 code queries from the 10 highest-voted Stack Overflow code snippets can be found here: [FaCoy website](https://github.com/FalconLK/FaCoY/tree/release-1.0/RQs/onlinequery)
 
 * **Additional Evaluation Results**:
