@@ -234,10 +234,13 @@ simThreshold      : 50%,50%,50%,50%
     * **SOCO (SOurce COde Re-use)** data set. The SOCO data set was created for the detection of source code reuse competition and can be downloaded here: [SOCO](http://users.dsic.upv.es/grupos/nle/soco/). However, the clone oracle has some issues which Ragkhitwetsagul et al. found and fixed. Please download the corrected clone oracle from: [Fixed clone oracle](http://crest.cs.ucl.ac.uk/fileadmin/crest/cloplag/soco_train_clones_fixed.txt).
     * **BigCloneBench** data set. The BigCloneBench is created by Svajlenko et al., it is one of the largest clone benchmarks available to date. It is created from IJaDataset 2.0 of 25,000 Java systems. The benchmark contains 2.8 million files with 8 million manually validated clone pairs of type-1 up to type-4. The data set and the clone oracle can be downloaded here: [BigCloneBench](https://github.com/jeffsvajlenko/BigCloneEval).
     * **GitHub** data set. We used 131,307 GitHub Java projects to evaluate Siamese's incremental update module. Since the projects are all open source, you can download the GitHub projects from [GitHub](https://github.com) directly.
+    * **10 highest-voted Stack Overflow code snippets** We reused the code snippets from Kim et al.'s study. The 10 code queries from the 10 highest-voted Stack Overflow code snippets can be found here: [FaCoy website](https://github.com/FalconLK/FaCoY/tree/release-1.0/RQs/onlinequery)
 
 * **Additional Evaluation Results**:
   * **RQ2 Comparison with Code Search Tools**
-  Due to limited space, we do not include all the results from using the 10 highest-voted Stack Overflow posts in the paper. We thus include them here. The full search results can be found below.
+  Due to limited space, we do not include all the results from using the 10 highest-voted Stack Overflow posts in the paper. We thus include them here.
+  * The full search results can be found [here](https://raw.githubusercontent.com/UCL-CREST/Siamese/master/results/results_for_rq2/10_so_snippets_clones_web.csv)
+  * **How to read the results** Siamese search results include multiple parts: (1) file path, (2) method name, (3) starting and ending line.
 
 ---
 
