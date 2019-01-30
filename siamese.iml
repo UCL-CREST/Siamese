@@ -13,6 +13,8 @@
       <excludeFolder url="file://$MODULE_DIR$/BellonClonesReader" />
       <excludeFolder url="file://$MODULE_DIR$/bcb_clones" />
       <excludeFolder url="file://$MODULE_DIR$/elasticsearch-2.2.0" />
+      <excludeFolder url="file://$MODULE_DIR$/elasticsearch-2.2.0-ngrams" />
+      <excludeFolder url="file://$MODULE_DIR$/elasticsearch-2.2.0-small" />
       <excludeFolder url="file://$MODULE_DIR$/exp_results" />
       <excludeFolder url="file://$MODULE_DIR$/kibana-4.4.1-darwin-x64" />
       <excludeFolder url="file://$MODULE_DIR$/ninka-1.3" />
@@ -22,6 +24,7 @@
       <excludeFolder url="file://$MODULE_DIR$/resources" />
       <excludeFolder url="file://$MODULE_DIR$/results" />
       <excludeFolder url="file://$MODULE_DIR$/sample_clones" />
+      <excludeFolder url="file://$MODULE_DIR$/search_results" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -69,5 +72,6 @@
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.7" level="project" />
     <orderEntry type="library" name="Maven: me.xdrop:fuzzywuzzy:1.1.9" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
   </component>
 </module>

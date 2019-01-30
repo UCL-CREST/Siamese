@@ -334,6 +334,8 @@ public class Siamese {
                 formatter.setAddLicense(true);
         } else if (outputFormat.equals("gcf")) {
             formatter.setFormat("gcf");
+        } else if (outputFormat.equals("json")) {
+            formatter.setFormat("json");
         } else {
             System.out.println("ERROR: wrong output format");
             return null;
@@ -702,8 +704,12 @@ public class Siamese {
         String outfilePath = outputFolder + "/" + index + "_" + qr + "_" + df.format(dateobj);
         if (formatter.getFormat().contains("csv"))
             outfilePath += ".csv";
-        else
+        else if (formatter.getFormat().equals("gcf"))
             outfilePath += ".xml";
+        else if (formatter.getFormat().equals("json"))
+            outfilePath += ".json";
+        else
+            outfilePath += ".csv"; // fall back to csv
         File outfile = new File(outfilePath);
         // if file doesn't exists, then create it
         boolean isCreated = false;
@@ -845,6 +851,8 @@ public class Siamese {
                             + " files/" + methodCount + " methods).");
                     if (formatter.getFormat().equals("gcf"))
                         outToFile = formatter.getXML();
+                    else if (formatter.getFormat().equals("json"))
+                        outToFile = formatter.getJSON();
                     bw.write(outToFile);
                     // reset the output to print
                     outToFile = "";
@@ -853,6 +861,8 @@ public class Siamese {
             // flush the last part of output
             if (formatter.getFormat().equals("gcf"))
                 outToFile = formatter.getXML();
+            else if (formatter.getFormat().equals("json"))
+                outToFile = formatter.getJSON();
             bw.write(outToFile);
             bw.close();
             System.out.println("Searching done for " + count + " files (" +
