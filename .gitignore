@@ -1,4 +1,5 @@
 .idea
+*.iml
 bcb_clones
 target/classes
 target
@@ -40,3 +41,5 @@ results/old
 elasticsearch-2.2.0_ngrams
 elasticsearch-2.2.0-ngrams
 elasticsearch-2.2.0-small
+.DS_Store
+**/.DS_Store
