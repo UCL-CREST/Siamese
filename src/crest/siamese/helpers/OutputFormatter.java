@@ -9,6 +9,7 @@ public class OutputFormatter {
     private String format;
     private boolean addStartEndLine;
     private XMLFormatter xmlFormatter;
+    private JSONFormatter jsonFormatter;
     private Document query;
     private int ccid = 1;
     private boolean addLicense;
@@ -17,6 +18,7 @@ public class OutputFormatter {
         format = "csv";
         addStartEndLine = true;
         xmlFormatter = new XMLFormatter();
+        jsonFormatter = new JSONFormatter();
         addLicense = false;
     }
 
@@ -65,7 +67,7 @@ public class OutputFormatter {
             }
             sb.append(",");
             return sb.toString();
-        } else if (this.format.equals("gcf")) {
+        } else if (this.format.equals("gcf") || this.format.equals("json")) {
             /* query, don't do anything yet */
             this.query = query;
             return "";
@@ -107,6 +109,11 @@ public class OutputFormatter {
             xmlFormatter.addCloneClass(this.ccid, -1, results);
             this.ccid++;
             return "";
+        } else if (this.format.equals("json")) {
+            /* put query at the front */
+            results.add(0, this.query);
+            jsonFormatter.addCloneClass(this.ccid, -1, results);
+            return "";
         } else {
             System.out.println("ERROR: unsupported format.");
             return null;
@@ -147,6 +154,11 @@ public class OutputFormatter {
             results.add(0, this.query);
             xmlFormatter.addCloneClass(this.ccid, -1, results);
             this.ccid++;
+            return "";
+        } else if (this.format.equals("json")) {
+            /* put query at the front */
+            results.add(0, this.query);
+            jsonFormatter.addCloneClass(this.ccid, -1, results);
             return "";
         } else {
             System.out.println("ERROR: unsupported format.");
@@ -197,6 +209,11 @@ public class OutputFormatter {
             xmlFormatter.addCloneClass(this.ccid, -1, results);
             this.ccid++;
             return "";
+        } else if (this.format.equals("json")) {
+            /* put query at the front */
+            results.add(0, this.query);
+            jsonFormatter.addCloneClass(this.ccid, -1, results);
+            return "";
         } else {
             System.out.println("ERROR: unsupported format.");
             return null;
@@ -205,5 +222,9 @@ public class OutputFormatter {
 
     public String getXML() {
         return xmlFormatter.getXMLAsString();
+    }
+
+    public String getJSON() {
+        return jsonFormatter.getJSONString();
     }
 }
