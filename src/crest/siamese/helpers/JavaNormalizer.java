@@ -1,5 +1,6 @@
 package crest.siamese.helpers;
 
+import crest.siamese.settings.JavaNormalizerMode;
 import crest.siamese.settings.NormalizerMode;
 import crest.siamese.settings.Settings;
 
@@ -19,10 +20,10 @@ public class JavaNormalizer implements Normalizer {
     private HashMap<String, Integer> opertaorMap = new HashMap<>();
     private HashMap<String, Integer> javaClassMap = new HashMap<String, Integer>();
     private HashMap<String, Integer> javaPackagesMap = new HashMap<String, Integer>();
-    private NormalizerMode modes = new NormalizerMode();
+    private JavaNormalizerMode modes;
 
     public JavaNormalizer(NormalizerMode modes) {
-        this.modes = modes;
+        this.modes = (JavaNormalizerMode) modes;
         setUpKeywordMap();
         setUpSymbolMap();
         setUpDatatypeMap();
@@ -46,11 +47,11 @@ public class JavaNormalizer implements Normalizer {
     }
 
     public void configure(NormalizerMode modes) {
-        this.modes = modes;
+        this.modes = (JavaNormalizerMode) modes;
     }
 
     @Override
-    public String normalizeAToken(String token, String type) throws Exception {
+    public String normalizeAToken(String token, String type) {
         if (datatypeMap.get(token) != null) {
             // data type = D
             if (modes.getDatatype() == Settings.Normalize.DATATYPE_NORM_ON)
@@ -109,7 +110,7 @@ public class JavaNormalizer implements Normalizer {
     }
 
     @Override
-    public ArrayList<String> noNormalizeAToken(String token) throws Exception {
+    public ArrayList<String> noNormalizeAToken(String token) {
         return null;
     }
 
