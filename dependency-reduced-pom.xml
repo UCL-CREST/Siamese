@@ -19,7 +19,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>crest.siamese.main.Main</mainClass>
+                  <mainClass>crest.siamese.Main</mainClass>
                 </transformer>
                 <transformer />
               </transformers>
