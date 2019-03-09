@@ -224,7 +224,7 @@ public class Python3MethodParser implements MethodParser {
             header.append(header.length() == 0 ? token.getText() + WHITESPACE : token.getText());
 
             // Outside of function header, no further iteration required
-            if (token.getType() == Python3Parser.COMMA && parent.getRuleIndex() == Python3Parser.RULE_funcdef) {
+            if (token.getType() == Python3Parser.COLON && parent.getRuleIndex() == Python3Parser.RULE_funcdef) {
                 break;
             }
         }
