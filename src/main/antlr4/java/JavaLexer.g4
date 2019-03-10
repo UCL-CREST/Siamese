@@ -26,7 +26,6 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-/* Copied from https://github.com/antlr/grammars-v4/blob/master/java/JavaLexer.g4 */
 
 lexer grammar JavaLexer;
 

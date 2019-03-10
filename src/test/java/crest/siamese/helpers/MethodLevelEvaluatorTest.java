@@ -4,6 +4,8 @@ package crest.siamese.helpers;
  * Created by Chaiyong on 7/17/17.
  */
 
+import org.junit.Test;
+
 import java.io.File;
 
 import static junit.framework.TestCase.assertEquals;
@@ -13,7 +15,7 @@ public class MethodLevelEvaluatorTest {
     private String mode = "test";
     private String outputDir = "results";
 
-    @org.junit.Test
+    @Test
     public void TestARP1() {
         MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
         e.generateSearchKey();
@@ -25,7 +27,7 @@ public class MethodLevelEvaluatorTest {
         resultFile.delete();
     }
 
-    @org.junit.Test
+    @Test
     public void TestARP2() {
         MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
         e.generateSearchKey();
@@ -37,7 +39,7 @@ public class MethodLevelEvaluatorTest {
         resultFile.delete();
     }
 
-    @org.junit.Test
+    @Test
     public void TestARP3() {
         MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
         e.generateSearchKey();
@@ -49,7 +51,7 @@ public class MethodLevelEvaluatorTest {
         resultFile.delete();
     }
 
-    @org.junit.Test
+    @Test
     public void TestMAP1() {
         MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
         e.generateSearchKey();
@@ -61,7 +63,7 @@ public class MethodLevelEvaluatorTest {
         resultFile.delete();
     }
 
-    @org.junit.Test
+    @Test
     public void TestMAP2() {
         MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
         e.generateSearchKey();
@@ -73,7 +75,7 @@ public class MethodLevelEvaluatorTest {
         resultFile.delete();
     }
 
-    @org.junit.Test
+    @Test
     public void TestMAP3() {
         MethodLevelEvaluator e = new MethodLevelEvaluator("resources/cloplag_clone_clusters_METHOD-LEVEL.csv", mode, outputDir, true);
         e.generateSearchKey();

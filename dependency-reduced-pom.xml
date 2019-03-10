@@ -5,8 +5,42 @@
   <artifactId>siamese</artifactId>
   <version>0.0.6-SNAPSHOT</version>
   <build>
-    <sourceDirectory>src</sourceDirectory>
     <plugins>
+      <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>4.7</version>
+        <executions>
+          <execution>
+            <id>antlr-java</id>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+            <configuration>
+              <arguments>
+                <argument>-package</argument>
+                <argument>crest.siamese.language.java</argument>
+              </arguments>
+              <sourceDirectory>${basedir}/src/main/antlr4/java</sourceDirectory>
+              <outputDirectory>${project.build.directory}/generated-sources/crest/siamese/language/java</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>antlr-python3</id>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+            <configuration>
+              <arguments>
+                <argument>-package</argument>
+                <argument>crest.siamese.language.python3</argument>
+              </arguments>
+              <sourceDirectory>${basedir}/src/main/antlr4/python3</sourceDirectory>
+              <outputDirectory>${project.build.directory}/generated-sources/crest/siamese/language/python3</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>2.4.3</version>
