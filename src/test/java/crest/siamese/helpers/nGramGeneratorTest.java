@@ -1,5 +1,7 @@
 package crest.siamese.helpers;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -8,16 +10,16 @@ import static org.junit.Assert.assertEquals;
  * Created by Chaiyong on 7/27/16.
  */
 public class nGramGeneratorTest {
-    @org.junit.Test
-    public void checkFourGrams() throws Exception {
+    @Test
+    public void checkFourGrams() {
         nGramGenerator gen = new nGramGenerator(4);
         String[] grams = gen.generateNGrams("hello world!");
         String[] expectedGrams = {"hell", "ello", "llo ", "lo w", "o wo", " wor", "worl", "orld", "rld!"};
         assertArrayEquals(grams, expectedGrams);
     }
 
-    @org.junit.Test
-    public void checkFourGramsFromJavaTokens() throws Exception {
+    @Test
+    public void checkFourGramsFromJavaTokens() {
         nGramGenerator gen = new nGramGenerator(2);
         ArrayList<String> javaTokens = new ArrayList<>();
         javaTokens.add("public");

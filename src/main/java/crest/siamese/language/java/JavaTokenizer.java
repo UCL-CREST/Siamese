@@ -40,13 +40,13 @@ public class JavaTokenizer implements Tokenizer {
         InputStream stream = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
         JavaLexer lexer = new JavaLexer(CharStreams.fromStream(stream, StandardCharsets.UTF_8));
         List<? extends Token> tokenList = lexer.getAllTokens();
-        String[] symbols = JavaLexer._SYMBOLIC_NAMES;
-        for(Token token : tokenList){
+        for (Token token : tokenList) {
+            String symbolicName = JavaLexer.VOCABULARY.getSymbolicName(token.getType());
             // normalize the token except white space (skip)
-            if (!symbols[token.getType()].equals("WS")
-                    && !symbols[token.getType()].equals("COMMENT")
-                    && !symbols[token.getType()].equals("LINE_COMMENT")) {
-                tokens.add(normalizer.normalizeAToken(token.getText().trim(), symbols[token.getType()]));
+            if (!symbolicName.equals("WS")
+                    && !symbolicName.equals("COMMENT")
+                    && !symbolicName.equals("LINE_COMMENT")) {
+                tokens.add(normalizer.normalizeAToken(token.getText().trim(), symbolicName));
             }
         }
 

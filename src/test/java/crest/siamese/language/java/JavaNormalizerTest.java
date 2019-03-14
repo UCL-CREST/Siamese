@@ -2,6 +2,7 @@ package crest.siamese.language.java;
 
 import crest.siamese.helpers.nGramGenerator;
 import crest.siamese.language.NormalizerMode;
+import org.junit.Test;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class JavaNormalizerTest {
 
-    @org.junit.Test
+    @Test
     public void checkTokenizationFromString() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(mode));
@@ -28,7 +29,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkSpecialCharacters() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(mode));
@@ -44,7 +45,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkOperators() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         char[] normOptions = {'o'};
@@ -61,7 +62,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkDatatypeNormalisation() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         char[] normOptions = {'d'};
@@ -80,7 +81,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkJavaClassNormalisation() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         char[] normOptions = {'j'};
@@ -103,7 +104,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkJavaPackageNormalisation() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         char[] normOptions = {'p'};
@@ -126,7 +127,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkWordNormalisation() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         char[] normOptions = {'w'};
@@ -142,7 +143,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkStringNormalisation() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         char[] normOptions = {'s'};
@@ -158,7 +159,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkDJKPSVWNormalisation() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         char[] normOptions = {'d', 'j', 'k', 'p', 's', 'w', 'v'};
@@ -176,7 +177,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkDJKPSVWNormalisation2() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         char[] normOptions = {'d', 'j', 'k', 'p', 's', 'w', 'v'};
@@ -203,7 +204,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void checkDJKOPSVWNormalisation() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         char[] normOptions = {'d', 'j', 'k', 'p', 's', 'w', 'v', 'o'};
@@ -241,7 +242,7 @@ public class JavaNormalizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void TestDefaultNormalizeMode() throws Exception {
         NormalizerMode mode = new JavaNormalizerMode();
         JavaTokenizer tokenizer = new JavaTokenizer(new JavaNormalizer(mode));

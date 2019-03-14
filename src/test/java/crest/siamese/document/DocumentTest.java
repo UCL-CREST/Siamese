@@ -1,5 +1,7 @@
 package crest.siamese.document;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 /**
@@ -7,7 +9,7 @@ import static org.junit.Assert.assertNotEquals;
  */
 public class DocumentTest {
 
-    @org.junit.Test
+    @Test
     public void TestDocumentCreation() {
         Document d = new Document();
         d.setFile("/my/test/file");
@@ -31,7 +33,7 @@ public class DocumentTest {
         assertEquals(d, d2);
     }
 
-    @org.junit.Test
+    @Test
     public void TestDifferentDocuments() {
         Document d = new Document();
         d.setFile("/my/test/file");
