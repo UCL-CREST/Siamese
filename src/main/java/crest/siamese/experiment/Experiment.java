@@ -17,7 +17,7 @@ public class Experiment {
     private static String[] normModes = {};
     private static int[] ngramSizes = {};
 
-    // TODO: I removed the "x", can put it back in if needed.
+    // The "x" is removed. We can put it back in if needed.
     private static String[] normModesAll = {
             "d", "j", "jd", "jk", "jkd", "jko", "jkod", "jo", "jod", "jp", "jpd", "jpk", "jpkd", "jpko", "jpkod",
             "jpo", "jpod", "jps", "jpsd", "jpsk", "jpskd", "jpsko", "jpskod", "jpso", "jpsod", "jpv", "jpvd", "jpvk",

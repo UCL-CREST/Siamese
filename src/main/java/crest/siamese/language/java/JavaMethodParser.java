@@ -180,16 +180,7 @@ public class JavaMethodParser implements MethodParser {
     private class MethodVisitor extends VoidVisitorAdapter {
         @Override
         public void visit(MethodDeclaration n, Object arg) {
-            // TODO: Do we need this?
-//            List<Parameter> parameterArrayList = n.getParameters();
             ArrayList<crest.siamese.document.Parameter> paramsList = new ArrayList<>();
-//            for (Parameter p: parameterArrayList) {
-//                paramsList.add(
-//                        new crest.siamese.document.Parameter(
-//                                p.getType().toString(),
-//                                p.getNameAsString()));
-//            }
-
             // do not include comments in the indexed code
             PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
             ppc.setPrintComments(false);
@@ -212,16 +203,7 @@ public class JavaMethodParser implements MethodParser {
     private class ConstructorVisitor extends VoidVisitorAdapter {
         @Override
         public void visit(ConstructorDeclaration c, Object arg) {
-
-//            List<Parameter> parameterArrayList = c.getParameters();
             ArrayList<crest.siamese.document.Parameter> paramsList = new ArrayList<>();
-//            for (Parameter p: parameterArrayList) {
-//                paramsList.add(
-//                        new crest.siamese.document.Parameter(
-//                                p.getType().toString(),
-//                                p.getNameAsString()));
-//            }
-
             // do not include comments in the indexed code
             PrettyPrinterConfiguration ppc = new PrettyPrinterConfiguration();
             ppc.setPrintComments(false);

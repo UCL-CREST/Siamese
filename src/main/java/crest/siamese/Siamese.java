@@ -234,7 +234,6 @@ public class Siamese {
             else
                 errMeasure = Settings.ErrorMeasure.MAP;
             deleteIndexAfterUse = Boolean.parseBoolean(prop.getProperty("deleteIndexAfterUse"));
-            // TODO: do we need this?
             prefixToRemove = inputFolder;
             if (!prefixToRemove.endsWith("/"))
                 prefixToRemove += "/"; // append / at the end
@@ -640,7 +639,7 @@ public class Siamese {
                                         t1Source,
                                         tokenizedSource,
 //                                        method.getSrc(),
-                                        "", // TODO: insert empty original code for performance now.
+                                        "", // insert empty original code for performance now.
                                         license,
                                         finalUrl);
                                 // add document to array
