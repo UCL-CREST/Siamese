@@ -573,6 +573,7 @@ public class Siamese {
         if (this.includeLicense) {
             this.fileLicense = extractProjectLicense();
         }
+        Date startDate = MyUtils.getCurrentTime();
         for (File file : listOfFiles) {
             try {
                 String license = "none";
@@ -681,8 +682,10 @@ public class Siamese {
                 if (fileCount % printEvery == 0) {
                     double percent = (double) fileCount * 100 / listOfFiles.size();
                     DecimalFormat df = new DecimalFormat("#.00");
-                    System.out.println("Indexed " + fileCount
-                            + " [" + df.format(percent) + "%] documents/files (" + count + " methods).");
+                    Date intervalDate = MyUtils.getCurrentTime();
+                    long timeElapsed = intervalDate.getTime() - startDate.getTime();
+                    System.out.println("Indexed " + fileCount + " [" + df.format(percent) + "%] documents/files ("
+                            + count + " methods) in " + timeElapsed + " ms");
                 }
             } catch (Exception e) {
                 System.out.println("ERROR: error while indexing a file: " + file.getAbsolutePath() + ". Skip.");
@@ -701,8 +704,10 @@ public class Siamese {
         if (fileCount % printEvery != 0) {
             double percent = (double) fileCount * 100 / listOfFiles.size();
             DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("Indexed " + fileCount
-                    + " [" + df.format(percent) + "%] files (" + count + " methods).");
+            Date endDate = MyUtils.getCurrentTime();
+            long timeElapsed = endDate.getTime() - startDate.getTime();
+            System.out.println("Indexed " + fileCount + " [" + df.format(percent) + "%] documents/files ("
+                    + count + " methods) in " + timeElapsed + " ms");
         }
         return count;
     }
