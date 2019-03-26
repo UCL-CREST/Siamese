@@ -48,7 +48,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class Siamese {
 
@@ -573,7 +576,14 @@ public class Siamese {
         if (this.includeLicense) {
             this.fileLicense = extractProjectLicense();
         }
+        // To log index interval times
         Date startDate = MyUtils.getCurrentTime();
+        // To sample 200 methods for evaluation (file count starts at 1)
+        // Final target is 100 methods after empty method lists and clone size filtering.
+        Random random = new Random();
+        Set<Integer> fileCountsToSample = random.ints(200, 1, listOfFiles.size()+1)
+                .boxed().collect(Collectors.toSet());
+        List<Method> sampledMethods = new ArrayList<>();
         for (File file : listOfFiles) {
             try {
                 String license = "none";
@@ -650,6 +660,12 @@ public class Siamese {
                             }
                         }
                     }
+                    // Store sampled methods
+                    if (fileCountsToSample.contains(fileCount) && methodList.size() > 0) {
+                        int methodIndexToSample = random.ints(1, 0, methodList.size())
+                                .findFirst().getAsInt();
+                        sampledMethods.add(methodList.get(methodIndexToSample));
+                    }
                 } catch (Exception e) {
                     System.out.println("ERROR: error while extracting methods.");
                     e.printStackTrace();
@@ -709,6 +725,16 @@ public class Siamese {
             System.out.println("Indexed " + fileCount + " [" + df.format(percent) + "%] documents/files ("
                     + count + " methods) in " + timeElapsed + " ms");
         }
+
+        // print out sampled method location and source code
+        for (Method sampledMethod: sampledMethods) {
+            String methodLocation = sampledMethod.getFile() + "_" + sampledMethod.getName() + "#"
+                    + sampledMethod.getStartLine() + "#" + sampledMethod.getEndLine();
+            String methodLocationComment = "# " + methodLocation;
+            System.out.println(methodLocationComment);
+            System.out.println(sampledMethod.getSrc());
+        }
+
         return count;
     }
 
