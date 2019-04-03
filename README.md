@@ -2,7 +2,7 @@
 
 ![Siamese logo](Logo.png "Siamese logo")
 
-Siamese (**S**calable, **i**ncremental, **a**nd multi-repr**ese**ntation) is a
+Siamese (**S**calable, **i**ncremental, **a**nd **m**ulti-repr**ese**ntation) is a
 code clone search system powered by Elasticsearch with
 code clone detection approaches, including code normalisation, *n*-grams, and query reduction technique,
 built on top. It can scalably search for clones of Type-1 to Type-3/Type-4 from a large corpora of Java source code within seconds.
