@@ -8,13 +8,14 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,10 +61,10 @@ public class Python3MethodParser implements MethodParser {
         return null;
     }
 
-    private static String readFile(File file, Charset encoding) {
+    private static String readFile(File file) {
         try {
-            byte[] encoded = Files.readAllBytes(file.toPath());
-            return new String(encoded, encoding);
+            byte[] bytes = Files.readAllBytes(file.toPath());
+            return new String(bytes, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return StringUtils.EMPTY;
@@ -77,11 +78,11 @@ public class Python3MethodParser implements MethodParser {
      */
     private static Python3Parser.File_inputContext parseFile(String filePath) {
         File file = new File(filePath);
-        String sourceCode = readFile(file, Charset.forName("UTF-8"));
+        String sourceCode = readFile(file);
 
         Python3Lexer lexer = new Python3Lexer(CharStreams.fromString(sourceCode));
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        Python3Parser parser = new Python3Parser(tokens);
+        TokenStream tokenStream = new CommonTokenStream(lexer);
+        Python3Parser parser = new Python3Parser(tokenStream);
 
         return parser.file_input();
     }
@@ -95,9 +96,9 @@ public class Python3MethodParser implements MethodParser {
         TerminalNodeImpl prev = null;
         TerminalNodeImpl curr = null;
         for (int i = 0; i < ruleContext.getChildCount(); i++) {
-            ParseTree element = ruleContext.getChild(i);
-            if (element instanceof TerminalNodeImpl) {
-                curr = (TerminalNodeImpl) element;
+            ParseTree parseTree = ruleContext.getChild(i);
+            if (parseTree instanceof TerminalNodeImpl) {
+                curr = (TerminalNodeImpl) parseTree;
                 if (curr.getSymbol().getType() == Python3Parser.NAME &&
                         prev != null && prev.getSymbol().getType() == Python3Parser.CLASS) {
                     break;
@@ -122,9 +123,9 @@ public class Python3MethodParser implements MethodParser {
     private void extract(RuleContext ruleContext, ArrayList<Method> methods,
                          TerminalNodeImpl classNode, List<TerminalNodeImpl> terminalNodes) {
         for (int i = 0; i < ruleContext.getChildCount(); i++) {
-            ParseTree element = ruleContext.getChild(i);
-            if (element instanceof RuleContext) {
-                RuleContext childRuleContext = (RuleContext) element;
+            ParseTree parseTree = ruleContext.getChild(i);
+            if (parseTree instanceof RuleContext) {
+                RuleContext childRuleContext = (RuleContext) parseTree;
                 if (childRuleContext.getRuleIndex() == Python3Parser.RULE_funcdef) {
                     // Inner function definition within a function
                     traverse(childRuleContext, methods, classNode);
@@ -141,8 +142,8 @@ public class Python3MethodParser implements MethodParser {
                         extract(childRuleContext, methods, classNode, terminalNodes);
                     }
                 }
-            } else if (element instanceof TerminalNodeImpl) {
-                TerminalNodeImpl terminalNode = (TerminalNodeImpl) element;
+            } else if (parseTree instanceof TerminalNodeImpl) {
+                TerminalNodeImpl terminalNode = (TerminalNodeImpl) parseTree;
                 terminalNodes.add(terminalNode);
             }
         }
@@ -253,9 +254,9 @@ public class Python3MethodParser implements MethodParser {
             methods.add(method);
         } else {
             for (int i = 0; i < ruleContext.getChildCount(); i++) {
-                ParseTree element = ruleContext.getChild(i);
-                if (element instanceof RuleContext) {
-                    traverse((RuleContext) element, methods, classNode);
+                ParseTree parseTree = ruleContext.getChild(i);
+                if (parseTree instanceof RuleContext) {
+                    traverse((RuleContext) parseTree, methods, classNode);
                 }
             }
         }
