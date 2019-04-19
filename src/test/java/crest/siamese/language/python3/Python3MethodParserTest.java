@@ -55,7 +55,7 @@ public class Python3MethodParserTest {
     public void parseMethodsAtFileLevelExtractMethodAsExpected() {
         // given
         Python3MethodParser python3MethodParser = new Python3MethodParser();
-        URL url = getClass().getClassLoader().getResource("crest/siamese/language/python3/simple.py");
+        URL url = getClass().getClassLoader().getResource("crest/siamese/language/python3/reverse_list.py");
         if (url == null) {
             fail("Resource not found, please check input to getResource().");
         }
@@ -65,12 +65,15 @@ public class Python3MethodParserTest {
         // when
         ArrayList<Method> methods = python3MethodParser.parseMethods();
         Method fileMethod = methods.get(0);
-        String expectedSourceCode = "def sum ( a , b ) :\n" +
-                "\treturn a + b\n" +
-                "print ( \"The sum of %i and %i is %i\" % ( 5 , 3 , sum ( 5 , 3 ) ) )\n" +
+        String expectedSourceCode = "" +
+                "input = [ 1 , 2 , 3 , 4 , 5 ]\n" +
+                "def reverse_list ( a ) :\n" +
+                    "\ta . reverse ( )\n" +
+                    "\treturn a\n" +
+                "print ( reverse_list ( input ) ) " +
                 "<EOF>";
         int expectedStartLine = 1;
-        int expectedEndLine = 6;
+        int expectedEndLine = 7;
 
         // then
         assertThat(fileMethod.getFile(), is(filePath));
