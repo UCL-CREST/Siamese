@@ -1,0 +1,15 @@
+version: '3.7'
+services: 
+  siamese:
+    build: .
+    volumes: 
+      - ./index-folder:/Siamese/index-folder
+      - ./search-folder:/Siamese/search-folder
+      - ./output-folder:/Siamese/output-folder
+    command: >
+      bash -c "
+      ./elasticsearch-2.2.0/bin/elasticsearch -d -Des.insecure.allow.root=true &&
+      sleep 10 &&
+      cd /Siamese &&
+      java -jar siamese-0.0.6-SNAPSHOT.jar -c index -i /index-folder -cf config.properties &&
+      java -jar siamese-0.0.6-SNAPSHOT.jar -c search -i /search-folder -o ./output-folder -cf config.properties"
