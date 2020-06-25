@@ -1,8 +1,18 @@
-.idea
-*.iml
-bcb_clones
-target/classes
+HELP.md
 target
+target/classes
+target/maven-status
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+bcb_clones
 elasticsearch.iml
 searchkey.csv
 rprec*.csv
@@ -41,5 +51,9 @@ results/old
 elasticsearch-2.2.0_ngrams
 elasticsearch-2.2.0-ngrams
 elasticsearch-2.2.0-small
+
+
+# System Files
 .DS_Store
+Thumbs.db
 **/.DS_Store
