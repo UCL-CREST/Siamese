@@ -5,7 +5,7 @@ import crest.siamese.language.MethodParser;
 
 import java.util.ArrayList;
 
-public class JavaScriptMethodParser implements MethodParser {
+public class JSMethodParser implements MethodParser {
 
     @Override
     public String getLicense() {
