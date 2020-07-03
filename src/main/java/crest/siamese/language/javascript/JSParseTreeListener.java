@@ -15,20 +15,22 @@ import java.util.Map;
 
 public class JSParseTreeListener extends JavaScriptParserBaseListener {
 
-    static final String FUNCTION_EXPRESSION = "Function Expression";
-    static final String ARROW_FUNCTION = "Arrow Function";
-    static final String ANONYMOUS_FUNCTION = "Anonymous Function";
-    static final String START = "START";
-    static final String END = "END";
+    private final String FUNCTION_EXPRESSION = "Function Expression";
+    private final String START = "START";
+    private final String END = "END";
 
-    ParseTree parseTree;
-    List<Method> jsMethods;
-    String filePath;
+    private ParseTree parseTree;
+    private List<Method> jsMethods;
+    private String filePath;
+    private Map<Integer, Integer> sourceStartEndMap;
+    private Map<Integer, String> sourceCodeMap;
 
     public JSParseTreeListener(String filePath, ParseTree parseTree) {
         this.parseTree = parseTree;
         this.filePath = filePath;
-        jsMethods = new ArrayList<>();
+        this.jsMethods = new ArrayList<>();
+        this.sourceStartEndMap = new HashMap<>();
+        this.sourceCodeMap = new HashMap<>();
 
     }
 
@@ -47,52 +49,46 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
                 StringUtils.EMPTY, src, startLine, endLine, parameters, StringUtils.EMPTY);
     }
 
-    private Method buildMethod(ParseTree tree) {
-        String className = getClassName(tree);
-        String functionName = getFunctionIdentifier(tree);
-        List<Parameter> parameters = getParameters(tree);
-        String header = getHeader(functionName, parameters);
-        Map<String, Integer> range = getRange(tree);
-        int startLine = range.get(START);
-        int endLine = range.get(END);
-        String src = getSourceCode(tree);
-        return new Method(filePath, StringUtils.EMPTY, className, functionName, StringUtils.EMPTY,
-                src, startLine, endLine, parameters, header);
-    }
-
-
     @Override
     public void enterFunctionDeclaration(FunctionDeclarationContext ctx) {
-        jsMethods.add(buildMethod(ctx));
+        buildMethod(ctx);
     }
 
     @Override
     public void enterFunctionExpression(FunctionExpressionContext ctx) {
-        jsMethods.add(buildMethod(ctx));
-    }
-
-    @Override
-    public void enterFunctionDecl(FunctionDeclContext ctx) {
-        jsMethods.add(buildMethod(ctx));
-    }
-
-    @Override
-    public void enterAnoymousFunctionDecl(AnoymousFunctionDeclContext ctx) {
-        jsMethods.add(buildMethod(ctx));
-    }
-
-    @Override
-    public void enterArrowFunction(ArrowFunctionContext ctx) {
-        jsMethods.add(buildMethod(ctx));
+        buildMethod(ctx);
     }
 
     @Override
     public void enterMethodDefinition(MethodDefinitionContext ctx) {
-        jsMethods.add(buildMethod(ctx));
+        buildMethod(ctx);
     }
 
+    private void buildMethod(ParseTree tree) {
+        Map<String, Integer> range = getRange(tree);
+        int startLine = range.get(START);
+        int endLine = range.get(END);
+        String src = getSourceCode(tree);
+        if ((sourceStartEndMap.containsKey(startLine) && sourceStartEndMap.get(startLine).equals(endLine))) {
+            if (sourceCodeMap.get(startLine).equals(src)) {
+                System.out.println("Found duplicate");
+                return;
+            }
+        }
+        String className = getClassName(tree);
+        String functionName = getFunctionIdentifier(tree);
+        List<Parameter> parameters = getParameters(tree);
+        String header = getHeader(functionName, parameters);
+        this.sourceStartEndMap.put(startLine, endLine);
+        this.sourceCodeMap.put(startLine, src);
 
-    private static String getSourceCode(ParseTree tree) {
+        Method method = new Method(filePath, StringUtils.EMPTY, className, functionName, StringUtils.EMPTY,
+                src, startLine, endLine, parameters, header);
+        jsMethods.add(method);
+
+    }
+
+    private String getSourceCode(ParseTree tree) {
         StringBuilder builder = new StringBuilder();
         List<TerminalNodeImpl> terminalNodes = traverseParseTree(tree);
         for (TerminalNodeImpl tm : terminalNodes) {
@@ -101,7 +97,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return builder.toString();
     }
 
-    private static List<TerminalNodeImpl> traverseParseTree(ParseTree tree) {
+    private List<TerminalNodeImpl> traverseParseTree(ParseTree tree) {
         List<TerminalNodeImpl> terminalNodes = new ArrayList<>();
         List<ParseTree> firstStack = new ArrayList<ParseTree>();
         firstStack.add(tree);
@@ -128,7 +124,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return terminalNodes;
     }
 
-    private static List<Parameter> getFunctionDeclarationParameters(ParseTree tree) {
+    private List<Parameter> getParameters(ParseTree tree) {
         List<Parameter> parameters = new ArrayList<>();
         if (tree.getChildCount() > 0) {
             for (int i = 0; i < tree.getChildCount(); i++) {
@@ -147,42 +143,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return parameters;
     }
 
-    private static List<Parameter> getArrowFunctionParameters(ParseTree tree) {
-        List<Parameter> parameters = new ArrayList<>();
-        if (tree.getChildCount() > 0) {
-            ParseTree firstChild = tree.getChild(0);//ArrowFunctionParametersContext
-            if (firstChild.getChildCount() > 0) {
-                for (int i = 0; i < firstChild.getChildCount(); i++) {
-                    if (firstChild.getChild(i) instanceof JavaScriptParser.FormalParameterListContext) {
-                        ParseTree secondChild = firstChild.getChild(i);
-                        if (secondChild.getChildCount() > 0) {
-                            for (int j = 0; j < secondChild.getChildCount(); j++) {
-                                if (secondChild.getChild(j) instanceof JavaScriptParser.FormalParameterArgContext) {
-                                    String param = secondChild.getChild(j).getText();
-                                    parameters.add(new Parameter(StringUtils.EMPTY, param));
-                                }
-                            }
-                            break;
-                        }
-
-                    }
-                }
-            }
-        }
-        return parameters;
-    }
-
-    private static List<Parameter> getParameters(ParseTree tree) {
-        List<Parameter> parameters = new ArrayList<>();
-        if (tree instanceof JavaScriptParser.AnoymousFunctionContext) {
-            parameters.addAll(getArrowFunctionParameters(tree));
-        } else {
-            parameters.addAll(getFunctionDeclarationParameters(tree));
-        }
-        return parameters;
-    }
-
-    private static String getClassName(ParseTree tree) {
+    private String getClassName(ParseTree tree) {
         String className = StringUtils.EMPTY;
         if (tree instanceof JavaScriptParser.MethodDefinitionContext) {
             ParseTree parentClassContext = tree.getParent();
@@ -195,7 +156,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return className;
     }
 
-    private static String getFunctionIdentifier(ParseTree tree) {
+    private String getFunctionIdentifier(ParseTree tree) {
         String functionName = StringUtils.EMPTY;
         if (tree instanceof JavaScriptParser.FunctionDeclarationContext) {
             if (tree.getChildCount() > 0) {
@@ -209,14 +170,14 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
             }
         } else if (tree instanceof JavaScriptParser.FunctionExpressionContext) {
             functionName = FUNCTION_EXPRESSION;//Functional expression does not contain any identifier
-        } else if (tree instanceof JavaScriptParser.ArrowFunctionContext) {
-            functionName = ARROW_FUNCTION;//Arrow function does not contain any identifier
-        } else if (tree instanceof JavaScriptParser.AnoymousFunctionContext) {
-            functionName = ANONYMOUS_FUNCTION;// Anonymous Function does not contain any identifier
         } else if (tree instanceof JavaScriptParser.MethodDefinitionContext) {// profess class member method
             while (!(tree instanceof JavaScriptParser.IdentifierContext)) {
                 if (tree.getChildCount() > 0) {// check even a member method is a generator function
                     if (tree.getChild(0) instanceof TerminalNodeImpl && tree.getChild(0).getText().equals("*")) {
+                        tree = tree.getChild(1);
+                        continue;
+                    }// check even a member method starts with #
+                    if (tree.getChild(0) instanceof TerminalNodeImpl && tree.getChild(0).getText().equals("#")) {
                         tree = tree.getChild(1);
                         continue;
                     }
@@ -228,7 +189,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return functionName;
     }
 
-    private static String getHeader(String functionName, List<Parameter> parameters) {
+    private String getHeader(String functionName, List<Parameter> parameters) {
         StringBuilder sb = new StringBuilder();
         sb.append(functionName + " " + "(");
         for (Parameter p : parameters) {
@@ -240,7 +201,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return sb.toString();
     }
 
-    private static Map<String, Integer> getRange(ParseTree tree) {
+    private Map<String, Integer> getRange(ParseTree tree) {
         Map<String, Integer> range = new HashMap<>();
         range.put(START, 0);
         range.put(END, 0);

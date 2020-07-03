@@ -20,7 +20,6 @@ public class JSMethodParser implements MethodParser {
     private String FILE_PATH;
     private String MODE;
 
-
     /**
      * Constructor that refer to parent Object class. Required for calling Class::newInstance.
      */
@@ -64,7 +63,6 @@ public class JSMethodParser implements MethodParser {
         this.FILE_PATH = filePath;
         this.MODE = mode;
     }
-
 
     /**
      * Uses ANTLR4 generated Parser and Lexer to extract methods from JavaScript source code file
@@ -118,7 +116,6 @@ public class JSMethodParser implements MethodParser {
         return methods;
 
     }
-
 
     private static String readFile(File file) {
         try {

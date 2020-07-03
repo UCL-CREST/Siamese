@@ -13,9 +13,8 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.fail;
 
-public final class SourceTreeWalker {
+public final class JSMethodParserSimulator {
     private static void printFunctionDeclaration(File sourceFile, String jsSourceCode) {
 
         JavaScriptParser parser = new Builder.Parser(jsSourceCode).build();
@@ -29,6 +28,7 @@ public final class SourceTreeWalker {
         } catch (Exception e) {
             System.err.println("Source file->" + sourceFile.getPath() + "-cannot be parsed ");
         }
+        System.out.println("Number of methods collected: " + methods.size());
         System.out.println("---Completed---");
 
     }
@@ -44,11 +44,12 @@ public final class SourceTreeWalker {
     }
 
     public static void main(String[] args) throws Exception {
-        URL url = SourceTreeWalker.class.getClassLoader().getResource("/crest/siamese/language/javascript/Generator.js");
+        /*URL url = JSMethodParserSimulator.class.getClassLoader().getResource("/crest/siamese/language/javascript/DemoTest.js");
         if (url == null) {
             System.out.println("Resource not found, please check input to getResource().");
-        }
-        String filePath = url.getPath();
+        }*/
+        String ss = "/home/mrhmisu/UCL-MS/Siamese/src/test/resources/crest/siamese/language/javascript/All-Combination-Of-JS-Functions.js";
+        String filePath = ss;//url.getPath();
         File file = new File(filePath);
         String sourceCode = readFile(file);
         printFunctionDeclaration(file, sourceCode);

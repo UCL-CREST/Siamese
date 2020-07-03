@@ -13,7 +13,6 @@ public final class Builder {
     private Builder() {
     }
 
-
     public static final class Parser {
 
         private JavaScriptParser parser;
