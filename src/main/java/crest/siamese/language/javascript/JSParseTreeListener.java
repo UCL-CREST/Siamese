@@ -13,6 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * This class works for collecting method blocks by traversing ANTLR4 generated Parse Tree
+ * based on the ANTLR4 recommended Listener pattern.
+ */
+
 public class JSParseTreeListener extends JavaScriptParserBaseListener {
 
     private final String FUNCTION_EXPRESSION = "Function Expression";
@@ -25,6 +31,13 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
     private Map<Integer, Integer> sourceStartEndMap;
     private Map<Integer, String> sourceCodeMap;
 
+
+    /**
+     * Constructor to build JSParseTreeListener
+     *
+     * @param filePath  JavaScript source file path
+     * @param parseTree ANTLR4 generated Parse Tree
+     */
     public JSParseTreeListener(String filePath, ParseTree parseTree) {
         this.parseTree = parseTree;
         this.filePath = filePath;
@@ -34,20 +47,6 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
 
     }
 
-    public List<Method> getJSMethods() {
-        return this.jsMethods;
-    }
-
-    public Method getFileBlockMethod() {
-        String src = getSourceCode(this.parseTree);
-        Map<String, Integer> range = getRange(this.parseTree);
-        int startLine = range.get(START);
-        int endLine = range.get(END);
-        List<Parameter> parameters = new ArrayList<>();
-
-        return new Method(this.filePath, StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY,
-                StringUtils.EMPTY, src, startLine, endLine, parameters, StringUtils.EMPTY);
-    }
 
     @Override
     public void enterFunctionDeclaration(FunctionDeclarationContext ctx) {
@@ -64,7 +63,36 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         buildMethod(ctx);
     }
 
-    private void buildMethod(ParseTree tree) {
+
+    protected List<Method> getJSMethods() {
+        return this.jsMethods;
+    }
+
+    /**
+     * This method builds a Method object using the complete source code of the file.
+     *
+     * @return A Method Object containing the whole source code of the file block.
+     */
+    protected Method getFileBlockMethod() {
+        String src = getSourceCode(this.parseTree);
+        Map<String, Integer> range = getRange(this.parseTree);
+        int startLine = range.get(START);
+        int endLine = range.get(END);
+        List<Parameter> parameters = new ArrayList<>();
+
+        return new Method(this.filePath, StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY,
+                StringUtils.EMPTY, src, startLine, endLine, parameters, StringUtils.EMPTY);
+    }
+
+
+    /**
+     * This method builds a Complete Method from the ANTLR4 generated Parse Tree.
+     * It collects function name, parameters, headers source, start and end line.
+     * Moreover, it helps to detect duplicate extracted methods from the Parse Tree.sss
+     *
+     * @param tree ANTLR4 generated Parse Tree
+     */
+    protected void buildMethod(ParseTree tree) {
         Map<String, Integer> range = getRange(tree);
         int startLine = range.get(START);
         int endLine = range.get(END);
@@ -88,20 +116,35 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
 
     }
 
-    private String getSourceCode(ParseTree tree) {
+    /**
+     * This method is responsible for retrieving the source code from the ANTLR4 generated Parse Tree.
+     * It travers ANTLR4 generated Parse Tree to get the list of terminal nodes and then concatenating
+     * the terminal nodes values as string to produce the tokenize source code.
+     *
+     * @param tree ANTLR4 generated Parse Tree
+     * @return Extract function block source code.
+     */
+    protected String getSourceCode(ParseTree tree) {
         StringBuilder builder = new StringBuilder();
         List<TerminalNodeImpl> terminalNodes = traverseParseTree(tree);
         for (TerminalNodeImpl tm : terminalNodes) {
-            builder.append(tm.getText() + " ");
+            builder.append(tm.getText()).append(" ");
         }
-        return builder.toString();
+        return builder.toString().trim();
     }
 
-    private List<TerminalNodeImpl> traverseParseTree(ParseTree tree) {
+
+    /**
+     * Travers ANTLR4 generated Parse Tree using Depth-First-Search and collect all the terminal nodes.
+     *
+     * @param tree tree ANTLR4 generated Parse Tree
+     * @return A list of TerminalNodeImpl derived from function block.
+     */
+    protected List<TerminalNodeImpl> traverseParseTree(ParseTree tree) {
         List<TerminalNodeImpl> terminalNodes = new ArrayList<>();
-        List<ParseTree> firstStack = new ArrayList<ParseTree>();
+        List<ParseTree> firstStack = new ArrayList<>();
         firstStack.add(tree);
-        List<List<ParseTree>> childListStack = new ArrayList<List<ParseTree>>();
+        List<List<ParseTree>> childListStack = new ArrayList<>();
         childListStack.add(firstStack);
         while (!childListStack.isEmpty()) {
             List<ParseTree> childStack = childListStack.get(childListStack.size() - 1);
@@ -113,7 +156,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
                     terminalNodes.add((TerminalNodeImpl) tree);
                 }
                 if (tree.getChildCount() > 0) {
-                    List<ParseTree> children = new ArrayList<ParseTree>();
+                    List<ParseTree> children = new ArrayList<>();
                     for (int i = 0; i < tree.getChildCount(); i++) {
                         children.add(tree.getChild(i));
                     }
@@ -124,7 +167,16 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return terminalNodes;
     }
 
-    private List<Parameter> getParameters(ParseTree tree) {
+
+    /**
+     * This method is called to identify the function parameters. It first travers ANTLR4 generated Parse Tree
+     * to locate the FormalParameterListContext RuleContext and extract function parameters from
+     * the FormalParameterArgContext RuleContext
+     *
+     * @param tree tree ANTLR4 generated Parse Tree
+     * @return A list of Parameters derived from function block and return empty list for Arrow function
+     */
+    protected List<Parameter> getParameters(ParseTree tree) {
         List<Parameter> parameters = new ArrayList<>();
         if (tree.getChildCount() > 0) {
             for (int i = 0; i < tree.getChildCount(); i++) {
@@ -143,7 +195,17 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return parameters;
     }
 
-    private String getClassName(ParseTree tree) {
+
+    /**
+     * This method is invoked to identify class name for the methods that are declared inside a class. It travers
+     * ANTLR4 generated Parse Tree to locate the MethodDefinitionContext RuleContext and the
+     * extract the class name from the parent RuleContext ClassDeclarationContext.
+     *
+     * @param tree tree ANTLR4 generated Parse Tree
+     * @return Class name if the extracted method is under any class declaration otherwise
+     * return empty string as StringUtils.EMPTY
+     */
+    protected String getClassName(ParseTree tree) {
         String className = StringUtils.EMPTY;
         if (tree instanceof JavaScriptParser.MethodDefinitionContext) {
             ParseTree parentClassContext = tree.getParent();
@@ -156,7 +218,16 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return className;
     }
 
-    private String getFunctionIdentifier(ParseTree tree) {
+
+    /**
+     * This method helps to extract the function name. It first travers ANTLR4 generated Parse Tree to locate
+     * the FunctionDeclarationContext, FunctionExpressionContext and MethodDefinitionContext RuleContext.
+     * The it extracts function name/ identifier from the IdentifierContext RuleContext.
+     *
+     * @param tree tree ANTLR4 generated Parse Tree
+     * @return Function name/ Identifier as String
+     */
+    protected String getFunctionIdentifier(ParseTree tree) {
         String functionName = StringUtils.EMPTY;
         if (tree instanceof JavaScriptParser.FunctionDeclarationContext) {
             if (tree.getChildCount() > 0) {
@@ -189,11 +260,19 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return functionName;
     }
 
-    private String getHeader(String functionName, List<Parameter> parameters) {
+
+    /**
+     * Create function signature as function header by concatenating the function name and parameters
+     *
+     * @param functionName Extracted function name
+     * @param parameters   List of parameters
+     * @return Function header containing function name and parameters as String
+     */
+    protected String getHeader(String functionName, List<Parameter> parameters) {
         StringBuilder sb = new StringBuilder();
-        sb.append(functionName + " " + "(");
+        sb.append(functionName).append(" ").append("(");
         for (Parameter p : parameters) {
-            sb.append(p.getId() + ",");
+            sb.append(p.getId()).append(",");
         }
         if (sb.charAt(sb.length() - 1) == ',')
             sb.deleteCharAt(sb.length() - 1);
@@ -201,7 +280,14 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         return sb.toString();
     }
 
-    private Map<String, Integer> getRange(ParseTree tree) {
+
+    /**
+     * Identify the method block range from the Parse tree.
+     *
+     * @param tree ANTLR4 generated Parse Tree
+     * @return A Map containing start line and end line of the method block
+     */
+    protected Map<String, Integer> getRange(ParseTree tree) {
         Map<String, Integer> range = new HashMap<>();
         range.put(START, 0);
         range.put(END, 0);
@@ -212,5 +298,6 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         }
         return range;
     }
+
 
 }

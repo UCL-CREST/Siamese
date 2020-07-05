@@ -1,25 +1,28 @@
 package crest.siamese.language.javascript;
 
 import crest.siamese.document.Method;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.apache.commons.lang.StringUtils;
+import org.junit.Test;
+
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public final class JSMethodParserSimulator {
-    private static void printFunctionDeclaration(File sourceFile, String jsSourceCode) {
+public final class JSMethodParserSimulatorTest {
 
-        JavaScriptParser parser = new Builder.Parser(jsSourceCode).build();
+    private static void printFunctionDeclaration(File sourceFile) {
         List<Method> methods = new ArrayList<>();
         try {
+            CharStream sourceStream = getSourceAsCharStreams(sourceFile);
+            JavaScriptParser parser = new Builder.Parser(sourceStream).build();
             ParseTree parseTree = parser.program();
             JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(sourceFile.getPath(), parseTree);
             ParseTreeWalker.DEFAULT.walk(jsParseTreeListener, parseTree);
@@ -33,25 +36,20 @@ public final class JSMethodParserSimulator {
 
     }
 
-    private static String readFile(File file) {
-        try {
-            byte[] bytes = Files.readAllBytes(file.toPath());
-            return new String(bytes, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return StringUtils.EMPTY;
-        }
+
+    private static CharStream getSourceAsCharStreams(File sourceFile) throws IOException {
+        Path sourcePath = Paths.get(sourceFile.getPath());
+        return CharStreams.fromPath(sourcePath);
     }
 
-    public static void main(String[] args) throws Exception {
+    @Test
+    public void JSMethodParserTest() {
         /*URL url = JSMethodParserSimulator.class.getClassLoader().getResource("/crest/siamese/language/javascript/DemoTest.js");
         if (url == null) {
             System.out.println("Resource not found, please check input to getResource().");
         }*/
-        String ss = "/home/mrhmisu/UCL-MS/Siamese/src/test/resources/crest/siamese/language/javascript/All-Combination-Of-JS-Functions.js";
-        String filePath = ss;//url.getPath();
+        String filePath = "/home/mrhmisu/UCL-MS/Siamese/src/test/resources/crest/siamese/language/javascript/All-Combination-Of-JS-Functions.js";
         File file = new File(filePath);
-        String sourceCode = readFile(file);
-        printFunctionDeclaration(file, sourceCode);
+        printFunctionDeclaration(file);
     }
 }

@@ -1,25 +1,34 @@
 package crest.siamese.language.javascript;
 
-import org.antlr.v4.runtime.ANTLRErrorListener;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
 
+
+/**
+ * A builder class that helps to build JavaScript Parser with Custom Error Listener
+ * based on the recommended Builder Pattern
+ */
 public final class Builder {
 
     private static final DescriptiveBailErrorListener ERROR_LISTENER = new DescriptiveBailErrorListener();
 
-    // No need to instantiate this class.
+    /**
+     * This class will not be instantiated.
+     */
     private Builder() {
     }
 
+    /**
+     * A static class  generates a Parser Builder
+     */
     public static final class Parser {
 
         private JavaScriptParser parser;
 
-        public Parser(String input) {
-            this(new ANTLRInputStream(input));
-        }
+        /**
+         * Constructor to Create Parser with source code as CharStream
+         *
+         * @param input Provided source code as CharStream
+         */
 
         public Parser(CharStream input) {
             JavaScriptLexer lexer = new JavaScriptLexer(input);
@@ -30,18 +39,33 @@ public final class Builder {
             this.parser.addErrorListener(ERROR_LISTENER);
         }
 
+        /**
+         * Constructor to Create Parser with JavaScriptLexer
+         *
+         * @param lexer JavaScript lexer;
+         */
         public Parser(JavaScriptLexer lexer) {
             this.parser = new JavaScriptParser(new CommonTokenStream(lexer));
             this.parser.removeErrorListeners();
             this.parser.addErrorListener(ERROR_LISTENER);
         }
 
+        /**
+         * Create Parser with ANTLRErrorListener
+         *
+         * @param listener ANTLRErrorListener to receive the errors;
+         */
         public Parser withErrorListener(ANTLRErrorListener listener) {
             this.parser.removeErrorListeners();
             this.parser.addErrorListener(listener);
             return this;
         }
 
+        /**
+         * Build JavaScript Parser
+         *
+         * @return JavaScript Parser
+         */
         public JavaScriptParser build() {
             return this.parser;
         }
