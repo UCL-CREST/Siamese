@@ -123,7 +123,7 @@ public class JSMethodParser implements MethodParser {
             ParseTree parseTree = parser.program();
             JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(sourceFile.getPath(), parseTree);
             ParseTreeWalker.DEFAULT.walk(jsParseTreeListener, parseTree);
-            methods.add(jsParseTreeListener.getFileBlockMethod());
+            methods.add(jsParseTreeListener.getFileBlockMethod(parseTree));
             return methods;
         } catch (Exception e) {
             e.printStackTrace();

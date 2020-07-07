@@ -54,9 +54,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
     }
 
     @Override
-    public void enterFunctionExpression(FunctionExpressionContext ctx) {
-        buildMethod(ctx);
-    }
+    public void enterFunctionExpression(FunctionExpressionContext ctx) { buildMethod(ctx); }
 
     @Override
     public void enterMethodDefinition(MethodDefinitionContext ctx) {
@@ -71,11 +69,12 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
     /**
      * This method builds a Method object using the complete source code of the file.
      *
+     * @param tree ANTLR4 generated Parse Tree
      * @return A Method Object containing the whole source code of the file block.
      */
-    protected Method getFileBlockMethod() {
-        String src = getSourceCode(this.parseTree);
-        Map<String, Integer> range = getRange(this.parseTree);
+    protected Method getFileBlockMethod(ParseTree tree) {
+        String src = getSourceCode(tree);
+        Map<String, Integer> range = getRange(tree);
         int startLine = range.get(START);
         int endLine = range.get(END);
         List<Parameter> parameters = new ArrayList<>();
@@ -96,13 +95,12 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         Map<String, Integer> range = getRange(tree);
         int startLine = range.get(START);
         int endLine = range.get(END);
-        String src = getSourceCode(tree);
         if ((sourceStartEndMap.containsKey(startLine) && sourceStartEndMap.get(startLine).equals(endLine))) {
-            if (sourceCodeMap.get(startLine).equals(src)) {
-                System.out.println("Found duplicate");
+            if (sourceCodeMap.get(startLine).equals(getSourceCode(tree))) {
                 return;
             }
         }
+        String src = getSourceCode(tree);
         String className = getClassName(tree);
         String functionName = getFunctionIdentifier(tree);
         List<Parameter> parameters = getParameters(tree);
@@ -126,9 +124,9 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
      */
     protected String getSourceCode(ParseTree tree) {
         StringBuilder builder = new StringBuilder();
-        List<TerminalNodeImpl> terminalNodes = traverseParseTree(tree);
-        for (TerminalNodeImpl tm : terminalNodes) {
-            builder.append(tm.getText()).append(" ");
+        List<String> terminalNodes = traverseParseTree(tree);
+        for (String tm : terminalNodes) {
+            builder.append(tm).append(" ");
         }
         return builder.toString().trim();
     }
@@ -138,10 +136,10 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
      * Travers ANTLR4 generated Parse Tree using Depth-First-Search and collect all the terminal nodes.
      *
      * @param tree tree ANTLR4 generated Parse Tree
-     * @return A list of TerminalNodeImpl derived from function block.
+     * @return A list of String derived from function block terminal nodes.
      */
-    protected List<TerminalNodeImpl> traverseParseTree(ParseTree tree) {
-        List<TerminalNodeImpl> terminalNodes = new ArrayList<>();
+    protected List<String> traverseParseTree(ParseTree tree) {
+        List<String> terminalNodes = new ArrayList<>();
         List<ParseTree> firstStack = new ArrayList<>();
         firstStack.add(tree);
         List<List<ParseTree>> childListStack = new ArrayList<>();
@@ -153,7 +151,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
             } else {
                 tree = childStack.remove(0);
                 if (tree instanceof TerminalNodeImpl) {
-                    terminalNodes.add((TerminalNodeImpl) tree);
+                    terminalNodes.add((tree.getText()));
                 }
                 if (tree.getChildCount() > 0) {
                     List<ParseTree> children = new ArrayList<>();
@@ -289,8 +287,8 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
      */
     protected Map<String, Integer> getRange(ParseTree tree) {
         Map<String, Integer> range = new HashMap<>();
-        range.put(START, 0);
-        range.put(END, 0);
+        range.put(START, 1);
+        range.put(END, 1);
         if (tree instanceof ParserRuleContext) {
             ParserRuleContext ctx = (ParserRuleContext) tree;
             range.put(START, ctx.getStart().getLine());
