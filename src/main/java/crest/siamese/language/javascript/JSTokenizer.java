@@ -1,11 +1,14 @@
 package crest.siamese.language.javascript;
 
+
 import crest.siamese.language.Normalizer;
 import crest.siamese.language.Tokenizer;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.Token;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,33 +31,43 @@ public class JSTokenizer implements Tokenizer {
         this.normalizer = normalizer;
     }
 
+    /**
+     * Not Implemented for JavaScript source code.
+     */
     @Override
-    public ArrayList<String> tokenize(String s) throws Exception {
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> tokenize(Reader reader) throws Exception {
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> tokenizeLine(Reader reader) throws Exception {
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> tokenize(File f) throws Exception {
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> getTokensFromFile(String file) throws Exception {
-        return null;
+    public ArrayList<String> tokenize(String s) {
+        return new ArrayList<>();
     }
 
     /**
-     * Uses the ANTLR4 Python3Lexer to obtain the list of tokens from the extracted method. Normalises the tokens
+     * Not Implemented for JavaScript source code.
+     */
+    @Override
+    public ArrayList<String> tokenize(Reader reader) {
+        return new ArrayList<>();
+    }
+
+    /**
+     * Not Implemented for JavaScript source code.
+     */
+    @Override
+    public ArrayList<String> tokenizeLine(Reader reader) {
+        return new ArrayList<>();
+    }
+
+
+    @Override
+    public ArrayList<String> tokenize(File f) throws IOException {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public ArrayList<String> getTokensFromFile(String file) {
+        return new ArrayList<>();
+    }
+
+    /**
+     * Uses the ANTLR4 JavaScriptLexer to obtain the list of tokens from the extracted method. Normalises the tokens
      * according to the configuration of the Normalizer (composite object of this class).
      *
      * @param input input
@@ -62,7 +75,21 @@ public class JSTokenizer implements Tokenizer {
      */
     @Override
     public ArrayList<String> getTokensFromString(String input) {
-        JavaScriptLexer lexer = new JavaScriptLexer(CharStreams.fromString(input));
+        ArrayList<String> tokens = getTokens(CharStreams.fromString(input));
+        return tokens;
+
+    }
+
+
+    /**
+     * Uses the ANTLR4 JavaScriptLexer to obtain the list of tokens from the extracted method. Normalises the tokens
+     * according to the configuration of the Normalizer (composite object of this class).
+     *
+     * @param source source code as CharStream
+     * @return ArrayList of String
+     */
+    protected ArrayList<String> getTokens(CharStream source) {
+        JavaScriptLexer lexer = new JavaScriptLexer(source);
         List<? extends Token> tokens = lexer.getAllTokens();
         List<Token> normalizedTokens = new ArrayList<>();
         tokens.forEach(token -> {
@@ -75,4 +102,6 @@ public class JSTokenizer implements Tokenizer {
                         JavaScriptParser.VOCABULARY.getSymbolicName(token.getType()).toUpperCase()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
+
 }

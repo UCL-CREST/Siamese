@@ -13,9 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 
 public class JSParseTreeListenerTest {
@@ -29,25 +28,22 @@ public class JSParseTreeListenerTest {
             "    return n * factorial(n - 1);\n" +
             "}";
     String classAndMemberMethodDeclarationSourceCode = "class Car {\n" +
-            "    constructor(brand) {\n" +
-            "        this.carname = brand;\n" +
-            "    }\n" +
-            "\n" +
             "    present() {\n" +
             "        return \"I have a \" + this.carname;\n" +
+            "    }\n" +
+            "}";
+    String classMemberWithGeneratorMethods = "\"use strict\";\n" +
+            "class Car {\n" +
+            "    * stopCar() {\n" +
+            "        return \"The car is stopped\";\n" +
             "    }\n" +
             "}";
 
     String functionalExpresionSourceCode = "var messageFunction = function messageFunction(message) {\n" +
             "    return message + ' World!';\n" +
             "}";
-    String generationFunctionSourceCode = "\"use strict\";\n" +
-            "function* range(start, end, step) {\n" +
-            "    while (start < end) {\n" +
-            "        yield start\n" +
-            "        start += step\n" +
-            "    }\n" +
-            "}";
+
+
     String startWithHashSymbolMethodSourceCode = "class Bar {\n" +
             "    async static #asyncStaticClassMethod() {\n" +
             "    }\n" +
@@ -58,17 +54,52 @@ public class JSParseTreeListenerTest {
             "    }\n" +
             "    return number;\n" +
             "}";
+    String generationFunctionSourceCode = "\"use strict\";\n" +
+            "function* range(start, end, step) {\n" +
+            "    while (start < end) {\n" +
+            "        yield start\n" +
+            "        start += step\n" +
+            "    }\n" +
+            "}";
 
+    String allFunctionalExpression = "\"use strict\";\n" +
+            "\n" +
+            "function add(a, b) {\n" +
+            "    return a + b;\n" +
+            "}\n" +
+            "\n" +
+            "var mul = function (x, y) {\n" +
+            "    return x * y;\n" +
+            "}\n" +
+            "\n" +
+            "class Car {\n" +
+            "    present() {\n" +
+            "        \n" +
+            "    }\n" +
+            "}";
 
+    String functionDecSource = "(function messageFunction(message) {\n" +
+            "        return message + ' World!';\n" +
+            "    })('Hello');";
     ParseTree parseTree;
     JSParseTreeListener jsParseTreeListener;
 
     public void init(String source) {
-
         CharStream sourceStream = CharStreams.fromString(source, dummyFilePath);
         JavaScriptParser parser = new Builder.Parser(sourceStream).build();
         parseTree = parser.program();
-        jsParseTreeListener = new JSParseTreeListener(dummyFilePath, parseTree);
+        jsParseTreeListener = new JSParseTreeListener(dummyFilePath);
+    }
+
+    @Test
+    public void JSParseTreeListenerConstructorAndOverridenFunctionTest() {
+        CharStream sourceStream = CharStreams.fromString(allFunctionalExpression, dummyFilePath);
+        JavaScriptParser parser = new Builder.Parser(sourceStream).build();
+        parseTree = parser.program();
+        jsParseTreeListener = new JSParseTreeListener(dummyFilePath);
+        ParseTreeWalker.DEFAULT.walk(jsParseTreeListener, parseTree);
+        List<Method> methods = jsParseTreeListener.getJSMethods();
+        assertEquals(methods.size(), 3);
     }
 
     @Test
@@ -84,12 +115,60 @@ public class JSParseTreeListenerTest {
     }
 
     @Test
-    public void getFunctionIdentifierTest() {
+    public void functionIdentifierOfFunctionDeclarationTest() {
         init(this.functionalDeclarationSourceCode);
         ParseTreeWalker.DEFAULT.walk(new JavaScriptParserBaseListener() {
             @Override
             public void enterFunctionDeclaration(JavaScriptParser.FunctionDeclarationContext ctx) {
                 assertEquals("factorial", jsParseTreeListener.getFunctionIdentifier(ctx));
+            }
+        }, this.parseTree);
+
+
+    }
+
+    @Test
+    public void functionIdentifierOfFunctionExpressionTest() {
+        init(this.functionalExpresionSourceCode);
+        ParseTreeWalker.DEFAULT.walk(new JavaScriptParserBaseListener() {
+            @Override
+            public void enterFunctionExpression(JavaScriptParser.FunctionExpressionContext ctx) {
+                assertEquals("Function Expression", jsParseTreeListener.getFunctionIdentifier(ctx));
+            }
+        }, this.parseTree);
+
+
+    }
+
+    @Test
+    public void functionIdentifierOfClassMethodDeclarationTest() {
+        init(this.classAndMemberMethodDeclarationSourceCode);
+        ParseTreeWalker.DEFAULT.walk(new JavaScriptParserBaseListener() {
+            @Override
+            public void enterMethodDefinition(JavaScriptParser.MethodDefinitionContext ctx) {
+                assertEquals("present", jsParseTreeListener.getFunctionIdentifier(ctx));
+            }
+        }, this.parseTree);
+    }
+
+    @Test
+    public void functionIdentifierOfClassGeneratorMethodDeclarationTest() {
+        init(this.classMemberWithGeneratorMethods);
+        ParseTreeWalker.DEFAULT.walk(new JavaScriptParserBaseListener() {
+            @Override
+            public void enterMethodDefinition(JavaScriptParser.MethodDefinitionContext ctx) {
+                assertEquals("stopCar", jsParseTreeListener.getFunctionIdentifier(ctx));
+            }
+        }, this.parseTree);
+    }
+
+    @Test
+    public void functionIdentifierOfHashMethodDeclarationTest() {
+        init(this.startWithHashSymbolMethodSourceCode);
+        ParseTreeWalker.DEFAULT.walk(new JavaScriptParserBaseListener() {
+            @Override
+            public void enterMethodDefinition(JavaScriptParser.MethodDefinitionContext ctx) {
+                assertEquals("asyncStaticClassMethod", jsParseTreeListener.getFunctionIdentifier(ctx));
             }
         }, this.parseTree);
     }
@@ -197,5 +276,12 @@ public class JSParseTreeListenerTest {
 
     }
 
+    @Test
+    public void ignoringRepeatedFunctionExtractionTest() {
+        init(functionDecSource);
+        ParseTreeWalker.DEFAULT.walk(jsParseTreeListener, parseTree);
+        List<Method> methods = jsParseTreeListener.getJSMethods();
+        assertEquals(methods.size(), 1);
+    }
 
 }

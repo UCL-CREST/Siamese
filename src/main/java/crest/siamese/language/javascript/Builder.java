@@ -4,12 +4,12 @@ import org.antlr.v4.runtime.*;
 
 
 /**
- * A builder class that helps to build JavaScript Parser with Custom Error Listener
+ * A builder class that helps to build JavaScriptParser with Custom Error Listener
  * based on the recommended Builder Pattern
  */
 public final class Builder {
 
-    private static final DescriptiveBailErrorListener ERROR_LISTENER = new DescriptiveBailErrorListener();
+    private static final ErrorListener ERROR_LISTENER = new ErrorListener();
 
     /**
      * This class will not be instantiated.
@@ -48,17 +48,6 @@ public final class Builder {
             this.parser = new JavaScriptParser(new CommonTokenStream(lexer));
             this.parser.removeErrorListeners();
             this.parser.addErrorListener(ERROR_LISTENER);
-        }
-
-        /**
-         * Create Parser with ANTLRErrorListener
-         *
-         * @param listener ANTLRErrorListener to receive the errors;
-         */
-        public Parser withErrorListener(ANTLRErrorListener listener) {
-            this.parser.removeErrorListeners();
-            this.parser.addErrorListener(listener);
-            return this;
         }
 
         /**

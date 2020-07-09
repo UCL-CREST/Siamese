@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * This class responsible for extracting all the JavaScript function block as Method objects
@@ -78,76 +76,82 @@ public class JSMethodParser implements MethodParser {
         ArrayList<Method> methods = new ArrayList<>();
         File file = new File(this.FILE_PATH);
         if (MODE.equals(Settings.MethodParserType.METHOD)) {
-            methods.addAll(getJSMethodBlock(file));
-        } else {
-            methods.addAll(getJSFileBlockMethod(file));
-        }
-        return methods;
-    }
-
-    /**
-     * Create a list of Methods for a given JavaScript source file.
-     *
-     * @param sourceFile JavaScript source file
-     * @return A list of JavaScript Methods extracted from the given JavaScript source file
-     */
-    private List<Method> getJSMethodBlock(File sourceFile) {
-        List<Method> methods = new ArrayList<>();
-        try {
-            CharStream sourceStream = getSourceAsCharStreams(sourceFile);
-            JavaScriptParser parser = new Builder.Parser(sourceStream).build();
-            ParseTree parseTree = parser.program();
-            JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(sourceFile.getPath(), parseTree);
-            ParseTreeWalker.DEFAULT.walk(jsParseTreeListener, parseTree);
+            JSParseTreeListener jsParseTreeListener = getTraversedJSParseTreeListener(file);
             methods.addAll(jsParseTreeListener.getJSMethods());
-            return methods;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Parsing Errors Occurs at source file: " + sourceFile.getPath());
+        } else {
+            ParseTree parseTree = getParsedTree(file);
+            JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(file.getAbsolutePath());
+            methods.add(jsParseTreeListener.getFileBlockMethod(parseTree));
         }
         return methods;
+    }
 
+
+    /**
+     * Create a Traversed JSParseTreeListener for a given JavaScript source file.
+     *
+     * @param sourceFile JavaScript source file
+     * @return A fully Traversed JSParseTreeListener instance
+     */
+    protected JSParseTreeListener getTraversedJSParseTreeListener(File sourceFile) {
+        ParseTree parseTree = getParsedTree(sourceFile);
+        JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(sourceFile.getPath());
+        ParseTreeWalker.DEFAULT.walk(jsParseTreeListener, parseTree);
+        return jsParseTreeListener;
     }
 
     /**
-     * Create a Method as File Block for a given JavaScript source file.
+     * Create a  ParseTree for a given JavaScript source file.
      *
      * @param sourceFile JavaScript source file
-     * @return A list of JavaScript Methods extracted as a File Block (contains a single File Block Method)
+     * @return An instance of a ParseTree fot the give JavaScript source file.
      */
-    private List<Method> getJSFileBlockMethod(File sourceFile) {
-        List<Method> methods = new ArrayList<>();
+
+    protected ParseTree getParsedTree(File sourceFile) {
         try {
-            CharStream sourceStream = getSourceAsCharStreams(sourceFile);
-            JavaScriptParser parser = new Builder.Parser(sourceStream).build();
+            JavaScriptParser parser = getJavaScriptParser(sourceFile);
             ParseTree parseTree = parser.program();
-            JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(sourceFile.getPath(), parseTree);
-            ParseTreeWalker.DEFAULT.walk(jsParseTreeListener, parseTree);
-            methods.add(jsParseTreeListener.getFileBlockMethod(parseTree));
-            return methods;
-        } catch (Exception e) {
-            e.printStackTrace();
+            return parseTree;
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
             System.err.println("Parsing Errors Occurs at source file: " + sourceFile.getPath());
         }
-        return methods;
-
+        JavaScriptParser parser = getJavaScriptParser(new File("Empty.js"));
+        ParseTree parseTree = parser.program();
+        return parseTree;
     }
+
+
+    /**
+     * Create a  JavaScriptParser for a given JavaScript source file.
+     *
+     * @param sourceFile JavaScript source file
+     * @return An instance of a JavaScriptParser fot the give JavaScript source file.
+     */
+
+    protected JavaScriptParser getJavaScriptParser(File sourceFile) {
+        CharStream sourceStream = getSourceAsCharStreams(sourceFile);
+        JavaScriptParser parser = new Builder.Parser(sourceStream).build();
+        return parser;
+    }
+
 
     /**
      * Read file content as CharStream for a given file
      *
      * @param sourceFile Source file
-     * @return File content as CharStream and throws IOException if the file is not found or read
+     * @return File content as CharStream and if IOException occurs then return CharStream of an empty string.
      */
-    private CharStream getSourceAsCharStreams(File sourceFile) {
-        CharStream input = null;
+    protected CharStream getSourceAsCharStreams(File sourceFile) {
+        CharStream input = CharStreams.fromString(" ");
         try {
             Path sourcePath = Paths.get(sourceFile.getPath());
             input = CharStreams.fromPath(sourcePath);
+            return input;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.toString());
+            return input;
         }
-        return input;
     }
 
 }

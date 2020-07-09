@@ -3,6 +3,9 @@ package crest.siamese.language.javascript;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,4 +84,7 @@ public class JSNormalizerTest {
             assertNull(jsNormalizer.noNormalizeAToken(token));
         }
     }
+
+
+
 }

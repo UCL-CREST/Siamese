@@ -7,7 +7,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
 
 
-public class DescriptiveBailErrorListenerTest {
+public class ErrorListenerTest {
 
 
     String syntaxErrorSourceCode = "function (a, b) {\n" +
@@ -21,7 +21,7 @@ public class DescriptiveBailErrorListenerTest {
         CharStream jsSourceCode = CharStreams.fromString(syntaxErrorSourceCode);
         JavaScriptParser parser = new Builder.Parser(jsSourceCode).build();
         ParseTree parseTree = parser.program();
-        JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(sourcePath, parseTree);
+        JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(sourcePath);
         ParseTreeWalker.DEFAULT.walk(jsParseTreeListener, parseTree);
     }
 }

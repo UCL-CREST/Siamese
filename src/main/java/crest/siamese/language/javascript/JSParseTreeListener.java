@@ -25,7 +25,6 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
     private final String START = "START";
     private final String END = "END";
 
-    private ParseTree parseTree;
     private List<Method> jsMethods;
     private String filePath;
     private Map<Integer, Integer> sourceStartEndMap;
@@ -35,11 +34,9 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
     /**
      * Constructor to build JSParseTreeListener
      *
-     * @param filePath  JavaScript source file path
-     * @param parseTree ANTLR4 generated Parse Tree
+     * @param filePath JavaScript source file path
      */
-    public JSParseTreeListener(String filePath, ParseTree parseTree) {
-        this.parseTree = parseTree;
+    public JSParseTreeListener(String filePath) {
         this.filePath = filePath;
         this.jsMethods = new ArrayList<>();
         this.sourceStartEndMap = new HashMap<>();
@@ -54,7 +51,9 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
     }
 
     @Override
-    public void enterFunctionExpression(FunctionExpressionContext ctx) { buildMethod(ctx); }
+    public void enterFunctionExpression(FunctionExpressionContext ctx) {
+        buildMethod(ctx);
+    }
 
     @Override
     public void enterMethodDefinition(MethodDefinitionContext ctx) {

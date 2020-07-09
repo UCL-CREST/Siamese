@@ -17,9 +17,19 @@ public class BuilderTest {
             "}";
 
     @Test
-    public void parserBuilderTest() {
+    public void buildParserWithCharStreamTest() {
         CharStream sourceStream = CharStreams.fromString(functionalDeclarationSourceCode, dummyFilePath);
         JavaScriptParser parser = new Builder.Parser(sourceStream).build();
         assertNotNull(parser);
+    }
+
+    @Test
+    public void buildParserWithLexerTest() {
+        CharStream sourceStream = CharStreams.fromString(functionalDeclarationSourceCode, dummyFilePath);
+        JavaScriptLexer lexer = new JavaScriptLexer(sourceStream);
+        JavaScriptParser parser = new Builder.Parser(lexer).build();
+        assertNotNull(parser);
+
+
     }
 }
