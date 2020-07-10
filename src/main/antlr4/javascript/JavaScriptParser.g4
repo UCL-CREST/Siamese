@@ -32,7 +32,7 @@ parser grammar JavaScriptParser;
 
 options {
     tokenVocab=JavaScriptLexer;
-    superClass=JavaScriptParserBase;
+    superClass=crest.siamese.language.javascript.antlr4.JavaScriptParserBase;
 }
 
 program

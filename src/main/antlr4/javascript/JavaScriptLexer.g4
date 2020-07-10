@@ -32,7 +32,7 @@ lexer grammar JavaScriptLexer;
 
 channels { ERROR }
 
-options { superClass=JavaScriptLexerBase; }
+options { superClass=crest.siamese.language.javascript.antlr4.JavaScriptLexerBase; }
 
 HashBangLine:                   { this.IsStartOfFile()}? '#!' ~[\r\n\u2028\u2029]*; // only allowed at start
 MultiLineComment:               '/*' .*? '*/'             -> channel(HIDDEN);

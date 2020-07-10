@@ -1,8 +1,10 @@
 package crest.siamese.language.javascript;
 
-import crest.siamese.language.javascript.JavaScriptParser.*;
 import crest.siamese.document.Method;
 import crest.siamese.document.Parameter;
+import crest.siamese.language.javascript.JavaScriptParser.FunctionDeclarationContext;
+import crest.siamese.language.javascript.JavaScriptParser.FunctionExpressionContext;
+import crest.siamese.language.javascript.JavaScriptParser.MethodDefinitionContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNodeImpl;
@@ -86,7 +88,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
     /**
      * This method builds a Complete Method from the ANTLR4 generated Parse Tree.
      * It collects function name, parameters, headers source, start and end line.
-     * Moreover, it helps to detect duplicate extracted methods from the Parse Tree.sss
+     * Moreover, it helps to detect duplicate extracted methods from the Parse Tree.
      *
      * @param tree ANTLR4 generated Parse Tree
      */

@@ -108,17 +108,13 @@ public class JSMethodParser implements MethodParser {
      */
 
     protected ParseTree getParsedTree(File sourceFile) {
+        JavaScriptParser parser = getJavaScriptParser(sourceFile);
         try {
-            JavaScriptParser parser = getJavaScriptParser(sourceFile);
-            ParseTree parseTree = parser.program();
-            return parseTree;
+            return parser.program();
         } catch (RuntimeException e) {
             System.err.println(e.getMessage());
-            System.err.println("Parsing Errors Occurs at source file: " + sourceFile.getPath());
         }
-        JavaScriptParser parser = getJavaScriptParser(new File("Empty.js"));
-        ParseTree parseTree = parser.program();
-        return parseTree;
+        return getJavaScriptParser(new File("empty.js")).program();
     }
 
 
@@ -130,9 +126,11 @@ public class JSMethodParser implements MethodParser {
      */
 
     protected JavaScriptParser getJavaScriptParser(File sourceFile) {
-        CharStream sourceStream = getSourceAsCharStreams(sourceFile);
-        JavaScriptParser parser = new Builder.Parser(sourceStream).build();
-        return parser;
+        CharStream sourceStream = CharStreams.fromString(" ");
+        if (sourceFile.isFile()) {
+            sourceStream = getSourceAsCharStreams(sourceFile);
+        }
+        return new Builder.Parser(sourceStream).build();
     }
 
 

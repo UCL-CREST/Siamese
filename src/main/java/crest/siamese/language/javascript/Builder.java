@@ -1,6 +1,7 @@
 package crest.siamese.language.javascript;
 
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 
 /**
