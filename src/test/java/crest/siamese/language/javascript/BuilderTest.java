@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 
 public class BuilderTest {
 
-    String dummyFilePath = "crest/siamese/language/javascript/DemoTest.js";
-    String functionalDeclarationSourceCode = "function factorial(n) {\n" +
+    final String FILE_PATH = "crest/siamese/language/javascript/DemoTest.js";
+    final String FUNCTION_DECLARATION = "function factorial(n) {\n" +
             "    if (n === 0) {\n" +
             "        return 1;\n" +
             "    }\n" +
@@ -18,14 +18,14 @@ public class BuilderTest {
 
     @Test
     public void buildParserWithCharStreamTest() {
-        CharStream sourceStream = CharStreams.fromString(functionalDeclarationSourceCode, dummyFilePath);
+        CharStream sourceStream = CharStreams.fromString(FUNCTION_DECLARATION, FILE_PATH);
         JavaScriptParser parser = new Builder.Parser(sourceStream).build();
         assertNotNull(parser);
     }
 
     @Test
     public void buildParserWithLexerTest() {
-        CharStream sourceStream = CharStreams.fromString(functionalDeclarationSourceCode, dummyFilePath);
+        CharStream sourceStream = CharStreams.fromString(FUNCTION_DECLARATION, FILE_PATH);
         JavaScriptLexer lexer = new JavaScriptLexer(sourceStream);
         JavaScriptParser parser = new Builder.Parser(lexer).build();
         assertNotNull(parser);

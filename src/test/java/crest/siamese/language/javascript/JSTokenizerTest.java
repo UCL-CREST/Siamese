@@ -7,13 +7,19 @@ import org.junit.Test;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 
 
 public class JSTokenizerTest {
-    String dummyFilePath = "crest/siamese/language/javascript/DemoTest.js";
-    String input = "function (a,b){ return a+b;} ";
+
+    final String DUMMY_FILE_PATH = "crest/siamese/language/javascript/DemoTest.js";
+    final String TEST_SOURCE = "function (a,b){ return a+b;} ";
+    final ArrayList<String> TOKENIZED_SOURCE = new ArrayList<>(Arrays.asList(
+            "function", "(", "a", ",", "b", ")", "{", "return", "a", "+", "b", ";", "}"
+    ));
+
     JSTokenizer jsTokenizer;
     File resourceSourceFile;
 
@@ -25,24 +31,21 @@ public class JSTokenizerTest {
         jsTokenizer = new JSTokenizer();
         jsTokenizer.configure(jsNormalizer);
         ClassLoader classLoader = getClass().getClassLoader();
-        resourceSourceFile = new File(classLoader.getResource(dummyFilePath).getFile());
+        resourceSourceFile = new File(Objects.requireNonNull(classLoader.getResource(DUMMY_FILE_PATH)).getFile());
 
     }
 
     @Test
     public void getTokensFromStringTest() {
-        ArrayList<String> actual = jsTokenizer.getTokensFromString(input);
-        ArrayList<String> expected = new ArrayList<>(Arrays.asList(
-                "function", "(", "a", ",", "b", ")", "{", "return", "a", "+", "b", ";", "}"
-        ));
-        assertEquals(actual, expected);
+        ArrayList<String> actual = jsTokenizer.getTokensFromString(TEST_SOURCE);
+        assertEquals(actual, TOKENIZED_SOURCE);
 
     }
 
     @Test
     public void testTokenize() throws IOException {
         Reader reader = new FileReader(resourceSourceFile);
-        assertEquals(0, jsTokenizer.tokenize(input).size());
+        assertEquals(0, jsTokenizer.tokenize(TEST_SOURCE).size());
         assertEquals(0, jsTokenizer.tokenize(reader).size());
         assertEquals(0, jsTokenizer.tokenizeLine(reader).size());
         assertEquals(0, jsTokenizer.tokenize(resourceSourceFile).size());

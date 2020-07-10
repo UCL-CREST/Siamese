@@ -10,18 +10,18 @@ import org.junit.Test;
 public class ErrorListenerTest {
 
 
-    String syntaxErrorSourceCode = "function (a, b) {\n" +
+    final String SYNTAX_ERROR_SOURCE = "function (a, b) {\n" +
             "    return a + b;\n" +
             "}";
 
-    String sourcePath = "/dummy/test/path/syntaxErrorSourceCode.js";
+    final String FILE_NAME = "/dummy/test/path/syntaxErrorSourceCode.js";
 
     @Test(expected = RuntimeException.class)
     public void syntaxErrorTest() {
-        CharStream jsSourceCode = CharStreams.fromString(syntaxErrorSourceCode);
+        CharStream jsSourceCode = CharStreams.fromString(SYNTAX_ERROR_SOURCE);
         JavaScriptParser parser = new Builder.Parser(jsSourceCode).build();
         ParseTree parseTree = parser.program();
-        JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(sourcePath);
+        JSParseTreeListener jsParseTreeListener = new JSParseTreeListener(FILE_NAME);
         ParseTreeWalker.DEFAULT.walk(jsParseTreeListener, parseTree);
     }
 }
