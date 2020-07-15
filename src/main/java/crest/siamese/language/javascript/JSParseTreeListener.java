@@ -206,14 +206,19 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
      */
     protected String getClassName(ParseTree tree) {
         String className = StringUtils.EMPTY;
-        if (tree instanceof JavaScriptParser.MethodDefinitionContext) {
-            ParseTree parentClassContext = tree.getParent();
-            while (!(parentClassContext instanceof JavaScriptParser.ClassDeclarationContext)) {
-                parentClassContext = parentClassContext.getParent();
+        try {
+            if (tree instanceof JavaScriptParser.MethodDefinitionContext) {
+                ParseTree parentClassContext = tree.getParent();
+                while (!(parentClassContext instanceof JavaScriptParser.ClassDeclarationContext)) {
+                    parentClassContext = parentClassContext.getParent();
+                }
+                ParseTree identifier = parentClassContext.getChild(1);
+                className = identifier.getText();
             }
-            ParseTree identifier = parentClassContext.getChild(1);
-            className = identifier.getText();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
+
         return className;
     }
 
