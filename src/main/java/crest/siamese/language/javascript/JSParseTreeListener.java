@@ -15,7 +15,6 @@
  */
 
 
-
 package crest.siamese.language.javascript;
 
 import crest.siamese.document.Method;
@@ -120,15 +119,25 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
             }
         }
         String src = getSourceCode(tree);
-        String className = getClassName(tree);
+        List<Parameter> parameters = new ArrayList<>();
+
+        /*
+          Method @{@link #getClassName(ParseTree)} and
+          @{@link #getFunctionIdentifier(ParseTree)} and
+         * @{@link #getHeader(ParseTree)} are implemented according to the requirement
+         * but not utilized here.
+         */
+
+       /* String className = getClassName(tree);
         String functionName = getFunctionIdentifier(tree);
-        List<Parameter> parameters = getParameters(tree);
-        String header = getHeader(functionName, parameters);
+        String header = getHeader(functionName, parameters);*/
+
         this.sourceStartEndMap.put(startLine, endLine);
         this.sourceCodeMap.put(startLine, src);
 
-        Method method = new Method(filePath, StringUtils.EMPTY, className, functionName, StringUtils.EMPTY,
-                src, startLine, endLine, parameters, header);
+
+        Method method = new Method(this.filePath, StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY,
+                StringUtils.EMPTY, src, startLine, endLine, parameters, StringUtils.EMPTY);
         jsMethods.add(method);
 
     }

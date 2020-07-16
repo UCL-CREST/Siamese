@@ -265,10 +265,9 @@ public class JSParseTreeListenerTest {
         int startLine = 1;
         int endLine = 6;
         String className = StringUtils.EMPTY;
-        String functionName = "factorial";
-        String header = "function (n)";
+        String functionName = StringUtils.EMPTY;
+        String header = StringUtils.EMPTY;
         List<Parameter> parameters = new ArrayList<>();
-        parameters.add(new Parameter(StringUtils.EMPTY, "n"));
 
         Method method = new Method(this.DUMMY_FILE_PATH, StringUtils.EMPTY, className, functionName, StringUtils.EMPTY,
                 src, startLine, endLine, parameters, header);
