@@ -37,12 +37,15 @@ import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenStream;
 
+import java.util.Stack;
+
 /**
  * All parser methods that used in grammar (p, prev, notLineTerminator, etc.)
  * should start with lower case char similar to parser rules.
  */
-public abstract class JavaScriptParserBase extends Parser
-{
+public abstract class JavaScriptParserBase extends Parser {
+    private Stack<String> tagNames = new Stack<>();
+
     public JavaScriptParserBase(TokenStream input) {
         super(input);
     }
@@ -93,10 +96,8 @@ public abstract class JavaScriptParserBase extends Parser
      * token stream a token of the given {@code type} exists on the
      * {@code HIDDEN} channel.
      *
-     * @param type
-     *         the type of the token on the {@code HIDDEN} channel
-     *         to check.
-     *
+     * @param type the type of the token on the {@code HIDDEN} channel
+     *             to check.
      * @return {@code true} iff on the current index of the parser's
      * token stream a token of the given {@code type} exists on the
      * {@code HIDDEN} channel.
@@ -152,5 +153,14 @@ public abstract class JavaScriptParserBase extends Parser
         // Check if the token is, or contains a line terminator.
         return (type == JavaScriptParser.MultiLineComment && (text.contains("\r") || text.contains("\n"))) ||
                 (type == JavaScriptParser.LineTerminator);
+    }
+
+    protected void pushHtmlTagName(String tagName) {
+        tagNames.push(tagName);
+    }
+
+    protected boolean popHtmlTagName(String tagName) {
+        return tagName.toLowerCase().equals(tagNames.pop().toLowerCase());
+        //return String.equals(tagNames.pop(), tagName, StringComparison.InvariantCulture);
     }
 }

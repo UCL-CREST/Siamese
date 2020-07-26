@@ -56,7 +56,8 @@
                                 <argument>-package</argument>
                                 <argument>crest.siamese.language.javascript</argument>
                             </arguments>
-                            <sourceDirectory>${basedir}/src/main/antlr4/javascript</sourceDirectory>
+                           <!-- <sourceDirectory>${basedir}/src/main/antlr4/javascript</sourceDirectory>-->
+                            <sourceDirectory>${basedir}/src/main/antlr4/jsx</sourceDirectory>
                             <outputDirectory>
                                 ${project.build.directory}/generated-sources/crest/siamese/language/javascript
                             </outputDirectory>
