@@ -42,12 +42,15 @@ public class JSNormalizer implements Normalizer {
      * Maps {@link JavaScriptLexer} to a normalised form.
      * Symbols with no corresponding normalised form have the empty string value. Normalization for these
      * symbols will always be false.
+     * Reference for the Classification: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators
      */
     private static final Map<String, String> normalizedSymbols = ImmutableMap.<String, String>builder()
             .put("HASHBANGLINE", "")
             .put("MULTILINECOMMENT", "")
             .put("SINGLELINECOMMENT", "")
-            .put("REGULAREXPRESSIONLITERAL", "")
+
+            .put("REGULAREXPRESSIONLITERAL", "")// confusion
+
             .put("OPENBRACKET", "")
             .put("CLOSEBRACKET", "")
             .put("OPENPAREN", "")
@@ -55,12 +58,15 @@ public class JSNormalizer implements Normalizer {
             .put("OPENBRACE", "")
             .put("CLOSEBRACE", "")
             .put("SEMICOLON", "")
-            .put("COMMA", "")
-            .put("ASSIGN", "")
-            .put("QUESTIONMARK", "")
-            .put("COLON", "")
-            .put("ELLIPSIS", "")
-            .put("DOT", "")
+
+
+            .put("COMMA", NORMALIZED_TOKEN_OPERATOR)// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comma_Operator
+            .put("ASSIGN", NORMALIZED_TOKEN_OPERATOR)
+            .put("QUESTIONMARK", NORMALIZED_TOKEN_OPERATOR) // Ternary Operator e.g; [condition ? val1 : val2]
+            .put("COLON", NORMALIZED_TOKEN_OPERATOR) // Ternary Operator e.g; [condition ? val1 : val2]
+            .put("ELLIPSIS", NORMALIZED_TOKEN_OPERATOR) //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+            .put("DOT", NORMALIZED_TOKEN_OPERATOR)//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining
+
             .put("PLUSPLUS", NORMALIZED_TOKEN_OPERATOR)
             .put("MINUSMINUS", NORMALIZED_TOKEN_OPERATOR)
             .put("PLUS", NORMALIZED_TOKEN_OPERATOR)
@@ -71,8 +77,10 @@ public class JSNormalizer implements Normalizer {
             .put("DIVIDE", NORMALIZED_TOKEN_OPERATOR)
             .put("MODULUS", NORMALIZED_TOKEN_OPERATOR)
             .put("POWER", NORMALIZED_TOKEN_OPERATOR)
-            .put("NULLCOALESCE", "")
-            .put("HASHTAG", "")
+            .put("NULLCOALESCE", NORMALIZED_TOKEN_OPERATOR)
+
+            .put("HASHTAG", "")// confusion
+
             .put("RIGHTSHIFTARITHMETIC", NORMALIZED_TOKEN_OPERATOR)
             .put("LEFTSHIFTARITHMETIC", NORMALIZED_TOKEN_OPERATOR)
             .put("RIGHTSHIFTLOGICAL", NORMALIZED_TOKEN_OPERATOR)
@@ -102,6 +110,8 @@ public class JSNormalizer implements Normalizer {
             .put("BITORASSIGN", NORMALIZED_TOKEN_OPERATOR)
             .put("POWERASSIGN", NORMALIZED_TOKEN_OPERATOR)
             .put("ARROW", NORMALIZED_TOKEN_OPERATOR)
+
+
             .put("NULLLITERAL", NORMALIZED_TOKEN_VALUE)
             .put("BOOLEANLITERAL", NORMALIZED_TOKEN_VALUE)
             .put("DECIMALLITERAL", NORMALIZED_TOKEN_VALUE)
@@ -113,6 +123,8 @@ public class JSNormalizer implements Normalizer {
             .put("BIGOCTALINTEGERLITERAL", NORMALIZED_TOKEN_VALUE)
             .put("BIGBINARYINTEGERLITERAL", NORMALIZED_TOKEN_VALUE)
             .put("BIGDECIMALINTEGERLITERAL", NORMALIZED_TOKEN_VALUE)
+
+
             .put("BREAK", NORMALIZED_TOKEN_KEYWORD)
             .put("DO", NORMALIZED_TOKEN_KEYWORD)
             .put("INSTANCEOF", NORMALIZED_TOKEN_KEYWORD)
@@ -160,15 +172,31 @@ public class JSNormalizer implements Normalizer {
             .put("PROTECTED", NORMALIZED_TOKEN_KEYWORD)
             .put("STATIC", NORMALIZED_TOKEN_KEYWORD)
             .put("YIELD", NORMALIZED_TOKEN_KEYWORD)
-            .put("IDENTIFIER", NORMALIZED_TOKEN_STRING)
+
+
+            .put("IDENTIFIER", NORMALIZED_TOKEN_NAME)
             .put("STRINGLITERAL", NORMALIZED_TOKEN_STRING)
-            .put("TEMPLATESTRINGLITERAL", "")
+            .put("TEMPLATESTRINGLITERAL", NORMALIZED_TOKEN_STRING)
             .put("WHITESPACES", "")
             .put("LINETERMINATOR", "")
+
+            // JSX Extension
             .put("HTMLCOMMENT", "")
             .put("CDATACOMMENT", "")
             .put("UNEXPECTEDCHARACTER", "")
+            .put("CDATA", NORMALIZED_TOKEN_STRING)
+            .put("TAGOPEN", "")
+            .put("TAGCLOSE", "")
+            .put("TAGSLASHCLOSE", "")
+            .put("TAGSLASH", "")
+
+            .put("TAGNAME", NORMALIZED_TOKEN_NAME)
+            .put("ATTRIBUTEVALUE", NORMALIZED_TOKEN_STRING)
+            .put("ATTRIBUTE", NORMALIZED_TOKEN_NAME)
+            .put("TAGEQUALS", "")// confusion
             .build();
+
+    // Total 133 Symbols
 
 
     /**

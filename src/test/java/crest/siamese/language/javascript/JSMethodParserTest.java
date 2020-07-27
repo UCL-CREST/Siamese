@@ -14,10 +14,23 @@ import static org.junit.Assert.*;
 public class JSMethodParserTest {
 
     final String FILE_NAME = "crest/siamese/language/javascript/All-Combination-Of-JS-Functions.js";
+    final String JSX_FILE_NAME = "crest/siamese/language/javascript/JSX.jsx";
     final String SYNTAX_ERROR_FILE_NAME = "crest/siamese/language/javascript/Syntax-Error.js";
     final String EMPTY_NOT_EXISTED_FILE_NAME = "Demo.js";
     final String METHOD_MOOD = "METHOD-LEVEL";
     final String FILE_MOOD = "FILE-LEVEL";
+
+
+    @Test
+    public void parseMethodsWithJSXTest() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(Objects.requireNonNull(classLoader.getResource(JSX_FILE_NAME)).getFile());
+        JSMethodParser jsMethodParser = new JSMethodParser();
+        jsMethodParser.configure(file.getAbsolutePath(), StringUtils.EMPTY, METHOD_MOOD, false);
+        ArrayList<Method> methods = jsMethodParser.parseMethods();
+        assertEquals(methods.size(), 1);
+
+    }
 
 
     @Test

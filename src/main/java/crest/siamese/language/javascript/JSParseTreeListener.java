@@ -243,7 +243,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
                 className = identifier.getText();
             }
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         return className;
