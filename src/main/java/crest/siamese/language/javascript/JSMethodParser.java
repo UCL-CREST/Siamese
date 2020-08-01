@@ -129,7 +129,7 @@ public class JSMethodParser implements MethodParser {
         try {
             return parser.program();
         } catch (RuntimeException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
         return getJavaScriptParser(new File("empty.js")).program();
     }

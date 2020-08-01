@@ -46,10 +46,10 @@ public class JSNormalizer implements Normalizer {
      */
     private static final Map<String, String> normalizedSymbols = ImmutableMap.<String, String>builder()
             .put("HASHBANGLINE", "")
-            .put("MULTILINECOMMENT", "")
-            .put("SINGLELINECOMMENT", "")
+            // .put("MULTILINECOMMENT", "")// passes through hidden chanel
+            //.put("SINGLELINECOMMENT", "")// passes through hidden chanel
 
-            .put("REGULAREXPRESSIONLITERAL", "")// confusion
+            .put("REGULAREXPRESSIONLITERAL", NORMALIZED_TOKEN_STRING)// confusion
 
             .put("OPENBRACKET", "")
             .put("CLOSEBRACKET", "")
@@ -79,7 +79,7 @@ public class JSNormalizer implements Normalizer {
             .put("POWER", NORMALIZED_TOKEN_OPERATOR)
             .put("NULLCOALESCE", NORMALIZED_TOKEN_OPERATOR)
 
-            .put("HASHTAG", "")// confusion
+            .put("HASHTAG", "")
 
             .put("RIGHTSHIFTARITHMETIC", NORMALIZED_TOKEN_OPERATOR)
             .put("LEFTSHIFTARITHMETIC", NORMALIZED_TOKEN_OPERATOR)
@@ -177,12 +177,12 @@ public class JSNormalizer implements Normalizer {
             .put("IDENTIFIER", NORMALIZED_TOKEN_NAME)
             .put("STRINGLITERAL", NORMALIZED_TOKEN_STRING)
             .put("TEMPLATESTRINGLITERAL", NORMALIZED_TOKEN_STRING)
-            .put("WHITESPACES", "")
-            .put("LINETERMINATOR", "")
+            //.put("WHITESPACES", "")// passes through hidden chanel
+            //.put("LINETERMINATOR", "")// passes through hidden chanel
 
             // JSX Extension
-            .put("HTMLCOMMENT", "")
-            .put("CDATACOMMENT", "")
+            //.put("HTMLCOMMENT", "")// passes through hidden chanel
+            //.put("CDATACOMMENT", "")// passes through hidden chanel
             .put("UNEXPECTEDCHARACTER", "")
             .put("CDATA", NORMALIZED_TOKEN_STRING)
             .put("TAGOPEN", "")
@@ -193,7 +193,7 @@ public class JSNormalizer implements Normalizer {
             .put("TAGNAME", NORMALIZED_TOKEN_NAME)
             .put("ATTRIBUTEVALUE", NORMALIZED_TOKEN_STRING)
             .put("ATTRIBUTE", NORMALIZED_TOKEN_NAME)
-            .put("TAGEQUALS", "")// confusion
+            .put("TAGEQUALS", "")
             .build();
 
     // Total 133 Symbols
