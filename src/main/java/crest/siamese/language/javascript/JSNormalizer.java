@@ -46,10 +46,10 @@ public class JSNormalizer implements Normalizer {
      */
     private static final Map<String, String> normalizedSymbols = ImmutableMap.<String, String>builder()
             .put("HASHBANGLINE", "")
-            // .put("MULTILINECOMMENT", "")// passes through hidden chanel
-            //.put("SINGLELINECOMMENT", "")// passes through hidden chanel
+            .put("MULTILINECOMMENT", "")// passes through hidden chanel
+            .put("SINGLELINECOMMENT", "")// passes through hidden chanel
 
-            .put("REGULAREXPRESSIONLITERAL", NORMALIZED_TOKEN_STRING)// confusion
+            .put("REGULAREXPRESSIONLITERAL", NORMALIZED_TOKEN_STRING)
 
             .put("OPENBRACKET", "")
             .put("CLOSEBRACKET", "")
@@ -177,12 +177,12 @@ public class JSNormalizer implements Normalizer {
             .put("IDENTIFIER", NORMALIZED_TOKEN_NAME)
             .put("STRINGLITERAL", NORMALIZED_TOKEN_STRING)
             .put("TEMPLATESTRINGLITERAL", NORMALIZED_TOKEN_STRING)
-            //.put("WHITESPACES", "")// passes through hidden chanel
-            //.put("LINETERMINATOR", "")// passes through hidden chanel
+            .put("WHITESPACES", "")// passes through hidden chanel
+            .put("LINETERMINATOR", "")// passes through hidden chanel
 
             // JSX Extension
-            //.put("HTMLCOMMENT", "")// passes through hidden chanel
-            //.put("CDATACOMMENT", "")// passes through hidden chanel
+            .put("HTMLCOMMENT", "")// passes through hidden chanel
+            .put("CDATACOMMENT", "")// passes through hidden chanel
             .put("UNEXPECTEDCHARACTER", "")
             .put("CDATA", NORMALIZED_TOKEN_STRING)
             .put("TAGOPEN", "")

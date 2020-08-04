@@ -164,7 +164,7 @@ public class JSMethodParser implements MethodParser {
             input = CharStreams.fromPath(sourcePath);
             return input;
         } catch (IOException e) {
-            System.err.println(e.toString());
+            System.out.println(e.toString());
             return input;
         }
     }
